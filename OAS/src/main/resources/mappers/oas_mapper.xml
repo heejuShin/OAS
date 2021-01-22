@@ -12,4 +12,6 @@
 	select * from users where user_id=#{user_id} and pwd=#{pwd}
 </select>
 
+
+
 </mapper>

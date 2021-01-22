@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.walab.oas.DTO.User;
 import com.walab.oas.DAO.MainDAO;
+import com.walab.oas.DTO.User;
 
 
 
@@ -31,6 +31,7 @@ public class MainController {
 		mav.setViewName("login"); //들어갈 페이지 jsp 이름 -> login.jsp 페이지로 이동한다는 뜻
       return mav;
 	}
+	
 	
 	@RequestMapping(value="loginProcess",method=RequestMethod.POST) // POST 방식 -> view에서 controller로 넘길 데이터가 있을 시 POST 방식으로
 	public ModelAndView loginProcess(HttpSession session,User user) throws Exception {

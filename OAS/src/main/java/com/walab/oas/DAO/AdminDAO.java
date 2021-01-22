@@ -1,5 +1,5 @@
 package com.walab.oas.DAO;
 
-public class FieldDAO {
+public class AdminDAO {
 
 }

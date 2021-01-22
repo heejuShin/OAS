@@ -24,11 +24,11 @@
 
 		<property name="url"
 
-			value="?characterEncoding=utf8&amp;useSSL=false&amp;allowMultiQueries=true"></property>
+			value="jdbc:mysql://sql2.freemysqlhosting.net:3306/sql12388551?characterEncoding=utf8&amp;useSSL=false&amp;allowMultiQueries=true"></property>
 
-		<property name="username" value=""></property>
+		<property name="username" value="sql12388551"></property>
 
-		<property name="password" value=""></property>
+		<property name="password" value="9qqQIYUtaV"></property>
 
 	</bean>
 
