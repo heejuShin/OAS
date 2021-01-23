@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.walab.oas.DAO.MainDAO;
-import com.walab.oas.DTO.User;
+import com.walab.oas.DTO.UserEx;
 
 
 
@@ -34,7 +34,7 @@ public class MainController {
 	
 	
 	@RequestMapping(value="loginProcess",method=RequestMethod.POST) // POST 방식 -> view에서 controller로 넘길 데이터가 있을 시 POST 방식으로
-	public ModelAndView loginProcess(HttpSession session,User user) throws Exception {
+	public ModelAndView loginProcess(HttpSession session,UserEx user) throws Exception {
 		ModelAndView mav;
 
 		if(session.getAttribute("login")!=null) { //기존에 login이라는 세션 값이 존재할 경우
@@ -42,7 +42,7 @@ public class MainController {
 		}
 
 		//로그인이 성공하면 User 객체를 반환한다.
-		User one=mainDao.login(user); // User는 사용자의 정보를 저장하는 DTO
+		UserEx one=mainDao.login(user); // User는 사용자의 정보를 저장하는 DTO
 
 		if(one!=null) {//로그인 성공 (해당 유저의 정보가 있다는 뜻이기 때문에!
 			
