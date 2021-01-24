@@ -32,12 +32,11 @@ public class AdminController {
 	
 	//신청폼 Create	
 	@RequestMapping(value="/admin/form/formCreate",method=RequestMethod.POST)
-	public ModelAndView saveFormData(@ModelAttribute Form form) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("adminFormCreate"); //form 생성 후 들어갈 페이지
+	public ModelAndView saveFormData(Form form) throws Exception {
+		ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
 		//Form table에는 그냥 insert하면 됨 -> DAO에 Form 객체 전달
 		//문제는 Field랑 Item table 우예하징..?
-
+		
 		return mav;
 	}
 	
