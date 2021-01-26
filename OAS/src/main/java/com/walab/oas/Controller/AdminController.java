@@ -51,7 +51,7 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) Update
-	@RequestMapping(value = "/admin/form/update/{link}")
+	@RequestMapping(value = "/admin/form/update")///{link}
 	  public ModelAndView updateForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
@@ -60,11 +60,11 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) View -> 하연언니 여기 하시면 됩니당!
-	@RequestMapping(value = "/admin/form/result/{link}")
+	@RequestMapping(value = "/admin/form/result")///{link}
 	  public ModelAndView readForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("adminFormCreate");
+		mav.setViewName("adminFormResult");
 		return mav;
 	}
 	
