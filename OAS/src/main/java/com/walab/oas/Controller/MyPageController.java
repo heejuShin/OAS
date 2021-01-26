@@ -88,16 +88,7 @@ public class MyPageController {
 			return mav;
 		}
 		
-		@RequestMapping(value = "/admin/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-		public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
-			
-			int formID=Integer.parseInt(request.getParameter("resultIDarray"));
-			System.out.println(formID);
-			mypageDao.deleteForm(formID);
-			System.out.println("Delete success");
-			
-			return new ModelAndView("redirect:/admin/mypage");
-		}
+		
 		
 		@RequestMapping(value="/mypage")
 		public ModelAndView userPageList(SearchCriteria cri, HttpSession session) {
@@ -145,5 +136,17 @@ public class MyPageController {
 
 			return mav;
 		}
+		
+		@RequestMapping(value = "/admin/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+		public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
+			
+			int formID=Integer.parseInt(request.getParameter("resultIDarray"));
+			System.out.println(formID);
+			mypageDao.deleteForm(formID);
+			System.out.println("Delete success!!!");
+			
+			return new ModelAndView("redirect:/admin/mypage");
+		}
+		
 
 }
