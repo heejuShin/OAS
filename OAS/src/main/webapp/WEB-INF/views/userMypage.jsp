@@ -281,7 +281,7 @@
         </script>
         <script>
 
-                            /* 검색 버튼을 클릭했을 때 */
+                            /* 검색 버튼을 클릭했을  */
                             $(document).on('click', '#btnSearch', function(e){
 
                         		e.preventDefault();
