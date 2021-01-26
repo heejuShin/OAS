@@ -19,12 +19,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.MainDAO;
+
 import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.SearchCriteria;
+
+import com.walab.oas.DTO.UserEx;
+
+
 
 @RestController
 @RequestMapping(value = "/") // 주소 패턴
@@ -90,6 +95,5 @@ public class MainController {
 		mav.setViewName("userFormWrite");
 		return mav;
 	}
-	
 		
 }

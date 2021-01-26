@@ -2,6 +2,7 @@ package com.walab.oas.DTO;
 
 import java.sql.Date;
 
+
 public class State {
 	private int id;
 	private int form_id;
@@ -44,5 +45,4 @@ public class State {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-
 }
