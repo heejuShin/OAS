@@ -1,67 +1,95 @@
 package com.walab.oas.Controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.MainDAO;
-import com.walab.oas.DTO.User;
-
-
+import com.walab.oas.DAO.MyPageDAO;
+import com.walab.oas.DTO.Category;
+import com.walab.oas.DTO.Criteria;
+import com.walab.oas.DTO.Form;
+import com.walab.oas.DTO.PageMaker;
+import com.walab.oas.DTO.SearchCriteria;
 
 @RestController
 @RequestMapping(value = "/") // 주소 패턴
-
 public class MainController {
 	
 	
-	//여기부터 예시 입니다!	
-	//login
 	@Autowired
 	private MainDAO mainDao; 
 	
-	@RequestMapping(value = "/login") // GET 방식으로 페이지 호출  
-	  public ModelAndView loginForm() throws Exception {
+	
+	//메인페이지 가기
+	@RequestMapping(value = "/") // GET 방식으로 페이지 호출
+	public ModelAndView goMypage(HttpSession session) throws Exception {
+		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("login"); //들어갈 페이지 jsp 이름 -> login.jsp 페이지로 이동한다는 뜻
-      return mav;
+//		int user_id=(Integer) session.getAttribute("ID");
+		int user_id= 1;
+		
+		List<Form> form_list=mainDao.formList();
+		List<Category> category_list=mainDao.categoryList();
+		
+		JSONArray jArray = new JSONArray();
+		JSONArray jArray2 = new JSONArray();
+		
+        try {
+        	for (int i = 0; i < form_list.size() ; i++) {   
+        		JSONObject ob =new JSONObject();
+        		ob.put("category_id", form_list.get(i).getCategory_id());
+		        ob.put("categoryName", form_list.get(i).getCategoryName());
+	            ob.put("id", form_list.get(i).getId());
+	            ob.put("formName", form_list.get(i).getFormName());
+	            ob.put("explanation", form_list.get(i).getExplanation());
+	            ob.put("startDate", form_list.get(i).getStartDate());
+	            ob.put("endDate", form_list.get(i).getEndDate());
+	            jArray.put(ob);
+	        }
+        	
+        	for (int i = 0; i < category_list.size() ; i++) {   
+        		JSONObject ob2 =new JSONObject();
+        		ob2.put("id", category_list.get(i).getId());
+		        ob2.put("categoryName", category_list.get(i).getCategoryName());
+		        System.out.println(ob2);
+	            jArray2.put(ob2);
+	        }
+
+        }catch(JSONException e){
+        	e.printStackTrace();
+        }
+		
+		mav.addObject("form_list",jArray);
+		mav.addObject("category_list",jArray2);
+		System.out.println(category_list);
+		System.out.println(jArray2);
+	    mav.setViewName("home");
+	    return mav;
 	}
 	
-	
-	@RequestMapping(value="loginProcess",method=RequestMethod.POST) // POST 방식 -> view에서 controller로 넘길 데이터가 있을 시 POST 방식으로
-	public ModelAndView loginProcess(HttpSession session,User user) throws Exception {
-		ModelAndView mav;
-
-		if(session.getAttribute("login")!=null) { //기존에 login이라는 세션 값이 존재할 경우
-			session. removeAttribute("login"); //기존 값을 제거한다
-		}
-
-		//로그인이 성공하면 User 객체를 반환한다.
-		User one=mainDao.login(user); // User는 사용자의 정보를 저장하는 DTO
-
-		if(one!=null) {//로그인 성공 (해당 유저의 정보가 있다는 뜻이기 때문에!
-			
-			//세션에 User 정보를 저장한다.
-			session.setAttribute("Name", one.getName()); 
-			session.setAttribute("ID", one.getId());
-			session.setAttribute("email", one.getEmail_address());
-			session.setAttribute("login", one);
-			
-			mav=new ModelAndView("home"); //로그인 성공시 유저의 아이디로 메인 페이지 돌아가기
-		}
+	@RequestMapping(value = "/form" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	public ModelAndView goToForm(HttpSession session) throws Exception {
 		
-		else {//로그인 실패
-			mav=new ModelAndView("login"); //로그인 실패시 다시 로그인 화면으로
-			mav.addObject("no_login","아이디 또는 비밀번호를 다시 입력해주세요."); // "no_login"이라는 key로 value를 "아이디 또는 비밀번호를 다시 입력해주세요" 담아서 해당 view로 넘김
-		}
-		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("userFormWrite");
 		return mav;
 	}
-	//예시 끝
-
+	
+		
 }

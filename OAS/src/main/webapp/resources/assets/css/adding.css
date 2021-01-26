@@ -1,0 +1,20 @@
+.button_div > button,
+.filter_search
+{
+    float:right;
+}
+
+.dropdown,
+.form-inline
+{
+    display: inline-block;
+}
+
+.pagination{
+    text-align: center;
+    display: block;
+}
+
+.pagination > li{
+    display: inline-block;
+}

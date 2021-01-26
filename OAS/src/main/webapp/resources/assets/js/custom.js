@@ -149,13 +149,14 @@ jQuery( document ).ready(function( $ ) {
           })
         });
 
-        var $grid = $(".grid").isotope({
-          itemSelector: ".all",
+        var $grid = $(".grids").isotope({
+          itemSelector: ".grid-item",
           percentPosition: true,
           masonry: {
-            columnWidth: ".all"
+            columnWidth: ".grid-item"
           }
-        })
+        });
+        
         $('.accordion > li:eq(0) a').addClass('active').next().slideDown();
 
         $('.accordion a').click(function(j) {

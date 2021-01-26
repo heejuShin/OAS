@@ -1,63 +1,107 @@
 package com.walab.oas.DTO;
 
+import java.sql.Date;
 
-//예시: User의 정보를 담는 DTO 입니다 (모두 예시입니다!)
 public class User {
+	private int id;
+	private String userName;
+	private int admin;
+	private String email;
+	private String studentId;
+	private String department;
+	private String major;
+	private String grade;
+	private String semester;
+	private int point;
+	private int isDelete;
+	private Date regDate;
+	private Date deleteDate;
 	
-	private Integer id;
-
-	private String name;
-
-	private String user_id;
-
-	private String pwd;
-	
-	private String email_address;
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", user_id=" + user_id + ", pwd=" + pwd + ", email_address="
-				+ email_address + "]";
+		return "User [id=" + id + ", userName=" + userName + ", admin=" + admin + ", email=" + email + ", studentId="
+				+ studentId + ", department=" + department + ", major=" + major + ", grade=" + grade + ", semester="
+				+ semester + ", point=" + point + ", isDelete=" + isDelete + ", regDate=" + regDate + ", deleteDate="
+				+ deleteDate + "]";
 	}
-
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-
-	public String getUser_id() {
-		return user_id;
+	public int getAdmin() {
+		return admin;
 	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setAdmin(int admin) {
+		this.admin = admin;
 	}
-
-	public String getPwd() {
-		return pwd;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public String getEmail_address() {
-		return email_address;
+	public String getStudentId() {
+		return studentId;
 	}
-
-	public void setEmail_address(String email_address) {
-		this.email_address = email_address;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getSemester() {
+		return semester;
+	}
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public int getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	public Date getDeleteDate() {
+		return deleteDate;
+	}
+	public void setDeleteDate(Date deleteDate) {
+		this.deleteDate = deleteDate;
+	}
+	
 	
 }
