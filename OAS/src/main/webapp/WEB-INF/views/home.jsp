@@ -64,7 +64,7 @@
 	/*  Header end*/
 	
 	/* 전체   */
-      html, body{height:120%;}
+      html, body{height:130%;}
       
       main {
       	margin: 2% 15%;
@@ -314,9 +314,6 @@
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">My Page</a>
-              </li>
                <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>
               </li>
@@ -376,7 +373,7 @@
                       <ul class="ul_filters">
                           <li class="active" data-filter="*">All Products</li>
                       </ul>
-                      <form class="form-inline">
+                      <form class="form-inline" style="margin-left:37%;">
                           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                           <button id="searchB" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                       </form>
