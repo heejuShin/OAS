@@ -1,0 +1,95 @@
+      #form_div{
+        width: 100%;
+        margin-top: 10px;
+      }
+      .form{
+        border-radius: 5px;
+        margin: auto;
+        margin-bottom: 20px;
+        padding: 15px;
+      }
+      .title, .state, .field{
+        width: 500px;
+        height: auto;
+        border: solid black 1px;
+        background: #d3e0d6;
+      }
+      .title input{
+        margin-bottom: 10px;
+        height: 30px;
+      }
+      textarea{
+        width: 400px;
+      }
+      .field{
+        height: 100px;
+      }
+      .edit{
+        overflow-y: scroll;
+        overflow-x: auto;
+      }
+      .content input{
+        width: 350px;
+        margin-right: 10px;
+      }
+      input[type=radio], input[type=checkbox]{
+        width: auto;
+      }
+      .field_title{
+        width: 350px;
+        margin-bottom: 10px;
+      }
+      .button{
+        width: 500px;
+        text-align: center;
+      }
+      .remove{
+        position: relative;
+        float: right;
+      }
+      button .submit{
+        width: 50px;
+      }
+      .add{
+        display: none;
+      }
+      .content{
+        margin-top: 10px;
+      }
+      #menu-bar{
+        position: absolute;
+        width: 50px;
+        height: 100px;
+        border-radius: 10px;
+        border: solid 1px black;
+        right: calc( 50% - 250px - 50px - 20px);
+        margin-right: 0px;
+        top: 240px;
+        text-align: center;
+        font-size: 50px;
+      }
+      label.item{
+        margin: 0px 15px;
+      }
+      .list_radio, .list_chxbox{
+        margin-top: 10px;
+      }
+      .essential{
+        color: #d13a34;
+        font-weight: bold;
+      }
+      #my_modal {
+        display: none;
+        width: 300px;
+        padding: 20px 60px;
+        background-color: #fefefe;
+        border: 1px solid #888;
+        border-radius: 3px;
+    }
+
+      #my_modal .modal_close_btn {
+        width: 50px;
+        top: 10px;
+        text-align: center;
+        right: 10px;
+      }

@@ -4,31 +4,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-    <title>Form</title>
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./form.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+<title>Insert title here</title>
+
+<!-- css -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Additional CSS Files -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css">
+
+<!-- js -->
+<!-- Bootstrap core JavaScript -->
+<script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Additional Scripts -->
+<script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
+
 </head>
-<body>
-<!-- ***** Preloader Start ***** -->
+
+    <!--모달-->
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
+    <style>
+    
+        .w3-section{
+            display:grid;
+              justify-content: stretch;
+              grid-template-columns: repeat(2, 1fr);
+              grid-column-gap: 10px;
+          }
+          .w3-black{
+            padding:7px 15px;
+              margin: 0 0 20px 0;
+              float: left;
+            position: relative;
+            left: 45%;
+          }
+      </style>
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
             <div></div>
             <div></div>
         </div>
-    </div>  
+    </div>
     <!-- ***** Preloader End ***** -->
 
     <!-- Header -->
@@ -45,7 +75,7 @@
                 <a class="nav-link" href="index.html">Home
                   <span class="sr-only">(current)</span>
                 </a>
-              </li> 
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="products.html">Our Products</a>
               </li>
@@ -61,96 +91,118 @@
       </nav>
     </header>
 
-	<form>
-  <div id="form_div">
 
-      <div id="menu-bar">+</div>
+<body>
+    <div style="height: 100px;"></div>
+    <!--body-->
+      <form>
+      <div id="form_div">
 
-      <div class="form edit title">
-          <input placeholder="설문지 제목"/>
-          <select id="category_select">
-            <option value="" selected disabled>카테고리 선택</option>
-            <option value="">카테고리1</option>
-            <option value="">카테고리2</option>
-            <option value="">카테고리3</option>
+          <div id="menu-bar">+</div>
 
-          </select><br>
-          <input type="date"/> ~ <input type="date"/>
-          <textarea placeholder="설문지 설명"></textarea>
+          <div class="form edit title">
+              <input placeholder="설문지 제목"/>
+              <select id="category_select">
+                <option value="" selected disabled>카테고리 선택</option>
+                <option value="">카테고리1</option>
+                <option value="">카테고리2</option>
+                <option value="">카테고리3</option>
+
+              </select><br>
+              <input type="date"/> ~ <input type="date"/>
+              <textarea placeholder="설문지 설명"></textarea>
+          </div>
+
+          <div class="form edit state">
+            상태 선택
+          </div>
+
+          <div id="list"></div>
+
+          <div class="form edit button">
+            <button type="button" class="submit">확인</button>
+          </div>
+
+          <div class="form edit button" style="display: none;"><!--UPDATE시 사용 예정 -->
+            <button type="button" class="edit">수정</button>
+            <button type="button" class="cancle">취소</button>
+          </div>
+
+        </div>
+      </form>
+
+      <div class="add" id="field_add">
+        <div class="form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
+          <input class="field_title" placeholder="질문 제목"/>
+          <input type=checkbox name="isEssential" value="essential">
+                  <label for="필수질문">필수</label>
+          </input>
+          <button type="button" class="remove">X</button><br>
+          <select class="field_type">
+            <option value="" selected disabled>질문유형</option>
+            <option value="text">단답형</option>
+            <option value="textarea">장문형</option>
+            <option value="radio">객관식</option>
+            <option value="checkbox">체크박스</option>
+            <option value="select">드롭다운</option>
+            <option value="file">파일업로드</option>
+            <option value="date">날짜</option>
+            <option value="time">시간</option>
+            <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
+          </select>
+          <div class="content"></div>
+        </div>
       </div>
 
-      <div class="form edit state">
-        상태 선택
+    <div class="add" id="radio_add">
+      <div>
+        <input type="radio" id="" name="" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
       </div>
-
-      <div id="list"></div>
-
-      <div class="form edit button">
-        <button type="button" class="submit">확인</button>
-      </div>
-
-      <div class="form edit button" style="display: none;"><!--UPDATE시 사용 예정 -->
-        <button type="button" class="edit">수정</button>
-        <button type="button" class="cancle">취소</button>
-      </div>
-
     </div>
-  </form>
 
-  <div class="add" id="field_add">
-    <div class="form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-      <input class="field_title" placeholder="질문 제목"/>
-      <input type=checkbox name="isEssential" value="essential">
-              <label for="필수질문">필수</label>
-      </input>
-      <button type="button" class="remove">X</button><br>
-      <select class="field_type">
-        <option value="" selected disabled>질문유형</option>
-        <option value="text">단답형</option>
-        <option value="textarea">장문형</option>
-        <option value="radio">객관식</option>
-        <option value="checkbox">체크박스</option>
-        <option value="select">드롭다운</option>
-        <option value="file">파일업로드</option>
-        <option value="date">날짜</option>
-        <option value="time">시간</option>
-        <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
-      </select>
-      <div class="content"></div>
+    <div class="add" id="chxbox_add">
+      <div>
+        <input type="checkbox" id="" name="" disabled ><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+      </div>
     </div>
-  </div>
 
-<div class="add" id="radio_add">
-  <div>
-    <input type="radio" id="" name="" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
-  </div>
-</div>
+    <div class="add" id="select_add">
+        <option value=""></option>
+    </div>
 
-<div class="add" id="chxbox_add">
-  <div>
-    <input type="checkbox" id="" name="" disabled ><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
-  </div>
-</div>
+  </body>
 
-<div class="add" id="select_add">
-    <option value=""></option>
-</div>
- <!-- Footer -->
     <footer>
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
               <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
+
             - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
             </div>
           </div>
         </div>
       </div>
     </footer>
-</body>
+
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+
+  </body>
+
 </html>
+
 <script>
 //메뉴바 이동 코드
 $(window).scroll(function(){
@@ -259,27 +311,3 @@ $(function(){
 **/
 
 </script>
-<!-- 기존 css framework js -->
-<!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-    <!-- Additional Scripts -->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/accordions.js"></script>
-
-
-    <script> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
-    </script>
