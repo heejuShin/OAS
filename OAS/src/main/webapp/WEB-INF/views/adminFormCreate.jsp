@@ -29,26 +29,6 @@
 
 </head>
 
-    <!--모달-->
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
-    <style>
-    
-        .w3-section{
-            display:grid;
-              justify-content: stretch;
-              grid-template-columns: repeat(2, 1fr);
-              grid-column-gap: 10px;
-          }
-          .w3-black{
-            padding:7px 15px;
-              margin: 0 0 20px 0;
-              float: left;
-            position: relative;
-            left: 45%;
-          }
-      </style>
-  </head>
-
   <body>
 
     <!-- ***** Preloader Start ***** -->
@@ -95,22 +75,25 @@
 <body>
     <div style="height: 100px;"></div>
     <!--body-->
-      <form>
+      <form action="formCreate" method="post" modelAttribute = "form">
       <div id="form_div">
 
           <div id="menu-bar">+</div>
 
           <div class="form edit title">
-              <input placeholder="설문지 제목"/>
-              <select id="category_select">
+              <input name="formName" placeholder="제목을 입력해주세요"/>
+              <input name="user_id" type="hidden" value="3"/> <!-- value session에서 가져와야함니당 -->
+              <select id="category_select" name="category_id">
+               	<!-- TODO : 카테고리 table에서 READ -->
                 <option value="" selected disabled>카테고리 선택</option>
-                <option value="">카테고리1</option>
-                <option value="">카테고리2</option>
-                <option value="">카테고리3</option>
+                <!-- value로 카테고리 Id를 넣어야해요! READ할 때 참고해주세욤 -->
+                <option value="1">카테고리1</option>
+                <option value="2">카테고리2</option>
+                <option value="3">카테고리3</option>
 
               </select><br>
-              <input type="date"/> ~ <input type="date"/>
-              <textarea placeholder="설문지 설명"></textarea>
+              <input name="startDate" type="date"/> ~ <input name="endDate" type="date"/>
+              <textarea name="explanation" placeholder="설문지 설명"></textarea>
           </div>
 
           <div class="form edit state">
@@ -120,7 +103,7 @@
           <div id="list"></div>
 
           <div class="form edit button">
-            <button type="button" class="submit">확인</button>
+            <button type="submit" class="submit">확인</button> <!-- 나중에는 그냥 type button으로 바꾸고 모달창에서 submit 되게해야함니다 -->
           </div>
 
           <div class="form edit button" style="display: none;"><!--UPDATE시 사용 예정 -->
@@ -185,21 +168,6 @@
         </div>
       </div>
     </footer>
-
-
-    <script language = "text/Javascript">
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
-    </script>
-
-
-  </body>
 
 </html>
 

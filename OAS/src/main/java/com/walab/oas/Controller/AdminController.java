@@ -36,7 +36,17 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
 		//Form table에는 그냥 insert하면 됨 -> DAO에 Form 객체 전달
 		//문제는 Field랑 Item table 우예하징..?
-		
+		System.out.println(form.getCategory_id());
+		System.out.println(form.getUser_id());
+		System.out.println(form.getFormName());
+		System.out.println(form.getExplanation());
+		//url
+		//isAvailable
+		//isUserEdit
+		//plusPoint
+		//minusPoint
+		System.out.println(form.getStartDate());
+		System.out.println(form.getEndDate());
 		return mav;
 	}
 	
