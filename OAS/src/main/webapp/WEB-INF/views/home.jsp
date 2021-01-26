@@ -295,6 +295,78 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+
+
+    $(document).ready(function () {
+
+        var form_list=${form_list};
+        var category_list=${category_list};
+        for(var i=0; i<category_list.length;i++){
+        	var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+        	$(".ul_filters").append(filter_li);
+        }
+        
+        for(var i=0; i < form_list.length; i++){
+            
+		    /*설문지 별 div 만듦 (div1)*/
+		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"'></div>"); 
+		   	$(".gridss").append(divOne);
+
+		   	/* div1의 안에 들어갈 div => "product-item" */
+		    var divTwo = $("<div></div>"); 
+		    divTwo.addClass("product-item");
+		    $($(".gridss").children()[i]).append(divTwo);
+
+		    
+		    var formName =  $("<h4 class='form_name'>"+form_list[i].formName +"</h4><hr class='line'>"); 
+		    $($($(".gridss").children()[i]).children()[0]).append(formName);
+
+		    
+			var formContent= $("<div class='down-content'></div>");
+			$($($(".gridss").children()[i]).children()[0]).append(formContent);
+
+			var category =  $("<h5 class='category'>"+form_list[i].categoryName +"</h5><p class='discription'>"+form_list[i].explanation+"</p>"); 
+		    $($($($(".gridss").children()[i]).children()[0]).children()[2]).append(category);
+			
+    		var ul = $("<ul class='period'></ul>");
+    		$($($($(".gridss").children()[i]).children()[0]).children()[2]).append(ul);
+
+    		var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
+			$($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
+
+			var a=$("<a href='#' id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>상 태(DB)</a>");
+			$($($(".gridss").children()[i]).children()[0]).append(a);
+
+			var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value=''/></form>");
+			$($($(".gridss").children()[i]).children()[0]).append(a);
+			
+    	}
+    });
+
+    function openForm(form_id){
+    	$('#select_formID').value = form_id;
+    	$("#form").submit();
+    }
+
+
+    $(document).ready( function() {   
+
+    	var $grid = $('.gridss').isotope({
+    	  itemSelector: '.grid-item',
+    	  percentPosition: true,
+          masonry: {
+            columnWidth: ".grid-item"
+          }
+    	});
+
+    	// filter items on button click
+    	$('.ul_filters').on( 'click', 'li', function() {
+    	  var filterValue = $(this).attr('data-filter');
+    	  $grid.isotope({ filter: filterValue });
+    	  $('.ul_filters li').removeClass('active');
+    	  $(this).addClass('active');
+    	});
+    });
     </script>
 
 
@@ -388,79 +460,7 @@
                         <div class="row gridss"  style="overflow:auto;">
                         </div>
                             
-                            <script>
-
-                            $(document).ready(function () {
-
-	                            var form_list=${form_list};
-	                            var category_list=${category_list};
-	                            for(var i=0; i<category_list.length;i++){
-	                            	var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
-	                            	$(".ul_filters").append(filter_li);
-		                        }
-	                            
-	                            for(var i=0; i < form_list.length; i++){
-	                                
-	                    		    /*설문지 별 div 만듦 (div1)*/
-	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"'></div>"); 
-	                    		   	$(".gridss").append(divOne);
-	
-	                    		   	/* div1의 안에 들어갈 div => "product-item" */
-	                    		    var divTwo = $("<div></div>"); 
-	                    		    divTwo.addClass("product-item");
-	                    		    $($(".gridss").children()[i]).append(divTwo);
-	
-	                    		    
-	                    		    var formName =  $("<h4 class='form_name'>"+form_list[i].formName +"</h4><hr class='line'>"); 
-	                    		    $($($(".gridss").children()[i]).children()[0]).append(formName);
-	
-	                    		    
-									var formContent= $("<div class='down-content'></div>");
-									$($($(".gridss").children()[i]).children()[0]).append(formContent);
-	
-									var category =  $("<h5 class='category'>"+form_list[i].categoryName +"</h5><p class='discription'>"+form_list[i].explanation+"</p>"); 
-	                    		    $($($($(".gridss").children()[i]).children()[0]).children()[2]).append(category);
-									
-		                    		var ul = $("<ul class='period'></ul>");
-		                    		$($($($(".gridss").children()[i]).children()[0]).children()[2]).append(ul);
-	
-		                    		var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
-									$($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
-	
-									var a=$("<a href='#' id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>상 태(DB)</a>");
-									$($($(".gridss").children()[i]).children()[0]).append(a);
-	
-									var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value=''/></form>");
-									$($($(".gridss").children()[i]).children()[0]).append(a);
-									
-			                	}
-                            });
-
-                            function openForm(form_id){
-                            	$('#select_formID').value = form_id;
-                            	$("#form").submit();
-                            }
-
-
-                            $(document).ready( function() {   
-
-                            	var $grid = $('.gridss').isotope({
-                            	  itemSelector: '.grid-item',
-                            	  percentPosition: true,
-                                  masonry: {
-                                    columnWidth: ".grid-item"
-                                  }
-                            	});
-
-                            	// filter items on button click
-                            	$('.ul_filters').on( 'click', 'li', function() {
-                            	  var filterValue = $(this).attr('data-filter');
-                            	  $grid.isotope({ filter: filterValue });
-                            	  $('.ul_filters li').removeClass('active');
-                            	  $(this).addClass('active');
-                            	});
-                            });
-                            </script>
+                            
                             
                             
 

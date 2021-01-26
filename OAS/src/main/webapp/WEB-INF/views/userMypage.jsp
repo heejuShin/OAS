@@ -158,13 +158,32 @@
 
     <section id="demo">
       <div class="container">
-          <div class="page-header">
-              <h2>Demo</h2>
-          </div>
+          <div class="page-header" style="float: left;">
+               <div class="user-profile">
+                  <img class="avatar"
+                     src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTF_erFD1SeUnxEpvFjzBCCDxLvf-wlh9ZuPMqi02qGnyyBtPWdE-3KoH3s"
+                     alt="Ash" />
+                  <div class="username">박상범 학부생</div>
+                  <div class="bio">4학년 7학기</div>
+                  <div class="description">안녕하세요우</div>
+
+               </div>
+            </div>
+
           <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
+          <nav class="filter_search" style="clear:both;">
+          <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET"style="float: right;" >
+              <select name="searchType">
+                 <option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>등록자+제목+카테고리</option>
+                 <option value="writer" <c:out value="${searchType =='writer'? 'selected':'' }"/>>등록자</option>
+                 <option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
+                 <option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
+              </select>
+              <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+           </form>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" style="float: right;"aria-haspopup="true" aria-expanded="false">
                 Dropdown button
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -174,7 +193,7 @@
               </div>
             </div>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" style="float: right;"aria-haspopup="true" aria-expanded="false">
                 Dropdown button
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -184,16 +203,7 @@
               </div>
             </div>
             
-            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			<select name="searchType">
-	  				<option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>등록자+제목+카테고리</option>
-	  				<option value="writer" <c:out value="${searchType =='writer'? 'selected':'' }"/>>등록자</option>
-	  				<option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
-	  				<option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
-	  			</select>
-	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  			</form>
+            
             
           </nav>
           <!--End_Filter and Search part-->
@@ -212,29 +222,29 @@
                   </thead>
                   
                   <tbody class="tbodies">
-                  	   
+                        
                       
                   </tbody>
               </table>
           </div>      
           <ul class="pagination">
-			    <c:if test="${pageMaker.prev}">
-			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}'>&laquo;</a>
-			    </li>
-			    </c:if>
-			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}'>${idx}</a>
-			    </li>
-			    </c:forEach>
-			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
-			    </li>
-			    </c:if>
-		  </ul>
-		  
+             <c:if test="${pageMaker.prev}">
+             <li>
+                 <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}'>&laquo;</a>
+             </li>
+             </c:if>
+             <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+             <li>
+                 <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}'>${idx}</a>
+             </li>
+             </c:forEach>
+             <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+             <li>
+                 <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
+             </li>
+             </c:if>
+        </ul>
+        
       </div> <!-- end container -->
   </section> <!-- end section -->
      
@@ -284,56 +294,56 @@
                             /* 검색 버튼을 클릭했을  */
                             $(document).on('click', '#btnSearch', function(e){
 
-                        		e.preventDefault();
-                        		var url = "${pageContext.request.contextPath}/board/search";
-                        		url = url + "?searchType=" + $('#searchType').val();
-                        		url = url + "&keyword=" + $('#keyword').val();
-                        		location.href = url;
-                        		console.log(url);
+                              e.preventDefault();
+                              var url = "${pageContext.request.contextPath}/board/search";
+                              url = url + "?searchType=" + $('#searchType').val();
+                              url = url + "&keyword=" + $('#keyword').val();
+                              location.href = url;
+                              console.log(url);
 
-                        	});	
-                        	
-							//표 동적 생성하는 부분
+                           });   
+                           
+                     //표 동적 생성하는 부분
                             $(document).ready(function () {
 
-	                            var userList=${userList};
-	                            for(var i=0; i < userList.length; i++){
-	                                
-	                    		    /*설문지 별 tr 만듦*/
-	                    		    var divOne = $("<tr></tr>"); 
-	                    		   	$(".tbodies").append(divOne);
-	
-	                    		   	/* tr의 안에 들어갈 td */
-	                    		    var td1 = $("<td><input type='checkbox' name='result' value='"+userList[i].id+"' /></td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td1);
-	
-	                    		    var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
-	                    		    $($(".tbodies").children()[i]).append(th1);
+                               var userList=${userList};
+                               for(var i=0; i < userList.length; i++){
+                                   
+                                 /*설문지 별 tr 만듦*/
+                                 var divOne = $("<tr></tr>"); 
+                                   $(".tbodies").append(divOne);
+   
+                                   /* tr의 안에 들어갈 td */
+                                 var td1 = $("<td><input type='checkbox' name='result' value='"+userList[i].id+"' /></td>"); 
+                                 $($(".tbodies").children()[i]).append(td1);
+   
+                                 var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
+                                 $($(".tbodies").children()[i]).append(th1);
 
-	                    		    var td2 = $("<td>"+userList[i].formName+"</td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td2);
+                                 var td2 = $("<td>"+userList[i].formName+"</td>"); 
+                                 $($(".tbodies").children()[i]).append(td2);
 
-	                    		    var td3 = $("<td>"+userList[i].startDate+" ~ "+userList[i].endDate+"</td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td3);
+                                 var td3 = $("<td>"+userList[i].startDate+" ~ "+userList[i].endDate+"</td>"); 
+                                 $($(".tbodies").children()[i]).append(td3);
 
-	                    		    var td4 = $("<td>"+userList[i].regDate+"</td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td4);
+                                 var td4 = $("<td>"+userList[i].regDate+"</td>"); 
+                                 $($(".tbodies").children()[i]).append(td4);
 
-	                    		    var td5 = $("<td>"+userList[i].userName+"</td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td5);
-	                    			
-									var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm("+userList[i].id+");'>상 태(DB)</a></td>");
-									$($(".tbodies").children()[i]).append(a);
-	
-									var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value=''/></form>");
-									$($(".tbodies").children()[i]).append(form);
-									
-			                	}
+                                 var td5 = $("<td>"+userList[i].userName+"</td>"); 
+                                 $($(".tbodies").children()[i]).append(td5);
+                                
+                           var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm("+userList[i].id+");'>상 태(DB)</a></td>");
+                           $($(".tbodies").children()[i]).append(a);
+   
+                           var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value=''/></form>");
+                           $($(".tbodies").children()[i]).append(form);
+                           
+                            }
                             });
 
                             function openForm(form_id){
-                            	$('#select_formID').value = form_id;
-                            	$("#form").submit();
+                               $('#select_formID').value = form_id;
+                               $("#form").submit();
                             }
                       </script>
   </body>
