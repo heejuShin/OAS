@@ -5,20 +5,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-    <title>Form</title>
-    <link rel="stylesheet" href="./form.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<title>Form</title>
 
-	<!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+<!-- css -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Additional CSS Files -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css">
+
+<!-- js -->
+<!-- Bootstrap core JavaScript -->
+<script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Additional Scripts -->
+<script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
 	
 </head>
 <body>
@@ -62,7 +70,7 @@
         </div>
       </nav>
     </header>
-
+	<div style='height:100px;'></div>
 <form>
   <div id="form_div">
 
@@ -72,7 +80,7 @@
           <h5 style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;">2021.01.13 ~ 2021.01.31</h5>
           <p>2021년 설문조사입니다. 여기는 신청폼에 대한 설명이들어갑니다. <br>현재는 view 페이지입니다.</p>
       </div>
-
+ 
       <div id="list">
         <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
           <h4>단답형<span class="essential"> * <span></h4>
@@ -163,19 +171,6 @@
 
 </body>
 </html>
-
-<!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-    <!-- Additional Scripts -->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/accordions.js"></script>
-
 
     <script> 
       cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
