@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,7 +71,7 @@
         </div>
       </nav>
     </header>
-<div style='height:100px;'></div>
+	<div style='height:100px;'></div>
   <form>
   <div id="form_div">
 
@@ -80,15 +81,17 @@
           <h5 style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;">2021.01.13 ~ 2021.01.31</h5>
           <p>2021년 설문조사입니다. 여기는 신청폼에 대한 설명이들어갑니다. <br>이곳은 유저가 입력한 폼 내용을 확인할 수 있는 곳</p>
       </div>
-
+ 
       <div id="list">
+      <c:forEach items="${field_list}" var="u">
         <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>단답형<span class="essential"> * <span></h4>
+          <h4>${u.fieldName}<span class="essential"> * <span></h4>
           <div class="content">
             <input type="text" value="신희주" readonly>
           </div>
         </div>
-
+		
+	  </c:forEach>
         <div class="form view field" id="filed?" style="height: 120px;"> <!--?에는 나중에 fieldId나 Index 들어감-->
           <h4>장문형<span class="essential"> * <span></h4>
           <div class="content">
