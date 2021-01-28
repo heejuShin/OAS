@@ -1,26 +1,28 @@
 package com.walab.oas.Controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.walab.oas.DAO.AdminDAO;
+import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
-import com.walab.oas.DTO.UserEx;
 
 @RestController
 @RequestMapping(value = "/")
 
 public class AdminController {
+	
+	@Autowired
+	private AdminDAO adminDao;
 	
 	//신청폼 (Admin) Create
 	@RequestMapping(value = "/admin/form/create")
@@ -51,13 +53,49 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) Update
-	@RequestMapping(value = "/admin/form/update")///{link}
+	@RequestMapping(value = "/admin/form/update/{link}")
 	  public ModelAndView updateForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("adminFormUpdate");
 		return mav;
 	}
+	
+	//신청폼 (Admin) View -> 하연언니 여기 하시면 됩니당!
+	@RequestMapping(value = "/admin/form/result")//{link}
+	  public ModelAndView readForm() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		List<Field> field_list=adminDao.getFieldList();
+		
+		JSONArray jArray= new JSONArray();
+		
+		 try {
+	        	for (int i = 0; i < field_list.size() ; i++) {   
+	        		JSONObject ob =new JSONObject();
+	        		ob.put("id", field_list.get(i).getId());
+			        ob.put("form_id", field_list.get(i).getForm_id());
+		            ob.put("fieldType", field_list.get(i).getFieldType());
+		            ob.put("fieldName", field_list.get(i).getFieldName());
+		            ob.put("fileName", field_list.get(i).getFileName());
+		            ob.put("isEssential", field_list.get(i).getIsEssential());
+		            ob.put("index", field_list.get(i).getIndex());
+		            ob.put("regDate", field_list.get(i).getRegDate());
+		            jArray.put(ob);
+		        }
+
+	        }catch(JSONException e){
+	        	e.printStackTrace();
+	        }
+		
+		 mav.addObject("form_list",jArray);
+		 System.out.println(field_list);
+		mav.setViewName("adminFormResult");
+		return mav;
+	}
+	
+}
+
 	
 	//신청폼 (Admin) View -> 하연언니 여기 하시면 됩니당!
 	@RequestMapping(value = "/admin/form/result")///{link}
