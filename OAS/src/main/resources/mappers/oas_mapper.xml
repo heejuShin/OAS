@@ -12,6 +12,8 @@
 	select * from users where user_id=#{user_id} and pwd=#{pwd}
 </select>
 
-
+<select id="getFieldList" resultType="com.walab.oas.DTO.Field">
+	select * from Field where Field.form_id=1;
+</select>
 
 </mapper>
