@@ -427,18 +427,25 @@
 		                    		var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
 									$($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
 	
-									var a=$("<a href='#' id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>상 태(DB)</a>");
+									var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>상 태(DB)</a>");
 									$($($(".gridss").children()[i]).children()[0]).append(a);
 	
-									var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value=''/></form>");
-									$($($(".gridss").children()[i]).children()[0]).append(a);
+									var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='1'/></form>");
+									$($($(".gridss").children()[i]).children()[0]).append(form);
 									
 			                	}
                             });
 
                             function openForm(form_id){
-                            	$('#select_formID').value = form_id;
-                            	$("#form").submit();
+                                
+                            	$("#myform_"+ form_id).children("input").val(form_id);
+
+                            		/* var buf = 	$("#myform_"+ form_id).children("input").val();
+                                console.log("form id : "+form_id+ " / form create : " + buf); */
+                                
+	                            //	$('#select_formID').value = form_id;
+	                            	//$("#myform").attr("action", "form");
+	                            	$("#myform_"+form_id).submit();
                             }
 
 
@@ -459,6 +466,8 @@
                             	  $('.ul_filters li').removeClass('active');
                             	  $(this).addClass('active');
                             	});
+
+                          
                             });
                             </script>
                             
@@ -471,7 +480,12 @@
               </div>
             </div>
 		</div>
+		
+		
+		
 	</main>
+	
+	
 	
 	
 	

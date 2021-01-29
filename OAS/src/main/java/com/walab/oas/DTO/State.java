@@ -7,11 +7,15 @@ public class State {
 	private int id;
 	private int form_id;
 	private String stateName;
+	private int isDefualt;
 	private Date regDate;
 	
+	
+
 	@Override
 	public String toString() {
-		return "State [id=" + id + ", form_id=" + form_id + ", stateName=" + stateName + ", regDate=" + regDate + "]";
+		return "State [id=" + id + ", form_id=" + form_id + ", stateName=" + stateName + ", isDefualt=" + isDefualt
+				+ ", regDate=" + regDate + "]";
 	}
 
 	public int getId() {
@@ -36,6 +40,14 @@ public class State {
 
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
+	}
+	
+	public int getIsDefualt() {
+		return isDefualt;
+	}
+
+	public void setIsDefualt(int isDefualt) {
+		this.isDefualt = isDefualt;
 	}
 
 	public Date getRegDate() {
