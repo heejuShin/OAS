@@ -99,5 +99,49 @@
    <delete id="deleteForm" parameterType="int">
     	delete from Form where id=#{formID};
    </delete>
+   
+   <!-- form 정보 가져오기  -->
+	 <select id="formInfo" parameterType="int" resultType="com.walab.oas.DTO.Form">
+	  <![CDATA[
+			SELECT formName, explanation FROM Form WHERE id =#{formID};
+	  ]]>
+	</select> 
+   
+   <!-- field 정보 가져오기  -->
+	 <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
+	  <![CDATA[
+	      SELECT id, fieldName, fieldType, isEssential,fileName FROM Field WHERE form_id =#{formID};
+	  ]]>
+	</select> 
+	
+	<!-- item 정보 가져오기  -->
+	 <select id="itemInfo" parameterType="int" resultType="com.walab.oas.DTO.Item">
+	  <![CDATA[
+	      SELECT content, isDefault FROM Item WHERE field_id=#{fieldID};
+	  ]]>
+	</select>
+	
+	<!-- default 상태 ID 가져오기  -->
+	 <select id="getStateID" parameterType="int" resultType="Integer">
+	  <![CDATA[
+	      SELECT id FROM State WHERE form_id =#{formID} and isDefault = 1;
+	  ]]>
+	</select>
+	
+	<!-- result  id 생성  -->
+   <insert id="createResultID" parameterType="com.walab.oas.DTO.Result">
+    	INSERT INTO Result (form_id,user_id,state_id) VALUE (#{form_id}, #{user_id}, #{state_id});
+    	
+    	<selectKey keyProperty="id" resultType="Integer">
+		    SELECT LAST_INSERT_ID()
+		</selectKey>
+    </insert>
+    
+    <!-- result  content  넣기   -->
+   <insert id="inputContent" parameterType="com.walab.oas.DTO.Result_Content" >
+    	INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
+    </insert> 
+    
+    
 
 </mapper>
