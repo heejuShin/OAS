@@ -194,13 +194,17 @@ public class MainController {
 		    String contents[]  = request.getParameterValues("content");
 		    
 		    for(int i = 0; i < field_ids.length; i++) {
-		    	Result_Content result_content = new Result_Content();
-		    	result_content.setResult_id(result_id);
-		    	result_content.setField_id(Integer.parseInt(field_ids[i]));
-		    	result_content.setContent(contents[i]);
-		    	
-		    	System.out.println(result_content);
+		    	if(contents[i] == "")
+		    		System.out.println("delete");
+		    	else {
+		    		Result_Content result_content = new Result_Content();
+			    		result_content.setResult_id(result_id);
+			    		result_content.setField_id(Integer.parseInt(field_ids[i]));
+			    		result_content.setContent(contents[i]);
+			    		
+			    		System.out.println(result_content);
 		    	mainDao.setContent(result_content);
+		    	}
 		    }
 		    
 			
