@@ -89,11 +89,18 @@ $( document ).ready(function() {
 	        });
 	}
 	$('#confirm').on('click', function() {
+		$("#modal_message").html("설문지 작성이 완료되었습니다.");
 		var name = $("#formName").val();
-		if(name=="") name= "<span style=\"color:red\">내용없음</span>";
+		if(name=="") {
+			name= "<span style=\"color:red\">내용없음</span>";
+			$("#modal_message").html("설문지 작성이 미완료되었습니다.");
+		}
 	    $("#confirm_title").html(name);
 	    var select_category = $("#category_select option:selected").html();
-		if ($("#category_select option:selected").val()=="") select_category = "<span style=\"color:red\">내용없음</span>";
+		if ($("#category_select option:selected").val()=="") {
+			select_category = "<span style=\"color:red\">내용없음</span>";
+			$("#modal_message").html("설문지 작성이 미완료되었습니다.");
+		}
 	    $("#confirm_category").html(select_category);
 	    $("#confirm_start").html($("#startDate").val()+ " " + $("#startTime").val());
 	    $("#confirm_end").html($("#endDate").val()+ " " + $("#endTime").val());
@@ -112,15 +119,12 @@ $( document ).ready(function() {
 	
 	//질문 유형 선택
 	$("#list").on('change', ".field_type", function(){
-	    $(this).parent(".field").css("height", "190px");
 	    var content;
 	    if(this.value=="textarea"){
 	      content = "<textarea disabled></textarea>";
-	      $(this).parent(".field").css("height", "140px");
 	    }
 	    else if(this.value=="select"){
 	      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"list_select\"></div>";
-	      $(this).parent(".field").css("height", "170px");
 	    }
 	    else if(this.value=="radio"){
 	      content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_radio\">옵션에 추가</button><div class=\"list_radio\"></div>";
@@ -130,7 +134,6 @@ $( document ).ready(function() {
 	    }
 	    else{
 	      content = "<input type=\""+this.value+"\" disabled/>";
-	      $(this).parent(".field").css("height", "140px");
 	    }
 	    $(this).siblings(".content").html(content);
 	});
@@ -205,8 +208,8 @@ $( document ).ready(function() {
 	    $(this).resizable({
 	      minHeight:100,
 	      maxHeight:1000,
-	      minWidth: 500,
-	      maxWidth: 500
+	      minWidth: 700,
+	      maxWidth: 700
 	    });
 	    }).mouseout(function(){
 	    $(this).css("cursor", "default");

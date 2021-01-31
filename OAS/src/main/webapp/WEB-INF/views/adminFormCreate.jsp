@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?dd">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 
 <!-- js -->
@@ -28,7 +28,7 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script><!-- div 크기 조정 -->
-<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?d"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?"></script>
 
 </head>
 
@@ -84,7 +84,7 @@
           <div id="menu-bar">+</div>
 
           <div class="form edit title">
-              <input id="formName" name="formName" placeholder="제목을 입력해주세요" value="지워라 나중에" required/>
+              <input id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
               <input name="user_id" type="hidden" value="2"/> <!-- value session에서 가져와야함니당 -->
               <select id="category_select" name="category_id" required>
                	<!-- TODO : 카테고리 table에서 READ -->
@@ -95,8 +95,8 @@
                 <option value="3">카테고리3</option>
 
               </select><br>
-              <input id="startDate" name="startDate" type="date" value="2020-09-23" required/><input id="startTime" name="startTime" type="time" value="10:00" required/>
-               ~ <input id="endDate" name="endDate" type="date" value="2020-09-30" required/><input id="endTime" name="endTime" type="time" value="23:00" required/>
+              <input id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" name="startTime" type="time" value="10:00" required/>
+               ~ <input id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" name="endTime" type="time" value="23:00" required/>
               <textarea name="explanation" placeholder="설문지 설명"></textarea>
               <input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
               <input name="minusPoint" type="hidden" value="0"/> <!-- type="number" -->
@@ -120,7 +120,7 @@
 
         </div>
         <div id="confirm_modal">
-	        <h4>설문지 작성이 완료되었습니다.</h4>
+	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
 	        <p>
 	        <span class="modal_title">제목 : </span><span id="confirm_title"></span><br>
 	        <span class="modal_title">분류 : </span><span id="confirm_category"></span><br>
@@ -129,7 +129,7 @@
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
 	        </p>
-	        <button type="submit" id="form_submit" class="submit" style="border: solid 1px black">확인</button>
+	        <button type="submit" id="form_submit" class="submit">확인</button>
 	        <a class="modal_close_btn"><button type="button">취소</button></a>
     	</div>
       </form>
