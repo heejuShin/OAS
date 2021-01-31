@@ -172,13 +172,9 @@
 	</select>
 	
     <!-- 카테고리 더하기 -->
-	<insert id="add_Category" parameterType="Category">
-		INSERT INTO `Category`(`categoryName`) 
-   		VALUES (#{categoryName});
-		<selectKey keyProperty="id" resultType="Integer">
-		    SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>	
+	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
+		INSERT INTO Category ('id', 'categoryName', 'regDate')values(#{category_Id}, #{erase}, null);
+	</insert>
     
     
 
