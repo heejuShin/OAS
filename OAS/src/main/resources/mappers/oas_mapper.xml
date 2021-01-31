@@ -166,6 +166,10 @@
 	 <select id="getFieldId" resultType="int">
 		select id from Field where `key` = #{key};
 	</select>
+	
+	<select id="linkDupCheck" resultType="int">
+		SELECT COUNT(*) from Form where url = #{link};
+	</select>
     
     
 
