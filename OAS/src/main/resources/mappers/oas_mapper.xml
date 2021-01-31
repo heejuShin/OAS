@@ -142,6 +142,31 @@
     	INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
     </insert> 
     
+    <!-- Form 관련 쿼리 정리 -->
+   	<insert id="formCreate" parameterType="Form">
+   		INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
+   		VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
+   	</insert>
+   	
+   	<insert id="fieldCreate" parameterType ="Field">
+   	INSERT INTO `Field` (`form_id`,`fieldType`,`fieldName`,`fileName`,`isEssential`,`key`) 
+   	VALUES (#{form_id},#{fieldType},#{fieldName},NULL,#{isEssential},#{key});
+   	
+   	</insert>
+   	
+   	<insert id="itemCreate" parameterType = "Item">
+   		INSERT INTO `Item`(`field_id`,`content`,`isDefault`) 
+   		VALUES (#{field_id},#{content},#{isDefault});
+   	</insert>
+   	
+   	<select id="getFormId" resultType="int">
+		select id from Form where url = #{url};
+	</select>
+	
+	 <select id="getFieldId" resultType="int">
+		select id from Field where `key` = #{key};
+	</select>
+    
     
 
 </mapper>

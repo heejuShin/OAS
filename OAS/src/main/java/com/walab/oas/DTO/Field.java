@@ -11,6 +11,7 @@ public class Field {
 	private int isEssential;
 	private int index;
 	private Date regDate;
+	private String key;
 	
 	
 
@@ -85,6 +86,14 @@ public class Field {
 
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	

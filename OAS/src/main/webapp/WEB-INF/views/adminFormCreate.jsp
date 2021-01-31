@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 
 <!-- js -->
 <!-- Bootstrap core JavaScript -->
@@ -26,6 +27,7 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script><!-- div 크기 조정 -->
 
 </head>
 
@@ -81,9 +83,9 @@
           <div id="menu-bar">+</div>
 
           <div class="form edit title">
-              <input name="formName" placeholder="제목을 입력해주세요"/>
-              <input name="user_id" type="hidden" value="3"/> <!-- value session에서 가져와야함니당 -->
-              <select id="category_select" name="category_id">
+              <input name="formName" placeholder="제목을 입력해주세요" value="지워라 나중에" required/>
+              <input name="user_id" type="hidden" value="2"/> <!-- value session에서 가져와야함니당 -->
+              <select id="category_select" name="category_id" required>
                	<!-- TODO : 카테고리 table에서 READ -->
                 <option value="" selected disabled>카테고리 선택</option>
                 <!-- value로 카테고리 Id를 넣어야해요! READ할 때 참고해주세욤 -->
@@ -92,8 +94,12 @@
                 <option value="3">카테고리3</option>
 
               </select><br>
-              <input name="startDate" type="date"/> ~ <input name="endDate" type="date"/>
+              <input name="startDate" type="date" value="2020-09-23" required/><input name="startTime" type="time" value="10:00" required/>
+               ~ <input name="endDate" type="date" value="2020-09-30" required/><input name="endTime" type="time" value="23:00" required/>
               <textarea name="explanation" placeholder="설문지 설명"></textarea>
+              <input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
+              <input name="minusPoint" type="hidden" value="0"/> <!-- type="number" -->
+              <input type="hidden" id="count" name="count" value="0"/>
           </div>
 
           <div class="form edit state">
@@ -116,12 +122,16 @@
 
       <div class="add" id="field_add">
         <div class="form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <input class="field_title" placeholder="질문 제목"/>
-          <input type=checkbox name="isEssential" value="essential">
+          <input class="field_title" name="f_title?" placeholder="질문 제목"/>
+          <input type=checkbox class="isEssential_fake" name="isEssential_fake">
                   <label for="필수질문">필수</label>
           </input>
+          <input type="hidden" name="isEssential?" class="isEssential" value="0"/>
+          <input type="hidden" class="index" value="0"/>
+          <input type="hidden" class="count" id="count?" name="count?" value="0"/>
+
           <button type="button" class="remove">X</button><br>
-          <select class="field_type">
+          <select class="field_type" name="f_type?"> <!-- TODO required -->
             <option value="" selected disabled>질문유형</option>
             <option value="text">단답형</option>
             <option value="textarea">장문형</option>
@@ -139,18 +149,24 @@
 
     <div class="add" id="radio_add">
       <div>
-        <input type="radio" id="" name="" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="radio_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
 
     <div class="add" id="chxbox_add">
       <div>
-        <input type="checkbox" id="" name="" disabled ><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+     	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
 
-    <div class="add" id="select_add">
-        <option value=""></option>
+   <div class="add" id="select_add">
+        <option class="option_fake" value=""></option>
+    </div>
+    
+    <div class="add" id="select_value_add">
+    	<input class="option_real" type="hidden" name="?content?" value=""/>
     </div>
 
   </body>
@@ -173,6 +189,9 @@
 
 <script>
 //메뉴바 이동 코드
+
+var count = 0;
+
 $(window).scroll(function(){
   var scrollTop = $(document).scrollTop();
     $("#menu-bar").stop();
@@ -188,7 +207,7 @@ $("#list").on('change', ".field_type", function(){
       $(this).parent(".field").css("height", "140px");
     }
     else if(this.value=="select"){
-      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button>";
+      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"list_select\"></div>";
       $(this).parent(".field").css("height", "170px");
     }
     else if(this.value=="radio"){
@@ -206,19 +225,29 @@ $("#list").on('change', ".field_type", function(){
 
 //field 추가
 $("#menu-bar").click(function(){
-  $("#field_add").find(".field").attr("id", "필드아이디"); //TODO
-  //TODO checkbox 필수질문 id나 name
+  count++;
+  $("#field_add").find(".field").attr("id", "field"+count);
+  $("#field_add").find(".isEssential").attr("name", "isEssential"+count);
+  $("#field_add").find(".field_title").attr("name", "f_title"+count);
+  $("#field_add").find(".field_type").attr("name", "f_type"+count);
+  $("#field_add").find(".count").attr("name", "count"+count);
+  $("#field_add").find(".index").attr("value", count);
+  $("#count").val(count);
   $("#list").append($("#field_add").html());
 });
+
 //field 삭제
 $("#list").on('click', ".remove", function(){
   $(this).parent().remove();
 })
+
 //객관식 아이템 추가
 $("#list").on('click', ".btn_add_radio", function(){
-  $("#radio_add").find("input").attr("name", "네임"); //TODO
-  $("#radio_add").find("input").attr("id", "아이디"); //TODO
-  $("#radio_add").find("label").attr("for", "input아이디"); //TODO
+  var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
+  $(this).parent().siblings(".count").val(r_cnt);
+  var idx = $(this).parent().siblings(".index").val();
+  $("#radio_add").find(".radio_real").attr("name", idx+"content"+String(r_cnt));
+  $("#radio_add").find(".radio_real").attr("value",$(this).siblings("input").val());
   $("#radio_add").find("label").html($(this).siblings("input").val());
   $(this).siblings(".list_radio").append($("#radio_add").html());
   $(this).siblings("input").val("");
@@ -229,19 +258,26 @@ $("#list").on('click', ".remove_item", function(){
 })
 //체크박스 아이템 추가
 $("#list").on('click', ".btn_add_chxbox", function(){
-  $("#chxbox_add").find("input").attr("name", "네임"); //TODO
-  $("#chxbox_add").find("input").attr("id", "아이디"); //TODO
-  $("#chxbox_add").find("label").attr("for", "input아이디"); //TODO
+  var c_cnt = parseInt($(this).parent().siblings(".count").val())+1;
+  $(this).parent().siblings(".count").val(c_cnt);
+  var idx = $(this).parent().siblings(".index").val();
+  $("#chxbox_add").find(".checkbox_real").attr("name", idx+"content"+String(c_cnt));
+  $("#chxbox_add").find(".checkbox_real").attr("value",$(this).siblings("input").val());
   $("#chxbox_add").find("label").html($(this).siblings("input").val());
   $(this).siblings(".list_chxbox").append($("#chxbox_add").html());
   $(this).siblings("input").val("");
 });
 //드롭다운 아이템 추가
 $("#list").on('click', ".btn_add_select", function(){
+  var o_cnt = parseInt($(this).parent().siblings(".count").val())+1;
+  $(this).parent().siblings(".count").val(o_cnt);
+  var idx = $(this).parent().siblings(".index").val();
+  $("#select_value_add").find(".option_real").attr("name", idx+"content"+String(o_cnt));
+  $("#select_value_add").find(".option_real").attr("value",$(this).siblings("input").val());
   $("#select_add").find("option").attr("value", $(this).siblings("input").val());
   $("#select_add").find("option").html($(this).siblings("input").val());
-  $(this).siblings("select").attr("id", "아이디"); //TODO
   $(this).siblings("select").append($("#select_add").html());
+  $(this).siblings(".list_select").append($("#select_value_add").html());
   $(this).siblings("input").val("");
 });
 
@@ -264,15 +300,28 @@ $(function(){
     $(this).css("cursor", "default");
   });
 });
+  
+//체크박스 값 전달
+$("#list").on('change', ".isEssential_fake", function(){
+	if ($(this).is(":checked")) {
+		$(this).siblings(".isEssential").val("1");
+	} else {
+		$(this).siblings(".isEssential").val("0");
+	}
+});
+
+$("#list").on('change', ".isDefault_fake", function(){
+	if ($(this).is(":checked")) {
+		$(this).siblings(".isDefault").val("1");
+	} else {
+		$(this).siblings(".isDefault").val("0");
+	}
+});
 
 /** TODO
-* 추가되는 field id 다르게 처리
-* 추가되는 item id 다르게 처리
-* 추가되는 item name 필드 내에서는 같게, 필드끼리는 다르게 처리
 * 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
 * 그래도 어느 정도의 CSS
 * 상태 선택
-* else(text, file, textarea, 날짜, 시간)등의 id랑 name도 바꾸기
 * 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
 * '기타' 추가 기능
 * 복사 기능

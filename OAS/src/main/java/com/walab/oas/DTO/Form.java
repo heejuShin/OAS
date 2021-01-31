@@ -22,6 +22,9 @@ public class Form {
 	private String userName;
 	private String categoryName;
 	
+	private String start;
+	private String end;
+	
 	@Override
 	public String toString() {
 		return "Form [id=" + id + ", category_id=" + category_id + ", categoryName=" + categoryName + ", user_id="
@@ -157,6 +160,22 @@ public class Form {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
 	}
 	
 }
