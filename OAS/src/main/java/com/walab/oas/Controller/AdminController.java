@@ -1,18 +1,27 @@
 package com.walab.oas.Controller;
 
 import java.sql.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.walab.oas.DAO.AdminDAO;
+import com.walab.oas.DAO.MainDAO;
+import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
@@ -24,92 +33,130 @@ public class AdminController {
 	
 	@Autowired
 	private AdminDAO adminDAO;
+	@Autowired
+	private MainDAO mainDao;
 	
 	//신청폼 (Admin) Create
 	@RequestMapping(value = "/admin/form/create")
 	  public ModelAndView createForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
+		
+		List<Category> category_list = mainDao.categoryList();
+		JSONArray jArray = new JSONArray();
+		
+		try{
+			for (int i = 0; i < category_list.size() ; i++) {   
+	    		JSONObject ob2 =new JSONObject();
+	    		ob2.put("id", category_list.get(i).getId());
+		        ob2.put("categoryName", category_list.get(i).getCategoryName());
+		        System.out.println(ob2);
+	            jArray.put(ob2);
+			}
+		}catch(JSONException e){
+	    	e.printStackTrace();
+	    }
+		
+		mav.addObject("category_list",jArray);
+		System.out.println(category_list);
+		
 		mav.setViewName("adminFormCreate");
 		return mav;
 	}
 	
 	//신청폼 Create	
-	@RequestMapping(value="admin/form/formCreate",method=RequestMethod.POST)
-	public ModelAndView saveFormData(HttpServletRequest request) throws Exception {
+		@SuppressWarnings("finally")
+		@RequestMapping(value="admin/form/formCreate",method=RequestMethod.POST)
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request) throws Exception {
 
-		ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
-		
-		Form form = new Form();
-		int category_id = Integer.parseInt(request.getParameter("category_id"));
-		form.setCategory_id(category_id);
-		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		form.setUser_id(user_id);
-		String formName = request.getParameter("formName");
-		form.setFormName(formName);
-		String explanation = request.getParameter("explanation");
-		form.setExplanation(explanation);
-		String url = request.getParameter("url");
-		form.setUrl(url);
-		int isAvailable = 0; //TODO
-		form.setIsAvailable(isAvailable);
-		int isUserEdit = 0; //TODO
-		form.setIsUserEdit(isUserEdit);
-		int plusPoint = Integer.parseInt(request.getParameter("plusPoint"));
-		form.setPlusPoint(plusPoint);
-		int minusPoint = Integer.parseInt(request.getParameter("minusPoint"));
-		form.setMinusPoint(minusPoint);
-		String start = request.getParameter("startDate")+" "+request.getParameter("startTime")+":00";
-		form.setStart(start);
-		String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
-		form.setEnd(end);
-		
-		adminDAO.createForm(form);
-		
-		//Field
-		int f_cnt = Integer.parseInt(request.getParameter("count"));
-		for(int i=1; i<=f_cnt; i++) {
-			Field field = new Field();
-			String title = request.getParameter("f_title"+Integer.toString(i));
-			if(title != null) {
+			ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
+			
+			Form form = new Form();
+			int category_id = 0;
+			try {
+				Integer.parseInt(request.getParameter("category_id"));
+				category_id = Integer.parseInt(request.getParameter("category_id"));
+				System.out.println("try");
+			}catch (NumberFormatException e){
+				String nCg = request.getParameter("category_id");
+				category_id = Integer.parseInt(request.getParameter("categoryNum")) +1;
+				Category cg = new Category();
+				cg.setId(category_id);
+				cg.setCategoryName(nCg);
+				cg.setRegDate(null);
+				adminDAO.addCategory(cg);
+				System.out.println("catch");
+			}finally {
+				System.out.println("finally category id "+category_id);
+				form.setCategory_id(category_id);
+				int user_id = Integer.parseInt(request.getParameter("user_id"));
+				form.setUser_id(user_id);
+				String formName = request.getParameter("formName");
+				form.setFormName(formName);
+				String explanation = request.getParameter("explanation");
+				form.setExplanation(explanation);
+				String url = request.getParameter("url");
+				form.setUrl(url);
+				int isAvailable = 0; //TODO
+				form.setIsAvailable(isAvailable);
+				int isUserEdit = 0; //TODO
+				form.setIsUserEdit(isUserEdit);
+				int plusPoint = Integer.parseInt(request.getParameter("plusPoint"));
+				form.setPlusPoint(plusPoint);
+				int minusPoint = Integer.parseInt(request.getParameter("minusPoint"));
+				form.setMinusPoint(minusPoint);
+				String start = request.getParameter("startDate")+" "+request.getParameter("startTime")+":00";
+				form.setStart(start);
+				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
+				form.setEnd(end);
 				
-				//int form_id = 1;
-				int form_id=adminDAO.getFormId(url); 
-				field.setForm_id(form_id); 
-				field.setFieldName(title); 
-				String fieldType = request.getParameter("f_type"+Integer.toString(i));
-				field.setFieldType(fieldType);
-				String fileName; // 이거 어떻게 할지 고민
-				//field.setFileName(fileName);
-				int isEssential = Integer.parseInt(request.getParameter("isEssential"+Integer.toString(i)));
-				field.setIsEssential(isEssential);
-				int index;
-				//field.setIndex(index);
-				String key = Integer.toString(form_id) + "_" + Integer.toString(i);
-				field.setKey(key);
-				adminDAO.createField(field);
+				adminDAO.createForm(form);
 				
-				if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
-					int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)));
-					for(int j=1; j<=i_cnt; j++) {
-						Item item = new Item();
-						String content = request.getParameter(Integer.toString(i)+"content"+Integer.toString(j));
-						if(content != null) {
-							//int field_id=1;
-							int field_id=adminDAO.getFieldId(key);
-							item.setField_id(field_id);
-							item.setContent(content);
-							int isDefault = 0;
-							//int isDefault = Integer.parseInt(request.getParameter(Integer.toString(i)+"isDefault"+Integer.toString(j))); 나중에 하자
-							item.setIsDefault(isDefault);
-							adminDAO.createItem(item);
+				//Field
+				int f_cnt = Integer.parseInt(request.getParameter("count"));
+				for(int i=1; i<=f_cnt; i++) {
+					Field field = new Field();
+					String title = request.getParameter("f_title"+Integer.toString(i));
+					if(title != null) {
+						
+						//int form_id = 1;
+						int form_id=adminDAO.getFormId(url); 
+						field.setForm_id(form_id); 
+						field.setFieldName(title); 
+						String fieldType = request.getParameter("f_type"+Integer.toString(i));
+						field.setFieldType(fieldType);
+						String fileName; // 이거 어떻게 할지 고민
+						//field.setFileName(fileName);
+						int isEssential = Integer.parseInt(request.getParameter("isEssential"+Integer.toString(i)));
+						field.setIsEssential(isEssential);
+						int index;
+						//field.setIndex(index);
+						String key = Integer.toString(form_id) + "_" + Integer.toString(i);
+						field.setKey(key);
+						adminDAO.createField(field);
+						
+						if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
+							int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)));
+							for(int j=1; j<=i_cnt; j++) {
+								Item item = new Item();
+								String content = request.getParameter(Integer.toString(i)+"content"+Integer.toString(j));
+								if(content != null) {
+									//int field_id=1;
+									int field_id=adminDAO.getFieldId(key);
+									item.setField_id(field_id);
+									item.setContent(content);
+									int isDefault = 0;
+									//int isDefault = Integer.parseInt(request.getParameter(Integer.toString(i)+"isDefault"+Integer.toString(j))); 나중에 하자
+									item.setIsDefault(isDefault);
+									adminDAO.createItem(item);
+								}
+							}
 						}
 					}
 				}
+				
+				return mav;
 			}
 		}
-		
-		return mav;
-	}
 	
 	//링크 중복체크
 	@RequestMapping(value="admin/form/link_finder",method=RequestMethod.POST)

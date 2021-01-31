@@ -14,8 +14,8 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?asdf">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?asdf">
 
 <!-- js -->
 <!-- Bootstrap core JavaScript -->
@@ -84,17 +84,11 @@
           <div id="menu-bar"><p id="add_p">+</p></div>
 
           <div class="form edit title">
-              <input id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
+              <input type="text" id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
               <input name="user_id" type="hidden" value="2"/> <!-- value session에서 가져와야함니당 -->
-              <select id="category_select" name="category_id" required>
-               	<!-- TODO : 카테고리 table에서 READ -->
-                <option value="" selected disabled>카테고리 선택</option>
-                <!-- value로 카테고리 Id를 넣어야해요! READ할 때 참고해주세욤 -->
-                <option value="1">카테고리1</option>
-                <option value="2">카테고리2</option>
-                <option value="3">카테고리3</option>
-
-              </select><br>
+              <select class="form-control-s" id="category_select" name="category_id" required>
+				<option value="" selected disabled>카테고리 선택</option>
+			  </select><br>
               <input id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" name="startTime" type="time" value="10:00" required/>
                ~ <input id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" name="endTime" type="time" value="23:00" required/>
               <textarea name="explanation" placeholder="설문지 설명"></textarea>
@@ -203,7 +197,15 @@
 </html>
 
 <script>
-
+var category_list = ${category_list};
+var categoryNum = $("<input name='categoryNum' value='"+category_list.length+"' type='hidden'>");
+$(".form-div").append(categoryNum);
+for (var i = 0; i < category_list.length; i++) {
+	var selectOption = $("<option value='"+category_list[i].id+"'>"+ category_list[i].categoryName+ "</option>");
+	$(".form-control-s").append(selectOption);
+}
+console.log(categoryNum);
+$(".form-control-s").append(categoryNum).html();
 /** TODO
 * 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
 * 그래도 어느 정도의 CSS

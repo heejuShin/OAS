@@ -24,7 +24,7 @@
       select{
       	padding: 0;
       	height: 35px;
-      	width: 150px;
+      	width: 200px;
       }
       label{
       	font-size: 14px;
@@ -42,6 +42,9 @@
       }
       .title input{
         margin-bottom: 10px;
+      }
+      .title input[type="text"]{
+      	width: 300px;
       }
       textarea{
         width: 620px;

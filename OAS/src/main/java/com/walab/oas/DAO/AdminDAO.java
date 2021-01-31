@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
@@ -40,4 +41,7 @@ public class AdminDAO {
 		return sqlSession.selectOne(namespace +".linkDupCheck", link);
 	}
 		
+	public int addCategory (Category cg) throws Exception{
+		return sqlSession.insert(namespace + ".add_Category", cg);
+	}
 }
