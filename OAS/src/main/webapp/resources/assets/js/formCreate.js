@@ -1,3 +1,13 @@
+var dup_check = false;
+function isValidForm(){
+    if(!dup_check){
+        alert("링크 중복 체크를 해주세요.");
+        $("#red_ck_link").focus();
+    	return false;
+    }
+    else return true;
+}
+
 $( document ).ready(function() {
 	//keydown event 없애기 (enter 눌러도 전송안되게)
 	document.addEventListener('keydown', function(event) {
@@ -6,15 +16,6 @@ $( document ).ready(function() {
 	  };
 	}, true);
 	//중복 체크 안하면 못 넘어가게
-	var dup_check = false;
-	function isValidForm(){
-	    if(!dup_check){
-	        alert("링크 중복 체크를 해주세요.");
-	        $("#red_ck_link").focus();
-	    	return false;
-	    }
-	    return true;
-	}
 	//링크 중복 체크 
 	    $("#red_ck_link").click(function(){
 	      if($("#link").val()==""){

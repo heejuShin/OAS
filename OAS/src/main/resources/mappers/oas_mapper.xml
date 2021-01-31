@@ -170,6 +170,15 @@
 	<select id="linkDupCheck" resultType="int">
 		SELECT COUNT(*) from Form where url = #{link};
 	</select>
+	
+    <!-- 카테고리 더하기 -->
+	<insert id="add_Category" parameterType="Category">
+		INSERT INTO `Category`(`categoryName`) 
+   		VALUES (#{categoryName});
+		<selectKey keyProperty="id" resultType="Integer">
+		    SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>	
     
     
 

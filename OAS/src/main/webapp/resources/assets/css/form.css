@@ -14,6 +14,9 @@
       	font-weight: normal;
       	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       }
+      .form_control{
+      	background: red;
+      }
       input[type="checkbox"]{
 		display: inline-block;
 		width: 30px;

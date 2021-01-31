@@ -10,6 +10,7 @@
 		<typeAlias alias="Form" type="com.walab.oas.DTO.Form" />
 		<typeAlias alias="Field" type="com.walab.oas.DTO.Field" />
 		<typeAlias alias="Item" type="com.walab.oas.DTO.Item" />
+		<typeAlias alias="Category" type="com.walab.oas.DTO.Category" />
 	</typeAliases>
 	
 </configuration>

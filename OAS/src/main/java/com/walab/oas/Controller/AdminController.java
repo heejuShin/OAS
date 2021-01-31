@@ -75,7 +75,6 @@ public class AdminController {
 			try {
 				Integer.parseInt(request.getParameter("category_id"));
 				category_id = Integer.parseInt(request.getParameter("category_id"));
-				System.out.println("try");
 			}catch (NumberFormatException e){
 				String nCg = request.getParameter("category_id");
 				category_id = Integer.parseInt(request.getParameter("categoryNum")) +1;
@@ -84,7 +83,6 @@ public class AdminController {
 				cg.setCategoryName(nCg);
 				cg.setRegDate(null);
 				adminDAO.addCategory(cg);
-				System.out.println("catch");
 			}finally {
 				System.out.println("finally category id "+category_id);
 				form.setCategory_id(category_id);
