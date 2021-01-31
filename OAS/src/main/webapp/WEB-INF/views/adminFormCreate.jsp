@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?asdf">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 
 <!-- js -->
@@ -81,7 +81,7 @@
       <form action="formCreate" method="post" modelAttribute = "form" onsubmit="return isValidForm()">
       <div id="form_div">
 
-          <div id="menu-bar">+</div>
+          <div id="menu-bar"><p id="add_p">+</p></div>
 
           <div class="form edit title">
               <input id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
