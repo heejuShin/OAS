@@ -60,18 +60,6 @@ public class AdminController {
 		form.setStart(start);
 		String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
 		form.setEnd(end);
-
-		System.out.println("Category id : " + form.getCategory_id());
-		System.out.println("User id : " + form.getUser_id());
-		System.out.println("FormName : " + form.getFormName());
-		System.out.println("Explanation : " + form.getExplanation());
-		System.out.println("URL : " + form.getUrl());
-		System.out.println("isAvailable : " + form.getIsAvailable());
-		System.out.println("isUserEdit : " + form.getIsUserEdit());
-		System.out.println("PlusPoint : " + form.getPlusPoint());
-		System.out.println("minusPoint : " + form.getMinusPoint());
-		System.out.println("start : " + form.getStart());
-		System.out.println("end : " + form.getEnd());
 		
 		adminDAO.createForm(form);
 		
@@ -98,12 +86,6 @@ public class AdminController {
 				field.setKey(key);
 				adminDAO.createField(field);
 				
-				System.out.println("\tform id -> "+ form_id);
-				System.out.println("\tField name -> "+ title);
-				System.out.println("\tField type -> "+ fieldType);
-				System.out.println("\tisEssential -> "+ isEssential);
-				System.out.println("\tkey -> "+ key);
-				
 				if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
 					int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)));
 					for(int j=1; j<=i_cnt; j++) {
@@ -117,9 +99,6 @@ public class AdminController {
 							int isDefault = 0;
 							//int isDefault = Integer.parseInt(request.getParameter(Integer.toString(i)+"isDefault"+Integer.toString(j))); 나중에 하자
 							item.setIsDefault(isDefault);
-							System.out.println("\t\tfield id -> "+ field_id);
-							System.out.println("\t\tcontent -> "+ content);
-							System.out.println("\t\tisDefault -> "+ isDefault);
 							adminDAO.createItem(item);
 						}
 					}
