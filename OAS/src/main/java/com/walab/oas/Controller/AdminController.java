@@ -2,12 +2,14 @@ package com.walab.oas.Controller;
 
 import java.sql.Date;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.walab.oas.DAO.AdminDAO;
@@ -46,7 +48,7 @@ public class AdminController {
 		form.setFormName(formName);
 		String explanation = request.getParameter("explanation");
 		form.setExplanation(explanation);
-		String url = "url5"; //TODO
+		String url = request.getParameter("url");
 		form.setUrl(url);
 		int isAvailable = 0; //TODO
 		form.setIsAvailable(isAvailable);
@@ -107,6 +109,13 @@ public class AdminController {
 		}
 		
 		return mav;
+	}
+	
+	//링크 중복체크
+	@RequestMapping(value="admin/form/link_finder",method=RequestMethod.POST)
+	public String linkDupCheck(@RequestParam("link") String link) throws Exception {
+		if(adminDAO.linkDupCheck(link)==0) return "success";
+		else return "fail";
 	}
 	
 	//신청폼 (Admin) Update

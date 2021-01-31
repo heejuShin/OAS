@@ -35,5 +35,9 @@ public class AdminDAO {
 	public int getFieldId(String key) {
 		return sqlSession.selectOne(namespace +".getFieldId", key);
 	}
+	
+	public int linkDupCheck(String link) {
+		return sqlSession.selectOne(namespace +".linkDupCheck", link);
+	}
 		
 }
