@@ -207,6 +207,15 @@
 		SELECT COUNT(*) from Form where url = #{link};
 	</select>
 	
+	<!-- 개별보기 내용 -->
+	<select id='getReadList' resultType="com.walab.oas.DTO.ReadResult">
+	SELECT * from Field 
+	INNER JOIN
+	(select field_id, content from ResultContent 
+	INNER JOIN Result ON (ResultContent.result_id=Result.id)
+	where ResultContent.result_id=10) A ON (Field.id=A.field_id) where Field.form_id=1;
+	</select>
+	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
 		INSERT INTO Category (categoryName) VALUE (#{categoryName});
