@@ -115,6 +115,8 @@ public class MainController {
 			        
 			        ob.put("form_name", form_info.get(i).getFormName());
 			        ob.put("form_detail", form_info.get(i).getExplanation());
+			        ob.put("form_startDate", form_info.get(i).getStartDate());
+			        ob.put("form_endDate", form_info.get(i).getEndDate());
 			            
 			        jArray1.put(ob);      
 		    }

@@ -6,65 +6,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<!-- css -->
-<!-- Font Awesome -->
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-
-  <!-- Latest compiled and minified Bootstrap CSS -->
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  
   <!-- Responsive Tables -->
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
-
-  <!-- Bootstrap core CSS -->
-  <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Additional CSS Files -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/adding.css">
-
-
-
-<!-- js -->
-<!-- Bootstrap core JavaScript -->
-<script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Additional Scripts -->
-<script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.pkgd.min.js"></script>
-
-<!-- table css -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>  
+  
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
  <style>
- 
- 	/*  Header start*/
- 	
-	/* templatemo-sixteen.css 313 수정필요  */
-	.banner{ padding-top:0px;} 
-    /* templatemo-sixteen.css 219 수정필요 */
-	header .navbar {padding: 10px 0px;}
-	
-	 .siteName h2 {
-		margin-top: 0px;
-	} 
-	
-	.navbar_right {
-		float:right;
-	}
-	
-	/*  Header end*/
 	
 	/* 전체   */
-      html, body{height:120%;}
+      html, body{height:100%;}
       
       main {
       	margin: 2% 15%;
@@ -99,6 +52,10 @@
       	margin-left:2%;
       	
       }
+      .title {
+      	margin-left:35%;
+      }
+      
 
       .title h1{
       	font-size: 350%;
@@ -141,18 +98,22 @@
       #headTable {
       	background-color: rgb(223, 223, 223);
       }
+      td{
+      text-align: center;}
+      
       
        /* board2 */
+       
       /* templatemo-sixteen.css 612 수정필요  */
       .board2{
       	width: 100%;
-      	height:70%;
+      	height:100%;
       	margin-top: 2%;
       	border: 1px solid grey;
       	border-radius: 20px;
       }
       .products, .container, .row, #contestsDiv, .filters-content, .row gridss{
-      	height:100%;
+      	height:90%;
       	width:100%;
       }
       
@@ -207,8 +168,8 @@
       
       .col-lg-4{
      		margin: 0 1%;
-     		width:330px;
-     		height:350px;
+     		width:250px;
+     		height:300px;
       }
       
       .down-content{
@@ -219,6 +180,12 @@
       
       .gridss{
       	width:100%;
+      	height:100%;
+      }
+      
+      .row{
+      	margin-left:0px;
+      	margin-right:0px;
       }
       
       .filled-button{
@@ -285,6 +252,7 @@
 
       
  </style>
+ 
  <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-19870163-1']);
@@ -295,102 +263,10 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-    </script>
-
-
-</head>
-<body>
-	<header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand siteName" href="index.html"><h2>HGU CSEE <em>신청 시스템</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto navbar_right">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">My Page</a>
-              </li>
-               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>
-              </li>
-              <!--<li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li> -->
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    
-    <!-- Banner Starts Here (Div 겹침 방지) -->
-    <div style="height: 80px;"></div>
-    
-    <main>
-    
-    
-    <!-- Banner Ends Here -->
-    
-     <!-- Banner Starts Here -->
-    <div class="banner header-text board1">
- 
-		<div class="board_image">
-                <img src="<%=request.getContextPath()%>/resources/img/home_4.jpg" alt="img section">
-         </div>
-
-        <div class="board_section">
-	        <div class="title">
-	        	<h1><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 <span class="swLink"><a href='#'>Link</a></span></h1>
-	        </div>
-
-                <div class="tablelist">
-	                <table class="table table-hover">  
-						  <tr id="headTable"><th>Id</th><th>title</th></tr>  
-						  <tr><td>101</td><td>2021-1학기 맥북 신청 일정 </td></tr>  
-						  <tr><td>102</td><td>2021 하계 SW 캠프 일정 공지 </td></tr>  
-						  <tr><td>103</td><td>2021 1학기 마일리지 신청 </td></tr>  
-						  <tr><td>104</td><td>2021 여름방학 소프트웨어 봉사단 모집 </td></tr>
-						  <tr><td>105</td><td>2021 2학기 공학 프로젝트 기획 신청  </td></tr>    
-					</table>  
-                </div>
-      </div>
-        
-    </div>
-    <!-- Banner Ends Here -->
-      
-	
- 
-        <div class="board2">
-		
-            <div class="products">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="filters">
-                      <ul class="ul_filters">
-                          <li class="active" data-filter="*">All Products</li>
-                      </ul>
-                      <form class="form-inline">
-                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                          <button id="searchB" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                      </form>
-                    </div>
-                  </div>
-                  <div id="contestsDiv" class="col-md-12">
-                    <div class="filters-content" >
-                    
-                        <div class="row gridss"  style="overflow:auto;">
-                        </div>
-                            
-                            <script>
 
                             $(document).ready(function () {
+                                /* CSS */
+                                	$('.gridss').css("height","100px");
 
 	                            var form_list=${form_list};
 	                            var category_list=${category_list};
@@ -402,7 +278,7 @@
 	                            for(var i=0; i < form_list.length; i++){
 	                                
 	                    		    /*설문지 별 div 만듦 (div1)*/
-	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"'></div>"); 
+	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"' style='top :0px; lefot:0px;'></div>"); 
 	                    		   	$(".gridss").append(divOne);
 	
 	                    		   	/* div1의 안에 들어갈 div => "product-item" */
@@ -467,40 +343,80 @@
                             	  $(this).addClass('active');
                             	});
 
+                            
+
                           
                             });
                             </script>
-                            
-                            
 
+
+</head>
+<body>
+	
+	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+    
+    <main>
+    
+    <div class="board1">
+ 
+		<div class="board_image">
+                <img src="<%=request.getContextPath()%>/resources/img/home_4.jpg" alt="img section">
+         </div>
+
+        <div class="board_section">
+	        <div class="title">
+	        	<h1><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 <span class="swLink"><a href='#'>Link</a></span></h1>
+	        </div>
+
+                <div class="tablelist">
+	                <table class="table table-hover">  
+						  <tr id="headTable"><th>Id</th><th>title</th></tr>  
+						  <tr><td>101</td><td>2021-1학기 맥북 신청 일정 </td></tr>  
+						  <tr><td>102</td><td>2021 하계 SW 캠프 일정 공지 </td></tr>  
+						  <tr><td>103</td><td>2021 1학기 마일리지 신청 </td></tr>  
+						  <tr><td>104</td><td>2021 여름방학 소프트웨어 봉사단 모집 </td></tr>
+						  <tr><td>105</td><td>2021 2학기 공학 프로젝트 기획 신청  </td></tr>    
+					</table>  
+                </div>
+      </div>
+        
+    </div>
+	
+ 
+        <div class="board2">
+		
+            <div class="products" style="margin-top:0px">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="filters">
+                      <ul class="ul_filters">
+                          <li class="active" data-filter="*">All Products</li>
+                      </ul>
+                      <form class="form-inline">
+                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                          <button id="searchB" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div id="contestsDiv" class="col-md-12">
+                    <div class="filters-content" >
+                    
+                        <div class="gridss"  style="overflow:scroll; height:100px"><!--  class : row 삭제 -->
+                        </div>
+                            
+                            
                         </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-		</div>
-		
-		
-		
+
 	</main>
 	
+	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 	
 	
-	
-	
-	   <footer>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="inner-content">
-             	<p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-              
-              - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p> 
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
 </body>
 </html>
