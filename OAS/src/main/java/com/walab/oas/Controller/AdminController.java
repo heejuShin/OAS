@@ -172,11 +172,10 @@ public class AdminController {
 		return mav;
 	}
 	
-	//신청폼 (Admin) View -> 하연언니 여기 하시면 됩니당!
+	//신청폼 (Admin) View 
 	@RequestMapping(value = "/admin/form/result/{link}")
 	  public ModelAndView readForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.setViewName("adminFormCreate");
 		return mav;
 	}

@@ -44,4 +44,5 @@ public class AdminDAO {
 	public int addCategory (Category cg) throws Exception{
 		return sqlSession.insert(namespace + ".add_Category", cg);
 	}
+
 }
