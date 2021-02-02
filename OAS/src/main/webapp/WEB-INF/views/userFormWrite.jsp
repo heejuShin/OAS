@@ -25,6 +25,10 @@
 		//form title & explation 만들기 
 		$('#form_title').text(formInfo[0].form_name);
 		$('#form_explation').text(formInfo[0].form_detail);
+		$('#startDate').text(formInfo[0].form_startDate);
+		$('#endDate').text(formInfo[0].form_endDate);
+		
+		
 		
 		//field 만들기 
 		for(var i = 0 ; i < fieldInfo.length; i++){
@@ -171,11 +175,13 @@
 
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/basic/header.jsp" />
  
 <main>
 
 	<div >
 		<h1 id="form_title"></h1>
+		<h3 id="form_date"><span id="startDate"></span>~<span id="endDate"></span></h3>
 		<h3 id="form_explation"></h3>
 	</div>
 	
@@ -187,6 +193,6 @@
 	</div>
 
 </main>
-
+<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 </body>
 </html>

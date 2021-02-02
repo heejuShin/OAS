@@ -18,6 +18,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?aadsf">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
 
 <!-- js -->
 <!-- Bootstrap core JavaScript -->
@@ -95,9 +96,10 @@
           <div class="form edit title">
               <input type="text" id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
               <input name="user_id" type="hidden" value="2"/> <!-- value session에서 가져와야함니당 -->
+              <span style="display:inline-block; width: 250px;">
               <select class="form-control" id="category_select" name="category_id" required>
 				<option value="" selected disabled>카테고리 선택</option>
-			  </select><br>
+			  </select></span><br>
               <input style="margin-top: 10px" id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" name="startTime" type="time" value="10:00" required/>
                ~ <input id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" name="endTime" type="time" value="23:00" required/>
               <textarea name="explanation" placeholder="설문지 설명"></textarea>

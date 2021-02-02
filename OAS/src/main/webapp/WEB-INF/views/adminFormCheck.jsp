@@ -6,24 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
-<!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!--
-
-    TemplateMo 546 Sixteen Clothing
-
-    https://templatemo.com/tm-546-sixteen-clothing
-
-    --> 
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-
     <!-- 해린 css -->
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -89,7 +71,7 @@ table caption {
           } 
         });
 
-        //함수2. 체크박스 헤제시 전체 체크박스 해제
+        //함수2. 체크박스 해제시 전체 체크박스 해제
         $("input:checkbox[name=result]").click(function () {
 
           if($(this).is(":checked") == false){
@@ -98,46 +80,54 @@ table caption {
             
         });
 
-        //함수3. '적용' 버튼 클릭시 함수
+        //함수3. '적용' 버튼 클릭시 함수 (체크된 라인의 상태가 바뀜)
         $("button[name='stateB']").click(function () {
 
-          var state = $("select[name=stateName]").val(); // 적용할 state_id
-
-          var result_ids = new Array(); //checkbox의 value를 담는다.
-
-          //체크된 박스의 라인에 존재하는 상태 값 변경
-          $("input:checkbox[name=result]:checked").each(function() { 
-
-            $(this).parent().siblings().children("select").val(state).prop("selected",true);
-            var test = $(this).val();
-            result_ids.push(test);
-            //alert("test : "+ test);
-
-          });
-
-          alert(" result_id : " + result_ids + " |  state : " + state +" | length : " + result_ids.length);
-
-          //컨트롤러로 정보 전송(ajax) result_id로 state_id update
-          // if(result_ids.length > 0){
-          //   var sendData = {"resultIDarray": result_ids, "newState" : state};
-
-          //   $.ajax({
-          //           url:"",
-          //           type:'POST',
-          //           data: sendData,
-          //           success:function(data){
-          //               console.log(" 변경할 상태정보 전송 완료!");
-          //           },
-          //           error:function(jqXHR, textStatus, errorThrown){
-          //               alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-          //           }
-          //   });
-          // }
-
-          //check box 전체 해제
-          $("input[type=checkbox]").prop("checked",false); 
+	          var state = $("select[name=stateName]").val(); // 적용할 state_id 
+	
+	          //체크된 박스의 라인에 존재하는 상태 값 변경
+	          $("input:checkbox[name=result]:checked").each(function() { 
+	
+	            $(this).parent().siblings().children("select").val(state).prop("selected",true);
+	          });
+	     
+	        //check box 전체 해제
+	        $("input[type=checkbox]").prop("checked",false); 
         });
 
+        
+		//확인 버튼을 눌렀을 때
+        $("button[name='stateSubmitB']").click(function () {
+
+        	var result_ids = new Array(); //checkbox의 value를 담는다.
+        	var result_states = new Array(); //select의 value를 담는다.
+          
+           $("input:checkbox[name=result]").each(function() { 
+	             var test = $(this).val();
+		         result_ids.push(test);
+		         var eachState=$(this).parent().siblings().children("select").val();
+		         result_states.push(eachState);
+           });
+
+           var sendData = {"resultIDarray": result_ids, "stateArray" : result_states};
+
+          //컨트롤러로 정보 전송(ajax) result_id로 state_name update
+           $.ajax({
+               url: "<%=request.getContextPath()%>/admin/form/update/check",
+               type:'POST',
+               traditional : true,
+               data: sendData,
+               success:function(data){
+                   console.log(" 변경할 상태정보 전송 완료!");
+               },
+               error:function(request,status,error){
+            	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+               }
+       		});
+
+        });
+
+		/*
         //함수4. 개별 상태 변경 select
         $("select[name=state]").on('change',function () {
 
@@ -160,7 +150,7 @@ table caption {
           //           }
           //   });
  
-        });
+        });*/
 
 
       });
@@ -170,39 +160,6 @@ table caption {
  </head>
 <body>
 
-	
-    <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="check.html"><h2>Sixteen <em>Clothing</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="check.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">Our Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <!-- Header End -->
-
-	<div style="height: 80px;"></div>
 
     <!-- main -->
     <main>
@@ -214,10 +171,7 @@ table caption {
         </div>
         <div id="controlDiv">
           <select id ="allState" name="stateName">
-            <option value="1" selected>대기중</option>
-            <option value="2">입금 전</option>
-            <option value="3">거절</option>
-            <option value="4"> 확인 완료</option>
+          	<!-- js로 option list 넣기 -->
           </select>
           <button name='stateB'>적용</button>
         </div>
@@ -256,80 +210,88 @@ table caption {
 
                   <!-- Name RULE -->
                   <!-- All checkbox name same, All select name same -->
-                  <tbody>
-                    <tr>
-                      <td><input type="checkbox" name="result" value="1" /></td>
-                      <td>1</td>
-                      <td>홍길동</td>
-                      <td>전산전자공학부</td>
-                      <td>22011123</td>
-                      <td>22011123@handong.edu</td>
-                      <td>21.01.13</td>
-                      <td>
-                        <select name="state">
-                          <option value="1">대기중</option>
-                          <option value="2">입금 전</option>
-                          <option value="3">거절</option>
-                          <option value="4" selected> 확인 완료</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td><input type="checkbox" name="result" value="2"/></td>
-                      <td>2</td>
-                      <td>김한동</td>
-                      <td>글로벌리더십</td>
-                      <td>22111122</td>
-                      <td>22111122@handong.edu</td>
-                      <td>21.01.13</td>
-                      <td>
-                        <select name="state">
-                          <option value="1" selected>대기중</option>
-                          <option value="2">입금 전</option>
-                          <option value="3">거절</option>
-                          <option value="4" selected> 확인 완료</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td><input type="checkbox" name="result" value="3"/></td>
-                      <td>3</td>
-                      <td>강나가</td>
-                      <td>전산전자공학부</td>
-                      <td>21811123</td>
-                      <td>21811123@handong.edu</td>
-                      <td>21.01.14</td>
-                      <td>
-                        <select name="state">
-                          <option value="1" selected>대기중</option>
-                          <option value="2">입금 전</option>
-                          <option value="3">거절</option>
-                          <option value="4"> 확인 완료</option>
-                        </select>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td><input type="checkbox" name="result" value="4"/></td>
-                      <td>4</td>
-                      <td>김가나</td>
-                      <td>전산전자공학부</td>
-                      <td>21911123</td>
-                      <td>21911123@handong.edu</td>
-                      <td>21.01.14</td>
-                      <td>
-                        <select name="state">
-                          <option value="1" selected>대기중</option>
-                          <option value="2">입금 전</option>
-                          <option value="3">거절</option>
-                          <option value="4"> 확인 완료</option>
-                        </select>
-                      </td>
-                    </tr>
+                  
+                  <tbody id="tbodies">
+                  <!-- js로 제출자 list 넣기 -->
+                    
                   </tbody>
                   <!-- data list End-->
+                  
+                  <script>
+               	  //표 동적 생성하는 부분
+                  $(document).ready(function () {
+
+                      var submitterList=${submitterList};
+                      var stateList=${stateList};
+
+                      for(var x=0; x < stateList.length; x++){
+                    	  if(stateList[x].stateName=="대기중"){
+                    		  var optionName= $("<option value='"+stateList[x].id+"' selected>"+stateList[x].stateName+"</option>"); 
+                        	  $("#allState").append(optionName);
+		              	  }
+                    	  else{
+	                    	  var optionName= $("<option value='"+stateList[x].id+"'>"+stateList[x].stateName+"</option>"); 
+	                    	  $("#allState").append(optionName);
+                    	  }
+                      }
+
+                      
+                      //제출자 리스트
+                      for(var i=0; i < submitterList.length; i++){
+                    	  console.log("here");
+	              		    /*사람 별 tr 만듦*/
+	              		    var divOne = $("<tr class='here'></tr>"); 
+	              		  	$("#tbodies").append(divOne);
+	
+	              		   	/* tr의 안에 들어갈 td */
+	              		    var td1 = $("<td><input type='checkbox' name='result' value='"+submitterList[i].id+"'/></td>"); 
+	              		    $($("#tbodies").children()[i]).append(td1);
+	
+	              		    var td2 = $("<td>"+(i+1)+"</td>"); 
+	              		    $($("#tbodies").children()[i]).append(td2);
+	
+	              		    var td3 = $("<td>"+submitterList[i].userName+"</td>"); 
+	              		    $($("#tbodies").children()[i]).append(td3);
+	
+	              		    var td4 = $("<td>"+submitterList[i].department+"</td>"); 
+	              		    $($("#tbodies").children()[i]).append(td4);
+	
+	              		    var td5 = $("<td>"+submitterList[i].studentId+"</td>"); 
+	              		    $($("#tbodies").children()[i]).append(td5);
+
+	              		  	var td6 = $("<td>"+submitterList[i].email+"</td>"); 
+	              		    $($("#tbodies").children()[i]).append(td6);
+	              			
+	              		  	var td7 = $("<td>"+submitterList[i].regDate+"</td>"); 
+	              		    $($("#tbodies").children()[i]).append(td7);
+
+	              		  	var td8 = $("<td></td>"); 
+	              		    $($("#tbodies").children()[i]).append(td8);
+
+	              		    //select
+	              		  	var selectInput= $("<select name='state'></select>"); 
+	              		    $($($("#tbodies").children()[i]).children()[7]).append(selectInput);
+	              		    
+	              		    //option
+	              		    for(var j=0; j<stateList.length; j++){
+		              		    if(stateList[j].stateName=="대기중"){
+		              		    	var optionName= $("<option value='"+stateList[j].id+"' selected>"+stateList[j].stateName+"</option>"); 
+			              		    $($($($("#tbodies").children()[i]).children()[7]).children()[0]).append(optionName);
+			              		}
+		              		    else{
+	              		    		var optionName= $("<option value='"+stateList[j].id+"'>"+stateList[j].stateName+"</option>"); 
+		              		    	$($($($("#tbodies").children()[i]).children()[7]).children()[0]).append(optionName);
+		              		    }
+				        	}
+	                	}
+                  });
+                  </script>
+                  
+                  <tfoot>
+			        <tr>
+			            <th colspan="8"><button name='stateSubmitB'>확인</button></th>
+			        </tr>
+			    </tfoot>
 
                 </table>
               
@@ -346,46 +308,20 @@ table caption {
       
     </main>
     <!-- main End -->
-    
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
 
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Additional Scripts -->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/accordions.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
 
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-        if(! cleared[t.id]){                      // function makes it static and global
-            cleared[t.id] = 1;  // you could use true and false, but that's more typing
-            t.value='';         // with more chance of typos
-            t.style.color='#fff';
-            }
-      }
-
-    </script>
 	
 
 </body>

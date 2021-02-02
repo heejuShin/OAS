@@ -140,9 +140,14 @@ public class MyPageController {
 		@RequestMapping(value = "/admin/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 		public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
 			
-			int formID=Integer.parseInt(request.getParameter("resultIDarray"));
+			String[] formID=request.getParameterValues("resultIDarray");
 			System.out.println(formID);
-			mypageDao.deleteForm(formID);
+			
+			for(int i=0; i<formID.length; i++) {
+				System.out.println("formID: "+formID[i]);
+				mypageDao.deleteForm(Integer.parseInt(formID[i]));
+			
+			}
 			System.out.println("Delete success!!!");
 			
 			return new ModelAndView("redirect:/admin/mypage");
