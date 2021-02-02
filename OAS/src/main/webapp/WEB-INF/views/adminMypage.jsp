@@ -13,29 +13,21 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Sixteen Clothing HTML Template</title>
-    <!--From here, the table thigns-->
-    <!-- Font Awesome -->
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <title>Admin my page</title>
 
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
+
+   
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+	<script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     
-
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-19870163-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-    </script>
+    
     <script type="text/javascript">
       $(document).ready(function () {
 
@@ -93,16 +85,54 @@
 
   
     </script>
+    
+    <style type="text/css">
+    html, body{height:100%;}
+        	
+    	.page-header{
+    		display:block;
+    		overflow: auto;
+    		}
+    		
+    	.page-header div{
+    		display:block;
+    		float:left;
+    	}
+    	#profileImg{
+    	width:70px;
+    	height:70px;
+    	
+    	}
+    	.filter_search{
+    		clear:both;
+    	
+    	}
+    	#welcomeMsg h1{
+    		width:max-content;
+    		margin:5% 0% 5% 5%;
+    	}
+    	
+    	#settingsIcon{
+    	width:35px;
+    	height:35px;
+    	}
+    	
+    
+    </style>
   </head>
 
   <body>
 
-	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+  <jsp:include page="/WEB-INF/views/basic/header.jsp" />
+
+
 
     <section id="demo">
-      <div class="container">
-          <div class="page-header">
-              <h2>Demo</h2>
+    <div class="container">
+      <div class="page-header" style="border-bottom: 1px solid black; margin : 3% 0%; padding-bottom: 2%">
+              <div><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"></div>
+		    	<div id="welcomeMsg"><h1 >안녕하세요 OOO 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
+		    	<div></div>
           </div>
           <!--Start_Filter and Search part-->
           <nav class="filter_search" >
@@ -186,6 +216,7 @@
   </section> <!-- end section -->
      
     <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
+
     <!--from here, the table things-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
