@@ -266,7 +266,7 @@ public class AdminController {
 	  public ModelAndView readForm(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		List<ReadResult> read_list=adminDao.getReadList();
+		List<ReadResult> read_list=adminDAO.getReadList();
 		
 		//String form_id  = request.getParameter("select_formID");
 		//int form_ID = Integer.parseInt(form_id);
