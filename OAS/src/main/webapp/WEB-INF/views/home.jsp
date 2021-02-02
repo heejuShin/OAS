@@ -320,6 +320,12 @@
                <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/form/result/{link}">Check Test</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">Login</a>
+              </li>
               <!--<li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
               </li> -->

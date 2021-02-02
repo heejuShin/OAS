@@ -11,10 +11,17 @@ public class Result {
 	private Date editDate;
 	private int isDelete;
 	
+	private String userName;
+	private String department;
+	private String studentId;
+	private String email;
+	
+
 	@Override
 	public String toString() {
 		return "Result [id=" + id + ", form_id=" + form_id + ", user_id=" + user_id + ", state_id=" + state_id
-				+ ", regDate=" + regDate + ", editDate=" + editDate + ", isDelete=" + isDelete + "]";
+				+ ", regDate=" + regDate + ", editDate=" + editDate + ", isDelete=" + isDelete + ", userName="
+				+ userName + ", department=" + department + ", studentId=" + studentId + ", email=" + email + "]";
 	}
 
 	public int getId() {
@@ -72,4 +79,39 @@ public class Result {
 	public void setIsDelete(int isDelete) {
 		this.isDelete = isDelete;
 	}
+
+	
+	//새로 추가한 부분
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 }

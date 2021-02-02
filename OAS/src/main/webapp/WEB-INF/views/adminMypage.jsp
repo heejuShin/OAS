@@ -65,29 +65,32 @@
 
         //함수2. 'delete' 버튼 클릭시 함수
         $("button[name='deleteB']").click(function () {
-
+		  
           var result_ids = new Array(); //checkbox의 value를 담는다.
 
           //체크된 박스의 라인에 존재하는 상태 값 변경
-          $("input:checkbox[name=formCheck]:checked").each(function() { 
+          $("input[name='result']:checked").each(function() { 
 
             var test = $(this).val();
+            console.log(test);
             result_ids.push(test);
 
           });
+          
           //컨트롤러로 정보 전송(ajax) result_id로 state_id update
            if(result_ids.length > 0){
              var sendData = {"resultIDarray": result_ids};
-
+             
              $.ajax({
-                     url:"/admin/deleteForm",
+                     url:"<%=request.getContextPath()%>/admin/deleteForm",
                      type:'POST',
+                     traditional : true,
                      data: sendData,
                      success:function(data){
                          console.log(" 선택한 폼 삭제 완료!");
                      },
-                     error:function(jqXHR, textStatus, errorThrown){
-                         alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+                     error:function(request,status,error){
+                  	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                      }
              });
            }

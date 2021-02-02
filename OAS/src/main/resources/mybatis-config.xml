@@ -6,7 +6,6 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias alias="User" type="com.walab.oas.DTO.User" />
 	</typeAliases>
 	
 </configuration>
