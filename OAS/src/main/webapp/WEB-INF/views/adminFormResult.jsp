@@ -59,82 +59,75 @@
 	
 	<div id="under_tab2" class="under_tabcontent under_current">
 		<form>
-		  <div id="form_div">
-		
-		      <div class="form view title">
-		          <h5 style="font-style: italic; float: right">MAC 신청</h5>
-		          <h2 style="margin-top: 0px">설문조사</h2>
-		          <h5 style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;">2021.01.13 ~ 2021.01.31</h5>
-		          <p>2021년 설문조사입니다. 여기는 신청폼에 대한 설명이들어갑니다. <br>이곳은 유저가 입력한 폼 내용을 확인할 수 있는 곳</p>
-		      </div>
+		  <div id="form_div">		
+		    <div class="form view title">
+          		<h5 style="font-style: italic; float: right">MAC 신청</h5>
+          		<h2 id="form_title" style="margin-top: 0px"></h2>
+			<h5 id="form_date" style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;"><span id="startDate"></span>~<span id="endDate"></span></h5>
+			<p id="form_explation"></p>
+      		    </div>
 		 
 		      <div id="list">
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>단답형<span class="essential"> * <span></h4>
-		          <div class="content">
-		            <input type="text" value="신희주" readonly>
-		          </div>
-		        </div>
-		
-		        <div class="form view field" id="filed?" style="height: 120px;"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>장문형<span class="essential"> * <span></h4>
-		          <div class="content">
-		            <textarea readonly>캠프는 유익했으나 이러한 점이 아쉬웠습니다.</textarea>
-		          </div>
-		        </div>
-		
-		
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>객관식</h4>
-		          <div class="content">
-		            <input type="radio" id="id" name="name" disabled checked><label class="item" for="id">선택된 답</label></input>
-		            <input type="radio" id="id" name="name" disabled><label class="item" for="id">객관식2</label></input>
-		            <input type="radio" id="id" name="name" disabled><label class="item" for="id">객관식3</label></input>
-		          </div>
-		        </div>
-		
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>체크박스</h4>
-		          <div class="content">
-		            <input type="checkbox" id="id" name="name" disabled checked><label class="item" for="id">체크박스1</label></input>
-		            <input type="checkbox" id="id" name="name" disabled checked><label class="item" for="id">체크박스2</label></input>
-		            <input type="checkbox" id="id" name="name" disabled><label class="item" for="id">체크박스3</label></input>
-		          </div>
-		        </div>
-		
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>드롭다운</h4>
-		          <div class="content">
-		            <select style="width: 300px;" disabled>
-		              <option value="옵션1" selected>선택된 옵션</option>
-		              <option value="옵션2">옵션2</option>
-		            </select>
-		          </div>
-		        </div>
-		
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>파일업로드</h4>
-		          <div class="content">
-		            <!--<input type="file"/>-->
-		            선택된 파일 : filename
-		          </div>
-		        </div>
-		
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>날짜</h4>
-		          <div class="content">
-		            <input style="height: 30px" type="date" value="2021-09-30" readonly/>
-		          </div>
-		        </div>
-		
-		        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-		          <h4>시간</h4>
-		          <div class="content">
-		            <input style="height: 30px" type="time" value="12:30:15" readonly/>
-		          </div>
-		        </div>
-		
+		        <c:forEach items="${read_list}" var="u" varStatus="status">
+		       <!-- ${status.count}
+		       ${u.id}-->
+			<div class="form view field" id="field${u.id}" style="height: 120px;"> <!--?에는 나중에 fieldId나 Index 들어감-->
+			  <h4>${u.fieldName}
+			  <c:if test="${u.isEssential eq 1 }">
+			  <span class="essential">*</span>
+			  </c:if>
+			  </h4>
+			  <c:if test='${u.fieldType eq "text"}'>
+			  <div class="content">        
+			    <input type="text" value="${u.content}" readonly>
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'textarea'}">
+			  <div class="content">   
+				<textarea readonly>${u.content}</textarea>
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'date'}">
+			  <div class="content">   
+				<input style="height: 30px" type="date" value="${u.content}" readonly/>
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'radio'}">
+			  <div class="content">   
+				<input type="radio" id="id" disabled checked/><label for="id">${u.content}</label>
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'select'}">
+			  <div class="content">   
+				<select style="width: 300px;" disabled>
+			      <option value="옵션1" selected>${u.content}</option>
+			    </select>
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'checkbox'}">
+			  <div class="content">   
+				<input type="checkbox" id="id" disabled checked/><label for="id">${u.content}</label>
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'file'}">
+			  <div class="content">   
+				<input type="file" id="id" readonly/>선택된 파일 : ${u.content}
+			  </div>
+			  </c:if>
+			  <c:if test="${u.fieldType eq 'time'}">
+			  <div class="content">   
+				<input type="time" id="id" value="${u.content}" readonly/>
+			  </div>
+			  </c:if>
+			  <!-- 
+			  <div class="content">        
+			    <input type="text" value="${u.content}" readonly>
+			  </div>
+			   -->
+			</div>
+		      	</c:forEach>		
 		      </div>
+			  
 		      <div id="my_modal">
 		        <h4>설문지 작성이 완료되었습니다.</h4>
 		        제목: 설문지 제목<br>
@@ -212,7 +205,17 @@ $(function() {
 	})
 });
 </script>
-
+<script type="text/javascript">
+	$(document).ready(function () {
+		var formInfo = ${form_info};
+		//alert(formInfo[0].form_name +"  "+ formInfo[0].form_detail +"  "+ formInfo[0].form_startDate + "~~~"+ formInfo[0].form_endDate);
+		//form title & explation 만들기 
+		$('#form_title').text(formInfo[0].form_name);
+		$('#form_explation').text(formInfo[0].form_detail);
+		$('#startDate').text(formInfo[0].form_startDate);
+		$('#endDate').text(formInfo[0].form_endDate);
+	});//document ready
+</script>
 	
 
 </body>
