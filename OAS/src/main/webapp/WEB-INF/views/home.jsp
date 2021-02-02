@@ -8,13 +8,16 @@
 
   <!-- Responsive Tables -->
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
+  
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>   -->
 
  <style>
 	
 	/* 전체   */
-      html, body{height:120%;}
+      html, body{height:100%;}
       
       main {
       	margin: 2% 15%;
@@ -49,6 +52,10 @@
       	margin-left:2%;
       	
       }
+      .title {
+      	margin-left:35%;
+      }
+      
 
       .title h1{
       	font-size: 350%;
@@ -91,18 +98,22 @@
       #headTable {
       	background-color: rgb(223, 223, 223);
       }
+      td{
+      text-align: center;}
+      
       
        /* board2 */
+       
       /* templatemo-sixteen.css 612 수정필요  */
       .board2{
       	width: 100%;
-      	height:70%;
+      	height:100%;
       	margin-top: 2%;
       	border: 1px solid grey;
       	border-radius: 20px;
       }
       .products, .container, .row, #contestsDiv, .filters-content, .row gridss{
-      	height:100%;
+      	height:90%;
       	width:100%;
       }
       
@@ -157,8 +168,8 @@
       
       .col-lg-4{
      		margin: 0 1%;
-     		width:330px;
-     		height:350px;
+     		width:250px;
+     		height:300px;
       }
       
       .down-content{
@@ -169,6 +180,12 @@
       
       .gridss{
       	width:100%;
+      	height:100%;
+      }
+      
+      .row{
+      	margin-left:0px;
+      	margin-right:0px;
       }
       
       .filled-button{
@@ -236,13 +253,13 @@
       
  </style>
  
- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
  
  <script>
 
                             $(document).ready(function () {
+                                /* CSS */
+                                	$('.gridss').css("height","100px");
 
 	                            var form_list=${form_list};
 	                            var category_list=${category_list};
@@ -254,7 +271,7 @@
 	                            for(var i=0; i < form_list.length; i++){
 	                                
 	                    		    /*설문지 별 div 만듦 (div1)*/
-	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"'></div>"); 
+	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"' style='top :0px; lefot:0px;'></div>"); 
 	                    		   	$(".gridss").append(divOne);
 	
 	                    		   	/* div1의 안에 들어갈 div => "product-item" */
@@ -319,6 +336,8 @@
                             	  $(this).addClass('active');
                             	});
 
+                            
+
                           
                             });
                             </script>
@@ -355,13 +374,11 @@
       </div>
         
     </div>
-    <!-- Banner Ends Here -->
-      
 	
  
         <div class="board2">
 		
-            <div class="products">
+            <div class="products" style="margin-top:0px">
               <div class="container">
                 <div class="row">
                   <div class="col-md-12">
@@ -378,7 +395,7 @@
                   <div id="contestsDiv" class="col-md-12">
                     <div class="filters-content" >
                     
-                        <div class="row gridss"  style="overflow:auto;">
+                        <div class="gridss"  style="overflow:scroll; height:100px"><!--  class : row 삭제 -->
                         </div>
                             
                             
