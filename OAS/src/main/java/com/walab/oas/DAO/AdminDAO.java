@@ -42,6 +42,7 @@ public class AdminDAO {
 	}
 		
 	public int addCategory (Category cg) throws Exception{
+		System.out.println("im here");
 		return sqlSession.insert(namespace + ".add_Category", cg);
 	}
 }

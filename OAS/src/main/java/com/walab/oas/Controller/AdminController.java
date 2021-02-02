@@ -26,6 +26,7 @@ import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 
+@Controller
 @RestController
 @RequestMapping(value = "/")
 
@@ -71,18 +72,23 @@ public class AdminController {
 			ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
 			
 			Form form = new Form();
+			Category cg = new Category();
 			int category_id = 0;
 			try {
 				Integer.parseInt(request.getParameter("category_id"));
 				category_id = Integer.parseInt(request.getParameter("category_id"));
+				System.out.println("try start");
 			}catch (NumberFormatException e){
+				System.out.println("Cathch start");
 				String nCg = request.getParameter("category_id");
-				category_id = Integer.parseInt(request.getParameter("categoryNum")) +1;
-				Category cg = new Category();
-				cg.setId(category_id);
+				System.out.println("Cathch start");
+				//category_id = Integer.parseInt(request.getParameter("categoryNum")) +1;
 				cg.setCategoryName(nCg);
-				cg.setRegDate(null);
+				System.out.println("Cathch start");
 				adminDAO.addCategory(cg);
+				System.out.println("Cathch start");
+				category_id = cg.getId();
+				System.out.println("This is catch "+category_id);
 			}finally {
 				System.out.println("finally category id "+category_id);
 				form.setCategory_id(category_id);
