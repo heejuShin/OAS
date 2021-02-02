@@ -6,7 +6,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- css -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Additional CSS Files -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
 
+<!-- js -->
+<!-- Bootstrap core JavaScript -->
+<script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Additional Scripts -->
+<script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
 <style>
 
 		.under_tab {
