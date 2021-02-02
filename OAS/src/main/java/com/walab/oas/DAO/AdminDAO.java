@@ -13,6 +13,7 @@ import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.State;
+import com.walab.oas.DTO.ReadResult;
 
 @Repository
 public class AdminDAO {
@@ -61,5 +62,11 @@ public class AdminDAO {
 	public int addCategory (Category cg) throws Exception{
 		System.out.println("im here");
 		return sqlSession.insert(namespace + ".add_Category", cg);
+	}
+	
+	public List<ReadResult> getReadList(){
+		
+		return sqlSession.selectList(namespace+".getReadList");
+			
 	}
 }
