@@ -38,6 +38,7 @@ import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.Item;
+import com.walab.oas.DTO.ReadResult;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -258,6 +259,48 @@ public class AdminController {
 			adminDAO.stateUpdate(paramMap);
 		}
 		
+	}
+	
+	//신청폼 (Admin) View
+	@RequestMapping(value = "/admin/form/result/{link}")//현재는 페이지를 보려면 /{link}가 
+	  public ModelAndView readForm(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		List<ReadResult> read_list=adminDao.getReadList();
+		
+		//String form_id  = request.getParameter("select_formID");
+		//int form_ID = Integer.parseInt(form_id);
+		int form_ID =1;
+		
+		//System.out.println("formID : "+ form_id);
+		
+		List<Form> form_info = mainDao.forminfo(form_ID);
+		
+		//form info json 처리 
+		JSONArray jArray1 = new JSONArray();
+		try {
+		    	for (int i = 0; i < form_info.size() ; i++) {   
+			    		JSONObject ob =new JSONObject();
+			        
+			        ob.put("form_name", form_info.get(i).getFormName());
+			        ob.put("form_detail", form_info.get(i).getExplanation());
+			        ob.put("form_startDate", form_info.get(i).getStartDate());
+			        ob.put("form_endDate", form_info.get(i).getEndDate());
+			            
+			        jArray1.put(ob);      
+		    }
+		    	System.out.println(jArray1.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
+		
+		 mav.addObject("form_ID", form_ID);
+		 mav.addObject("form_info", jArray1);
+		 mav.addObject("read_list",read_list);
+		 System.out.println("--------------------------------------");
+		 System.out.println(read_list);
+		mav.setViewName("adminFormResult");
+		return mav;
 	}
 	
 }
