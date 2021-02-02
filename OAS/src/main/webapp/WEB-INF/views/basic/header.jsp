@@ -85,7 +85,7 @@
                 </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">My Page</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">Admin My Page</a>
               </li>
                <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>

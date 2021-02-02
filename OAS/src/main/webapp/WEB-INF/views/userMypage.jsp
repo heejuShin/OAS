@@ -80,6 +80,31 @@
 
   
     </script>
+    
+    <style type="text/css">
+    
+    	
+    	#profile{
+    		margin : 3% 0%;
+    		}
+    		
+    	#profile div{
+    		display:block;
+    		margin-top:3%;
+    		float:left;
+    	}
+    	.page-header{
+    		clear:both;
+    	
+    	}
+    	#welcomeMsg h1{
+    		weight:fit-content;
+    		margin-top:10%;
+    		margin-left:5%;
+    	}
+    	
+    
+    </style>
   </head>
 
   <body>
@@ -95,10 +120,19 @@
     <!-- ***** Preloader End ***** -->
 
     <jsp:include page="/WEB-INF/views/basic/header.jsp" />
+    
+    
 
 
     <section id="demo">
+	    
+    
       <div class="container">
+      <div id="profile">
+      <div><img alt="profileImg" src="resources/img/smile.png"></div>
+	    <div id="welcomeMsg"><h1>안녕하세요 홍길동 님</h1></div>
+	    
+	    </div>
           <div class="page-header">
               <h2>Demo</h2>
           </div>
