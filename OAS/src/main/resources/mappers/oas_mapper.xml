@@ -142,6 +142,9 @@
 			SELECT formName, explanation,startDate,endDate FROM Form WHERE id =#{formID};
 	  ]]>
 	</select> 
+	
+	
+
    
    <!-- field 정보 가져오기  -->
 	 <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
@@ -177,6 +180,12 @@
    <insert id="inputContent" parameterType="com.walab.oas.DTO.Result_Content" >
     	INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
     </insert> 
+    
+    <!-- 상태 id 생성  -->
+   <insert id="stateCreate" parameterType="com.walab.oas.DTO.State">
+    	INSERT INTO State (form_id,stateName,isDefault) VALUE (#{form_id}, #{stateName}, #{isDefault});
+    </insert>
+    
     
     <!-- Form 관련 쿼리 정리 -->
    	<insert id="formCreate" parameterType="Form">
@@ -218,6 +227,7 @@
 	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
+		INSERT INTO Category ('id', 'categoryName', 'regDate') values(#{category_Id}, #{erase}, null);
 		INSERT INTO Category (categoryName) VALUE (#{categoryName});
 		<selectKey keyProperty="id" resultType="Integer">
 		    SELECT LAST_INSERT_ID();

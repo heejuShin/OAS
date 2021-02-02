@@ -240,7 +240,13 @@ public class AdminController {
 		return mav;
 	}
 	
-	//신청폼 체크 각 제출자 상태 update
+	//신청폼 (Admin) View 
+	@RequestMapping(value = "/admin/form/result/{link}")
+	  public ModelAndView readForm() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("adminFormCreate");
+
+      //신청폼 체크 각 제출자 상태 update
 	@RequestMapping(value = "/form/update/check" ,method=RequestMethod.POST)
 	public void checkResult(HttpServletRequest request) throws Exception {
 		

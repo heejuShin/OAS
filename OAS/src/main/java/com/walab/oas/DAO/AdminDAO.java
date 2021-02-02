@@ -63,6 +63,7 @@ public class AdminDAO {
 		System.out.println("im here");
 		return sqlSession.insert(namespace + ".add_Category", cg);
 	}
+
 	
 	public List<ReadResult> getReadList(){
 		
