@@ -175,6 +175,7 @@
 
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/basic/header.jsp" />
  
 <main>
 
@@ -192,6 +193,6 @@
 	</div>
 
 </main>
-
+<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 </body>
 </html>
