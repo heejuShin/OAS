@@ -82,25 +82,34 @@
     </script>
     
     <style type="text/css">
-    
-    	
-    	#profile{
-    		margin : 3% 0%;
+    html, body{height:100%;}
+        	
+    	.page-header{
+    		display:block;
+    		overflow: auto;
     		}
     		
-    	#profile div{
+    	.page-header div{
     		display:block;
-    		margin-top:3%;
     		float:left;
     	}
-    	.page-header{
+    	#profileImg{
+    	width:70px;
+    	height:70px;
+    	
+    	}
+    	.filter_search{
     		clear:both;
     	
     	}
     	#welcomeMsg h1{
-    		weight:fit-content;
-    		margin-top:10%;
-    		margin-left:5%;
+    		width:max-content;
+    		margin:5% 0% 5% 5%;
+    	}
+    	
+    	#settingsIcon{
+    	width:35px;
+    	height:35px;
     	}
     	
     
@@ -109,16 +118,6 @@
 
   <body>
 
-    <!-- ***** Preloader Start ***** -->
-   <!--  <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>   -->
-    <!-- ***** Preloader End ***** -->
-
     <jsp:include page="/WEB-INF/views/basic/header.jsp" />
     
     
@@ -126,15 +125,11 @@
 
     <section id="demo">
 	    
-    
       <div class="container">
-      <div id="profile">
-      <div><img alt="profileImg" src="resources/img/smile.png"></div>
-	    <div id="welcomeMsg"><h1>안녕하세요 홍길동 님</h1></div>
-	    
-	    </div>
-          <div class="page-header">
-              <h2>Demo</h2>
+          <div class="page-header" style="border-bottom: 1px solid black; margin : 3% 0%; padding-bottom: 2%">
+              <div><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"></div>
+		    	<div id="welcomeMsg"><h1 >안녕하세요 김해린학부생 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
+		    	<div></div>
           </div>
           <!--Start_Filter and Search part-->
           <nav class="filter_search" >

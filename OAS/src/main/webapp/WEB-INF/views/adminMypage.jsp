@@ -13,42 +13,20 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Sixteen Clothing HTML Template</title>
-    <!--From here, the table thigns-->
-    <!-- Font Awesome -->
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <title>Admin my page</title>
 
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
-    <!--From here, the header and footer-->
-    <!-- Bootstrap core CSS -->
-    <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/adding.css">
+   
+    <!-- Latest compiled and minified Bootstrap JavaScript -->
+	<script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
-
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-19870163-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-    </script>
+    
+    
     <script type="text/javascript">
       $(document).ready(function () {
 
@@ -103,63 +81,53 @@
 
   
     </script>
+    
+    <style type="text/css">
+    html, body{height:100%;}
+        	
+    	.page-header{
+    		display:block;
+    		overflow: auto;
+    		}
+    		
+    	.page-header div{
+    		display:block;
+    		float:left;
+    	}
+    	#profileImg{
+    	width:70px;
+    	height:70px;
+    	
+    	}
+    	.filter_search{
+    		clear:both;
+    	
+    	}
+    	#welcomeMsg h1{
+    		width:max-content;
+    		margin:5% 0% 5% 5%;
+    	}
+    	
+    	#settingsIcon{
+    	width:35px;
+    	height:35px;
+    	}
+    	
+    
+    </style>
   </head>
 
   <body>
-
-    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
-
-    <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Sixteen <em>Clothing</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">Our Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <!-- Banner Starts Here -->
-    <div class="banner header-text">
-      <div class="owl-banner owl-carousel">
-        <div class="" style="height: 150px;">
-        </div>
-      </div>
-    </div>
-    <!-- Banner Ends Here -->
+  
+  <jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
 
     <section id="demo">
-      <div class="container">
-          <div class="page-header">
-              <h2>Demo</h2>
+    <div class="container">
+      <div class="page-header" style="border-bottom: 1px solid black; margin : 3% 0%; padding-bottom: 2%">
+              <div><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"></div>
+		    	<div id="welcomeMsg"><h1 >안녕하세요 OOO 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
+		    	<div></div>
           </div>
           <!--Start_Filter and Search part-->
           <nav class="filter_search" >
@@ -242,19 +210,7 @@
       </div> <!-- end container -->
   </section> <!-- end section -->
      
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 
 
     <!-- Bootstrap core JavaScript -->
