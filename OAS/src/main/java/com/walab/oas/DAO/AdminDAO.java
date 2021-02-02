@@ -7,6 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.walab.oas.DTO.Category;
+import com.walab.oas.DTO.Field;
+import com.walab.oas.DTO.Form;
+import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.State;
 
@@ -29,5 +33,33 @@ public class AdminDAO {
 	public void stateUpdate(Map<String, Object> paramMap) {
 		sqlSession.update(namespace + ".stateUpdate",paramMap);
 	}
+	
+	public int createForm(Form form) throws Exception{
+		return sqlSession.insert(namespace + ".formCreate", form);
+	}
+	
+	public int createField(Field field) throws Exception{
+		return sqlSession.insert(namespace+ ".fieldCreate", field);
+	}
+	
+	public int createItem(Item item) throws Exception{
+		return sqlSession.insert(namespace+ ".itemCreate", item);
+	}
+	
+	public int getFormId(String url) {
+		return sqlSession.selectOne(namespace +".getFormId", url);
+	}
+	
+	public int getFieldId(String key) {
+		return sqlSession.selectOne(namespace +".getFieldId", key);
+	}
+	
+	public int linkDupCheck(String link) {
+		return sqlSession.selectOne(namespace +".linkDupCheck", link);
+	}
 		
+	public int addCategory (Category cg) throws Exception{
+		System.out.println("im here");
+		return sqlSession.insert(namespace + ".add_Category", cg);
+	}
 }

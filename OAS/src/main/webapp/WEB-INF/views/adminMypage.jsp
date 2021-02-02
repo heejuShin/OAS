@@ -23,19 +23,6 @@
 
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
-    <!--From here, the header and footer-->
-    <!-- Bootstrap core CSS -->
-    <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/adding.css">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
 
     <script type="text/javascript">
@@ -110,54 +97,7 @@
 
   <body>
 
-    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
-
-    <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Sixteen <em>Clothing</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">Our Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <!-- Banner Starts Here -->
-    <div class="banner header-text">
-      <div class="owl-banner owl-carousel">
-        <div class="" style="height: 150px;">
-        </div>
-      </div>
-    </div>
-    <!-- Banner Ends Here -->
-
+	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
     <section id="demo">
       <div class="container">
@@ -245,33 +185,7 @@
       </div> <!-- end container -->
   </section> <!-- end section -->
      
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-    <!-- Additional Scripts -->
-    <script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
-
+    <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
     <!--from here, the table things-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 

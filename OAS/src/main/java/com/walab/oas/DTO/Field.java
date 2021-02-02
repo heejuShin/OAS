@@ -5,13 +5,16 @@ import java.sql.Date;
 public class Field {
 	private int id;
 	private int form_id;
-	private char fieldType;
+	private String fieldType;
 	private String fieldName;
 	private String fileName;
 	private int isEssential;
 	private int index;
 	private Date regDate;
+	private String key;
 	
+	
+
 	@Override
 	public String toString() {
 		return "Field [id=" + id + ", form_id=" + form_id + ", fieldType=" + fieldType + ", fieldName=" + fieldName
@@ -35,11 +38,13 @@ public class Field {
 		this.form_id = form_id;
 	}
 
-	public char getFieldType() {
+	
+
+	public String getFieldType() {
 		return fieldType;
 	}
 
-	public void setFieldType(char fieldType) {
+	public void setFieldType(String fieldType) {
 		this.fieldType = fieldType;
 	}
 
@@ -81,6 +86,14 @@ public class Field {
 
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	

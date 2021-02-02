@@ -114,6 +114,7 @@
     	delete from Form where id=#{formID};
    </delete>
    
+   
    <!-- 해당 폼 제출자 정보 리스트 -->
    <select id="submitterList" parameterType="int" resultType="com.walab.oas.DTO.Result">
    		<![CDATA[
@@ -134,5 +135,85 @@
    <update id="stateUpdate" parameterType="java.util.Map">
    		UPDATE Result SET state_id =#{stateID} WHERE id = #{resultID} ;
    </update>
+
+   <!-- form 정보 가져오기  -->
+	 <select id="formInfo" parameterType="int" resultType="com.walab.oas.DTO.Form">
+	  <![CDATA[
+			SELECT formName, explanation,startDate,endDate FROM Form WHERE id =#{formID};
+	  ]]>
+	</select> 
+   
+   <!-- field 정보 가져오기  -->
+	 <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
+	  <![CDATA[
+	      SELECT id, fieldName, fieldType, isEssential,fileName FROM Field WHERE form_id =#{formID};
+	  ]]>
+	</select> 
+	
+	<!-- item 정보 가져오기  -->
+	 <select id="itemInfo" parameterType="int" resultType="com.walab.oas.DTO.Item">
+	  <![CDATA[
+	      SELECT content, isDefault FROM Item WHERE field_id=#{fieldID};
+	  ]]>
+	</select>
+	
+	<!-- default 상태 ID 가져오기  -->
+	 <select id="getStateID" parameterType="int" resultType="Integer">
+	  <![CDATA[
+	      SELECT id FROM State WHERE form_id =#{formID} and isDefault = 1;
+	  ]]>
+	</select>
+	
+	<!-- result  id 생성  -->
+   <insert id="createResultID" parameterType="com.walab.oas.DTO.Result">
+    	INSERT INTO Result (form_id,user_id,state_id) VALUE (#{form_id}, #{user_id}, #{state_id});
+    	
+    	<selectKey keyProperty="id" resultType="Integer">
+		    SELECT LAST_INSERT_ID()
+		</selectKey>
+    </insert>
+    
+    <!-- result  content  넣기   -->
+   <insert id="inputContent" parameterType="com.walab.oas.DTO.Result_Content" >
+    	INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
+    </insert> 
+    
+    <!-- Form 관련 쿼리 정리 -->
+   	<insert id="formCreate" parameterType="Form">
+   		INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
+   		VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
+   	</insert>
+   	
+   	<insert id="fieldCreate" parameterType ="Field">
+   	INSERT INTO `Field` (`form_id`,`fieldType`,`fieldName`,`fileName`,`isEssential`,`key`) 
+   	VALUES (#{form_id},#{fieldType},#{fieldName},NULL,#{isEssential},#{key});
+   	
+   	</insert>
+   	
+   	<insert id="itemCreate" parameterType = "Item">
+   		INSERT INTO `Item`(`field_id`,`content`,`isDefault`) 
+   		VALUES (#{field_id},#{content},#{isDefault});
+   	</insert>
+   	
+   	<select id="getFormId" resultType="int">
+		select id from Form where url = #{url};
+	</select>
+	
+	 <select id="getFieldId" resultType="int">
+		select id from Field where `key` = #{key};
+	</select>
+	
+	<select id="linkDupCheck" resultType="int">
+		SELECT COUNT(*) from Form where url = #{link};
+	</select>
+	
+    <!-- 카테고리 더하기 -->
+	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
+		INSERT INTO Category (categoryName) VALUE (#{categoryName});
+		<selectKey keyProperty="id" resultType="Integer">
+		    SELECT LAST_INSERT_ID();
+		</selectKey>
+	</insert>
+    
 
 </mapper>

@@ -14,7 +14,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
 
 <!-- js -->
 <!-- Bootstrap core JavaScript -->
@@ -26,6 +28,12 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
+
+<!-- 카테고리 관련 CDN -->
+<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- select2 javascript cdn -->
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 
 </head>
 
@@ -75,25 +83,24 @@
 <body>
     <div style="height: 100px;"></div>
     <!--body-->
-      <form action="formCreate" method="post" modelAttribute = "form">
+      <form action="formCreate" method="post" modelAttribute = "form" onsubmit="return isValidForm()">
       <div id="form_div">
 
-          <div id="menu-bar">+</div>
+          <div id="menu-bar"><p id="add_p">+</p></div>
 
           <div class="form edit title">
-              <input name="formName" placeholder="제목을 입력해주세요"/>
-              <input name="user_id" type="hidden" value="3"/> <!-- value session에서 가져와야함니당 -->
-              <select id="category_select" name="category_id">
-               	<!-- TODO : 카테고리 table에서 READ -->
-                <option value="" selected disabled>카테고리 선택</option>
-                <!-- value로 카테고리 Id를 넣어야해요! READ할 때 참고해주세욤 -->
-                <option value="1">카테고리1</option>
-                <option value="2">카테고리2</option>
-                <option value="3">카테고리3</option>
-
-              </select><br>
-              <input name="startDate" type="date"/> ~ <input name="endDate" type="date"/>
+              <input type="text" id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
+              <input name="user_id" type="hidden" value="2"/> <!-- value session에서 가져와야함니당 -->
+              <span style="display:inline-block; width: 250px;">
+              <select class="form-control" id="category_select" name="category_id" required>
+				<option value="" selected disabled>카테고리 선택</option>
+			  </select></span><br>
+              <input style="margin-top: 10px" id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" name="startTime" type="time" value="10:00" required/>
+               ~ <input id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" name="endTime" type="time" value="23:00" required/>
               <textarea name="explanation" placeholder="설문지 설명"></textarea>
+              <input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
+              <input name="minusPoint" type="hidden" value="0"/> <!-- type="number" -->
+              <input type="hidden" id="count" name="count" value="0"/>
           </div>
 
           <div class="form edit state">
@@ -103,7 +110,7 @@
           <div id="list"></div>
 
           <div class="form edit button">
-            <button type="submit" class="submit">확인</button> <!-- 나중에는 그냥 type button으로 바꾸고 모달창에서 submit 되게해야함니다 -->
+            <button type="button" id="confirm">확인</button> 
           </div>
 
           <div class="form edit button" style="display: none;"><!--UPDATE시 사용 예정 -->
@@ -112,16 +119,33 @@
           </div>
 
         </div>
+        <div id="confirm_modal">
+	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
+	        <p>
+	        <span class="modal_title">제목 : </span><span id="confirm_title"></span><br>
+	        <span class="modal_title">분류 : </span><span id="confirm_category"></span><br>
+	        <span class="modal_title">기간 : </span><span id="confirm_start"></span> ~ <span id="confirm_end"></span> <br>
+	        <span class="modal_title">링크 : </span><input id="link" type="text" name="url"/>
+	        <button id="red_ck_link" type="button">중복 확인</button>
+	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
+	        </p>
+	        <button type="submit" id="form_submit" class="submit">확인</button>
+	        <a class="modal_close_btn"><button type="button">취소</button></a>
+    	</div>
       </form>
 
       <div class="add" id="field_add">
         <div class="form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <input class="field_title" placeholder="질문 제목"/>
-          <input type=checkbox name="isEssential" value="essential">
+          <input class="field_title" name="f_title?" placeholder="질문 제목"/>
+          <input type=checkbox class="isEssential_fake" name="isEssential_fake">
                   <label for="필수질문">필수</label>
           </input>
+          <input type="hidden" name="isEssential?" class="isEssential" value="0"/>
+          <input type="hidden" class="index" value="0"/>
+          <input type="hidden" class="count" id="count?" name="count?" value="0"/>
+
           <button type="button" class="remove">X</button><br>
-          <select class="field_type">
+          <select class="field_type" name="f_type?"> <!-- TODO required -->
             <option value="" selected disabled>질문유형</option>
             <option value="text">단답형</option>
             <option value="textarea">장문형</option>
@@ -139,19 +163,26 @@
 
     <div class="add" id="radio_add">
       <div>
-        <input type="radio" id="" name="" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="radio_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
 
     <div class="add" id="chxbox_add">
       <div>
-        <input type="checkbox" id="" name="" disabled ><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+     	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
 
-    <div class="add" id="select_add">
-        <option value=""></option>
+   <div class="add" id="select_add">
+        <option class="option_fake" value=""/>
     </div>
+    
+    <div class="add" id="select_value_add">
+    	<input class="option_real" type="hidden" name="?content?" value=""/>
+    </div>
+   
 
   </body>
 
@@ -172,107 +203,23 @@
 </html>
 
 <script>
-//메뉴바 이동 코드
-$(window).scroll(function(){
-  var scrollTop = $(document).scrollTop();
-    $("#menu-bar").stop();
-    $("#menu-bar").animate( { "top" : scrollTop + 240 });
-  });
-
-//질문 유형 선택
-$("#list").on('change', ".field_type", function(){
-    $(this).parent(".field").css("height", "190px");
-    var content;
-    if(this.value=="textarea"){
-      content = "<textarea disabled></textarea>";
-      $(this).parent(".field").css("height", "140px");
-    }
-    else if(this.value=="select"){
-      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button>";
-      $(this).parent(".field").css("height", "170px");
-    }
-    else if(this.value=="radio"){
-      content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_radio\">옵션에 추가</button><div class=\"list_radio\"></div>";
-    }
-    else if(this.value=="checkbox"){
-      content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_chxbox\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
-    }
-    else{
-      content = "<input type=\""+this.value+"\" disabled/>";
-      $(this).parent(".field").css("height", "140px");
-    }
-    $(this).siblings(".content").html(content);
+var category_list = ${category_list};
+var categoryNum = $("<input name='categoryNum' value='"+category_list.length+"' type='hidden'>");
+$(".form-div").append(categoryNum);
+for (var i = 0; i < category_list.length; i++) {
+	var selectOption = $("<option value='"+category_list[i].id+"'>"+ category_list[i].categoryName+ "</option>");
+	$(".form-control").append(selectOption);
+}
+console.log(categoryNum);
+$(".form-control").append(categoryNum).html();
+//select2 초기화
+$(".form-control").select2({
+	tags : true
 });
-
-//field 추가
-$("#menu-bar").click(function(){
-  $("#field_add").find(".field").attr("id", "필드아이디"); //TODO
-  //TODO checkbox 필수질문 id나 name
-  $("#list").append($("#field_add").html());
-});
-//field 삭제
-$("#list").on('click', ".remove", function(){
-  $(this).parent().remove();
-})
-//객관식 아이템 추가
-$("#list").on('click', ".btn_add_radio", function(){
-  $("#radio_add").find("input").attr("name", "네임"); //TODO
-  $("#radio_add").find("input").attr("id", "아이디"); //TODO
-  $("#radio_add").find("label").attr("for", "input아이디"); //TODO
-  $("#radio_add").find("label").html($(this).siblings("input").val());
-  $(this).siblings(".list_radio").append($("#radio_add").html());
-  $(this).siblings("input").val("");
-});
-//아이템 삭제
-$("#list").on('click', ".remove_item", function(){
-  $(this).parent().remove();
-})
-//체크박스 아이템 추가
-$("#list").on('click', ".btn_add_chxbox", function(){
-  $("#chxbox_add").find("input").attr("name", "네임"); //TODO
-  $("#chxbox_add").find("input").attr("id", "아이디"); //TODO
-  $("#chxbox_add").find("label").attr("for", "input아이디"); //TODO
-  $("#chxbox_add").find("label").html($(this).siblings("input").val());
-  $(this).siblings(".list_chxbox").append($("#chxbox_add").html());
-  $(this).siblings("input").val("");
-});
-//드롭다운 아이템 추가
-$("#list").on('click', ".btn_add_select", function(){
-  $("#select_add").find("option").attr("value", $(this).siblings("input").val());
-  $("#select_add").find("option").html($(this).siblings("input").val());
-  $(this).siblings("select").attr("id", "아이디"); //TODO
-  $(this).siblings("select").append($("#select_add").html());
-  $(this).siblings("input").val("");
-});
-
-//div 크기 조절 코드
-$(function(){
-  $("#list").on('mouseover', ".field", function(e){
-  //$(".field").mousemove(function(e){
-  var x = e.pageX-$(this).position().left;
-  var y = e.pageY-$(this).position().top;
-  var z = $(this).width();
-
-    $(this).css("cursor", "e-resize");
-    $(this).resizable({
-      minHeight:100,
-      maxHeight:1000,
-      minWidth: 500,
-      maxWidth: 500
-    });
-    }).mouseout(function(){
-    $(this).css("cursor", "default");
-  });
-});
-
 /** TODO
-* 추가되는 field id 다르게 처리
-* 추가되는 item id 다르게 처리
-* 추가되는 item name 필드 내에서는 같게, 필드끼리는 다르게 처리
 * 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
 * 그래도 어느 정도의 CSS
 * 상태 선택
-* else(text, file, textarea, 날짜, 시간)등의 id랑 name도 바꾸기
 * 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
 * '기타' 추가 기능
 * 복사 기능
