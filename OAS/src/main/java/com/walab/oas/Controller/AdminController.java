@@ -273,6 +273,7 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		
 		List<ReadResult> read_list=adminDAO.getReadList();
+		List<Category> category_name = adminDAO.getCategoryName();
 		
 		//String form_id  = request.getParameter("select_formID");
 		//int form_ID = Integer.parseInt(form_id);
@@ -282,6 +283,23 @@ public class AdminController {
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		
+		//category name json처 
+		JSONArray c_name = new JSONArray();
+		try {
+	    		for (int i = 0; i < category_name.size() ; i++) {   
+		    		JSONObject ob =new JSONObject();
+		        
+		        ob.put("categoryId", category_name.get(i).getId());
+		        ob.put("categoryName", category_name.get(i).getCategoryName());
+		            
+		        c_name.put(ob);      
+	    		}
+	    		System.out.println("--------------------------------------");
+	    		System.out.println(c_name.toString());
+	    	}catch(JSONException e){
+	        e.printStackTrace();
+	    	}
+		  
 		//form info json 처리 
 		JSONArray jArray1 = new JSONArray();
 		try {
@@ -303,8 +321,7 @@ public class AdminController {
 		 mav.addObject("form_ID", form_ID);
 		 mav.addObject("form_info", jArray1);
 		 mav.addObject("read_list",read_list);
-		 System.out.println("--------------------------------------");
-		 System.out.println(read_list);
+		 mav.addObject("category_name",c_name);
 		mav.setViewName("adminFormResult");
 		return mav;
 	}
