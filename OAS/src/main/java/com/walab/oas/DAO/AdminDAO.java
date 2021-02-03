@@ -63,11 +63,12 @@ public class AdminDAO {
 		System.out.println("im here");
 		return sqlSession.insert(namespace + ".add_Category", cg);
 	}
-
 	
-	public List<ReadResult> getReadList(){
-		
-		return sqlSession.selectList(namespace+".getReadList");
-			
+	public List<ReadResult> getReadList(){	
+		return sqlSession.selectList(namespace+".getReadList");		
+	}
+	
+	public List<Category> getCategoryName(){		
+		return sqlSession.selectList(namespace+".getCategoryName");		
 	}
 }
