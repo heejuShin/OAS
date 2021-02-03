@@ -225,6 +225,13 @@
 	where ResultContent.result_id=10) A ON (Field.id=A.field_id) where Field.form_id=1;
 	</select>
 	
+	<!-- 개별보기에 카테고리 가져오기  -->
+	<select id="getCategoryName" resultType="com.walab.oas.DTO.Category">
+	Select categoryName from Category 
+	inner join Form on Category.id = Form.category_id 
+	where Form.id =1;
+	</select><!-- Form.id =#{formid받아오기 }; -->
+	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
 		INSERT INTO Category ('id', 'categoryName', 'regDate') values(#{category_Id}, #{erase}, null);
