@@ -84,7 +84,7 @@
 		<form>
 		  <div id="form_div">		
 		    <div class="form view title">
-          		<h5 style="font-style: italic; float: right">MAC 신청</h5>
+          		<h5 style="float: right"></h5>
           		<h2 id="form_title" style="margin-top: 0px"></h2>
 			<h5 id="form_date" style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;"><span id="startDate"></span>~<span id="endDate"></span></h5>
 			<p id="form_explation"></p>
@@ -151,20 +151,12 @@
 		      	</c:forEach>		
 		      </div>
 			  
-		      <div id="my_modal">
-		        <h4>설문지 작성이 완료되었습니다.</h4>
-		        제목: 설문지 제목<br>
-		        카테고리: Mac 신청<br>
-		        기간: 21.01.10 ~ 21.01.30 <br>
-		        링크: www.handong.edu <br>
-		        <a class="modal_close_btn">확인</a>
-		    </div>
+		      
 		    </div>
 		
 		      <div class="form edit button">
 		        <button type="button" id="submit">확인</button>
 		      </div>
-		    </div>
 		  </form>
 	</div>
     
@@ -241,12 +233,14 @@ $(function() {
 <script type="text/javascript">
 	$(document).ready(function () {
 		var formInfo = ${form_info};
+		var category = ${category_name};
 		//alert(formInfo[0].form_name +"  "+ formInfo[0].form_detail +"  "+ formInfo[0].form_startDate + "~~~"+ formInfo[0].form_endDate);
 		//form title & explation 만들기 
 		$('#form_title').text(formInfo[0].form_name);
 		$('#form_explation').text(formInfo[0].form_detail);
 		$('#startDate').text(formInfo[0].form_startDate);
 		$('#endDate').text(formInfo[0].form_endDate);
+		$('#category_name').text(category[0].categoryName);
 	});//document ready
 </script>
 	
