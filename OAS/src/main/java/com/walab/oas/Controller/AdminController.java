@@ -245,6 +245,8 @@ public class AdminController {
 	  public ModelAndView readForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("adminFormCreate");
+		return mav;
+	}
 
       //신청폼 체크 각 제출자 상태 update
 	@RequestMapping(value = "/form/update/check" ,method=RequestMethod.POST)

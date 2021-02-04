@@ -123,6 +123,8 @@
       </select>
       </div>
           </div>
+          
+            <div id="list"></div>
 
           <div class="form edit button">
             <button type="button" id="confirm">확인</button> 
