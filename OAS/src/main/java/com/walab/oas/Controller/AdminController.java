@@ -82,7 +82,7 @@ public class AdminController {
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
 		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request) throws Exception {
 
-			ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
+			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 			
 			Form form = new Form();
 			Category cg = new Category();
@@ -237,14 +237,6 @@ public class AdminController {
 		mav.addObject("stateList", jArray2);
 		
 		mav.setViewName("adminFormView");
-		return mav;
-	}
-	
-	//신청폼 (Admin) View 
-	@RequestMapping(value = "/admin/form/result/{link}")
-	  public ModelAndView readForm() throws Exception {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("adminFormCreate");
 		return mav;
 	}
 

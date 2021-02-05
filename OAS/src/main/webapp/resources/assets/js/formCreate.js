@@ -141,7 +141,6 @@ $( document ).ready(function() {
 	
 	//field 추가
 	$("#menu-bar").click(function(){
-		alert("why?");
 	  count++;
 	  $("#field_add").find(".field").attr("id", "field"+count);
 	  $("#field_add").find(".isEssential").attr("name", "isEssential"+count);

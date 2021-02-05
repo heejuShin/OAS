@@ -160,5 +160,10 @@
       .select2-container{
       	font-size: 14px;
       }
-
+      .select2-selection__choice{
+      	padding-left: 25px !important;
+      }
+      .select2-selection__choice__remove{
+      	background-color: white !important;
+      }
 
