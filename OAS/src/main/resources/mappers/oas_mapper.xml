@@ -232,6 +232,11 @@
 	where Form.id =1;
 	</select><!-- Form.id =#{formid받아오기 }; -->
 	
+	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
+	<select id='getDate' resultType="com.walab.oas.DTO.Result">
+	SELECT * FROM Result where Result.id=10;
+	</select><!-- where Result.id=#{해당 응답지 id} -->
+	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
 		INSERT INTO Category ('id', 'categoryName', 'regDate') values(#{category_Id}, #{erase}, null);
