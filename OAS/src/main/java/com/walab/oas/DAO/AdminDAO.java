@@ -71,4 +71,8 @@ public class AdminDAO {
 	public List<Category> getCategoryName(){		
 		return sqlSession.selectList(namespace+".getCategoryName");		
 	}
+	
+	public List<Result> getDate(){		
+		return sqlSession.selectList(namespace+".getDate");		
+	}
 }
