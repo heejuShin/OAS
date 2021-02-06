@@ -274,32 +274,59 @@ public class AdminController {
 		
 		List<ReadResult> read_list=adminDAO.getReadList();
 		List<Category> category_name = adminDAO.getCategoryName();
+		List<Result> date_list = adminDAO.getDate();
 		
 		//String form_id  = request.getParameter("select_formID");
 		//int form_ID = Integer.parseInt(form_id);
 		int form_ID =1;
 		
-		//System.out.println("formID : "+ form_id);
-		
 		List<Form> form_info = mainDao.forminfo(form_ID);
+		List<Field> field_list = mainDao.fieldList(form_ID);
 		
-		//category name json처 
+		//read_list json 처리 
+				JSONArray readContent = new JSONArray();
+				try {
+				    	for (int i = 0; i < read_list.size() ; i++) {   
+					    		JSONObject ob =new JSONObject();
+					        
+					        ob.put("id", read_list.get(i).getId());
+					        ob.put("form_id", read_list.get(i).getForm_id());
+					        ob.put("fieldType", read_list.get(i).getFieldType());
+					        ob.put("fieldName", read_list.get(i).getFieldName());
+					        ob.put("fileName", read_list.get(i).getFileName());
+					        ob.put("isEssential", read_list.get(i).getIsEssential());
+					        ob.put("index", read_list.get(i).getIndex());
+					        ob.put("regDate", read_list.get(i).getRegDate());
+					        ob.put("key", read_list.get(i).getKey());
+					        ob.put("field_id", read_list.get(i).getField_id());
+					        ob.put("content", read_list.get(i).getContent());
+					        
+					            
+					        readContent.put(ob);      
+				    }
+				    	System.out.println("+++++++++++++++++++++");
+				        System.out.println(readContent.toString());
+				    }catch(JSONException e){
+				        e.printStackTrace();
+				    }
+		
+		//category name json처리 
 		JSONArray c_name = new JSONArray();
 		try {
-	    		for (int i = 0; i < category_name.size() ; i++) {   
+	    	for (int i = 0; i < category_name.size() ; i++) {   
 		    		JSONObject ob =new JSONObject();
 		        
 		        ob.put("categoryId", category_name.get(i).getId());
 		        ob.put("categoryName", category_name.get(i).getCategoryName());
 		            
 		        c_name.put(ob);      
-	    		}
-	    		System.out.println("--------------------------------------");
-	    		System.out.println(c_name.toString());
-	    	}catch(JSONException e){
+	    }
+	    	System.out.println("--------------------------------------");
+	    	System.out.println(c_name.toString());
+	    }catch(JSONException e){
 	        e.printStackTrace();
-	    	}
-		  
+	    }
+		
 		//form info json 처리 
 		JSONArray jArray1 = new JSONArray();
 		try {
@@ -313,15 +340,58 @@ public class AdminController {
 			            
 			        jArray1.put(ob);      
 		    }
+		    	System.out.println("--------------------------------------");
 		    	System.out.println(jArray1.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
 		
+		//field info json 처리 
+		JSONArray jArray2 = new JSONArray();
+		try {
+		    	for (int i = 0; i < field_list.size() ; i++) {   
+			    		JSONObject ob =new JSONObject();
+			        
+			        ob.put("field_id", field_list.get(i).getId());
+			        ob.put("field_name", field_list.get(i).getFieldName());
+			        ob.put("field_type", field_list.get(i).getFieldType());
+			        ob.put("field_star", field_list.get(i).getIsEssential());
+			        ob.put("field_file", field_list.get(i).getFieldName());
+			        
+			            
+			        jArray2.put(ob);      
+		    }
+		        System.out.println(jArray2.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
+		
+		//date_list json처리 
+				JSONArray reg_edit_date = new JSONArray();
+				try {
+			    	for (int i = 0; i < date_list.size() ; i++) {   
+				    		JSONObject ob =new JSONObject();
+				        
+				        ob.put("regDate", date_list.get(i).getRegDateKor());
+				        ob.put("editDate", date_list.get(i).getEditDateKor());
+				            
+				        reg_edit_date.put(ob);      
+			    }
+			    	System.out.println("--------------------------------------");
+			    	System.out.println(reg_edit_date.toString());
+			    }catch(JSONException e){
+			        e.printStackTrace();
+			    }
+		
+		
 		 mav.addObject("form_ID", form_ID);
 		 mav.addObject("form_info", jArray1);
-		 mav.addObject("read_list",read_list);
+		 mav.addObject("field_list", jArray2);
+		 mav.addObject("read_list",readContent);
 		 mav.addObject("category_name",c_name);
+		 mav.addObject("date_list",reg_edit_date);
+		 
+		 //System.out.println(read_list);
 		mav.setViewName("adminFormResult");
 		return mav;
 	}
