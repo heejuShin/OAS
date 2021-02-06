@@ -1,15 +1,20 @@
 package com.walab.oas.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 
@@ -21,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.walab.oas.DAO.AdminDAO;
+import com.walab.oas.DAO.ExcelDownloadDAO;
 import com.walab.oas.DAO.MainDAO;
 
 import com.walab.oas.DTO.Category;
@@ -80,7 +87,7 @@ public class AdminController {
 	//신청폼 create
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
-		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request) throws Exception {
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 			
@@ -169,8 +176,7 @@ public class AdminController {
 							}
 						}
 					}
-				}
-				
+				}				
 				return mav;
 			}
 		}
@@ -318,6 +324,62 @@ public class AdminController {
 		 mav.addObject("category_name",c_name);
 		mav.setViewName("adminFormResult");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/form/excel")
+	  public ModelAndView excelTest() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("test");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/form/downloadExcelFile", method = RequestMethod.POST)
+	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ArrayList<String> formQ = new ArrayList<String>();
+		formQ.add("카테고리");
+		formQ.add("설문지명");
+		formQ.add("작성자");
+		formQ.add("제출기한");
+		ArrayList<String> formA = new ArrayList<String>();
+		formA.add("맥북신청");
+		formA.add("2021년도 1학기 맥북신청");
+		formA.add("소중대");
+		formA.add("2021-03-02 09:00:00" + " ~ " + "2021-03-21 18:30:00");
+		
+		ArrayList<String> q = new ArrayList<String>();
+		q.add("제출시간");
+		q.add("수정시간");
+		q.add("학번");
+		q.add("이름");
+		q.add("이메일");
+		q.add("학부");
+		q.add("전공");
+		q.add("학년");
+		q.add("학기");
+		//질문 개수만큼 더 넣기
+		q.add("좋았던 점은?");
+		q.add("부족한 점은?");
+		
+		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
+		//답변 개수만큼
+		for(int i=0; i<2; i++) {
+			ArrayList a = new ArrayList<String>();
+			a.add("2021-03-07 15:32:49");
+			a.add("-");
+			a.add("21800412");
+			a.add("신희주");
+			a.add("21800412@handong.edu");
+			a.add("전산전자공학부");
+			a.add("컴퓨터공학심화");
+			a.add("4");
+			a.add("1");
+			//질문 개수만큼
+			a.add("좋았어요");
+			a.add("부족했어요");
+			ans.add(a);
+		}
+		ExcelDownloadDAO ed = new ExcelDownloadDAO();
+		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
 	}
 	
 }
