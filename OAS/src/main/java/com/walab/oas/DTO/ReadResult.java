@@ -15,6 +15,13 @@ public class ReadResult {
 	private int field_id;
 	private String content;
 	
+	@Override
+	public String toString() {
+		return "Result [id=" + id + ", form_id=" + form_id + ", fieldType=" + fieldType + ", fieldName=" + fieldName
+				+ ", fileName=" + fileName + ", isEssential=" + isEssential + ", index=" + index + ", regDate="
+				+ regDate + ", key=" + key + ", field_id=" + field_id + ", content=" + content + "]";
+	}
+	
 	public int getId() {
 		return id;
 	}
