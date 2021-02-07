@@ -415,9 +415,8 @@ public class AdminController {
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
-		//List<ReadResult> result_list = adminDAO.getReadList(form_ID);
 		String categoryName = adminDAO.getCategoryName_one(form_ID);
-		User user_info = adminDAO.getUserInfo(form_info.get(0).getUser_id());
+		User user_info = adminDAO.getUserInfobyId(form_info.get(0).getUser_id());
 		System.out.println("-->"+form_info.toString());
 		System.out.println("-->"+field_list.toString());
 
@@ -451,7 +450,7 @@ public class AdminController {
 		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
 		for(int i=0; i<result_info.size(); i++) {
 			ArrayList a = new ArrayList<String>();
-			User user = adminDAO.getUserInfo(result_info.get(i).getUser_id());
+			User user = adminDAO.getUserInfobyId(result_info.get(i).getUser_id());
 			a.add(result_info.get(i).getRegDateKor());
 			a.add(result_info.get(i).getEditDateKor());
 			a.add(user.getStudentId());
