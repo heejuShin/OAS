@@ -122,7 +122,7 @@
 									var values = optionlist[idx].content;
 									var labelNum = fieldInfo[i].field_id +"-"+ idx;
 									
-									var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"'><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
+									var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='radio_"+fieldInfo[i].field_id+"' value='"+values+"'><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
 
 									if(optionlist[idx].isDefault == 1)
 											$(listTag.children('input')).attr("checked", "checked");
@@ -205,7 +205,12 @@
 								$(this).siblings('input[name=field_ids]').remove();
 					        }else if($(this).children('label').children().is(':checkbox') && $(this).children('label').children().is(':checked') < 1) {
 								$(this).siblings('input[name=field_ids]').remove();
-					        }
+					        }else if($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked') == 1 ) {
+						        var newInput = $('<textarea name="content" style="display:none;">'+$(this).children('div').children().val()+'</textarea>');
+						        $(this).append(newInput);
+						        }
+
+					        
 
 							//checkbox value $로 엮기
 							if($(this).children('label').children("input:checkbox[name=content]:checked").length > 0){

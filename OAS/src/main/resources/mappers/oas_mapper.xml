@@ -262,6 +262,21 @@
 	<select id="excelResultContent" resultType="com.walab.oas.DTO.Result_Content">
 		 SELECT content from ResultContent where result_id = #{id};
 	</select>
+
+	<!-- User 정보 가져오기  -->
+	 <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
+	  <![CDATA[
+			SELECT * FROM User;
+	  ]]>
+	</select> 
+	
+	<!-- User admin update  -->
+	 <update id="updateLevel"  parameterType ="com.walab.oas.DTO.User">
+	  <![CDATA[
+			UPDATE User SET admin = #{admin} WHERE id = #{id};
+	  ]]>
+	</update> 
+
     
 
 </mapper>

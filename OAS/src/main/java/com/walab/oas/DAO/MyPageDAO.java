@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.SearchCriteria;
+import com.walab.oas.DTO.User;
 
 @Repository
 public class MyPageDAO {
@@ -51,5 +52,15 @@ public class MyPageDAO {
 	public void deleteForm(int formID) throws Exception {
 		sqlSession.delete(namespace + ".deleteForm",formID);
 	}
+	
+	//user info 가져오기 
+	public List<User> getUserInfo() throws Exception{
+		return sqlSession.selectList(namespace + ".getUserInfo");
+	}
+	
+	//user admin update 
+		public void updateAdmin(User user) throws Exception{
+			 sqlSession.update(namespace + ".updateLevel",user);
+		}
 		
 }
