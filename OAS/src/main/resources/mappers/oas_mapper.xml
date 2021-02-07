@@ -238,7 +238,7 @@
 	where Form.id = #{id};
 	</select>
 	
-	<select id="getUserInfo" parameterType="int" resultType="com.walab.oas.DTO.User">
+	<select id="getUserInfobyId" parameterType="int" resultType="com.walab.oas.DTO.User">
 	Select * from User where id = #{id};
 	</select>
 	

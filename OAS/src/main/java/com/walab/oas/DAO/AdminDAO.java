@@ -82,7 +82,7 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".getDate");		
 	}
 	
-	public User getUserInfo(int id) {
+	public User getUserInfobyId(int id) {
 		return sqlSession.selectOne(namespace+".getUserInfo", id);
 	}
 	

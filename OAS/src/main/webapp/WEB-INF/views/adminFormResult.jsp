@@ -126,7 +126,7 @@
 						}); //옵션 부르기 끝
 						
 					//console.log(" 옵션 확인 ");
-					//console.log(optionlist);
+					console.log(optionlist);
 					 if(fieldInfo[i].field_type == 'select'){
 						 console.log("step5");
 						 var selectID = "select" + fieldInfo[i].field_id;
