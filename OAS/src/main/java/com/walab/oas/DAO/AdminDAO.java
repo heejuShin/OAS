@@ -72,7 +72,15 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".getCategoryName");		
 	}
 	
+	public String getCategoryName_one(int id){	
+		return sqlSession.selectOne(namespace+".getCategoryName_one", id);		
+	}
+	
 	public List<Result> getDate(){		
 		return sqlSession.selectList(namespace+".getDate");		
+	}
+	
+	public String getUserName(int id) {
+		return sqlSession.selectOne(namespace+".getUserName", id);
 	}
 }

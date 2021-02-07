@@ -139,7 +139,7 @@
    <!-- form 정보 가져오기  -->
 	 <select id="formInfo" parameterType="int" resultType="com.walab.oas.DTO.Form">
 	  <![CDATA[
-			SELECT formName, explanation,startDate,endDate FROM Form WHERE id =#{formID};
+			SELECT * FROM Form WHERE id =#{formID};
 	  ]]>
 	</select> 
 	
@@ -149,14 +149,14 @@
    <!-- field 정보 가져오기  -->
 	 <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
 	  <![CDATA[
-	      SELECT id, fieldName, fieldType, isEssential,fileName FROM Field WHERE form_id =#{formID};
+	      SELECT * FROM Field WHERE form_id =#{formID};
 	  ]]>
 	</select> 
 	
 	<!-- item 정보 가져오기  -->
 	 <select id="itemInfo" parameterType="int" resultType="com.walab.oas.DTO.Item">
 	  <![CDATA[
-	      SELECT content, isDefault FROM Item WHERE field_id=#{fieldID};
+	      SELECT * FROM Item WHERE field_id=#{fieldID};
 	  ]]>
 	</select>
 	
@@ -231,6 +231,16 @@
 	inner join Form on Category.id = Form.category_id 
 	where Form.id =1;
 	</select><!-- Form.id =#{formid받아오기 }; -->
+	
+	<select id="getCategoryName_one" parameterType="int" resultType="String">
+	Select categoryName from Category 
+	inner join Form on Category.id = Form.category_id 
+	where Form.id = #{id};
+	</select>
+	
+	<select id="getUserName" parameterType="int" resultType="String">
+	Select userName from User where id = #{id};
+	</select>
 	
 	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
 	<select id='getDate' resultType="com.walab.oas.DTO.Result">

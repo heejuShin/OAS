@@ -1,6 +1,7 @@
 package com.walab.oas.DTO;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Form {
 	private int id;
@@ -14,10 +15,10 @@ public class Form {
 	private int isUserEdit;
 	private int plusPoint;
 	private int minusPoint;
-	private Date startDate;
-	private Date endDate;
-	private Date regDate;
-	private Date editDate;
+	private Timestamp startDate;
+	private Timestamp endDate;
+	private Timestamp regDate;
+	private Timestamp editDate;
 	
 	private String userName;
 	private String categoryName;
@@ -114,35 +115,35 @@ public class Form {
 		this.minusPoint = minusPoint;
 	}
 
-	public Date getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 
-	public Date getRegDate() {
+	public Timestamp getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(Timestamp regDate) {
 		this.regDate = regDate;
 	}
 
-	public Date getEditDate() {
+	public Timestamp getEditDate() {
 		return editDate;
 	}
 
-	public void setEditDate(Date editDate) {
+	public void setEditDate(Timestamp editDate) {
 		this.editDate = editDate;
 	}
 	

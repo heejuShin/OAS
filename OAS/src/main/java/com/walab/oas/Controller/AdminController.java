@@ -405,16 +405,29 @@ public class AdminController {
 	
 	@RequestMapping(value = "/form/downloadExcelFile", method = RequestMethod.POST)
 	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		//쿼리 작업
+		//String form_id  = request.getParameter("select_formID");
+		int form_ID = 1;//Integer.parseInt(form_id);
+		
+		List<Form> form_info = mainDao.forminfo(form_ID);
+		List<Field> field_list = mainDao.fieldList(form_ID);
+		String categoryName = adminDAO.getCategoryName_one(form_ID);
+		String writer = adminDAO.getUserName(form_info.get(0).getUser_id());
+		System.out.println("-->"+form_info.toString());
+		System.out.println("-->"+field_list.toString());
+
+		
 		ArrayList<String> formQ = new ArrayList<String>();
 		formQ.add("카테고리");
 		formQ.add("설문지명");
 		formQ.add("작성자");
 		formQ.add("제출기한");
 		ArrayList<String> formA = new ArrayList<String>();
-		formA.add("맥북신청");
-		formA.add("2021년도 1학기 맥북신청");
-		formA.add("소중대");
-		formA.add("2021-03-02 09:00:00" + " ~ " + "2021-03-21 18:30:00");
+		formA.add(categoryName);
+		formA.add(form_info.get(0).getFormName());
+		formA.add(writer);
+		formA.add(form_info.get(0).getStartDate() + " ~ " + form_info.get(0).getEndDate());
 		
 		ArrayList<String> q = new ArrayList<String>();
 		q.add("제출시간");
@@ -427,6 +440,9 @@ public class AdminController {
 		q.add("학년");
 		q.add("학기");
 		//질문 개수만큼 더 넣기
+		for (int i = 0; i < field_list.size() ; i++) { 
+			q.add(field_list.get(i).getFieldName());
+		}
 		q.add("좋았던 점은?");
 		q.add("부족한 점은?");
 		
