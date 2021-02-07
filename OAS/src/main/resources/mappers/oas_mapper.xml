@@ -214,6 +214,20 @@
 		    SELECT LAST_INSERT_ID();
 		</selectKey>
 	</insert>
+	
+	<!-- User 정보 가져오기  -->
+	 <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
+	  <![CDATA[
+			SELECT * FROM User;
+	  ]]>
+	</select> 
+	
+	<!-- User admin update  -->
+	 <update id="updateLevel"  parameterType ="com.walab.oas.DTO.User">
+	  <![CDATA[
+			UPDATE User SET admin = #{admin} WHERE id = #{id};
+	  ]]>
+	</update> 
     
 
 </mapper>
