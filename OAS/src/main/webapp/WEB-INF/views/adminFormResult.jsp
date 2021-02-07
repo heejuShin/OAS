@@ -30,7 +30,6 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
 <style>
-
 		.under_tab {
 			list-style: none;
 			margin: 0;
@@ -80,7 +79,6 @@
 		console.log("step1");
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
-
 		$('#form_title').text(formInfo[0].form_name);
 		$('#form_explation').text(formInfo[0].form_detail);
 		$('#startDate').text(formInfo[0].form_startDate);
