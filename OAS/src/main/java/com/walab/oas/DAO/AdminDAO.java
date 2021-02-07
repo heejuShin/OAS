@@ -12,7 +12,9 @@ import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
+import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.State;
+import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.ReadResult;
 
 @Repository
@@ -80,7 +82,17 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".getDate");		
 	}
 	
-	public String getUserName(int id) {
-		return sqlSession.selectOne(namespace+".getUserName", id);
+	public User getUserInfo(int id) {
+		return sqlSession.selectOne(namespace+".getUserInfo", id);
 	}
+	
+	public List<Result> getExcelResult(int id){
+		return sqlSession.selectList(namespace+".excelResult", id);
+	}
+	
+	public List<Result_Content> getExcelResultContent(int id){
+		return sqlSession.selectList(namespace+".excelResultContent", id);
+	}
+	
+	
 }

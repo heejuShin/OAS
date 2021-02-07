@@ -69,8 +69,6 @@ public class Result {
 				//String strReg = fm.format(regDate);
 				//SimpleDateFormat formatTime = new SimpleDateFormat(strReg,Locale.KOREAN);
 				String regDate1 = fm.format(regDate);
-				System.out.println("*************************");
-				System.out.println(regDate1);
 		
 		return regDate1;
 	}
@@ -88,8 +86,6 @@ public class Result {
 		//Fri Jan 29 10:06:29 KST 2021
 				SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
 				String editDate1 = fm.format(editDate);
-				System.out.println("*************************");
-				System.out.println(editDate1);
 		
 		return editDate1;
 	}

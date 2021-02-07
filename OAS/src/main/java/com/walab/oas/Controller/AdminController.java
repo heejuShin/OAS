@@ -43,7 +43,9 @@ import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Result;
+import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.State;
+import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.ReadResult;
 
@@ -412,8 +414,9 @@ public class AdminController {
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
+		//List<ReadResult> result_list = adminDAO.getReadList(form_ID);
 		String categoryName = adminDAO.getCategoryName_one(form_ID);
-		String writer = adminDAO.getUserName(form_info.get(0).getUser_id());
+		User user_info = adminDAO.getUserInfo(form_info.get(0).getUser_id());
 		System.out.println("-->"+form_info.toString());
 		System.out.println("-->"+field_list.toString());
 
@@ -426,8 +429,8 @@ public class AdminController {
 		ArrayList<String> formA = new ArrayList<String>();
 		formA.add(categoryName);
 		formA.add(form_info.get(0).getFormName());
-		formA.add(writer);
-		formA.add(form_info.get(0).getStartDate() + " ~ " + form_info.get(0).getEndDate());
+		formA.add(user_info.getUserName());
+		formA.add(form_info.get(0).getStartDateKor() + " ~ " + form_info.get(0).getEndDateKor());
 		
 		ArrayList<String> q = new ArrayList<String>();
 		q.add("제출시간");
@@ -439,29 +442,28 @@ public class AdminController {
 		q.add("전공");
 		q.add("학년");
 		q.add("학기");
-		//질문 개수만큼 더 넣기
 		for (int i = 0; i < field_list.size() ; i++) { 
 			q.add(field_list.get(i).getFieldName());
 		}
-		q.add("좋았던 점은?");
-		q.add("부족한 점은?");
 		
+		List<Result> result_info = adminDAO.getExcelResult(form_ID);
 		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
-		//답변 개수만큼
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<result_info.size(); i++) {
 			ArrayList a = new ArrayList<String>();
-			a.add("2021-03-07 15:32:49");
-			a.add("-");
-			a.add("21800412");
-			a.add("신희주");
-			a.add("21800412@handong.edu");
-			a.add("전산전자공학부");
-			a.add("컴퓨터공학심화");
-			a.add("4");
-			a.add("1");
-			//질문 개수만큼
-			a.add("좋았어요");
-			a.add("부족했어요");
+			User user = adminDAO.getUserInfo(result_info.get(i).getUser_id());
+			a.add(result_info.get(i).getRegDateKor());
+			a.add(result_info.get(i).getEditDateKor());
+			a.add(user.getStudentId());
+			a.add(user.getUserName());
+			a.add(user.getEmail());
+			a.add(user.getDepartment());
+			a.add(user.getMajor());
+			a.add(user.getGrade());
+			a.add(user.getSemester());
+			List<Result_Content> answer_info = adminDAO.getExcelResultContent(result_info.get(i).getId());
+			for(int j=0; j<answer_info.size(); j++) {
+				a.add(answer_info.get(j).getContent());
+			}
 			ans.add(a);
 		}
 		ExcelDownloadDAO ed = new ExcelDownloadDAO();

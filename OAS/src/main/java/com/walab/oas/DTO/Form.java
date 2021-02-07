@@ -2,6 +2,8 @@ package com.walab.oas.DTO;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class Form {
 	private int id;
@@ -178,5 +180,16 @@ public class Form {
 	public void setEnd(String end) {
 		this.end = end;
 	}
+	
+	public String getStartDateKor() {
+				SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
+				String regDate1 = fm.format(startDate);		
+		return regDate1;
+	}
+	public String getEndDateKor() {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
+		String regDate1 = fm.format(endDate);		
+		return regDate1;
+}
 	
 }

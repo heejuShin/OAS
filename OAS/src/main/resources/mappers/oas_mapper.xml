@@ -238,8 +238,8 @@
 	where Form.id = #{id};
 	</select>
 	
-	<select id="getUserName" parameterType="int" resultType="String">
-	Select userName from User where id = #{id};
+	<select id="getUserInfo" parameterType="int" resultType="com.walab.oas.DTO.User">
+	Select * from User where id = #{id};
 	</select>
 	
 	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
@@ -255,6 +255,13 @@
 		    SELECT LAST_INSERT_ID();
 		</selectKey>
 	</insert>
+	
+	<select id="excelResult" resultType="com.walab.oas.DTO.Result">
+		SELECT * from Result where form_id = #{id};
+	</select>
+	<select id="excelResultContent" resultType="com.walab.oas.DTO.Result_Content">
+		 SELECT content from ResultContent where result_id = #{id};
+	</select>
     
 
 </mapper>

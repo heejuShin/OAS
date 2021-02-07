@@ -1,27 +1,28 @@
 package com.walab.oas.DTO;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReadResult {
 	private int id;
 	private int form_id;
+	private int user_id;
 	private String fieldType;
 	private String fieldName;
 	private String fileName;
 	private int isEssential;
 	private int index;
-	private Date regDate;
+	private String regDate;
+	private String editDate;
 	private String key;
 	private int field_id;
 	private String content;
-	
 	@Override
 	public String toString() {
-		return "Result [id=" + id + ", form_id=" + form_id + ", fieldType=" + fieldType + ", fieldName=" + fieldName
-				+ ", fileName=" + fileName + ", isEssential=" + isEssential + ", index=" + index + ", regDate="
-				+ regDate + ", key=" + key + ", field_id=" + field_id + ", content=" + content + "]";
+		return "ReadResult [id=" + id + ", form_id=" + form_id + ", user_id=" + user_id + ", fieldType=" + fieldType
+				+ ", fieldName=" + fieldName + ", fileName=" + fileName + ", isEssential=" + isEssential + ", index="
+				+ index + ", regDate=" + regDate + ", editDate=" + editDate + ", key=" + key + ", field_id=" + field_id
+				+ ", content=" + content + "]";
 	}
-	
 	public int getId() {
 		return id;
 	}
@@ -33,6 +34,12 @@ public class ReadResult {
 	}
 	public void setForm_id(int form_id) {
 		this.form_id = form_id;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 	public String getFieldType() {
 		return fieldType;
@@ -64,11 +71,17 @@ public class ReadResult {
 	public void setIndex(int index) {
 		this.index = index;
 	}
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
+	}
+	public String getEditDate() {
+		return editDate;
+	}
+	public void setEditDate(String editDate) {
+		this.editDate = editDate;
 	}
 	public String getKey() {
 		return key;
@@ -88,4 +101,7 @@ public class ReadResult {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	
+	
 }

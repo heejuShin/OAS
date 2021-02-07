@@ -43,7 +43,7 @@ public class ExcelDownloadDAO {
         sheet.setColumnWidth(5, 15*256);
         sheet.setColumnWidth(6, 15*256);
         for(int i=0; i<q.size(); i++) {
-        	sheet.setColumnWidth(7+i, 15*256);
+        	sheet.setColumnWidth(9+i, 25*256);
         }
 		
 		//FQ
