@@ -1,26 +1,33 @@
 package com.walab.oas.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,13 +37,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.walab.oas.DAO.AdminDAO;
+import com.walab.oas.DAO.ExcelDownloadDAO;
 import com.walab.oas.DAO.MainDAO;
 
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Result;
+import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.State;
+import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.ReadResult;
 
@@ -80,9 +90,9 @@ public class AdminController {
 	//신청폼 create
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
-		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request) throws Exception {
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-			ModelAndView mav = new ModelAndView("redirect:/admin/form/create");
+			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 			
 			Form form = new Form();
 			Category cg = new Category();
@@ -169,8 +179,7 @@ public class AdminController {
 							}
 						}
 					}
-				}
-				
+				}				
 				return mav;
 			}
 		}
@@ -239,12 +248,6 @@ public class AdminController {
 		mav.setViewName("adminFormView");
 		return mav;
 	}
-	
-	//신청폼 (Admin) View 
-	@RequestMapping(value = "/admin/form/result/{link}")
-	  public ModelAndView readForm() throws Exception {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("adminFormCreate");
 
       //신청폼 체크 각 제출자 상태 update
 	@RequestMapping(value = "/form/update/check" ,method=RequestMethod.POST)
@@ -273,14 +276,59 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		
 		List<ReadResult> read_list=adminDAO.getReadList();
+		List<Category> category_name = adminDAO.getCategoryName();
+		List<Result> date_list = adminDAO.getDate();
 		
 		//String form_id  = request.getParameter("select_formID");
 		//int form_ID = Integer.parseInt(form_id);
 		int form_ID =1;
 		
-		//System.out.println("formID : "+ form_id);
-		
 		List<Form> form_info = mainDao.forminfo(form_ID);
+		List<Field> field_list = mainDao.fieldList(form_ID);
+		
+		//read_list json 처리 
+				JSONArray readContent = new JSONArray();
+				try {
+				    	for (int i = 0; i < read_list.size() ; i++) {   
+					    		JSONObject ob =new JSONObject();
+					        
+					        ob.put("id", read_list.get(i).getId());
+					        ob.put("form_id", read_list.get(i).getForm_id());
+					        ob.put("fieldType", read_list.get(i).getFieldType());
+					        ob.put("fieldName", read_list.get(i).getFieldName());
+					        ob.put("fileName", read_list.get(i).getFileName());
+					        ob.put("isEssential", read_list.get(i).getIsEssential());
+					        ob.put("index", read_list.get(i).getIndex());
+					        ob.put("regDate", read_list.get(i).getRegDate());
+					        ob.put("key", read_list.get(i).getKey());
+					        ob.put("field_id", read_list.get(i).getField_id());
+					        ob.put("content", read_list.get(i).getContent());
+					        
+					            
+					        readContent.put(ob);      
+				    }
+				    	System.out.println("+++++++++++++++++++++");
+				        System.out.println(readContent.toString());
+				    }catch(JSONException e){
+				        e.printStackTrace();
+				    }
+		
+		//category name json처리 
+		JSONArray c_name = new JSONArray();
+		try {
+	    	for (int i = 0; i < category_name.size() ; i++) {   
+		    		JSONObject ob =new JSONObject();
+		        
+		        ob.put("categoryId", category_name.get(i).getId());
+		        ob.put("categoryName", category_name.get(i).getCategoryName());
+		            
+		        c_name.put(ob);      
+	    }
+	    	System.out.println("--------------------------------------");
+	    	System.out.println(c_name.toString());
+	    }catch(JSONException e){
+	        e.printStackTrace();
+	    }
 		
 		//form info json 처리 
 		JSONArray jArray1 = new JSONArray();
@@ -295,18 +343,131 @@ public class AdminController {
 			            
 			        jArray1.put(ob);      
 		    }
+		    	System.out.println("--------------------------------------");
 		    	System.out.println(jArray1.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
 		
+		//field info json 처리 
+		JSONArray jArray2 = new JSONArray();
+		try {
+		    	for (int i = 0; i < field_list.size() ; i++) {   
+			    		JSONObject ob =new JSONObject();
+			        
+			        ob.put("field_id", field_list.get(i).getId());
+			        ob.put("field_name", field_list.get(i).getFieldName());
+			        ob.put("field_type", field_list.get(i).getFieldType());
+			        ob.put("field_star", field_list.get(i).getIsEssential());
+			        ob.put("field_file", field_list.get(i).getFieldName());
+			        
+			            
+			        jArray2.put(ob);      
+		    }
+		        System.out.println(jArray2.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
+		
+		//date_list json처리 
+				JSONArray reg_edit_date = new JSONArray();
+				try {
+			    	for (int i = 0; i < date_list.size() ; i++) {   
+				    		JSONObject ob =new JSONObject();
+				        
+				        ob.put("regDate", date_list.get(i).getRegDateKor());
+				        ob.put("editDate", date_list.get(i).getEditDateKor());
+				            
+				        reg_edit_date.put(ob);      
+			    }
+			    	System.out.println("--------------------------------------");
+			    	System.out.println(reg_edit_date.toString());
+			    }catch(JSONException e){
+			        e.printStackTrace();
+			    }
+		
+		
 		 mav.addObject("form_ID", form_ID);
 		 mav.addObject("form_info", jArray1);
-		 mav.addObject("read_list",read_list);
-		 System.out.println("--------------------------------------");
-		 System.out.println(read_list);
+		 mav.addObject("field_list", jArray2);
+		 mav.addObject("read_list",readContent);
+		 mav.addObject("category_name",c_name);
+		 mav.addObject("date_list",reg_edit_date);
+		 
+		 //System.out.println(read_list);
 		mav.setViewName("adminFormResult");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/form/excel")
+	  public ModelAndView excelTest() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("test");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/form/downloadExcelFile", method = RequestMethod.POST)
+	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		//쿼리 작업
+		//String form_id  = request.getParameter("select_formID");
+		int form_ID = 1;//Integer.parseInt(form_id);
+		
+		List<Form> form_info = mainDao.forminfo(form_ID);
+		List<Field> field_list = mainDao.fieldList(form_ID);
+		String categoryName = adminDAO.getCategoryName_one(form_ID);
+		User user_info = adminDAO.getUserInfobyId(form_info.get(0).getUser_id());
+		System.out.println("-->"+form_info.toString());
+		System.out.println("-->"+field_list.toString());
+
+		
+		ArrayList<String> formQ = new ArrayList<String>();
+		formQ.add("카테고리");
+		formQ.add("설문지명");
+		formQ.add("작성자");
+		formQ.add("제출기한");
+		ArrayList<String> formA = new ArrayList<String>();
+		formA.add(categoryName);
+		formA.add(form_info.get(0).getFormName());
+		formA.add(user_info.getUserName());
+		formA.add(form_info.get(0).getStartDateKor() + " ~ " + form_info.get(0).getEndDateKor());
+		
+		ArrayList<String> q = new ArrayList<String>();
+		q.add("제출시간");
+		q.add("수정시간");
+		q.add("학번");
+		q.add("이름");
+		q.add("이메일");
+		q.add("학부");
+		q.add("전공");
+		q.add("학년");
+		q.add("학기");
+		for (int i = 0; i < field_list.size() ; i++) { 
+			q.add(field_list.get(i).getFieldName());
+		}
+		
+		List<Result> result_info = adminDAO.getExcelResult(form_ID);
+		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
+		for(int i=0; i<result_info.size(); i++) {
+			ArrayList a = new ArrayList<String>();
+			User user = adminDAO.getUserInfobyId(result_info.get(i).getUser_id());
+			a.add(result_info.get(i).getRegDateKor());
+			a.add(result_info.get(i).getEditDateKor());
+			a.add(user.getStudentId());
+			a.add(user.getUserName());
+			a.add(user.getEmail());
+			a.add(user.getDepartment());
+			a.add(user.getMajor());
+			a.add(user.getGrade());
+			a.add(user.getSemester());
+			List<Result_Content> answer_info = adminDAO.getExcelResultContent(result_info.get(i).getId());
+			for(int j=0; j<answer_info.size(); j++) {
+				a.add(answer_info.get(j).getContent());
+			}
+			ans.add(a);
+		}
+		ExcelDownloadDAO ed = new ExcelDownloadDAO();
+		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
 	}
 	
 }

@@ -1,6 +1,8 @@
 package com.walab.oas.DTO;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;//제출&수정 날짜와 시간 모두 보여주기 위해서 변경
+import java.util.Locale;
 
 public class Result {	
 	private int id;
@@ -59,7 +61,18 @@ public class Result {
 	public Date getRegDate() {
 		return regDate;
 	}
-
+	
+	//제출 시간 개별보기에서 보여주기 위해 추가
+	public String getRegDateKor() {
+		//Fri Jan 29 10:06:29 KST 2021
+				SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
+				//String strReg = fm.format(regDate);
+				//SimpleDateFormat formatTime = new SimpleDateFormat(strReg,Locale.KOREAN);
+				String regDate1 = fm.format(regDate);
+		
+		return regDate1;
+	}
+	
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
@@ -67,7 +80,16 @@ public class Result {
 	public Date getEditDate() {
 		return editDate;
 	}
-
+	
+	//수정 시간 개별보기에서 보여주기 위해 추가
+	public String getEditDateKor() {
+		//Fri Jan 29 10:06:29 KST 2021
+				SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
+				String editDate1 = fm.format(editDate);
+		
+		return editDate1;
+	}
+	
 	public void setEditDate(Date editDate) {
 		this.editDate = editDate;
 	}

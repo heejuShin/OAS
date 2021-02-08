@@ -30,7 +30,6 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
 <style>
-
 		.under_tab {
 			list-style: none;
 			margin: 0;
@@ -68,155 +67,134 @@
 			display: block;
 		}
 </style>
-</head>
-<body>
-
-	<ul class="under_tab">
-		<li class="under_current" data-tab="under_tab1"><a href="#">상태체크</a></li>
-		<li data-tab="under_tab2"><a href="#">개별보기</a></li>
-	</ul>
-	
-	<div id="under_tab1" class="under_tabcontent">
-		<jsp:include page="/WEB-INF/views/adminFormCheck.jsp" />
-	</div>
-	
-	<div id="under_tab2" class="under_tabcontent under_current">
-		<form>
-		  <div id="form_div">		
-		    <div class="form view title">
-          		<h5 style="font-style: italic; float: right">MAC 신청</h5>
-          		<h2 id="form_title" style="margin-top: 0px"></h2>
-			<h5 id="form_date" style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;"><span id="startDate"></span>~<span id="endDate"></span></h5>
-			<p id="form_explation"></p>
-      		    </div>
-		 
-		      <div id="list">
-		        <c:forEach items="${read_list}" var="u" varStatus="status">
-		       <!-- ${status.count}
-		       ${u.id}-->
-			<div class="form view field" id="field${u.id}" style="height: 120px;"> <!--?에는 나중에 fieldId나 Index 들어감-->
-			  <h4>${u.fieldName}
-			  <c:if test="${u.isEssential eq 1 }">
-			  <span class="essential">*</span>
-			  </c:if>
-			  </h4>
-			  <c:if test='${u.fieldType eq "text"}'>
-			  <div class="content">        
-			    <input type="text" value="${u.content}" readonly>
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'textarea'}">
-			  <div class="content">   
-				<textarea readonly>${u.content}</textarea>
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'date'}">
-			  <div class="content">   
-				<input style="height: 30px" type="date" value="${u.content}" readonly/>
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'radio'}">
-			  <div class="content">   
-				<input type="radio" id="id" disabled checked/><label for="id">${u.content}</label>
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'select'}">
-			  <div class="content">   
-				<select style="width: 300px;" disabled>
-			      <option value="옵션1" selected>${u.content}</option>
-			    </select>
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'checkbox'}">
-			  <div class="content">   
-				<input type="checkbox" id="id" disabled checked/><label for="id">${u.content}</label>
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'file'}">
-			  <div class="content">   
-				<input type="file" id="id" readonly/>선택된 파일 : ${u.content}
-			  </div>
-			  </c:if>
-			  <c:if test="${u.fieldType eq 'time'}">
-			  <div class="content">   
-				<input type="time" id="id" value="${u.content}" readonly/>
-			  </div>
-			  </c:if>
-			  <!-- 
-			  <div class="content">        
-			    <input type="text" value="${u.content}" readonly>
-			  </div>
-			   -->
-			</div>
-		      	</c:forEach>		
-		      </div>
-			  
-		      <div id="my_modal">
-		        <h4>설문지 작성이 완료되었습니다.</h4>
-		        제목: 설문지 제목<br>
-		        카테고리: Mac 신청<br>
-		        기간: 21.01.10 ~ 21.01.30 <br>
-		        링크: www.handong.edu <br>
-		        <a class="modal_close_btn">확인</a>
-		    </div>
-		    </div>
+<script>
+	$(document).ready(function () {
 		
-		      <div class="form edit button">
-		        <button type="button" id="submit">확인</button>
-		      </div>
-		    </div>
-		  </form>
-	</div>
-    
-  <script>
-    function modal(id) {
-    var zIndex = 9999;
-    var modal = $('#' + id);
-
-    // 모달 div 뒤에 희끄무레한 레이어
-    var bg = $('<div>')
-        .css({
-            position: 'fixed',
-            zIndex: zIndex,
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%',
-            overflow: 'auto',
-            // 레이어 색갈은 여기서 바꾸면 됨
-            backgroundColor: 'rgba(0,0,0,0.4)'
-        })
-        .appendTo('body');
-
-    modal
-        .css({
-            position: 'fixed',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-            // 시꺼먼 레이어 보다 한칸 위에 보이기
-            zIndex: zIndex + 1,
-
-            // div center 정렬
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            msTransform: 'translate(-50%, -50%)',
-            webkitTransform: 'translate(-50%, -50%)'
-        })
-        .show()
-        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        .find('.modal_close_btn')
-        .on('click', function() {
-            bg.remove();
-            modal.hide();
-        });
-}
-
-$('#submit').on('click', function() {
-    // 모달창 띄우기
-    modal('my_modal');
-});
-
+		var formInfo = ${form_info};
+		var fieldInfo = ${field_list};
+		var category = ${category_name};
+		var date = ${date_list};
+		var resultContent = ${read_list};
+		
+		console.log("step1");
+		//form title & explation 만들기 
+		console.log("title : " + formInfo[0].form_name);
+		$('#form_title').text(formInfo[0].form_name);
+		$('#form_explation').text(formInfo[0].form_detail);
+		$('#startDate').text(formInfo[0].form_startDate);
+		$('#endDate').text(formInfo[0].form_endDate);
+		$('#category_name').text(category[0].categoryName);
+		$('#regDate').text("제출 일자: " + date[0].regDate);
+		if(date[0].editDate != "2000-01-01 00:00:00"){
+			$('#editDate').text("마지막 수정 날짜: " + date[0].editDate);
+		}else{
+			$('#editDate').text("마지막 수정 날짜: "+ date[0].regDate);
+		}
+		console.log("step2");
+		//field 만들기 
+		for(var i = 0 ; i < fieldInfo.length; i++){
+			console.log("step3");
+				//form 제출시 확인 필요한 필드 클래스 명으로 지정 
+				if(fieldInfo[i].field_star == 1){
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'>"+fieldInfo[i].field_name+" <span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
+ 						$("#fieldInputs").append(divTitle);
+ 				}else{
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'>"+fieldInfo[i].field_name+" </p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
+						$("#fieldInputs").append(divTitle);
+					} 
+				console.log("step3.5");
+				//아래의 항목의 경우 별도의 옵션 필요
+				if(fieldInfo[i].field_type == 'select' || fieldInfo[i].field_type == 'radio' || fieldInfo[i].field_type == 'checkbox'){
+					console.log("step4");
+					var optionlist;
+					var fieldID = fieldInfo[i].field_id;
+					//field별 옵션 호출 
+					 $.ajax({
+						url:'<%=request.getContextPath()%>/getItem',
+						type:'POST',
+						data: {fieldID : fieldInfo[i].field_id} ,
+						dataType : 'json',
+						async: false,
+						success:function(data){
+							optionlist = data;
+						},
+						error:function(jqXHR, textStatus, errorThrown){
+							alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+						}
+						}); //옵션 부르기 끝
+						
+					//console.log(" 옵션 확인 ");
+					console.log(optionlist);
+					 if(fieldInfo[i].field_type == 'select'){
+						 console.log("step5");
+						 var selectID = "select" + fieldInfo[i].field_id;
+						 $("#field_"+ fieldInfo[i].field_id).children('p').attr("for",selectID);
+ 						  var selectTag = $("<select id='"+selectID+"' class='form-control' name='content' disabled></select>");
+ 							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(selectTag);
+					 }
+					 for(var idx=0; idx < optionlist.length; idx++){
+						 console.log("step6");
+						 
+								 $("#field_"+ fieldInfo[i].field_id).children(".inputDiv").addClass("marginTop")
+							if(fieldInfo[i].field_type == 'select'){
+								
+									if(optionlist[idx].content == resultContent[i].content){
+										var optionTag = $("<option value='"+optionlist[idx].content+"' selected>"+optionlist[idx].content+"</option>");
+										//alert(optionlist[idx].content); 
+									}else{
+										var optionTag = $("<option value='"+optionlist[idx].content+"' >"+optionlist[idx].content+"</option>");
+									}
+									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").children('select').append(optionTag);
+						  
+							 }else if(fieldInfo[i].field_type == 'radio'){
+								 	//alert(optionlist[idx].content);
+									var values = optionlist[idx].content;
+									var labelNum = fieldInfo[i].field_id +"-"+ idx;
+									
+									if(values == resultContent[i].content){
+										var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' checked disabled><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
+									}else{
+										var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' disabled><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
+									}
+									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
+									
+							  }else if(fieldInfo[i].field_type == 'checkbox'){
+								  
+									var values = optionlist[idx].content;
+									if(values == resultContent[i].content){
+										var listTag = $("<label class='checkbox-wrap'> "+values+"<input type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' checked disabled><span class='checkmark'></span></label>");
+							  		}else{
+							  			var listTag = $("<label class='checkbox-wrap'> "+values+"<input type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' disabled><span class='checkmark'></span></label>");
+							  		}
+									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
+									
+							  }
+					   }//option만큼 반복 
+							
+					 
+				}else if(fieldInfo[i].field_type == 'textarea'){
+						var textTag = $("<textarea class='input100' name='content' readonly>"+resultContent[i].content+"</textarea>");
+						//alert(resultContent[i].content);
+						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(textTag);
+				}else{
+						var inputTag = $("<input class= 'input100' type='"+fieldInfo[i].field_type +"' name='content' value='"+resultContent[i].content+"' readonly>");
+					//alert(resultContent[i].content);
+						if(fieldInfo[i].field_type == 'text')
+							inputTag.addClass("bottomLine");
+						else if(fieldInfo[i].field_type == 'file'){
+							if(fieldInfo[i].field_file){
+								var downTag = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+								$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(downTag);
+							}
+							inputTag.addClass("fileinput");
+						}
+						
+						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(inputTag);
+				}
+			}//field 수 만큼 반복
+	}); //document ready
+	</script>
+	<script>
 /* 하위 탭 */
 $(function() {
 	$('ul.under_tab li').click(function() {
@@ -238,18 +216,59 @@ $(function() {
           }
       }
 </script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		var formInfo = ${form_info};
-		//alert(formInfo[0].form_name +"  "+ formInfo[0].form_detail +"  "+ formInfo[0].form_startDate + "~~~"+ formInfo[0].form_endDate);
-		//form title & explation 만들기 
-		$('#form_title').text(formInfo[0].form_name);
-		$('#form_explation').text(formInfo[0].form_detail);
-		$('#startDate').text(formInfo[0].form_startDate);
-		$('#endDate').text(formInfo[0].form_endDate);
-	});//document ready
+</head>
+<body>
+
+	<ul class="under_tab">
+		<li class="under_current" data-tab="under_tab1"><a href="#">상태체크</a></li>
+		<li data-tab="under_tab2"><a href="#">개별보기</a></li>
+	</ul>
+	
+	<div id="under_tab1" class="under_tabcontent">
+		<jsp:include page="/WEB-INF/views/adminFormCheck.jsp" />
+	</div>
+	
+	<div id="under_tab2" class="under_tabcontent under_current">
+		<form id='userForm'>
+		  <div id="form_div">		
+		    <div class="form view title">
+          		<h5 id='category_name' style="float: right"></h5>
+          		<h2 id="form_title" style="margin-top: 0px"></h2>
+			<h5 id="form_date" style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;"><span id="startDate"></span>~<span id="endDate"></span></h5>
+			<p id="form_explation"></p>
+      		    </div>
+		 	<div class="form view field" id="date" style="height: 120px;">        
+			    <p id="regDate"></p><br>
+			    <p id="editDate"></p>
+			</div>
+			</div>
+			</form>
+			</div>
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form" id="userForm" method="POST">
+				<input type="hidden" name="form_index" value="${form_ID}" >
+				<span class="contact100-form-title" id="form_title"> </span>
+
+				<div class="wrap-input100 bg0">
+					<p class="label-input100 form_explanation" ></p>
+				</div>
+				
+				<div id="fieldInputs"  class="contact100-form">
+						<!-- field insert 구역 -->
+				</div>
+
+				
+			</form>
+		</div>
+	</div>
+</body>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-23581568-13');
 </script>
 	
-
-</body>
 </html>

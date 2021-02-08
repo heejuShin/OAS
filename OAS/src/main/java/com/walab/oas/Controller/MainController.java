@@ -98,13 +98,15 @@ public class MainController {
 		System.out.println("<goToForm> controller");
 		
 		String form_id  = request.getParameter("select_formID");
-		int form_ID = Integer.parseInt(form_id);
+		int form_ID = 1;//Integer.parseInt(form_id);
 
 		
 		//System.out.println("formID : "+ form_id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
+		System.out.println("<goToForm> form info");
+		System.out.println(form_info.toString());
 		System.out.println(field_list.toString());
 		
 		//form info json 처리 
@@ -135,7 +137,7 @@ public class MainController {
 					        ob.put("field_name", field_list.get(i).getFieldName());
 					        ob.put("field_type", field_list.get(i).getFieldType());
 					        ob.put("field_star", field_list.get(i).getIsEssential());
-					        ob.put("field_file", field_list.get(i).getFieldName());
+					        ob.put("field_file", field_list.get(i).getFileName() );
 					        
 					            
 					        jArray2.put(ob);      
@@ -152,6 +154,7 @@ public class MainController {
 		mav.addObject("form_info", jArray1);
 		mav.addObject("field_list", jArray2);
 		mav.setViewName("userFormWrite");
+		System.out.println("<goToForm> controller end");
 		return mav;
 	}
 	
@@ -215,9 +218,6 @@ public class MainController {
 			
 			return mav;
 		}
-	
-	
-	
 	
 		
 }

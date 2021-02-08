@@ -16,13 +16,10 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?aadsf">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=11">
 
 <!-- js -->
-<!-- Bootstrap core JavaScript -->
-
 <script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Additional Scripts -->
@@ -31,7 +28,7 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     
@@ -58,7 +55,7 @@
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="index.html"> <h2>Sixteen <em>Clothing</em> </h2></a>
+          <a class="navbar-brand" href="<%=request.getContextPath()%>"><h2>HGU CSEE <em>신청 시스템</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -109,9 +106,9 @@
           </div>
 
           <div class="form edit state">
-             <div class="form edit state">   
-        <h4>상태 선택<span class="essential"> * </span></h4>
-        <select id="state" multiple="multiple" style="width: 450px">
+              
+        <h5 style="margin-bottom: 10px;">상태 선택<span class="essential"> * </span></h5>
+        <select style="width: 650px;" id="state" multiple="multiple" style="width: 450px">
           <option selected="selected" value="대기중">대기 중</option>
           <option selected="selected" value="입금전">입금 전</option>
           <option selected="selected" value="방문요망">방문요망</option>
@@ -121,8 +118,9 @@
           <option selected="selected" value="신청마감">신청마감</option>
           <option selected="selected" value="예약">예약</option>    
       </select>
-      </div>
           </div>
+          
+            <div id="list"></div>
 
           <div class="form edit button">
             <button type="button" id="confirm">확인</button> 
@@ -242,7 +240,6 @@ $(".form-control").select2({
 });
 
 /** TODO
-* 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
 * 그래도 어느 정도의 CSS
 * 상태 선택
 * 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
