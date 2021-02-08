@@ -331,5 +331,13 @@
 	<select id="users" resultType="com.walab.oas.DTO.User">
        select userName, admin, email, studentId, phoneNum, department, major, grade, semester, point from User;
     </select>
+    
+    <select id="findUser" resultType="com.walab.oas.DTO.User">
+    	select * from User where email = #{email};
+    </select>
+    
+   	<select id="isUserExist" resultType="int">
+    	select COUNT(*) from User where email = #{email};
+    </select>
 </mapper>
 

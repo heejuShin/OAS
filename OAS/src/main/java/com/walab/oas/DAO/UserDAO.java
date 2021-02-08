@@ -43,5 +43,12 @@ public class UserDAO {
 	public List<User> users() throws Exception{
 		return sqlSession.selectList(namespace + ".users");
 	}
+	
+	public int isUserExist(String email) {
+		return sqlSession.selectOne(namespace + ".isUserExist", email);
+	}
+	public User findUser(String email) {
+		return sqlSession.selectOne(namespace + ".findUser", email);
+	}
 
 }

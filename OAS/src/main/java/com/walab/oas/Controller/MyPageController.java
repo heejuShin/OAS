@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,27 +35,34 @@ public class MyPageController {
 	
 	// 게시판 페이징
 		@RequestMapping(value="/admin/mypage")
-		public ModelAndView adminPageList(SearchCriteria cri, HttpSession session) throws JsonProcessingException {
+		public ModelAndView adminPageList(HttpServletRequest request, SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
-			
-			mav = new ModelAndView("adminMypage");
-			
-			List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
-			System.out.println(adminList);
-			ObjectMapper mapper=new ObjectMapper();
-			String jArray=mapper.writeValueAsString(adminList);
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(adminList.size());
-
-			
-			mav.addObject("adminList", jArray);
-			mav.addObject("count", adminList.size());
-			mav.addObject("searchOption", cri.getSearchType());
-			mav.addObject("keyword", cri.getKeyword());
-			
-			mav.addObject("pageMaker", pageMaker);
-
+			if(session==null || !request.isRequestedSessionIdValid()) {
+				mav = new ModelAndView("AccessDenied");
+				return mav;
+			}
+			else if(session.getAttribute("admin").equals("2")) {
+				mav = new ModelAndView("AccessDenied");
+			}
+			else {	
+				mav = new ModelAndView("adminMypage");
+				
+				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
+				System.out.println(adminList);
+				ObjectMapper mapper=new ObjectMapper();
+				String jArray=mapper.writeValueAsString(adminList);
+				PageMaker pageMaker = new PageMaker();
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(adminList.size());
+	
+				
+				mav.addObject("adminList", jArray);
+				mav.addObject("count", adminList.size());
+				mav.addObject("searchOption", cri.getSearchType());
+				mav.addObject("keyword", cri.getKeyword());
+				
+				mav.addObject("pageMaker", pageMaker);
+			}
 			return mav;
 		}
 		

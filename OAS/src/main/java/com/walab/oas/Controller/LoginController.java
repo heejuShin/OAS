@@ -81,7 +81,7 @@ public class LoginController {
       RestTemplate restTemplate = new RestTemplate();
 
       //Google OAuth Access Token 요청을 위한 파라미터 세팅
-      GoogleOAuthRequest googleOAuthRequestParam = new GoogleOAuthRequest(clientId,clientSecret,authCode,"http://localhost:8088/login/google/auth","authorization_code");
+      GoogleOAuthRequest googleOAuthRequestParam = new GoogleOAuthRequest(clientId,clientSecret,authCode,"http://localhost:8080/login/google/auth","authorization_code");
 
 
 
@@ -112,8 +112,30 @@ public class LoginController {
       User user = new User();
       user.setEmail(userInfo.get("email"));
       user.setUserName(userInfo.get("name"));
-      List<User> users = userDao.users();
+      //List<User> users = userDao.users();
       //String redirectUrl = "redirect:https://accou
+      if(userDao.isUserExist(userInfo.get("email"))==0) {
+          mav.addObject("user", user);
+          //mav.addObject("token", result.getAccessToken());
+          mav.setViewName("registInfo");
+          
+          return mav;
+      }
+      else {
+	      user = userDao.findUser(user.getEmail());
+	      
+	      session.setAttribute("name", user.getUserName());
+	      session.setAttribute("email", user.getEmail());
+	      session.setAttribute("admin", user.getAdmin());
+	      session.setAttribute("studentId", user.getStudentId());
+	      session.setAttribute("grade", user.getGrade());
+	      session.setAttribute("department", user.getDepartment());
+	      session.setAttribute("admin", user.getAdmin());
+	      mav.setViewName("redirect:/");
+	      return mav;
+      }
+      
+      /*
       for(int i=0;i<users.size();i++) {
          System.out.println(i+" "+user.getEmail()+" "+users.get(i).getEmail()+" "+ user.getEmail().equals(users.get(i).getEmail()));
          if(user.getEmail().equals(users.get(i).getEmail())) {
@@ -125,17 +147,12 @@ public class LoginController {
             session.setAttribute("studentId", users.get(i).getStudentId());
             session.setAttribute("grade", users.get(i).getGrade());
             session.setAttribute("department", users.get(i).getDepartment());
+            session.setAttribute("admin", users.get(i).getAdmin());
             //mav.addObject("token", result.getAccessToken());
             mav.setViewName("redirect:/");
             return mav;
          }
-      }
-      mav.addObject("user", user);
-      //mav.addObject("token", result.getAccessToken());
-      mav.setViewName("registInfo");
-      
-      return mav;
-
+      }*/
    }
    
    /**
@@ -165,7 +182,7 @@ public class LoginController {
       
       String redirectUrl = "redirect:https://accounts.google.com/o/oauth2/v2/auth?"
             + "client_id=561186600567-ghv5joqq35ar98gvkp6vqa5pltvop4ie.apps.googleusercontent.com"
-            + "&redirect_uri=http://localhost:8088/login/google/auth"
+            + "&redirect_uri=http://localhost:8080/login/google/auth"
             + "&response_type=code"
             + "&scope=email%20profile%20openid"
             + "&access_type=offline";
@@ -187,6 +204,7 @@ public class LoginController {
       session.setAttribute("studentId", user.getStudentId());
       session.setAttribute("grade", user.getGrade());
       session.setAttribute("department", user.getDepartment());
+      session.setAttribute("admin", user.getAdmin());
       mav.setViewName("redirect:/");
       return mav;
    }
