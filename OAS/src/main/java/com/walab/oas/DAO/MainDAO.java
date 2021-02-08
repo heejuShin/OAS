@@ -40,19 +40,7 @@ public class MainDAO{
 		return sqlSession.selectList(namespace + ".fieldInfo", formID);
 	}
 	
-	public List<Item> itemList(int fieldID) {
-		return sqlSession.selectList(namespace + ".itemInfo", fieldID);
-	}
 	
-	public int getState (int formID) {
-		 return sqlSession.selectOne(namespace + ".getStateID", formID);
-	}
 	
-	public int setResult (Result resultInfo) {
-		 return sqlSession.insert(namespace + ".createResultID", resultInfo);
-	}
 	
-	public void setContent (Result_Content resultInfo) {
-		 sqlSession.insert(namespace + ".inputContent", resultInfo);
-	}
 }

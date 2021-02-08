@@ -186,7 +186,7 @@
 								var msg = $("<p class='redCSS redMsg' >필수값입니다.</p>");
 								$(this).after(msg);
 							}
-					   }else if($(this).children('div').children().is(':radio') && !$(this).children('div').children().is(':checked') ){
+					   }else if($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked')< 1 ){
 			        		is_empty = 1;
 						if($(this).siblings('.redMsg').length < 1) {
 							var msg = $("<p class='redCSS redMsg' >필수값입니다.</p>");
@@ -202,12 +202,18 @@
 						$(".inputDiv").each(function (){
 							//radio,checkbox 가 필수가 아닐때 hidden input(관련 field_id) 지움
 							if ($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked') < 1 ) {
-								$(this).siblings('input[name=field_ids]').remove();
+								$(this).append('<input type="hidden" name="content" value="">');
 					        }else if($(this).children('label').children().is(':checkbox') && $(this).children('label').children().is(':checked') < 1) {
-								$(this).siblings('input[name=field_ids]').remove();
+					        	$(this).children('label').children('input:checkbox').attr("name", "removeI");
+					        	$(this).append('<input type="hidden" name="content" value="">');
 					        }else if($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked') == 1 ) {
-						        var newInput = $('<textarea name="content" style="display:none;">'+$(this).children('div').children().val()+'</textarea>');
-						        $(this).append(newInput);
+					        	$(this).children('div').children('input:radio').each(function (){
+						        	if($(this).is(':checked')){
+							        	var newInput = $('<textarea name="content" style="display:none;">'+$(this).val()+'</textarea>');
+							        	$(this).append(newInput);
+							        	}
+							        
+					        	});
 						        }
 
 					        
