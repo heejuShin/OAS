@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -84,6 +85,7 @@ public class AdminController {
 	//신청폼 create
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
+		@ModelAttribute("ses")
 		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");

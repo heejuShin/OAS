@@ -148,7 +148,7 @@
     <div class="container">
       <div class="page-header" style="border-bottom: 1px solid black; margin : 3% 0%; padding-bottom: 2%">
               <div><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"></div>
-		    	<div id="welcomeMsg"><h1 >안녕하세요 OOO 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
+		    	<div id="welcomeMsg"><h1 >안녕하세요 ${name }님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
 		    	<div></div>
           </div>
           <!--Start_Filter and Search part-->
