@@ -110,7 +110,10 @@ $( document ).ready(function() {
 	});
 
 	//메뉴바 이동 코드
-	var count = 0;
+	var count = $("div#list").children().length-1;
+	
+	if(count<0)
+		count=0;
 	
 	$(window).scroll(function(){
 	  var scrollTop = $(document).scrollTop();
@@ -142,6 +145,7 @@ $( document ).ready(function() {
 	//field 추가
 	$("#menu-bar").click(function(){
 	  count++;
+	  
 	  $("#field_add").find(".field").attr("id", "field"+count);
 	  $("#field_add").find(".isEssential").attr("name", "isEssential"+count);
 	  $("#field_add").find(".field_title").attr("name", "f_title"+count);
@@ -159,6 +163,8 @@ $( document ).ready(function() {
 	
 	//객관식 아이템 추가
 	$("#list").on('click', ".btn_add_radio", function(){
+	
+	  
 	  var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
 	  $(this).parent().siblings(".count").val(r_cnt);
 	  var idx = $(this).parent().siblings(".index").val();

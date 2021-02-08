@@ -13,14 +13,17 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.SearchCriteria;
+import com.walab.oas.DTO.User;
 
 @RestController
 @RequestMapping(value = "/") // 주소 패턴
@@ -31,58 +34,25 @@ public class MyPageController {
 	
 	// 게시판 페이징
 		@RequestMapping(value="/admin/mypage")
-		public ModelAndView adminPageList(SearchCriteria cri, HttpSession session) {
+		public ModelAndView adminPageList(SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
 			
 			mav = new ModelAndView("adminMypage");
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()));
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			JSONArray jArray = new JSONArray();
 			
 			List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
 			System.out.println(adminList);
-			
-	        try {
-	        	for (int i = 0; i < adminList.size() ; i++) {   
-	        		JSONObject ob =new JSONObject();
-	        		ob.put("id", adminList.get(i).getId());
-			        ob.put("categoryName", adminList.get(i).getCategoryName());
-		            ob.put("formName", adminList.get(i).getFormName());
-		            ob.put("startDate", adminList.get(i).getStartDate());
-		            ob.put("endDate", adminList.get(i).getEndDate());
-		            ob.put("regDate", adminList.get(i).getRegDate());
-		            ob.put("userName", adminList.get(i).getUserName());
-		            jArray.put(ob);
-		        }
-	
-	        }catch(JSONException e){
-	        	e.printStackTrace();
-	        }
-			
-			int count = mypageDao.countArticle(cri.getSearchType(), cri.getKeyword());
-			
-			Map<String, Object> map = new HashMap<String, Object>();
+			ObjectMapper mapper=new ObjectMapper();
+			String jArray=mapper.writeValueAsString(adminList);
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(adminList.size());
+
 			
 			mav.addObject("adminList", jArray);
-			mav.addObject("count", count);
+			mav.addObject("count", adminList.size());
 			mav.addObject("searchOption", cri.getSearchType());
 			mav.addObject("keyword", cri.getKeyword());
 			
-//			String json = null ;
-//			
-//			try { // convert map to JSON string 
-//				json= mapper.writeValueAsString(adminList); 
-//				
-//				json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(adminList); 
-//				
-//				System.out.println("json: "+json); // pretty-print 
-//				} catch (JsonProcessingException e) { e.printStackTrace(); }
-//			
-	       
 			mav.addObject("pageMaker", pageMaker);
 
 			return mav;
@@ -91,51 +61,82 @@ public class MyPageController {
 		
 		
 		@RequestMapping(value="/mypage")
-		public ModelAndView userPageList(SearchCriteria cri, HttpSession session) {
+		public ModelAndView userPageList(SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
 			
 			mav = new ModelAndView("userMypage");
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()));
-
-			ObjectMapper mapper = new ObjectMapper();
-
-			JSONArray jArray = new JSONArray();
-			
 			int user_id=1;
 			
-			List<Form> userList = mypageDao.userList(cri,user_id); //admin의 폼 데이터 리스트를 가져온다
-			System.out.println(userList);
-			
-	        try {
-	        	for (int i = 0; i < userList.size() ; i++) {   
-	        		JSONObject ob =new JSONObject();
-	        		ob.put("id", userList.get(i).getId());
-			        ob.put("categoryName", userList.get(i).getCategoryName());
-		            ob.put("formName", userList.get(i).getFormName());
-		            ob.put("startDate", userList.get(i).getStartDate());
-		            ob.put("endDate", userList.get(i).getEndDate());
-		            ob.put("regDate", userList.get(i).getRegDate());
-		            ob.put("userName", userList.get(i).getUserName());
-		            jArray.put(ob);
-		        }
-	
-	        }catch(JSONException e){
-	        	e.printStackTrace();
-	        }
-			
-			int count = mypageDao.countArticle(cri.getSearchType(), cri.getKeyword());
-			System.out.println(jArray);
+			//userTab1 신청폼 개수 가져오기 (TAB1)
+			cri.setUser_id(user_id);
+			List<Form> userList = mypageDao.userList(cri); //admin의 폼 데이터 리스트를 가져온다
+			int count1 = userList.size();
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(count1);
+			ObjectMapper mapper=new ObjectMapper();
+			String jArray=mapper.writeValueAsString(userList);
 			mav.addObject("userList", jArray);
-			mav.addObject("count", count);
+			mav.addObject("count1", count1);
+			mav.addObject("pageMaker", pageMaker);
+		
+			
+			//TAB2
+			List<Form> userTab2=mypageDao.noApplyForm(cri);
+			PageMaker pageMaker2 = new PageMaker();
+			pageMaker2.setCri(cri);
+			int count2 = userTab2.size();
+			pageMaker2.setTotalCount(count2);
+			ObjectMapper mapper2=new ObjectMapper();
+			String userTabStrint2=mapper2.writeValueAsString(userTab2);
+			mav.addObject("userTab2", userTabStrint2);
+			mav.addObject("count2", count2);
+			mav.addObject("pageMaker2", pageMaker2);
+			
+			//TAB3
+			List<Form> userTab3=mypageDao.pastApplyForm(cri);
+			int count3 = userTab3.size();
+			PageMaker pageMaker3 = new PageMaker();
+			pageMaker3.setCri(cri);
+			pageMaker3.setTotalCount(count3);
+			ObjectMapper mapper3=new ObjectMapper();
+			String userTabStrint3=mapper3.writeValueAsString(userTab3);
+			mav.addObject("userTab3", userTabStrint3);
+			mav.addObject("count3", count3);
+			mav.addObject("pageMaker3", pageMaker3);
+			
+			
 			mav.addObject("searchOption", cri.getSearchType());
 			mav.addObject("keyword", cri.getKeyword());
 			
-			mav.addObject("pageMaker", pageMaker);
-
 			return mav;
 		}
+		
+		/*
+		@RequestMapping(value = "/userTab2" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+		@ResponseBody
+		public List<Form> userTab2(HttpSession session,HttpServletRequest request,SearchCriteria cri) throws Exception {
+			int user_id=Integer.parseInt(request.getParameter("user_id"));
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()));
+			
+			List<Form> formList=mypageDao.noApplyForm(cri,user_id);
+			return formList;
+		}*/
+		/*
+		@RequestMapping(value = "/userTab3" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+		@ResponseBody
+		public List<Form> userTab3(HttpSession session,HttpServletRequest request,SearchCriteria cri) throws Exception {
+			int user_id=Integer.parseInt(request.getParameter("user_id"));
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()));
+			
+			List<Form> formList=mypageDao.pastApplyForm(cri,user_id);
+			System.out.println("formTab3: "+formList);
+			return formList;
+		}*/
 		
 		@RequestMapping(value = "/admin/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 		public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
@@ -153,5 +154,29 @@ public class MyPageController {
 			return new ModelAndView("redirect:/admin/mypage");
 		}
 		
+		
+		@RequestMapping(value= "/userInformation") // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+		@ResponseBody
+		public List<User> getUserInfo(HttpSession session) throws Exception {
+				
+			String email="21700000@handong.edu";
+				
+			List<User> userinfo = mypageDao.getUserInfo(email);
+				
+			System.out.println("userinfo: "+userinfo);
+				
+			return userinfo;
+		}
+		
+		@RequestMapping(value = "/info/modify" ,method = RequestMethod.POST)
+		  public ModelAndView modifyInfo(HttpSession session,User user) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			
+			
+			mypageDao.modifyInfo(user);
+			
+			mav.setViewName("redirect:/mypage");
+			return mav;
+		}
 
 }

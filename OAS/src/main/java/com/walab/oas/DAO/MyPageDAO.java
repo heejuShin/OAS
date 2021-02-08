@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.SearchCriteria;
+import com.walab.oas.DTO.User;
 
 @Repository
 public class MyPageDAO {
@@ -32,15 +33,9 @@ public class MyPageDAO {
 		return sqlSession.selectList("adminlist", cri);
 	}
 	
-	public List<Form> userList(SearchCriteria cri,int user_id){ //admin의 폼리스트 가져오기
+	public List<Form> userList(SearchCriteria cri){ //admin의 폼리스트 가져오기
+		
 		return sqlSession.selectList("userlist", cri);
-	}
-	
-	public int countArticle(String searchType, String keyword) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("searchType", searchType);
-		map.put("keyword", keyword);
-		return sqlSession.selectOne("countArticle", map);
 	}
 	
 	public int countBoardList() {
@@ -52,4 +47,27 @@ public class MyPageDAO {
 		sqlSession.delete(namespace + ".deleteForm",formID);
 	}
 		
+	//user 정보 가져오기
+	public List<User> getUserInfo(String email){ //admin의 폼리스트 가져오기
+		return sqlSession.selectList("userinfo", email);
+	}
+	
+	//user 정보 수정하기
+	//user 정보 가져오기
+	public void modifyInfo(User user){ //admin의 폼리스트 가져오기
+		sqlSession.update("modifyInfo", user);
+	}
+	
+	//user 신청 안 한 신청폼 가져오기
+	public List<Form> noApplyForm(SearchCriteria cri){ //admin의 폼리스트 가져오기
+		
+		return sqlSession.selectList("noApplyForm", cri);
+	}
+	
+	//신청했던 과거 폼들 가져오기
+	//user 신청한 한 신청폼 가져오기
+	public List<Form> pastApplyForm(SearchCriteria cri){ //admin의 폼리스트 가져오기
+		
+		return sqlSession.selectList("pastApplyForm", cri);
+	}
 }

@@ -4,95 +4,185 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FormUpdate</title>
+<title>Insert title here</title>
+
+<!-- css -->
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Additional CSS Files -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
+
+<!-- js -->
+<!-- Bootstrap core JavaScript -->
+<script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Additional Scripts -->
+<script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
+<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
+
+<!-- 카테고리 관련 CDN -->
+<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- select2 javascript cdn -->
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 
 </head>
+
 <body>
-    
-<form>
-  <div id="form_div">
+    <div style="height: 100px;"></div>
+    <!--body-->
+      <form action="formUpdate" method="post" modelAttribute = "form">
+      <div id="form_div">
 
-      <div class="form view title">
-          <h5 style="font-style: italic; float: right">MAC 신청</h5>
-          <h2 style="margin-top: 0px">설문조사</h2>
-          <h5 style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;">2021.01.13 ~ 2021.01.31</h5>
-          <p>2021년 설문조사입니다. 여기는 신청폼에 대한 설명이들어갑니다. <br>현재는 view 페이지입니다.</p>
+          <div id="menu-bar"><p id="add_p">+</p></div>
+
+          <div class="form edit title">
+              <input type="text" id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required/>
+              <input name="user_id" type="hidden" value="2"/> <!-- value session에서 가져와야함니당 -->
+              <span style="display:inline-block; width: 250px;">
+              <select class="form-control" id="category_select" name="category_id" required>
+				<option value="" selected disabled>카테고리 선택</option>
+			  </select></span><br>
+              <input style="margin-top: 10px" id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" name="startTime" type="time" value="10:00" required/>
+               ~ <input id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" name="endTime" type="time" value="23:00" required/>
+              <textarea name="explanation" placeholder="설문지 설명"></textarea>
+              <input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
+              <input name="minusPoint" type="hidden" value="0"/> <!-- type="number" -->
+              <input name="isHeaderModified" id="isHeaderModified" type="hidden" value="0"/>
+              <input name="formId" id="formId" type="hidden" value="0"/>
+              <input type="hidden" id="count" name="count" value="0"/>
+          </div>
+
+          <div class="form edit state">   
+	        <h4>상태 선택<span class="essential"> * </span></h4>
+	        <select id="state" multiple="multiple" style="width: 450px">
+	          <option selected="selected" value="대기중">대기 중</option>
+	          <option selected="selected" value="입금전">입금 전</option>
+	          <option selected="selected" value="방문요망">방문요망</option>
+	          <option selected="selected" value="완료">완료</option>
+	          <option selected="selected" value="불가">불가</option>
+	          <option selected="selected" value="신청중">신청 중</option>
+	          <option selected="selected" value="신청마감">신청마감</option>
+	          <option selected="selected" value="예약">예약</option>    
+	      </select>
+	      </div>
+
+          <div id="list"></div>
+          
+          
+          <div class="form edit button"><!--UPDATE시 사용 예정 -->
+            <button type="button" class="edit" id="edit">수정</button>
+            <button type="button" class="cancle" id="cancle">취소</button>
+          </div>
+
+        </div>
+        <div id="confirm_modal">
+	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
+	        <p>
+	        <span class="modal_title">제목 : </span><span id="confirm_title"></span><br>
+	        <span class="modal_title">분류 : </span><span id="confirm_category"></span><br>
+	        <span class="modal_title">기간 : </span><span id="confirm_start"></span> ~ <span id="confirm_end"></span> <br>
+	        <span class="modal_title">링크 : </span><input id="link" type="text" name="url"/>
+	       
+	        </p>
+	        <button type="submit" id="form_submit" class="submit">확인</button>
+	        <a class="modal_close_btn"><button type="button">취소</button></a>
+    	</div>
+      </form>
+
+      <div class="add" id="field_add">
+        <div class="form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
+          <input class="field_title" name="f_title?" placeholder="질문 제목"/>
+          <input type=checkbox class="isEssential_fake" name="isEssential_fake">
+                  <label for="필수질문">필수</label>
+          </input>
+          <input type="hidden" name="isEssential?" class="isEssential" value="0"/>
+          <input type="hidden" class="index" value="0"/>
+          <input type="hidden" class="count" id="count?" name="count?" value="0"/>
+          <input type="hidden" class="isModified" name="isModified" value="0"/>
+          <input type="hidden" class="fieldId" name="fieldId" value=""/>
+
+          <button type="button" class="remove">X</button><br>
+          <select class="field_type" name="f_type?"> <!-- TODO required -->
+            <option value="" selected disabled>질문유형</option>
+            <option value="text">단답형</option>
+            <option value="textarea">장문형</option>
+            <option value="radio">객관식</option>
+            <option value="checkbox">체크박스</option>
+            <option value="select">드롭다운</option>
+            <option value="file">파일업로드</option>
+            <option value="date">날짜</option>
+            <option value="time">시간</option>
+            <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
+          </select>
+          <div class="content"></div>
+        </div>
       </div>
- 
-      <div id="list">
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>단답형<span class="essential"> * <span></h4>
-          <div class="content">
-            <input type="text">
-          </div>
-        </div>
 
-        <div class="form view field" id="filed?" style="height: 120px;"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>장문형<span class="essential"> * <span></h4>
-          <div class="content">
-            <textarea></textarea>
-          </div>
-        </div>
-
-
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>객관식</h4>
-          <div class="content">
-            <input type="radio" id="id" name="name"><label class="item" for="id">객관식1</label></input>
-            <input type="radio" id="id" name="name"><label class="item" for="id">객관식2</label></input>
-            <input type="radio" id="id" name="name"><label class="item" for="id">객관식3</label></input>
-          </div>
-        </div>
-
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>체크박스</h4>
-          <div class="content">
-            <input type="checkbox" id="id" name="name"><label class="item" for="id">체크박스1</label></input>
-            <input type="checkbox" id="id" name="name"><label class="item" for="id">체크박스2</label></input>
-            <input type="checkbox" id="id" name="name"><label class="item" for="id">체크박스3</label></input>
-          </div>
-        </div>
-
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>드롭다운</h4>
-          <div class="content">
-            <select style="width: 300px;">
-              <option value="옵션1">옵션1</option>
-              <option value="옵션2">옵션2</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>파일업로드</h4>
-          <div class="content">
-            <input type="file"/>
-          </div>
-        </div>
-
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>날짜</h4>
-          <div class="content">
-            <input style="height: 30px" type="date"/>
-          </div>
-        </div>
-
-        <div class="form view field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          <h4>시간</h4>
-          <div class="content">
-            <input style="height: 30px" type="time"/>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="form edit button">
-        <button type="button" class="submit">제출</button>
+    <div class="add" id="radio_add">
+      <div>
+      	<input class="radio_itemId" type="hidden" name="?itemId?" value=""/>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="radio_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
-  </form>
 
+    <div class="add" id="chxbox_add">
+      <div>
+      	<input class="checkbox_itemId" type="hidden" name="?itemId?" value=""/>
+        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+     	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+      </div>
+    </div>
 
-</body>
+   <div class="add" id="select_add">
+        <option class="option_fake" value=""/>
+    </div>
+    
+    <div class="add" id="select_value_add">
+    	<input class="select_itemId" type="hidden" name="?itemId?" value=""/>
+    	<input class="option_real" type="hidden" name="?content?" value=""/>
+    </div>
+   
+
+  </body>
+  <script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js"></script>
+  
+  
+  <script>
+	var category_list = ${category_list};
+	var categoryNum = $("<input name='categoryNum' value='"+category_list.length+"' type='hidden'>");
+	$(".form-div").append(categoryNum);
+	for (var i = 0; i < category_list.length; i++) {
+		var selectOption = $("<option value='"+category_list[i].id+"'>"+ category_list[i].categoryName+ "</option>");
+		$(".form-control").append(selectOption);
+	}
+	console.log(categoryNum);
+	$(".form-control").append(categoryNum).html();
+	//select2 초기화
+	$(".form-control").select2({
+		tags : true
+	});
+	/** TODO
+	* 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
+	* 그래도 어느 정도의 CSS
+	* 상태 선택
+	* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
+	* '기타' 추가 기능
+	* 복사 기능
+	**/
+
+	
+</script>
+  
+
 </html>

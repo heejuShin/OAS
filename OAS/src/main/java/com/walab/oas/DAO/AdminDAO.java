@@ -62,4 +62,24 @@ public class AdminDAO {
 		System.out.println("im here");
 		return sqlSession.insert(namespace + ".add_Category", cg);
 	}
+	
+	//admin Form update 기능
+	public Form formInfo(int form_id) {
+		return sqlSession.selectOne(namespace + ".formDetailInfo",form_id);
+	}
+	public List<Field> formDetailField(int form_id) {
+		return sqlSession.selectList(namespace + ".formDetailField",form_id);
+	}
+	public List<Item> formDetailItem(int field_id) {
+		return sqlSession.selectList(namespace + ".formDetailItem",field_id);
+	}
+	public void modifyForm(Form form) {
+		sqlSession.update(namespace + ".modifyForm",form);
+	}
+	public void modifyField(Field field) {
+		sqlSession.update(namespace + ".modifyField",field);
+	}
+	public void modifyItem(Item item) {
+		sqlSession.update(namespace + ".modifyItem",item);
+	}
 }

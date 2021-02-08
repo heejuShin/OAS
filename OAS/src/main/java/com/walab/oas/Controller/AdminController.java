@@ -10,17 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.sql.Date;
-import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
 
@@ -237,6 +230,181 @@ public class AdminController {
 		
 		mav.setViewName("adminFormView");
 		return mav;
+	}
+	
+	//신청폼 update 기능
+	@RequestMapping(value = "/form/update/{link}")
+	public ModelAndView formUpdate(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		List<Category> category_list = mainDao.categoryList();
+		JSONArray jArray = new JSONArray();
+		try{
+			for (int i = 0; i < category_list.size() ; i++) {   
+	    		JSONObject ob2 =new JSONObject();
+	    		ob2.put("id", category_list.get(i).getId());
+		        ob2.put("categoryName", category_list.get(i).getCategoryName());
+		        System.out.println(ob2);
+	            jArray.put(ob2);
+			}
+			
+		}catch(JSONException e){
+	    	e.printStackTrace();
+	    }
+		
+		mav.addObject("category_list",jArray);
+		
+		mav.setViewName("adminFormView");
+		return mav;
+			
+	}
+	
+	//신청폼 수정 페이지에서 각 field에 맞는 item 가져오기
+	@RequestMapping(value= "/form/update/info", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	@ResponseBody
+	public Form getFormInfo(HttpServletRequest request, HttpSession session) throws Exception {
+				
+		int form_id=Integer.parseInt(request.getParameter("form_id"));
+		
+		Form formInfo=adminDAO.formInfo(form_id);
+		System.out.println("formInfo: "+formInfo);
+				
+		return formInfo;
+	}	
+	
+	//신청폼 수정 페이지에서 field 가져오기
+	@RequestMapping(value= "/form/update/field", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	@ResponseBody
+	public List<Field> getFieldList(HttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("oghoho");
+		int form_id=Integer.parseInt(request.getParameter("form_id"));
+			
+		List<Field> formDetailField=adminDAO.formDetailField(form_id);
+			
+		return formDetailField;
+	}	
+	
+	//신청폼 수정 페이지에서 각 field에 맞는 item 가져오기
+	@RequestMapping(value= "/form/update/item", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	@ResponseBody
+	public List<Item> getItemList(HttpServletRequest request, HttpSession session) throws Exception {
+			
+		int field_id=Integer.parseInt(request.getParameter("field_id"));
+		System.out.println("field_id: "+field_id);
+			
+		List<Item> formDetailItem=adminDAO.formDetailItem(field_id);
+			
+		return formDetailItem;
+	}	
+	
+	//신청폼 update
+	@SuppressWarnings("finally")
+	@RequestMapping(value="/form/update/formUpdate",method=RequestMethod.POST)
+	public @ResponseBody ModelAndView modifyFormData(HttpServletRequest request) throws Exception {
+
+		ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
+		System.out.println("in form update><");
+		Form form = new Form();
+		Category cg = new Category();
+		int category_id = 0;
+		int form_id = Integer.parseInt(request.getParameter("formId"));
+		try {
+			Integer.parseInt(request.getParameter("category_id"));
+			category_id = Integer.parseInt(request.getParameter("category_id"));
+			System.out.println("try start");
+		}catch (NumberFormatException e){
+			System.out.println("Cathch start");
+			String nCg = request.getParameter("category_id");
+			System.out.println("Cathch start");
+			//category_id = Integer.parseInt(request.getParameter("categoryNum")) +1;
+			cg.setCategoryName(nCg);
+			System.out.println("Cathch start");
+			adminDAO.addCategory(cg);
+			System.out.println("Cathch start");
+			category_id = cg.getId();
+			System.out.println("This is catch "+category_id);
+		}finally {
+			String url = request.getParameter("url");
+			if(Integer.parseInt(request.getParameter("isHeaderModified"))==1) {
+				
+				System.out.println("finally category id "+category_id);
+				form.setCategory_id(category_id);
+				
+				form.setId(form_id);
+				int user_id = Integer.parseInt(request.getParameter("user_id"));
+				form.setUser_id(user_id);
+				String formName = request.getParameter("formName");
+				form.setFormName(formName);
+				String explanation = request.getParameter("explanation");
+				form.setExplanation(explanation);
+				
+				form.setUrl(url);
+				int isAvailable = 0; //TODO
+				form.setIsAvailable(isAvailable);
+				int isUserEdit = 0; //TODO
+				form.setIsUserEdit(isUserEdit);
+				int plusPoint = Integer.parseInt(request.getParameter("plusPoint"));
+				form.setPlusPoint(plusPoint);
+				int minusPoint = Integer.parseInt(request.getParameter("minusPoint"));
+				form.setMinusPoint(minusPoint);
+				String start = request.getParameter("startDate")+" "+request.getParameter("startTime")+":00";
+				form.setStart(start);
+				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
+				form.setEnd(end);
+				
+				adminDAO.modifyForm(form);
+			}
+			
+			String[] isModified=request.getParameterValues("isModified");
+			String[] field_id=request.getParameterValues("fieldId");
+			//Field
+			int f_cnt = Integer.parseInt(request.getParameter("count"));
+			for(int i=1; i<=f_cnt; i++) {
+				if(Integer.parseInt(isModified[i-1])==1) {
+					Field field = new Field();
+					String title = request.getParameter("f_title"+Integer.toString(i));
+					if(title != null) {
+						
+						field.setId(Integer.parseInt(field_id[i-1]));
+						field.setForm_id(form_id); 
+						field.setFieldName(title); 
+						String fieldType = request.getParameter("f_type"+Integer.toString(i));
+						field.setFieldType(fieldType);
+						String fileName; // 이거 어떻게 할지 고민
+						//field.setFileName(fileName);
+						int isEssential = Integer.parseInt(request.getParameter("isEssential"+Integer.toString(i)));
+						field.setIsEssential(isEssential);
+						int index;
+						//field.setIndex(index);
+						String key = Integer.toString(form_id) + "_" + Integer.toString(i);
+						field.setKey(key);
+						adminDAO.modifyField(field);
+						
+						if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
+							int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)))-1;
+							System.out.println("i_cnt"+i_cnt);
+							for(int j=1; j<=i_cnt; j++) {
+								Item item = new Item();
+								System.out.println("j"+j);
+								String content = request.getParameter(Integer.toString(i)+"content"+Integer.toString(j));
+								if(content != null) {
+									System.out.println(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));
+									item.setId(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));
+									item.setField_id(Integer.parseInt(field_id[i-1]));
+									item.setContent(content);
+									int isDefault = 0;
+									//int isDefault = Integer.parseInt(request.getParameter(Integer.toString(i)+"isDefault"+Integer.toString(j))); 나중에 하자
+									item.setIsDefault(isDefault);
+									adminDAO.modifyItem(item);
+								}
+							}
+						}//radio,select,dropdown이면
+					}//field Name이 비어있지 않으면
+				}//수정이 되었으면
+			}//반복문 끝
+			
+			return mav;
+		}
 	}
 	
 	//신청폼 체크 각 제출자 상태 update

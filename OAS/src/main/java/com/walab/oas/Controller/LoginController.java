@@ -58,7 +58,7 @@ public class LoginController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		//Google OAuth Access Token 요청을 위한 파라미터 세팅
-		GoogleOAuthRequest googleOAuthRequestParam = new GoogleOAuthRequest(clientId,clientSecret,authCode,"http://localhost:8088/oas/login/google/auth","authorization_code");
+		GoogleOAuthRequest googleOAuthRequestParam = new GoogleOAuthRequest(clientId,clientSecret,authCode,"http://localhost:8080/oas/login/google/auth","authorization_code");
 
 
 
@@ -123,7 +123,7 @@ public class LoginController {
 		
 		String redirectUrl = "redirect:https://accounts.google.com/o/oauth2/v2/auth?"
 				+ "client_id=561186600567-ghv5joqq35ar98gvkp6vqa5pltvop4ie.apps.googleusercontent.com"
-				+ "&redirect_uri=http://localhost:8088/oas/login/google/auth"
+				+ "&redirect_uri=http://localhost:8080/oas/login/google/auth"
 				+ "&response_type=code"
 				+ "&scope=email%20profile%20openid"
 				+ "&access_type=offline";
@@ -139,7 +139,7 @@ public class LoginController {
 		int user_id=userDao.joinUser(user);
 		
 		
-		mav.setViewName("home");
+		mav.setViewName("redirect:/mypage");
 		return mav;
 	}
 }

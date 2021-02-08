@@ -206,15 +206,6 @@
       }
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
       /* 지울 내용 */
       
      /*  .board_image{
@@ -302,26 +293,18 @@
 	
 		                    		var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
 									$($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
-	
-									var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>상 태(DB)</a>");
+
+									var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청하기</a>");
 									$($($(".gridss").children()[i]).children()[0]).append(a);
-	
-									var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='1'/></form>");
+		
+									var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
 									$($($(".gridss").children()[i]).children()[0]).append(form);
 									
 			                	}
                             });
 
-                            function openForm(form_id){
-                                
-                            	$("#myform_"+ form_id).children("input").val(form_id);
-
-                            		/* var buf = 	$("#myform_"+ form_id).children("input").val();
-                                console.log("form id : "+form_id+ " / form create : " + buf); */
-                                
-	                            //	$('#select_formID').value = form_id;
-	                            	//$("#myform").attr("action", "form");
-	                            	$("#myform_"+form_id).submit();
+							function openForm(form_id){
+	                            $("#myform_"+form_id).submit();
                             }
 
 
@@ -390,13 +373,20 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="filters">
+                    
                       <ul class="ul_filters">
                           <li class="active" data-filter="*">All Products</li>
                       </ul>
-                      <form class="form-inline">
-                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                          <button id="searchB" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                      </form>
+                      
+                      <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" >
+			  			<select name="searchType">
+			  				<option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>전체</option>
+			  				<option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
+			  				<option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
+			  			</select>
+			  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+			  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		  			</form>
                     </div>
                   </div>
                   <div id="contestsDiv" class="col-md-12">

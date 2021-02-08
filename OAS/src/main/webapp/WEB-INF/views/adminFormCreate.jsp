@@ -103,9 +103,19 @@
               <input type="hidden" id="count" name="count" value="0"/>
           </div>
 
-          <div class="form edit state">
-            상태 선택
-          </div>
+           <div class="form edit state">   
+	        <h4>상태 선택<span class="essential"> * </span></h4>
+	        <select id="state" multiple="multiple" style="width: 450px">
+	          <option selected="selected" value="대기중">대기 중</option>
+	          <option selected="selected" value="입금전">입금 전</option>
+	          <option selected="selected" value="방문요망">방문요망</option>
+	          <option selected="selected" value="완료">완료</option>
+	          <option selected="selected" value="불가">불가</option>
+	          <option selected="selected" value="신청중">신청 중</option>
+	          <option selected="selected" value="신청마감">신청마감</option>
+	          <option selected="selected" value="예약">예약</option>    
+	      </select>
+	      </div>
 
           <div id="list"></div>
 
@@ -203,6 +213,14 @@
 </html>
 
 <script>
+$('#state').on('select2:select', function(e) {
+    var id = e.params.data.id;
+    var value = $(this).val();
+  });
+  $("#state").select2({
+      tags: true,
+      tokenSeparators: [',', ' ']
+  })
 var category_list = ${category_list};
 var categoryNum = $("<input name='categoryNum' value='"+category_list.length+"' type='hidden'>");
 $(".form-div").append(categoryNum);

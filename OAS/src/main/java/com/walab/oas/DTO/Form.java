@@ -21,17 +21,21 @@ public class Form {
 	
 	private String userName;
 	private String categoryName;
+	private String stateName;
+	private int state_id;
 	
 	private String start;
 	private String end;
 	
+
 	@Override
 	public String toString() {
-		return "Form [id=" + id + ", category_id=" + category_id + ", categoryName=" + categoryName + ", user_id="
-				+ user_id + ", formName=" + formName + ", explanation=" + explanation + ", url=" + url
-				+ ", isAvailable=" + isAvailable + ", isUserEdit=" + isUserEdit + ", plusPoint=" + plusPoint
-				+ ", minusPoint=" + minusPoint + ", startDate=" + startDate + ", endDate=" + endDate + ", regDate="
-				+ regDate + ", editDate=" + editDate + ", userName=" + userName + "]";
+		return "Form [id=" + id + ", category_id=" + category_id + ", user_id=" + user_id + ", formName=" + formName
+				+ ", explanation=" + explanation + ", url=" + url + ", isAvailable=" + isAvailable + ", isUserEdit="
+				+ isUserEdit + ", plusPoint=" + plusPoint + ", minusPoint=" + minusPoint + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", regDate=" + regDate + ", editDate=" + editDate + ", userName=" + userName
+				+ ", categoryName=" + categoryName + ", stateName=" + stateName + ", state_id=" + state_id + ", start="
+				+ start + ", end=" + end + "]";
 	}
 
 	public int getId() {
@@ -138,6 +142,23 @@ public class Form {
 		this.regDate = regDate;
 	}
 
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	
+
+	public int getState_id() {
+		return state_id;
+	}
+
+	public void setState_id(int state_id) {
+		this.state_id = state_id;
+	}
+
 	public Date getEditDate() {
 		return editDate;
 	}
@@ -162,6 +183,7 @@ public class Form {
 		this.categoryName = categoryName;
 	}
 
+	
 	public String getStart() {
 		return start;
 	}

@@ -8,6 +8,7 @@ public class User {
 	private int admin;
 	private String email;
 	private String studentId;
+	private String phoneNum;
 	private String department;
 	private String major;
 	private String grade;
@@ -17,13 +18,15 @@ public class User {
 	private Date regDate;
 	private Date deleteDate;
 	
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", admin=" + admin + ", email=" + email + ", studentId="
-				+ studentId + ", department=" + department + ", major=" + major + ", grade=" + grade + ", semester="
-				+ semester + ", point=" + point + ", isDelete=" + isDelete + ", regDate=" + regDate + ", deleteDate="
-				+ deleteDate + "]";
+				+ studentId + ", phoneNum=" + phoneNum + ", department=" + department + ", major=" + major + ", grade="
+				+ grade + ", semester=" + semester + ", point=" + point + ", isDelete=" + isDelete + ", regDate="
+				+ regDate + ", deleteDate=" + deleteDate + "]";
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -54,6 +57,14 @@ public class User {
 	public void setStudentId(String studentId) {
 		this.studentId = studentId;
 	}
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
 	public String getDepartment() {
 		return department;
 	}
