@@ -46,6 +46,16 @@ public class MyPageDAO {
 	public void deleteForm(int formID) throws Exception {
 		sqlSession.delete(namespace + ".deleteForm",formID);
 	}
+	
+	//user info 가져오기 
+	public List<User> getUserInfo() throws Exception{
+		return sqlSession.selectList(namespace + ".getUserInfo");
+	}
+	
+	//user admin update 
+		public void updateAdmin(User user) throws Exception{
+			 sqlSession.update(namespace + ".updateLevel",user);
+		}
 		
 	//user 정보 가져오기
 	public List<User> getUserInfo(String email){ //admin의 폼리스트 가져오기

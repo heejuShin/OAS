@@ -20,8 +20,10 @@
 
     <!-- Latest compiled and minified Bootstrap JavaScript -->
 	<script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
+	 
     
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -36,6 +38,7 @@
     			$('#' + activeTab).addClass('current');
     		})
       });
+      
     </script>
     
     <style type="text/css">
@@ -148,11 +151,11 @@
 		</div>
 	</main>
 
-  
   <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
+
      
   <jsp:include page="/WEB-INF/views/userInfo.jsp" />
-                      
+
   </body>
 
 </html>

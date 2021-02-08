@@ -154,7 +154,6 @@ public class MyPageController {
 			return new ModelAndView("redirect:/admin/mypage");
 		}
 		
-		
 		@RequestMapping(value= "/userInformation") // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
 		@ResponseBody
 		public List<User> getUserInfo(HttpSession session) throws Exception {
@@ -178,5 +177,58 @@ public class MyPageController {
 			mav.setViewName("redirect:/mypage");
 			return mav;
 		}
+
+		//유저 관리 페이지
+		@RequestMapping(value = "/admin/manage") 
+		public ModelAndView managePage (HttpSession session, HttpServletRequest request) throws Exception {
+			System.out.println("<managePage> controller");
+			
+			List<User> userData = mypageDao.getUserInfo();
+			JSONArray jArray = new JSONArray();
+			 try {
+		        	for (int i = 0; i < userData.size() ; i++) {   
+		        		JSONObject ob =new JSONObject();
+		        		ob.put("id", userData.get(i).getId());
+				        ob.put("userName", userData.get(i).getUserName());
+				        ob.put("userNumber",userData.get(i).getPhoneNum());
+				        ob.put("userEmail", userData.get(i).getEmail());
+				        ob.put("studentID", userData.get(i).getStudentId());
+			            ob.put("studentMajor", userData.get(i).getMajor());
+			            ob.put("userLevel", userData.get(i).getAdmin());
+
+			            jArray.put(ob);
+			        }
+		        	System.out.println(jArray);
+		
+		        }catch(JSONException e){
+		        	e.printStackTrace();
+		        }
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("adminUserManage");
+			mav.addObject("userData", jArray);
+			System.out.println("<managePage> controller Finish!");
+			return mav;
+		}
+				
+				//유저 레벨 변경하기 
+				@RequestMapping(value = "/admin/setLevel") 
+				public void setLevels (HttpSession session, HttpServletRequest request) throws Exception {
+					System.out.println("<setLevels> controller");
+					
+					String[] userIDs  = request.getParameterValues("userIDs[]");
+					String userLevel = request.getParameter("newState");
+					
+					for(int i=0; i < userIDs.length ;i++) {
+						User user = new User();
+						user.setId(Integer.parseInt(userIDs[i]));
+						user.setAdmin(Integer.parseInt(userLevel));
+						System.out.println(user);
+						mypageDao.updateAdmin(user);
+					}
+					System.out.println("<setLevels> controller Finish");
+					
+				}
+		
 
 }

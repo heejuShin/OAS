@@ -341,16 +341,13 @@
     <main>
     
     <div class="board1">
- 
 		<div class="board_image">
                 <img src="<%=request.getContextPath()%>/resources/img/home_4.jpg" alt="img section">
          </div>
-
         <div class="board_section">
 	        <div class="title">
 	        	<h1><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 <span class="swLink"><a href='#'>Link</a></span></h1>
 	        </div>
-
                 <div class="tablelist">
 	                <table class="table table-hover">  
 						  <tr id="headTable"><th>Id</th><th>title</th></tr>  

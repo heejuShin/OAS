@@ -153,21 +153,24 @@
    <!-- form 정보 가져오기  -->
 	 <select id="formInfo" parameterType="int" resultType="com.walab.oas.DTO.Form">
 	  <![CDATA[
-			SELECT formName, explanation,startDate,endDate FROM Form WHERE id =#{formID};
+			SELECT * FROM Form WHERE id =#{formID};
 	  ]]>
 	</select> 
+	
+	
+
    
    <!-- field 정보 가져오기  -->
 	 <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
 	  <![CDATA[
-	      SELECT id, fieldName, fieldType, isEssential,fileName FROM Field WHERE form_id =#{formID};
+	      SELECT * FROM Field WHERE form_id =#{formID};
 	  ]]>
 	</select> 
 	
 	<!-- item 정보 가져오기  -->
 	 <select id="itemInfo" parameterType="int" resultType="com.walab.oas.DTO.Item">
 	  <![CDATA[
-	      SELECT content, isDefault FROM Item WHERE field_id=#{fieldID};
+	      SELECT * FROM Item WHERE field_id=#{fieldID};
 	  ]]>
 	</select>
 	
@@ -191,6 +194,12 @@
    <insert id="inputContent" parameterType="com.walab.oas.DTO.Result_Content" >
     	INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
     </insert> 
+    
+    <!-- 상태 id 생성  -->
+   <insert id="stateCreate" parameterType="com.walab.oas.DTO.State">
+    	INSERT INTO State (form_id,stateName,isDefault) VALUE (#{form_id}, #{stateName}, #{isDefault});
+    </insert>
+    
     
     <!-- Form 관련 쿼리 정리 -->
    	<insert id="formCreate" parameterType="Form">
@@ -221,13 +230,67 @@
 		SELECT COUNT(*) from Form where url = #{link};
 	</select>
 	
+	<!-- 개별보기 내용 -->
+	<select id='getReadList' resultType="com.walab.oas.DTO.ReadResult">
+	SELECT * from Field 
+	INNER JOIN
+	(select field_id, content from ResultContent 
+	INNER JOIN Result ON (ResultContent.result_id=Result.id)
+	where ResultContent.result_id=10) A ON (Field.id=A.field_id) where Field.form_id=1;
+	</select>
+	
+	<!-- 개별보기에 카테고리 가져오기  -->
+	<select id="getCategoryName" resultType="com.walab.oas.DTO.Category">
+	Select categoryName from Category 
+	inner join Form on Category.id = Form.category_id 
+	where Form.id =1;
+	</select><!-- Form.id =#{formid받아오기 }; -->
+	
+	<select id="getCategoryName_one" parameterType="int" resultType="String">
+	Select categoryName from Category 
+	inner join Form on Category.id = Form.category_id 
+	where Form.id = #{id};
+	</select>
+	
+	<select id="getUserInfobyId" parameterType="int" resultType="com.walab.oas.DTO.User">
+	Select * from User where id = #{id};
+	</select>
+	
+	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
+	<select id='getDate' resultType="com.walab.oas.DTO.Result">
+	SELECT * FROM Result where Result.id=10;
+	</select><!-- where Result.id=#{해당 응답지 id} -->
+	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
+		INSERT INTO Category ('id', 'categoryName', 'regDate') values(#{category_Id}, #{erase}, null);
 		INSERT INTO Category (categoryName) VALUE (#{categoryName});
 		<selectKey keyProperty="id" resultType="Integer">
 		    SELECT LAST_INSERT_ID();
 		</selectKey>
 	</insert>
+	
+	<select id="excelResult" resultType="com.walab.oas.DTO.Result">
+		SELECT * from Result where form_id = #{id};
+	</select>
+	<select id="excelResultContent" resultType="com.walab.oas.DTO.Result_Content">
+		 SELECT content from ResultContent where result_id = #{id};
+	</select>
+
+	<!-- User 정보 가져오기  -->
+	 <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
+	  <![CDATA[
+			SELECT * FROM User;
+	  ]]>
+	</select> 
+	
+	<!-- User admin update  -->
+	 <update id="updateLevel"  parameterType ="com.walab.oas.DTO.User">
+	  <![CDATA[
+			UPDATE User SET admin = #{admin} WHERE id = #{id};
+	  ]]>
+	</update> 
+
     
 	<!-- user 정보 가져오기 -->
 	<select id="userinfo" parameterType="String" resultType="com.walab.oas.DTO.User">
@@ -265,3 +328,4 @@
 		UPDATE `Item` SET field_id=#{field_id},content=#{content},isDefault=#{isDefault} WHERE id=#{id};
 	</update>
 </mapper>
+

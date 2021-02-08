@@ -12,7 +12,10 @@ import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
+import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.State;
+import com.walab.oas.DTO.User;
+import com.walab.oas.DTO.ReadResult;
 
 @Repository
 public class AdminDAO {
@@ -63,6 +66,7 @@ public class AdminDAO {
 		return sqlSession.insert(namespace + ".add_Category", cg);
 	}
 	
+
 	//admin Form update 기능
 	public Form formInfo(int form_id) {
 		return sqlSession.selectOne(namespace + ".formDetailInfo",form_id);
@@ -82,4 +86,34 @@ public class AdminDAO {
 	public void modifyItem(Item item) {
 		sqlSession.update(namespace + ".modifyItem",item);
 	}
+
+	public List<ReadResult> getReadList(){	
+		return sqlSession.selectList(namespace+".getReadList");		
+	}
+	
+	public List<Category> getCategoryName(){		
+		return sqlSession.selectList(namespace+".getCategoryName");		
+	}
+	
+	public String getCategoryName_one(int id){	
+		return sqlSession.selectOne(namespace+".getCategoryName_one", id);		
+	}
+	
+	public List<Result> getDate(){		
+		return sqlSession.selectList(namespace+".getDate");		
+	}
+	
+	public User getUserInfobyId(int id) {
+		return sqlSession.selectOne(namespace+".getUserInfo", id);
+	}
+	
+	public List<Result> getExcelResult(int id){
+		return sqlSession.selectList(namespace+".excelResult", id);
+	}
+	
+	public List<Result_Content> getExcelResultContent(int id){
+		return sqlSession.selectList(namespace+".excelResultContent", id);
+	}
+	
+	
 }
