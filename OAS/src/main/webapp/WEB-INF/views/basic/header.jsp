@@ -96,6 +96,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">Login</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login/logout">Logout</a>
+              </li>
               <!--<li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
               </li> -->
