@@ -11,7 +11,7 @@ public class SearchCriteria extends Criteria{
 	}
 
 	public void setSearchType(String searchType) {
-		this.searchType = searchType;
+		this.searchType = "all";
 	}
 
 	public String getKeyword() {

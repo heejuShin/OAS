@@ -3,11 +3,15 @@ $( document ).ready(function() {
 	var formInfo;
 	var formDetail;
 	
+	var formID=$(".title").find("input[name=formId]").val();
+	
+	console.log("formID"+formID);
+	
 	$.ajax({ //해당 form의 정보가져오기
-		url : 'info',
+		url : "info",
 	  	type : "post",
-	  	data:{form_id:"1"},
-	  	dataType : 'json',
+	  	data:{"form_id":formID},
+	  	dataType : "json",
 	  	async: false,
 	  	success: function(data){
 		  	formInfo = data;
@@ -30,7 +34,7 @@ $( document ).ready(function() {
 	$(".title").find("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
 	$(".title").find(".select2-selection__rendered").html(formInfo.categoryName);
 	
-	$(".title").find("input[name=formId]").attr("value",formInfo.id);
+	
 	$(".title").find("input[name=startDate]").attr("value",formInfo.startDate);
 	$(".title").find("input[name=endDate]").attr("value",formInfo.endDate);
 	$(".title").find("textarea[name=explanation]").html(formInfo.explanation);
@@ -44,7 +48,7 @@ $( document ).ready(function() {
 	$.ajax({ //해당 폼의 field 가져오기
 		url : 'field',
 	  	type : "post",
-	  	data:{form_id:"1"},
+	  	data:{form_id:formID},
 	  	dataType : 'json',
 	  	async: false,
 	  	success: function(data){
@@ -59,6 +63,10 @@ $( document ).ready(function() {
 
 		}
 	});
+	
+	
+	$(".title").find(".fieldCount").attr("name", "fieldCount"+formInfo.id);
+	$(".title").find(".fieldCount").attr("value", formDetail.length);
 	
 	var count=0;
 	
@@ -86,6 +94,7 @@ $( document ).ready(function() {
 	  
 	 
 	  $("#field_add").find(".count").attr("name", "count"+count);
+	  $("#field_add").find(".itemCount").attr("name", "itemCount"+count);
 	  $("#field_add").find(".index").attr("value", count);
 	  
 	  //field 유형 나타내기
@@ -122,6 +131,8 @@ $( document ).ready(function() {
 		
 				}
 	  	  });
+	  	  
+	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
 	    	content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"list_select\"></div>";
@@ -239,6 +250,7 @@ $( document ).ready(function() {
 	
 	$("#list").on('click', ".btn_add_radio", function(){
 		$(this).parent().siblings(".isModified").val("1");
+		
 	});
 	
 	$("#list").on('click', ".remove_item", function(){

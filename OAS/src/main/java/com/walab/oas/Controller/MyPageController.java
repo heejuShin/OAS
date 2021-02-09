@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.MyPageDAO;
+import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.SearchCriteria;
@@ -31,6 +33,8 @@ public class MyPageController {
 	
 	@Autowired
 	private MyPageDAO mypageDao; 
+	@Autowired
+	private MainDAO mainDao; 
 	
 	// 게시판 페이징
 		@RequestMapping(value="/admin/mypage")
@@ -39,17 +43,23 @@ public class MyPageController {
 			
 			mav = new ModelAndView("adminMypage");
 			
+			List<Category> categoryt=mainDao.categoryList();
+			ObjectMapper category_mapper=new ObjectMapper();
+			String category_list=category_mapper.writeValueAsString(categoryt);
+			
 			List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
-			System.out.println(adminList);
+			int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword());
+			
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(adminList);
 			PageMaker pageMaker = new PageMaker();
+			System.out.println(cri);
 			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(adminList.size());
-
+			pageMaker.setTotalCount(count);
 			
+			mav.addObject("categoryList", category_list);
 			mav.addObject("adminList", jArray);
-			mav.addObject("count", adminList.size());
+			mav.addObject("count", count);
 			mav.addObject("searchOption", cri.getSearchType());
 			mav.addObject("keyword", cri.getKeyword());
 			
@@ -67,10 +77,16 @@ public class MyPageController {
 			mav = new ModelAndView("userMypage");
 			int user_id=1;
 			
+			//카테고리 리스트
+			List<Category> categoryt=mainDao.categoryList();
+			ObjectMapper category_mapper=new ObjectMapper();
+			String category_list=category_mapper.writeValueAsString(categoryt);
+			mav.addObject("categoryList", category_list);
+			
 			//userTab1 신청폼 개수 가져오기 (TAB1)
 			cri.setUser_id(user_id);
 			List<Form> userList = mypageDao.userList(cri); //admin의 폼 데이터 리스트를 가져온다
-			int count1 = userList.size();
+			int count1 = mypageDao.countUserTab1(cri.getSearchType(), cri.getKeyword());
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(count1);
@@ -85,7 +101,7 @@ public class MyPageController {
 			List<Form> userTab2=mypageDao.noApplyForm(cri);
 			PageMaker pageMaker2 = new PageMaker();
 			pageMaker2.setCri(cri);
-			int count2 = userTab2.size();
+			int count2 = mypageDao.countUserTab2(cri.getSearchType(), cri.getKeyword());
 			pageMaker2.setTotalCount(count2);
 			ObjectMapper mapper2=new ObjectMapper();
 			String userTabStrint2=mapper2.writeValueAsString(userTab2);
@@ -95,7 +111,7 @@ public class MyPageController {
 			
 			//TAB3
 			List<Form> userTab3=mypageDao.pastApplyForm(cri);
-			int count3 = userTab3.size();
+			int count3 = mypageDao.countUserTab3(cri.getSearchType(), cri.getKeyword());
 			PageMaker pageMaker3 = new PageMaker();
 			pageMaker3.setCri(cri);
 			pageMaker3.setTotalCount(count3);
@@ -106,7 +122,6 @@ public class MyPageController {
 			mav.addObject("pageMaker3", pageMaker3);
 			
 			
-			mav.addObject("searchOption", cri.getSearchType());
 			mav.addObject("keyword", cri.getKeyword());
 			
 			return mav;
@@ -141,14 +156,11 @@ public class MyPageController {
 		@RequestMapping(value = "/admin/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 		public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
 			
-			String[] formID=request.getParameterValues("resultIDarray");
+			String formID=request.getParameter("select_formID");
 			System.out.println(formID);
 			
-			for(int i=0; i<formID.length; i++) {
-				System.out.println("formID: "+formID[i]);
-				mypageDao.deleteForm(Integer.parseInt(formID[i]));
+			mypageDao.deleteForm(Integer.parseInt(formID));
 			
-			}
 			System.out.println("Delete success!!!");
 			
 			return new ModelAndView("redirect:/admin/mypage");

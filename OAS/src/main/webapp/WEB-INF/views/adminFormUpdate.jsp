@@ -28,7 +28,6 @@
 <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
 
 <!-- 카테고리 관련 CDN -->
 <script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -58,8 +57,9 @@
               <input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
               <input name="minusPoint" type="hidden" value="0"/> <!-- type="number" -->
               <input name="isHeaderModified" id="isHeaderModified" type="hidden" value="0"/>
-              <input name="formId" id="formId" type="hidden" value="0"/>
+              <input name="formId" id="formId" type="hidden" value="<%=request.getAttribute("form_id")%>"/>
               <input type="hidden" id="count" name="count" value="0"/>
+          	  <input type="hidden" class="fieldCount" name="fieldCount?" value="0"/>
           </div>
 
           <div class="form edit state">   
@@ -109,6 +109,8 @@
           <input type="hidden" class="index" value="0"/>
           <input type="hidden" class="count" id="count?" name="count?" value="0"/>
           <input type="hidden" class="isModified" name="isModified" value="0"/>
+          <input type="hidden" class="itemCount" name="itemCount?" value="0"/>
+          
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 
           <button type="button" class="remove">X</button><br>
@@ -155,8 +157,8 @@
    
 
   </body>
+  <script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
   <script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js"></script>
-  
   
   <script>
 	var category_list = ${category_list};

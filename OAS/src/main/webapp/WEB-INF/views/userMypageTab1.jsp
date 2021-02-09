@@ -13,24 +13,9 @@
           
           <!--Start_Filter and Search part-->
           <nav class="filter_search" >
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
             
             <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="GET" >
-	  			<select name="searchType">
-	  				<option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>전체</option>
-	  				<option value="writer" <c:out value="${searchType =='writer'? 'selected':'' }"/>>등록자</option>
-	  				<option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
-	  				<option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
-	  			</select>
+	  			<input type="hidden" name="searchType" value="all">
 	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   			</form>
@@ -41,8 +26,12 @@
               <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
                   <thead>
                       <tr>
-                          <th><input type="checkbox" id="allCheck" /></th>
-                          <th>카테고리</th>
+                          <th></th>
+                          <th>
+                          	<select class="filters filter-category" data-filter-group='category'>
+			  					<option data-filter='' value="*">카테고리</option>
+			  			  	</select>
+			  			  </th>
                           <th data-priority="1">제목</th>
                           <th data-priority="2">신청 기간</th>
                           <th data-priority="2">등록 일자</th>
@@ -81,15 +70,23 @@
                         	
 	//표 동적 생성하는 부분
   	$(document).ready(function () {
+
+  		var categoryList=${categoryList};
+		for(var i=0; i < categoryList.length; i++){
+			var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
+			$(".filter-category").append(option);
+		}
+
+		
 		var userList=${userList};
 	   	for(var i=0; i < userList.length; i++){
 	                                
 		   	/*설문지 별 tr 만듦*/
-		  	var divOne = $("<tr></tr>"); 
+		  	var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>"); 
 		   	$(".tbodies").append(divOne);
 	
 			/* tr의 안에 들어갈 td */
-		 	var td1 = $("<td><input type='checkbox' name='result' value='"+userList[i].id+"' /></td>"); 
+		 	var td1 = $("<td>"+(i+1)+"</td>"); 
 		 	$($(".tbodies").children()[i]).append(td1);
 		
 			var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
@@ -107,17 +104,51 @@
 			var td5 = $("<td>"+userList[i].userName+"</td>"); 
 		  	$($(".tbodies").children()[i]).append(td5);
 		                    			
-			var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm("+userList[i].id+");'>"+userList[i].stateName+"</a></td>");
+			var a=$("<td><a href='#' id=' form_"+userList[i].id+"' class='filled-button' onClick = 'openForm(this);'>"+userList[i].stateName+"</a></td>");
 			$($(".tbodies").children()[i]).append(a);
 		
 			var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
 			$($(".tbodies").children()[i]).append(form);
 										
 		}
+
 	});
 
-    function openForm(form_id){
-		$('#select_formID').value = form_id;
-   		$("#form").submit();
+    function openForm(obj){
+   		$(obj).parent().siblings("#form").submit();
     }
+
+    $(document).ready( function() {   
+    	//테이블 카테고리, 상태 select
+	       var $table = $('.tbodies').isotope({
+	          itemSelector: '.item-row',
+              layoutMode: 'vertical',
+	          getSortData: {
+	              category : '[data-category]',
+	           }
+	        });
+
+	        var filters = {};
+	        // bind filter on select change,
+	        $('.filter-category').on( 'change', function() {
+	          // get filter value from option value
+	          var $this = $(this);
+	          var filterGroup = $this.attr('data-filter-group');
+	          // set filter for group
+	          //filters[filterGroup] = $this.value;
+	          filters[filterGroup] = $this.find(':selected').attr('data-filter');
+
+	       	  // combine filters
+	          var filterValue = '';
+	          for (var prop in filters) {
+	            filterValue += filters[prop];
+	          }
+	          console.log(filterValue);
+	          
+	          $table.isotope({ 
+	            filter : filterValue 
+	          });
+	        });
+
+      });
 </script>

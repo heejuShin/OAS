@@ -84,8 +84,8 @@ public class MainController {
 		int form_ID = Integer.parseInt(request.getParameter("select_formID"));
 		int stateID = Integer.parseInt(request.getParameter("stateID"));
 
-
-		if(stateID!=0) {
+		System.out.println(stateID);
+		if(stateID==0) { //아직 신청하지 않았다면
 			List<Form> form_info = mainDao.forminfo(form_ID);
 			List<Field> field_list = mainDao.fieldList(form_ID);
 			System.out.println(field_list.toString());
@@ -133,7 +133,7 @@ public class MainController {
 			mav.addObject("field_list", jArray2);
 			mav.setViewName("userFormWrite");
 		}
-		else {
+		else { //이미 신청한 폼이라면
 			
 			mav.setViewName("userFormView");
 		}

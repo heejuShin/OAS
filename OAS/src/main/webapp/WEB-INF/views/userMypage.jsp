@@ -116,13 +116,26 @@
 		.tabcontent.current {
 			display: block;
 		}
+		
+		.item-row,.item-row2,.item-row3{
+    		position: relative !important;
+    		left: initial;
+    		top: initial;
+    		
+    	}
+    	.filters{
+    		border:none;
+    	}
+    	.filters:focus{
+    		outline:none;
+    	}
     </style>
   </head>
 
   <body>
 
     <jsp:include page="/WEB-INF/views/basic/header.jsp" />
-    
+    <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
     <main>
 	    <div id="wrap" class="banner header-text">
 	    	<!-- 탭 부분 -->

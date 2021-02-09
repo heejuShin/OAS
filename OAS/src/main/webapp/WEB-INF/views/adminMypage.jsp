@@ -32,9 +32,7 @@
     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     
     <!-- 필터링 -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     
     <style type="text/css">
     html, body{height:100%;}
@@ -67,32 +65,25 @@
     	height:35px;
     	}
     	
+    	.item-row{
+    		position: relative !important;
+    		left: initial;
+    		top: initial;
+    		
+    	}
+    	.filters{
+    		border:none;
+    	}
+    	.filters:focus{
+    		outline:none;
+    	}
     </style>
     
-    <script type="text/javascript">
-      $(document).ready(function () {
-/* 
-    	//테이블 카테고리, 상태 select
-	       var $grid = $('.tbodies').isotope({
-	          itemSelector: '.form-item',
-	          percentPosition: true,
-	            masonry: {
-	              columnWidth: ".form-item"
-	            }
-	        });
-	        // bind filter on select change
-	        $('.filter-category').on( 'change','option', function() {
-	          // get filter value from option value
-	          var filterValue = this.value;
-	          $grid.isotope({ filter: filterValue });
-	        });
+    <script>
+    $(document).ready( function() {
 
-	     // bind filter on select change
-	        $('.filter-status').on( 'change','option', function() {
-	          // get filter value from option value
-	          var filterValue = this.value;
-	          $grid.isotope({ filter: filterValue });
-	        }); */
+
+	        
           
         //함수1. 체크박스 전체 선택 / 해제 함수
         $("#allCheck").click(function () {
@@ -153,24 +144,11 @@
           </div>
           <!--Start_Filter and Search part-->
           <nav class="filter_search" >
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </div>
+            
             
             <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			<select name="searchType">
-	  				<option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>전체</option>
-	  				<option value="writer" <c:out value="${searchType =='writer'? 'selected':'' }"/>>등록자</option>
-	  				<option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
-	  				<option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
-	  			</select>
+	  			
+	  			<input type="hidden" name="searchType" value="all">
 	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   			</form>
@@ -183,22 +161,21 @@
                       <tr>
                           <th>링크</th>
                           <th>
-							<select name="filter-category">
-			  					<option value="*">카테고리</option>
-			  					<option value=".맥북신청">맥북신청</option>
-			  					<option value=".특강신청">특강신청</option>
+							<select class="filters filter-category" data-filter-group='category'>
+			  					<option data-filter='' value="*">카테고리</option>
 			  				</select>
 						  </th>
                           <th data-priority="1">제목</th>
                           <th data-priority="2">신청 기간</th>
                           <th data-priority="2">등록 일자</th>
                           <th data-priority="2">등록자</th>
+                          
                           <th data-priority="1">
-							<select name="filter-status">
-			  					<option value="*">상태</option>
-			  					<option value=".예약">예약</option>
-			  					<option value=".신청중">신청중</option>
-			  					<option value=".신청마감">신청마감</option>
+							<select class="filters filter-status" data-filter-group='status'>
+			  					<option data-filter='' value="*">상태</option>
+			  					<option data-filter='.예약' value=".예약">예약</option>
+			  					<option data-filter='.신청중' value=".신청중">신청중</option>
+			  					<option data-filter='.신청마감' value=".신청마감">신청마감</option>
 			  				</select>
 						  </th>
                           <th data-priority="1"></th>
@@ -239,24 +216,31 @@
   </section> <!-- end section -->
      
     <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
-
-    <!--from here, the table things-->
+<!-- 
+    from here, the table things
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-        <!-- Latest compiled and minified Bootstrap JavaScript -->
+        Latest compiled and minified Bootstrap JavaScript
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-        <script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
-
+         -->
+	<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
         <script>
 
 							//표 동적 생성하는 부분
                             $(document).ready(function () {
+
+								var categoryList=${categoryList};
+								for(var i=0; i < categoryList.length; i++){
+									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
+									$(".filter-category").append(option);
+								}
+                                
 	                            var adminList=${adminList};
 	                            for(var i=0; i < adminList.length; i++){
 	                                
 	                    		    /*설문지 별 tr 만듦*/
-	                    		    var divOne = $("<tr class='form-item"+i+" filter "+adminList[i].categoryName+"' ></tr>"); 
+	                    		    var divOne = $("<tr class='form-item"+i+" item-row category"+adminList[i].category_id+"' data-category='category"+adminList[i].category_id+"' data-status='' ></tr>"); 
 	                    		    //var divOne = $("<tr></tr>"); 
 	                    		   	$(".tbodies").append(divOne);
 	
@@ -281,24 +265,26 @@
 	                    				var td6 = $("<td>예약</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-										var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm("+adminList[i].id+");'>수정</a></td>");
+										var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 
-										/* $(".form-item"+i).addClass('예약'); */
+										$(".form-item"+i).addClass('예약');
+										$(".form-item"+i).attr('data-status','예약');
 	                    			}
 	                    			//모집마감
 	                    			else if(new Date()>new Date(adminList[i].endDate)){
 	                    				var td6 = $("<td>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    			
-	                    				var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm("+adminList[i].id+");'>삭제</a></td>");
+	                    				var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a></td>");
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 
-										/* $(".form-item"+i).addClass('신청마감'); */
+										$(".form-item"+i).addClass('신청마감');
+										$(".form-item"+i).attr('data-status','신청마감');
 		                    		}
 		                    		/* 중지할 경우 */
 		                    		//모집중
@@ -306,12 +292,13 @@
 		                    			var td6 = $("<td>신청중</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-		                    			var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm("+adminList[i].id+");'>수정</a></td>");
+		                    			var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='form' action='/form/vidw/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 
-										/* $(".form-item"+i).addClass('신청중'); */
+										$(".form-item"+i).addClass('신청중');
+										$(".form-item"+i).attr('data-status','신청중');
 			                    	}
 			                	}
 
@@ -327,10 +314,47 @@
 									alert("신청폼의 URL이 복사되었습니다");
 	                            });
                             });
-                            function openForm(form_id){
-                            	$("#form").submit();
+                            function openForm(obj){
+                           		$(obj).parent().siblings("#form").submit();
+                            }
+                            function deleteForm(obj){
+                            	$(obj).parent().siblings("#deleteForm").submit();
                             }
 
+                          $(document).ready( function() {   
+                        	//테이블 카테고리, 상태 select
+                    	       var $table = $('.tbodies').isotope({
+                    	          itemSelector: '.item-row',
+                	              llayoutMode: 'vertical',
+                    	          getSortData: {
+                    	              category : '[data-category]',
+                    	              status : '[data-status]', 
+                    	           }
+                    	        });
+
+                    	        var filters = {};
+                    	        // bind filter on select change,
+                    	        $('.filters').on( 'change', function() {
+                    	          // get filter value from option value
+                    	          var $this = $(this);
+                    	          var filterGroup = $this.attr('data-filter-group');
+                    	          // set filter for group
+                    	          //filters[filterGroup] = $this.value;
+                    	          filters[filterGroup] = $this.find(':selected').attr('data-filter');
+
+                    	       	  // combine filters
+                    	          var filterValue = '';
+                    	          for (var prop in filters) {
+                    	            filterValue += filters[prop];
+                    	          }
+                    	          console.log(filterValue);
+                    	          
+                    	          $table.isotope({ 
+                    	            filter : filterValue 
+                    	          });
+                    	        });
+
+                          });
                             
                       </script>
   </body>

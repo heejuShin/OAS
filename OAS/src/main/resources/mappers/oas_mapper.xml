@@ -49,8 +49,8 @@
 	
 	<select id="userlist" resultType="com.walab.oas.DTO.Form">
 		
-			SELECT c.id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
-			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM (SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now()) between date(startDate) AND date(endDate)) as s  INNER JOIN Category ON s.category_id=Category.id) as c
+			SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
+			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM (SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now()) between date(startDate) AND date(endDate)) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id)
 			<include refid="search" />
@@ -58,10 +58,19 @@
 			LIMIT #{pageStart}, #{perPageNum};
 			
 	</select>
+	<!-- userTab1 게시글 수 -->
+	<select id="countUserTab1" resultType="int">
+		SELECT count(*)
+			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now()) between date(startDate) AND date(endDate)) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
+			INNER join User as u
+			ON (c.user_id = u.id)
+		<include refid="search" />
+
+	</select>
 	
 	<select id="noApplyForm" resultType="com.walab.oas.DTO.Form">
 		
-			SELECT c.id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,ifnull(state_id,0)as state_id
+			SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,ifnull(state_id,0)as state_id
 			FROM (SELECT s.*,categoryName FROM (SELECT state_id,Form.* FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE Result.user_id=#{user_id} )as Result ON Result.form_id=Form.id  WHERE date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id)
@@ -70,15 +79,33 @@
 			LIMIT #{pageStart}, #{perPageNum};
 			
 	</select>
+	<!-- userTab2 게시글 수 -->
+	<select id="countUserTab2" resultType="int">
+		SELECT count(*)
+			FROM (SELECT s.*,categoryName FROM (SELECT state_id,Form.* FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE Result.user_id=#{user_id})as Result ON Result.form_id=Form.id  WHERE date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
+			INNER join User as u
+			ON (c.user_id = u.id)
+		<include refid="search" />
+
+	</select>
 	
 	<select id="pastApplyForm" resultType="com.walab.oas.DTO.Form">
-			SELECT c.id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,ifnull(state_id,0)as state_id
+			SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,ifnull(state_id,0)as state_id
 			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now())>date(endDate) AND (date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()))) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id)
 			<include refid="search" />
 			ORDER BY c.id DESC 
 			LIMIT #{pageStart}, #{perPageNum};
+	</select>
+	<!-- userTab3 게시글 수 -->
+	<select id="countUserTab3" resultType="int">
+		SELECT count(*)
+			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM (SELECT * FROM Result WHERE Result.user_id=1)as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now())>date(endDate) AND (date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()))) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
+			INNER join User as u
+			ON (c.user_id = u.id)
+		<include refid="search" />
+
 	</select>
 	
 	
@@ -92,7 +119,7 @@
 	<!-- 페이징 -->
 	<!-- 페이징 적용 게시글 + 검색 -->
 	<select id="adminlist" resultType="com.walab.oas.DTO.Form">
-			SELECT c.id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName
+			SELECT c.id,c.category_id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName
 			FROM (SELECT Form.*,categoryName FROM Form LEFT OUTER JOIN Category ON Form.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
@@ -100,6 +127,16 @@
 			ORDER BY c.id DESC
 			LIMIT #{pageStart}, #{perPageNum};
 	
+	</select>
+	
+	<!-- 검색 대한 게시글 수 (admin)-->
+	<select id="countArticle" resultType="int">
+		SELECT count(*)
+			FROM (SELECT Form.*,categoryName FROM Form LEFT OUTER JOIN Category ON Form.category_id=Category.id) as c
+			INNER join User as u
+			ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
+		<include refid="search" />
+
 	</select>
 	
 	

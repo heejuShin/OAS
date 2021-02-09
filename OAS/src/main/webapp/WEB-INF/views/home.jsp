@@ -269,8 +269,13 @@
 	                            for(var i=0; i < form_list.length; i++){
 	                                
 	                    		    /*설문지 별 div 만듦 (div1)*/
-	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"' style='top :0px; lefot:0px;'></div>"); 
+	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"' style='top :0px; left:0px;'></div>"); 
 	                    		   	$(".gridss").append(divOne);
+
+	                    		   	if(form_list[i].state_id==0)
+	                    		   		$($(".gridss").children()[i]).addClass('미신청');
+	                    		   	else
+	                    		   		$($(".gridss").children()[i]).addClass('신청완료');
 	
 	                    		   	/* div1의 안에 들어갈 div => "product-item" */
 	                    		    var divTwo = $("<div></div>"); 
@@ -294,9 +299,14 @@
 		                    		var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
 									$($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
 
-									var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청하기</a>");
-									$($($(".gridss").children()[i]).children()[0]).append(a);
-		
+									if(form_list[i].state_id==0){
+										var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청완료</a>");
+										$($($(".gridss").children()[i]).children()[0]).append(a);
+									}
+									else{
+										var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청하기</a>");
+										$($($(".gridss").children()[i]).children()[0]).append(a);
+									}
 									var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
 									$($($(".gridss").children()[i]).children()[0]).append(form);
 									
@@ -324,11 +334,24 @@
                             	  $grid.isotope({ filter: filterValue });
                             	  $('.ul_filters li').removeClass('active');
                             	  $(this).addClass('active');
-                            	});
+                            	}); 
 
+
+                            	var $table = $('.gridss').isotope({
+                            		itemSelector: '.grid-item',
+                              	  	percentPosition: true,
+                      	          getSortData: {
+                      	              status : '[data-status]', 
+                      	           }
+                      	        });
+                      	        
+                            	$('.filter-status').on('change', function() {
                             
+                              	  var filterValue = $(this).find(':selected').attr('data-filter');
+                              	  console.log(filterValue);
+                              	  $table.isotope({ filter: filterValue });
+                              	});
 
-                          
                             });
                             </script>
 
@@ -371,19 +394,21 @@
                   <div class="col-md-12">
                     <div class="filters">
                     
-                      <ul class="ul_filters">
+                      <ul class="filters ul_filters">
                           <li class="active" data-filter="*">All Products</li>
                       </ul>
                       
                       <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" >
-			  			<select name="searchType">
-			  				<option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>전체</option>
-			  				<option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
-			  				<option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
-			  			</select>
+			  		
+			  			<input type="hidden" name="searchType" value="all">
 			  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 			  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		  			</form>
+		  			 </form>
+		  			 <select class="filters filter-status" data-filter-group='status' style="width:10%;">
+			  			<option data-filter='' value="*">신청현황</option>
+			  			<option data-filter='.미신청' value=".미신청">미신청</option>
+			  			<option data-filter='.신청완료' value=".신청완료">신청완료</option>
+			  		 </select>
                     </div>
                   </div>
                   <div id="contestsDiv" class="col-md-12">

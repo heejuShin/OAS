@@ -1,5 +1,6 @@
 package com.walab.oas.Controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,10 +48,11 @@ public class LoginController {
 	
 	/**
 	 * Authentication Code를 전달 받는 엔드포인트
+	 * @throws IOException 
 	 **/
 	@GetMapping("google/auth")
 	public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode)
-			throws JsonProcessingException {
+			throws IOException {
 		
 		HttpSession session = request.getSession();
 		
