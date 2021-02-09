@@ -2,7 +2,10 @@ package com.walab.oas.DAO;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -76,8 +79,12 @@ public class ExcelDownloadDAO {
 	    }
         
         response.setContentType("ms-vnd/excel");
+        SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");
+        Date time = new Date();
+        String nametime = format.format(time);
+        
         try {
-			response.setHeader("Content-Disposition", "attachment;filename="+new String(fa.get(1).getBytes("utf-8"),"8859_1")+".xls");
+			response.setHeader("Content-Disposition", "attachment;filename="+new String(fa.get(1).getBytes("utf-8"),"8859_1")+"-"+nametime.substring(2)+".xls");
 		} catch (UnsupportedEncodingException e1) {
 			response.setHeader("Content-Disposition", "attachment;filename=formResult.xls");
 		}
