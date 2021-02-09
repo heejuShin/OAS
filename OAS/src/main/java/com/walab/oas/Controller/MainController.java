@@ -81,6 +81,12 @@ public class MainController {
 		return mav;
 	}
 	
+	@RequestMapping(value= "/LoignNeed")
+	public ModelAndView LoignNeed() {
+		ModelAndView mav = new ModelAndView("LoignNeed");
+		return mav;
+	}
+	
 	//home 페이지에서 폼을 눌렀을 때,
 	@RequestMapping(value = "/form" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView goToForm(HttpSession session, HttpServletRequest request) throws Exception {

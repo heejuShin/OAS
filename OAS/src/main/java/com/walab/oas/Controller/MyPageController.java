@@ -37,14 +37,14 @@ public class MyPageController {
 		@RequestMapping(value="/admin/mypage")
 		public ModelAndView adminPageList(HttpServletRequest request, SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
-			/*if(session==null || !request.isRequestedSessionIdValid()) {
-				mav = new ModelAndView("AccessDenied");
+			if(session.getAttribute("admin")==null) {
+				mav = new ModelAndView("LoginNeed");
 				return mav;
 			}
-			else if(session.getAttribute("admin").equals("2")) {
+			else if(((Integer)session.getAttribute("admin"))==2) {
 				mav = new ModelAndView("AccessDenied");
 			}
-			else {	*/
+			else {
 				mav = new ModelAndView("adminMypage");
 				
 				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
@@ -62,7 +62,7 @@ public class MyPageController {
 				mav.addObject("keyword", cri.getKeyword());
 				
 				mav.addObject("pageMaker", pageMaker);
-			//}
+			}
 			return mav;
 		}
 		
