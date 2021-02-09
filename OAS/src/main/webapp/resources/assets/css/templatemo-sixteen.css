@@ -435,13 +435,15 @@ header .navbar {
 	font-size: 17px;
 	color: #1a6692;
 	margin-bottom: 20px;
+	margin-top: 40px;
+	text-align:center;
 }
 
 .product-item .down-content h6 {
 	position: absolute;
 	top: 30px;
-	right: 30px;
-	font-size: 18px;
+	right: 30px; 
+	font-size: 11px;
 	color: #121212;
 }
 
