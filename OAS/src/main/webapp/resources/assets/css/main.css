@@ -246,8 +246,9 @@ iframe {
   display: block;
   width: 100%;
   background: transparent;
-  font-family: Montserrat-SemiBold;
-  font-size: 18px;
+  font-family: NanumGothic;
+	font-weight: 600;
+	font-size: 18px;
   color: #555555;
   line-height: 1.2;
   padding-right: 15px;
