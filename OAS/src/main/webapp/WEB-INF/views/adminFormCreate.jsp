@@ -86,13 +86,11 @@
 							
 							<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
 								<option value="" selected="" disabled="">카테고리 선택</option>
-								  <option value="1">맥북신청</option>
-								  <option value="2">특강 소감문 제출</option>
-								  <option value="7">asdf</option>
 								  <input name="categoryNum" value="3" type="hidden">
 							  </select>
 <!-- 							  <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 250px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-category_select-container"><span class="select2-selection__rendered" id="select2-category_select-container" title="카테고리 선택">카테고리 선택</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></span><br>
- -->		</div>
+ -->	
+ 		</div>
 
 
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
@@ -126,6 +124,9 @@
 			          <option selected="selected" value="예약">예약</option>    
 			      </select>
 			</div>
+			 				<input name="plusPoint" type="hidden" value="0"/> <!— type="number" —>
+              				<input name="minusPoint" type="hidden" value="0"/> <!— type="number" —>
+              				<input type="hidden" id="count" name="count" value="0"/>
 			
 			<div id="list" style="width: inherit;">
 			

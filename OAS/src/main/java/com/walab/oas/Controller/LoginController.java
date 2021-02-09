@@ -126,6 +126,7 @@ public class LoginController {
       else {
 	      user = userDao.findUser(user.getEmail());
 	      
+	      session.setAttribute("id", user.getId());
 	      session.setAttribute("name", user.getUserName());
 	      session.setAttribute("email", user.getEmail());
 	      session.setAttribute("admin", user.getAdmin());
@@ -202,6 +203,7 @@ public class LoginController {
       
       int user_id=userDao.joinUser(user);
       System.out.println("user = "+user.getEmail()+" "+user.getGrade());
+      session.setAttribute("id", user.getId());
       session.setAttribute("name", user.getUserName());
       session.setAttribute("email", user.getEmail());
       session.setAttribute("admin", user.getAdmin());

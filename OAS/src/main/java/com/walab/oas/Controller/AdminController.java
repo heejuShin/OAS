@@ -86,7 +86,7 @@ public class AdminController {
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
 		@ModelAttribute("ses")
-		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 			
@@ -111,7 +111,8 @@ public class AdminController {
 			}finally {
 				System.out.println("finally category id "+category_id);
 				form.setCategory_id(category_id);
-				int user_id = Integer.parseInt(request.getParameter("user_id"));
+				//int user_id = Integer.parseInt(request.getParameter("user_id"));
+				int user_id = (Integer)session.getAttribute("id");
 				form.setUser_id(user_id);
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
