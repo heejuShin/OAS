@@ -25,6 +25,7 @@ import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
+import com.walab.oas.DTO.Form_ver2;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.Result;
@@ -51,7 +52,7 @@ public class MainController {
 		int user_id= 1; //세션이 있으면 그 사람 user_id로, 아니면 user_id는 0으로 설정해야함
 		
 		cri.setUser_id(user_id);
-		List<Form> form_list=mainDao.formList(cri);
+		List<Form_ver2> form_list=mainDao.formList(cri);
 		List<Category> category_list=mainDao.categoryList();
 		
 		System.out.println("main form: "+form_list);
@@ -81,6 +82,12 @@ public class MainController {
 		return mav;
 	}
 	
+	@RequestMapping(value= "/LoignNeed")
+	public ModelAndView LoignNeed() {
+		ModelAndView mav = new ModelAndView("LoignNeed");
+		return mav;
+	}
+	
 	//home 페이지에서 폼을 눌렀을 때,
 	@RequestMapping(value = "/form" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView goToForm(HttpSession session, HttpServletRequest request) throws Exception {
@@ -90,8 +97,8 @@ public class MainController {
 		int form_ID = Integer.parseInt(request.getParameter("select_formID"));
 		int stateID = Integer.parseInt(request.getParameter("stateID"));
 
-
-		if(stateID!=0) {
+		System.out.println(stateID);
+		if(stateID==0) { //아직 신청하지 않았다면
 			List<Form> form_info = mainDao.forminfo(form_ID);
 			List<Field> field_list = mainDao.fieldList(form_ID);
 			System.out.println(field_list.toString());
@@ -139,7 +146,7 @@ public class MainController {
 			mav.addObject("field_list", jArray2);
 			mav.setViewName("userFormWrite");
 		}
-		else {
+		else { //이미 신청한 폼이라면
 			
 			mav.setViewName("userFormView");
 		}
