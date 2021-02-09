@@ -83,11 +83,11 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>">Home
                   <span class="sr-only">(current)</span>
                 </a>
-              </li> 
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">Admin My Page</a>
               </li>
-               <li class="nav-item">
+              <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>
               </li>
               <li class="nav-item">
@@ -95,6 +95,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login/logout">Logout</a>
               </li>
               <!--<li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>

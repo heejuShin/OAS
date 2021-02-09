@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,33 +39,41 @@ public class MyPageController {
 	
 	// 게시판 페이징
 		@RequestMapping(value="/admin/mypage")
-		public ModelAndView adminPageList(SearchCriteria cri, HttpSession session) throws JsonProcessingException {
+		public ModelAndView adminPageList(HttpServletRequest request, SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
-			
-			mav = new ModelAndView("adminMypage");
-			
-			List<Category> categoryt=mainDao.categoryList();
-			ObjectMapper category_mapper=new ObjectMapper();
-			String category_list=category_mapper.writeValueAsString(categoryt);
-			
-			List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
-			int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword());
-			
-			ObjectMapper mapper=new ObjectMapper();
-			String jArray=mapper.writeValueAsString(adminList);
-			PageMaker pageMaker = new PageMaker();
-			System.out.println(cri);
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(count);
-			
-			mav.addObject("categoryList", category_list);
-			mav.addObject("adminList", jArray);
-			mav.addObject("count", count);
-			mav.addObject("searchOption", cri.getSearchType());
-			mav.addObject("keyword", cri.getKeyword());
-			
-			mav.addObject("pageMaker", pageMaker);
 
+			if(session.getAttribute("admin")==null) {
+				mav = new ModelAndView("LoginNeed");
+				return mav;
+			}
+			else if(((Integer)session.getAttribute("admin"))==2) {
+				mav = new ModelAndView("AccessDenied");
+			}
+			else {
+				mav = new ModelAndView("adminMypage");
+				
+				List<Category> categoryt=mainDao.categoryList();
+				ObjectMapper category_mapper=new ObjectMapper();
+				String category_list=category_mapper.writeValueAsString(categoryt);
+				
+				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
+				int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword());
+				
+				ObjectMapper mapper=new ObjectMapper();
+				String jArray=mapper.writeValueAsString(adminList);
+				PageMaker pageMaker = new PageMaker();
+				System.out.println(cri);
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(count);
+				
+				mav.addObject("categoryList", category_list);
+				mav.addObject("adminList", jArray);
+				mav.addObject("count", count);
+				mav.addObject("searchOption", cri.getSearchType());
+				mav.addObject("keyword", cri.getKeyword());
+				
+				mav.addObject("pageMaker", pageMaker);
+			}
 			return mav;
 		}
 		

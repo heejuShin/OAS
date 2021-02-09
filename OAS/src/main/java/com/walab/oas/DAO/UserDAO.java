@@ -39,5 +39,16 @@ public class UserDAO {
 	public void setContent (Result_Content resultInfo) {
 		 sqlSession.insert(namespace + ".inputContent", resultInfo);
 	}
+	
+	public List<User> users() throws Exception{
+		return sqlSession.selectList(namespace + ".users");
+	}
+	
+	public int isUserExist(String email) {
+		return sqlSession.selectOne(namespace + ".isUserExist", email);
+	}
+	public User findUser(String email) {
+		return sqlSession.selectOne(namespace + ".findUser", email);
+	}
 
 }

@@ -194,9 +194,6 @@
 	  ]]>
 	</select> 
 	
-	
-
-   
    <!-- field 정보 가져오기  -->
 	 <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
 	  <![CDATA[
@@ -364,5 +361,17 @@
 	<update id="modifyItem" parameterType="com.walab.oas.DTO.Item">
 		UPDATE `Item` SET field_id=#{field_id},content=#{content},isDefault=#{isDefault} WHERE id=#{id};
 	</update>
+	<!-- user 정보 가져오기 -->
+	<select id="users" resultType="com.walab.oas.DTO.User">
+       select userName, admin, email, studentId, phoneNum, department, major, grade, semester, point from User;
+    </select>
+    
+    <select id="findUser" resultType="com.walab.oas.DTO.User">
+    	select * from User where email = #{email};
+    </select>
+    
+   	<select id="isUserExist" resultType="int">
+    	select COUNT(*) from User where email = #{email};
+    </select>
 </mapper>
 
