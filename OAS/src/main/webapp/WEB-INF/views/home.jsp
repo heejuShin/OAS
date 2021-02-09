@@ -133,14 +133,18 @@
       
       .discription{
       	overflow: hidden;
+      	background-color:#f7f7f7;
       }
       
       .down-content p{
-      display:bolck;
+     
       height:120px;
-      border: black 1px solid;
+      border: #f7f7f7 1px solid;
       border-radius:10px;
       padding: 2px 4px;
+      color: black;
+    font-family: NanumGothic;
+    font-weight: 600;
       
       }
       
@@ -152,6 +156,16 @@
       
       .formDate{
       	margin-bottom:2%;
+      }
+      
+      .product-item .down-content h4{
+      margin-top: 40px;
+	text-align:center;
+      }
+      
+      .a.filled-button{
+      font-weight: 600;
+      padding: 10px;
       }
      
       
@@ -237,6 +251,8 @@
                                   var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
                                   $(".ul_filters").append(filter_li);
                               }
+
+                             
                                
                                for(var i=0; i < form_list.length; i++){
                                   var timestmp = form_list[i].startDate;
@@ -262,7 +278,7 @@
                                  var category =  $("<span class='category_name'>"+form_list[i].categoryName +"</span>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
                              
-                           var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
+                           var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
                            $($($(".grid").children()[i]).children()[0]).append(a);
                            
                             }
