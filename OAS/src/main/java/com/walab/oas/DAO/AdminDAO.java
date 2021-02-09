@@ -104,7 +104,7 @@ public class AdminDAO {
 	}
 	
 	public User getUserInfobyId(int id) {
-		return sqlSession.selectOne(namespace+".getUserInfo", id);
+		return sqlSession.selectOne(namespace+".getUserInfobyId", id);
 	}
 	
 	public List<Result> getExcelResult(int id){

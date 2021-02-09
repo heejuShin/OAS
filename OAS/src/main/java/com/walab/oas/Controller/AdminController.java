@@ -663,6 +663,7 @@ public class AdminController {
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
 		String categoryName = adminDAO.getCategoryName_one(form_ID);
+		System.out.println(form_info.get(0).getUser_id());
 		User user_info = adminDAO.getUserInfobyId(form_info.get(0).getUser_id());
 		System.out.println("-->"+form_info.toString());
 		System.out.println("-->"+field_list.toString());
