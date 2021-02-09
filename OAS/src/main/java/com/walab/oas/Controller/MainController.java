@@ -88,13 +88,15 @@ public class MainController {
 	}
 	
 	//home 페이지에서 폼을 눌렀을 때,
-	@RequestMapping(value = "/form" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	@RequestMapping(value = "/form") // GET 방식으로 페이지 호출
 	public ModelAndView goToForm(HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<goToForm> controller");
 
 		ModelAndView mav = new ModelAndView();
 		int form_ID = Integer.parseInt(request.getParameter("select_formID"));
+		//int form_ID = 1;
 		int stateID = Integer.parseInt(request.getParameter("stateID"));
+		//int stateID = 0;
 
 		System.out.println(stateID);
 		if(stateID==0) { //아직 신청하지 않았다면

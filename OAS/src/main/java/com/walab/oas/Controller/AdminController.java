@@ -204,9 +204,9 @@ public class AdminController {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
-		
-		
+	   
 		int form_id=Integer.parseInt(request.getParameter("select_formID"));
+		//int form_id = 1;
 		System.out.println("form_id: "+form_id);
 		List<Result> submitterList= adminDAO.submitterList(form_id);
 		List<State> stateList=adminDAO.stateList(form_id);
