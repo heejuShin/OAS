@@ -27,8 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.walab.oas.DAO.UserDAO;
@@ -69,12 +71,14 @@ public class LoginController {
    
    /**
     * Authentication Code를 전달 받는 엔드포인트
-    * @throws Exception 
+ * @throws IOException 
+ * @throws JsonMappingException 
+ * @throws JsonParseException 
     **/
    @GetMapping("google/auth")
    @ModelAttribute("ses")
-   public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode)
-         throws Exception {
+   public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode) throws JsonParseException, JsonMappingException, IOException
+         {
       
 	   String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
 	   

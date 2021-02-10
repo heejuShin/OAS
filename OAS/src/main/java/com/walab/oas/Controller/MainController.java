@@ -54,7 +54,7 @@ public class MainController {
 		int user_id= 1; //세션이 있으면 그 사람 user_id로, 아니면 user_id는 0으로 설정해야함
 		
 		cri.setUser_id(user_id);
-		List<Form_ver2> form_list=mainDao.formList(cri);
+		List<Form> form_list=mainDao.formList(cri);
 		List<Category> category_list=mainDao.categoryList();
 		
 		System.out.println("main form: "+form_list);
