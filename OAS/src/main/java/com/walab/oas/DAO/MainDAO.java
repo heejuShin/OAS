@@ -32,7 +32,7 @@ public class MainDAO{
 //		return sqlSession.selectList(namespace + ".form_list",cri);
 //	}
 	
-	public List<Form_ver2> formList(SearchCriteria cri) {
+	public List<Form> formList(SearchCriteria cri) {
 		return sqlSession.selectList(namespace + ".form_list",cri);
 	}
 	

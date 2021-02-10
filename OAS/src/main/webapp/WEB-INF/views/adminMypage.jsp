@@ -252,9 +252,9 @@
 	                    		    $($(".tbodies").children()[i]).append(th1);
 	                    		    var td2 = $("<td>"+adminList[i].formName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td2);
-	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY MM DD HH:mm:ss')+" ~ "+moment(adminList[i].endDate).format('YYYY MM DD HH:mm:ss')+"</td>"); 
+	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(adminList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td3);
-	                    		    var td4 = $("<td>"+moment(adminList[i].regDate).format('YYYY MM DD HH:mm:ss')+"</td>"); 
+	                    		    var td4 = $("<td>"+moment(adminList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td4);
 	                    		    var td5 = $("<td>"+adminList[i].userName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td5);
@@ -286,6 +286,7 @@
 										$(".form-item"+i).addClass('신청마감');
 										$(".form-item"+i).attr('data-status','신청마감');
 		                    		}
+		                    		
 		                    		/* 중지할 경우 */
 		                    		//모집중
 		                    		else{

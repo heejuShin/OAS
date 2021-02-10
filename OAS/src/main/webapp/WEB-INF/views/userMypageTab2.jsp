@@ -84,10 +84,10 @@ $(document).ready(function () {
 		  	var td2 = $("<td>"+formList2[i].formName+"</td>"); 
 		 	$($(".tbodies2").children()[i]).append(td2);
 	
-		   	var td3 = $("<td>"+moment(formList2[i].startDate).format('YYYY MM DD HH:mm:ss')+" ~ "+moment(formList2[i].endDate).format('YYYY MM DD HH:mm:ss')+"</td>"); 
+		   	var td3 = $("<td>"+moment(formList2[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(formList2[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
 		  	$($(".tbodies2").children()[i]).append(td3);
 	
-		 	var td4 = $("<td>"+moment(formList2[i].regDate).format('YYYY MM DD HH:mm:ss')+"</td>"); 
+		 	var td4 = $("<td>"+moment(formList2[i].regDate).format('YYYY.MM.DD')+"</td>"); 
 			$($(".tbodies2").children()[i]).append(td4);
 	
 			var td5 = $("<td>"+formList2[i].userName+"</td>"); 

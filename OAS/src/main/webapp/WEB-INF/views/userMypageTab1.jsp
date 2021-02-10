@@ -95,10 +95,10 @@
 		  	var td2 = $("<td>"+userList[i].formName+"</td>"); 
 		 	$($(".tbodies").children()[i]).append(td2);
 	
-		   	var td3 = $("<td>"+userList[i].startDate+" ~ "+userList[i].endDate+"</td>"); 
+		 	var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
 		  	$($(".tbodies").children()[i]).append(td3);
 	
-		 	var td4 = $("<td>"+userList[i].regDate+"</td>"); 
+		  	var td4 = $("<td>"+moment(userList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
 			$($(".tbodies").children()[i]).append(td4);
 	
 			var td5 = $("<td>"+userList[i].userName+"</td>"); 
