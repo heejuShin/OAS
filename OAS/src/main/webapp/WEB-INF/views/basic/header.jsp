@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,21 +85,32 @@
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
+              <c:set var="admin" value="${admin }" />
+			  <c:if test="${admin == 0 || admin == 1}">
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">Admin My Page</a>
               </li>
+              </c:if>
+              <c:if test="${admin == 2 }">
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>
               </li>
+              </c:if>
+              <!--
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/admin/form/view/{link}">Check Test</a>
               </li>
+              -->
+              <c:if test="${admin eq null}">
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">Login</a>
               </li>
+              </c:if>
+              <c:if test="${admin != null}">
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login/logout">Logout</a>
               </li>
+              </c:if>
               <!--<li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
               </li> -->

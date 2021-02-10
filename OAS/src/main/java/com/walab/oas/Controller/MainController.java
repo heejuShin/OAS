@@ -27,6 +27,7 @@ import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
+import com.walab.oas.DTO.Form_ver2;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.Result;
@@ -53,7 +54,7 @@ public class MainController {
 		int user_id= 1; //세션이 있으면 그 사람 user_id로, 아니면 user_id는 0으로 설정해야함
 		
 		cri.setUser_id(user_id);
-		List<Form> form_list=mainDao.formList(cri);
+		List<Form_ver2> form_list=mainDao.formList(cri);
 		List<Category> category_list=mainDao.categoryList();
 		
 		System.out.println("main form: "+form_list);
@@ -90,13 +91,15 @@ public class MainController {
 	}
 	
 	//home 페이지에서 폼을 눌렀을 때,
-	@RequestMapping(value = "/form" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	@RequestMapping(value = "/form") // GET 방식으로 페이지 호출
 	public ModelAndView goToForm(HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<goToForm> controller");
 
 		ModelAndView mav = new ModelAndView();
-		int form_ID = Integer.parseInt(request.getParameter("select_formID"));
-		int stateID = Integer.parseInt(request.getParameter("stateID"));
+		//int form_ID = Integer.parseInt(request.getParameter("select_formID"));
+		int form_ID = 1;
+		//int stateID = Integer.parseInt(request.getParameter("stateID"));
+		int stateID = 0;
 
 		System.out.println(stateID);
 		if(stateID==0) { //아직 신청하지 않았다면
@@ -156,7 +159,7 @@ public class MainController {
 		System.out.println("<goToForm> controller end");
 		return mav;
 	}
-	
+
 	//handong 이메일로 로그인을 하지 않아 403 에러 발생 시 
 	@RequestMapping(value = "/error403", method = { RequestMethod.POST, RequestMethod.GET })
 	public void errorOccur(HttpServletResponse response, HttpServletRequest request) throws Exception {
