@@ -250,6 +250,20 @@ public class MyPageController {
 					System.out.println("<setLevels> controller Finish");
 					
 				}
+				
+				//유저 탈퇴처리하기 
+				@RequestMapping(value = "/admin/deleteUser",method = RequestMethod.POST) 
+				public ModelAndView deleteUser (HttpSession session, HttpServletRequest request) throws Exception {
+					System.out.println("<deleteUser> controller");
+					
+					String userID  = request.getParameter("userID");
+					mypageDao.deleteUser(Integer.parseInt(userID));
+					
+					System.out.println("<deleteUser> controller Finish");
+					return new ModelAndView("redirect:/admin/manage");
+
+					
+				}
 		
 
 }

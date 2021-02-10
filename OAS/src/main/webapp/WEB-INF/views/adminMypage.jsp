@@ -207,10 +207,10 @@
 		  </ul>
 		  
           <div class="button_div">
-            <button>create</button>
+            <button onclick="location.href='<%=request.getContextPath()%>/admin/form/create'">create</button>
             <button name="deleteB">Delete</button>
-            <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/manage'">User management</button>
-            <a href='<%=request.getContextPath()%>/admin/manage'>관리자 페이지</a>
+            <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/manage'">회원 관리</button>
+        
           </div>    
       </div> <!-- end container -->
   </section> <!-- end section -->

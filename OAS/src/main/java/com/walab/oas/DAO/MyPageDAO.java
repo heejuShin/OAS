@@ -106,4 +106,10 @@ public class MyPageDAO {
 		map.put("keyword", keyword);
 		return sqlSession.selectOne("countUserTab3", map);
 	}
+
+	//유저 탈퇴 처리
+	public void deleteUser(int userID) {
+		// TODO Auto-generated method stub
+		sqlSession.update("userDelete", userID);
+	}
 }
