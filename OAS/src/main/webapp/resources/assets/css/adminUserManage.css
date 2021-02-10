@@ -55,7 +55,7 @@ thead {
 }
 
 .askDelete:hover {
-	opacity: 0.5;
+	filter: brightness(70%); 
 }
 
 
@@ -97,7 +97,7 @@ thead {
 }
 
 #stateB:hover {
-	opacity: 0.5;
+	filter: brightness(90%); 
 }
 
 
@@ -154,7 +154,7 @@ thead {
 }
 
 .checkB:hover {
-	opacity: 0.5;
+	filter: brightness(90%); 
 }
 
 #deleteB {

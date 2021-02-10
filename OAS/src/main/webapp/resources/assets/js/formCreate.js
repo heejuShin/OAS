@@ -32,12 +32,14 @@ $( document ).ready(function() {
 	          dataType: 'text',
 	          success : function(data){
 	            if(data=="success"){
-	              $("#link_dup_txt").html("<span style='color:green; font-size:12px;'>사용가능</span>");
+	              $("#link_dup_txt").html("<span style='color:green;' class='overlap_msg' >사용가능</span>");
+	              $("#link").css("background-color","#e4eee4");
 	              dup_check=true;
 	            }
 	            else{
 	              $("#link").val("");
-	              $("#link_dup_txt").html("<span style='color:red; font-size:12px;'>사용불가</span>");
+	              $("#link_dup_txt").html("<span style='color:red;' class='overlap_msg'>사용불가</span>");
+	              $("#link").css("background-color","#eee6e4");
 	              dup_check=false;
 	            }
 	          }, error:function(request, status, error){
@@ -85,6 +87,7 @@ $( document ).ready(function() {
 	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
 	        .find('.modal_close_btn')
 	        .on('click', function() {
+	        	
 	            bg.remove();
 	            modal.hide();
 	        });
@@ -94,6 +97,7 @@ $( document ).ready(function() {
 		var name = $("#formName").val();
 		if(name=="") {
 			name= "<span style=\"color:red\">내용없음</span>";
+			
 			$("#modal_message").html("설문지 작성이 미완료되었습니다.");
 		}
 	    $("#confirm_title").html(name);
@@ -101,6 +105,7 @@ $( document ).ready(function() {
 		if ($("#category_select option:selected").val()=="") {
 			select_category = "<span style=\"color:red\">내용없음</span>";
 			$("#modal_message").html("설문지 작성이 미완료되었습니다.");
+			
 		}
 	    $("#confirm_category").html(select_category);
 	    $("#confirm_start").html($("#startDate").val()+ " " + $("#startTime").val());
