@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+main {
+	margin: 5%;
+	font-family: NanumGothic;
+}
+
+
+/* page title */
+
+#headTitle {
+	display: block;
+	margin-bottom: 50px;
+}
+
+#headTitle h2 {
+	font-size: 30px;
+	font-weight: 800;
+	padding-bottom: 20px;
+	border-bottom: 3px black solid;
+}
+
+
+/* table */
+
+table th {
+	font-family: NanumGothic;
+	font-size: 17px;
+	font-weight: 800;
+	text-align: center;
+}
+
+table td {
+	font-family: NanumGothic;
+	font-size: 13px;
+	font-weight: 600;
+	text-align: center;
+}
+
+thead {
+	border-top: 1px solid #ddd;
+}
+
+.tableDiv {
+	clear: both;
+	margin-top: 2%;
+}
+
+.askDelete {
+	color: white;
+	background: #e65858;
+	border-radius: 5px;
+	border: none;
+	padding: 3% 6%;
+}
+
+.askDelete:hover {
+	opacity: 0.5;
+}
+
+
+/* select control */
+
+#select_control {
+	display: block;
+	width: fit-content;
+	position: absolute;
+	right: 5%;
+	text-align: center;
+}
+
+#controlDiv {
+	display: table;
+	width: fit-content;
+	margin: 2% 0%;
+	text-align: center;
+	overflow: hidden;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+#allLevel {
+	display: table-cell;
+	width: 110px;
+	font-size: 15px;
+	height: 35px;
+	float: left;
+}
+
+#stateB {
+	display: table-cell;
+	float: left;
+	margin-left: 10px;
+	border: #ffe902 4px solid;
+	background: #ffe902;
+	border-radius: 8px;
+}
+
+#stateB:hover {
+	opacity: 0.5;
+}
+
+
+/* delete modal*/
+
+#modal {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+#deleteModal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	width: 400px;
+	height: 170px;
+	border-radius: 10px;
+	color: black;
+	padding: 30px;
+}
+
+#deleteModal p {
+	text-align: center;
+	font-family: NanumGothic;
+	font-size: 15px;
+	font-weight: 700;
+	color: black;
+}
+
+#modal_buttons {
+	display: block;
+	width: 100%;
+	top: 50%;
+	text-align: center;
+	left: 50%;
+	margin-top: 30px;
+}
+
+.checkB {
+	margin: 5px;
+	font-family: NanumGothic;
+	font-weight: 800;
+	font-size: 15px;
+	width: 70px;
+	border-radius: 10px;
+	padding: 7px 0px;
+}
+
+.checkB:hover {
+	opacity: 0.5;
+}
+
+#deleteB {
+	border: 3px #f65656 solid;
+	background-color: white;
+	color: #f65656;
+}
+
+#notDeleteB {
+	border: 3px #4d744d solid;
+	background-color: white;
+	color: #4d744d;
+}
