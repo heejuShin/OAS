@@ -7,7 +7,7 @@ public class State {
 	private int id;
 	private int form_id;
 	private String stateName;
-	private int isDefualt;
+	private int isDefault;
 	private Date regDate;
 	
 	
@@ -42,12 +42,12 @@ public class State {
 		this.stateName = stateName;
 	}
 	
-	public int getIsDefualt() {
-		return isDefualt;
+	public int getIsDefault() {
+		return isDefault;
 	}
 
-	public void setIsDefualt(int isDefualt) {
-		this.isDefualt = isDefualt;
+	public void setIsDefualt(int isDefault) {
+		this.isDefault = isDefault;
 	}
 
 	public Date getRegDate() {

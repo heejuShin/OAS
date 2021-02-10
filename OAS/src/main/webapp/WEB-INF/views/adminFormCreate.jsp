@@ -125,6 +125,8 @@
 			          <option selected="selected" value="예약">예약</option>    
 			      </select>
 			</div>
+			<input type="hidden" id="state_selected" name="state"/>
+			
 			 				<input name="plusPoint" type="hidden" value="0"/> <!— type="number" —>
               				<input name="minusPoint" type="hidden" value="0"/> <!— type="number" —>
               				<input type="hidden" id="count" name="count" value="0"/>
@@ -132,6 +134,7 @@
 			<div id="list" style="width: inherit;">
 			
 			</div> 
+			
 			
 			<!-- input type : submit -->
 				<div id="submitDiv" class="container-contact100-form-btn form edit button">
@@ -237,15 +240,23 @@
 </html>
 
 <script>
+$( document ).ready(function() {
+	var value = $("#state").val();
+    var s = value.toString();
+    $("#state_selected").val(s); 
+})
 $('#state').on('select2:select', function(e) {
     var id = e.params.data.id;
     var value = $(this).val();
-  });
-  
+    var s = value.toString();
+    $("#state_selected").val(s); 
+    //console.log(document.getElementById('state_selected').value);
+      });
   $("#state").select2({
       tags: true,
       tokenSeparators: [',', ' ']
   })
+  
 var category_list = ${category_list};
 var categoryNum = $("<input name='categoryNum' value='"+category_list.length+"' type='hidden'>");
 $(".form-div").append(categoryNum);
