@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HGU CSEE 신청 시스템</title>
 
   <!-- Responsive Tables -->
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
@@ -15,241 +15,159 @@
 
 
  <style>
-	
-	/* 전체   */
-      html, body{height:100%;}
+   
+   /* 전체   */
+      html, body{height:auto}
       
       main {
-      	margin: 2% 15%;
-      	height:100%;
+         margin: 2% 15%;
+         height:100%;
       }
       
       /* board1 */
       
       .board1 {
-      	height: 30%;
-      	padding: 0 2%;
+         height: 300px;
+         padding: 0 2%;
       }
       
       .board_image{
       display:block;
-      	width: 25%;
-      	height: 100%;
+         width: 25%;
+         height: 100%;
       }
       
       .board_image, .board_section{
-      	float:left;
+         float:left;
       }
       
       .board2{
-      	clear:both;
+         clear:both;
+         height:auto;
       }
       
       .board_section{
-      	display: block;  
-      	width: 73%; 
-      	
-      	margin-left:2%;
-      	
+         display: block;  
+         width: 73%; 
+         
+         margin-left:2%;
+         
       }
       .title {
-      	margin-left:35%;
+         margin-left:35%;
       }
       
 
       .title h1{
-      	font-size: 350%;
-      	font-family: inherit;
-      	font-style: normal;
-      	font-weight:700;
+         font-size: 350%;
+         font-family: inherit;
+         font-style: normal;
+         font-weight:700;
       }
       
        .swLink{
-      	font-size: 50%;
-      	text-decoration: underline;
-    	text-underline-position: under;
+         font-size: 50%;
+         text-decoration: underline;
+       text-underline-position: under;
       } 
       
       .board_image img{
-      	  width: 100%;
-		  height: 100%;
-		  object-fit: cover;
+           width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
       
       .title img {
-		  width: 8%;
-		  height: 8%;
-		  object-fit: contain;
-		  margin-right:1.5%;
-		  margin-top: -1%;
-		}
-		      
+        width: 8%;
+        height: 8%;
+        object-fit: contain;
+        margin-right:1.5%;
+        margin-top: -1%;
+      }
+            
       
       /* 공지 테이블  */
       .tablelist{
-      	margin-top: 4%;
-      	width: 100%;
+         margin-top: 4%;
+         width: 100%;
       }
       
       .tablelist th{
-      	text-align: center;
+         text-align: center;
       }
       
       #headTable {
-      	background-color: rgb(223, 223, 223);
+         background-color: rgb(223, 223, 223);
       }
       td{
       text-align: center;}
       
       
-       /* board2 */
-       
-      /* templatemo-sixteen.css 612 수정필요  */
-      .board2{
-      	width: 100%;
-      	height:100%;
-      	margin-top: 2%;
-      	border: 1px solid grey;
-      	border-radius: 20px;
-      }
-      .products, .container, .row, #contestsDiv, .filters-content, .row gridss{
-      	height:90%;
-      	width:100%;
-      }
-      
-      .products{
-      	width: 100%;
-      	margin: 0;
-      	padding: 0;
-      }
-      
-      .products div{
-      	padding: 0;
-      }
-      
-      .products{
-      	width:100%;
-     }
-      .row{
-      	margin: 0;
-      }
-      
-      .col-md-12 {
-      padding: 0;
-      width:100%;
-      }
       
       /* 검색 필터  */
       
        .products .filters{
-       	width:100%;
-      	padding-bottom: 2%;
-      	margin-bottom: 1%;
-      	
+          width:100%;
+         padding-bottom: 2%;
+         margin-bottom: 1%;
+         
       }
   
       
       .ul_filters{
-     	padding: 2% 0;
-     	width:100%;
+        padding: 2% 0;
+        width:100%;
       }
       
       .form_inline{
-      	width:100%;
+         width:100%;
       }
       
      
       
       #searchB{
-      	border: 1px solid #28a745;
+         border: 1px solid #28a745;
       }
       
-      /* card  */
+      /*--------------------*/
       
-      .col-lg-4{
-     		margin: 0 1%;
-     		width:250px;
-     		height:300px;
+      .discription{
+      	overflow: hidden;
+      	background-color:#f7f7f7;
       }
       
-      .down-content{
-      	padding: 4%;
-      	height:200px;
-      	
+      .down-content p{
+     
+      height:120px;
+      border: #f7f7f7 1px solid;
+      border-radius:10px;
+      padding: 2px 4px;
+      color: black;
+    font-family: NanumGothic;
+    font-weight: 600;
+      
       }
       
-      .gridss{
-      	width:100%;
-      	height:100%;
+      .formLink{
+      	display:bolck;
+      	text-align:center;
+      	margin-bottom:10px;
       }
       
-      .row{
-      	margin-left:0px;
-      	margin-right:0px;
+      .formDate{
+      	margin-bottom:2%;
       }
       
-      .filled-button{
-      	margin-left:110px;
-      	margin-bottom:30px;
+      .product-item .down-content h4{
+      margin-top: 40px;
+	text-align:center;
       }
       
-      .product-item{
-      	margin-bottom: 10px;
+      .a.filled-button{
+      font-weight: 600;
+      padding: 10px;
       }
-      
-      .product-item h4{
-      	text-align: center;
-      }
-      
-      hr{
-      margin: 0;
-      }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      /* 지울 내용 */
-      
-     /*  .board_image{
-        border: 1px solid black;
-      } 
-       */
-      /* 
-      .col-lg-4{
-     		border: 2px solid red;
-      }
-      
-        	.col-lg-4 div{
-        border: 1px solid black;
-      } 
-      	.board2 div{
-        border: 2px solid black;
-      } 
-      
-      main {
-      	border: 3px solid blue;
-      }
-      
-      .board1 {
-      	border: 3px solid red;
-      }
-      .board2 {
-      	border: 3px solid green;
-      } 
-
-      
-      
-       .filters {
-      	border: 3px solid red;
-      } */
-
+     
       
  </style>
  
@@ -266,154 +184,221 @@
 
                             $(document).ready(function () {
                                 /* CSS */
-                                	$('.gridss').css("height","100px");
 
-	                            var form_list=${form_list};
-	                            var category_list=${category_list};
-	                            for(var i=0; i<category_list.length;i++){
-	                            	var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
-	                            	$(".ul_filters").append(filter_li);
-		                        }
+                           //      	$('.gridss').css("height","100px");
+
+	                        //     var form_list=${form_list};
+	                        //     var category_list=${category_list};
+	                        //     for(var i=0; i<category_list.length;i++){
+	                        //     	var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+	                        //     	$(".ul_filters").append(filter_li);
+		                     //    }
 	                            
-	                            for(var i=0; i < form_list.length; i++){
+	                        //     for(var i=0; i < form_list.length; i++){
 	                                
-	                    		    /*설문지 별 div 만듦 (div1)*/
-	                    		    var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"' style='top :0px; lefot:0px;'></div>"); 
-	                    		   	$(".gridss").append(divOne);
+	                    		//     /*설문지 별 div 만듦 (div1)*/
+	                    		//     var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"' style='top :0px; left:0px;'></div>"); 
+	                    		//    	$(".gridss").append(divOne);
+
+	                    		//    	if(form_list[i].state_id==0)
+	                    		//    		$($(".gridss").children()[i]).addClass('미신청');
+	                    		//    	else
+	                    		//    		$($(".gridss").children()[i]).addClass('신청완료');
 	
-	                    		   	/* div1의 안에 들어갈 div => "product-item" */
-	                    		    var divTwo = $("<div></div>"); 
-	                    		    divTwo.addClass("product-item");
-	                    		    $($(".gridss").children()[i]).append(divTwo);
+	                    		//    	/* div1의 안에 들어갈 div => "product-item" */
+	                    		//     var divTwo = $("<div></div>"); 
+	                    		//     divTwo.addClass("product-item");
+	                    		//     $($(".gridss").children()[i]).append(divTwo);
 	
 	                    		    
-	                    		    var formName =  $("<h4 class='form_name'>"+form_list[i].formName +"</h4><hr class='line'>"); 
-	                    		    $($($(".gridss").children()[i]).children()[0]).append(formName);
+	                    		//     var formName =  $("<h4 class='form_name'>"+form_list[i].formName +"</h4><hr class='line'>"); 
+	                    		//     $($($(".gridss").children()[i]).children()[0]).append(formName);
 	
 	                    		    
-									var formContent= $("<div class='down-content'></div>");
-									$($($(".gridss").children()[i]).children()[0]).append(formContent);
+									// var formContent= $("<div class='down-content'></div>");
+									// $($($(".gridss").children()[i]).children()[0]).append(formContent);
 	
-									var category =  $("<h5 class='category'>"+form_list[i].categoryName +"</h5><p class='discription'>"+form_list[i].explanation+"</p>"); 
-	                    		    $($($($(".gridss").children()[i]).children()[0]).children()[2]).append(category);
+									// var category =  $("<h5 class='category'>"+form_list[i].categoryName +"</h5><p class='discription'>"+form_list[i].explanation+"</p>"); 
+	                    		//     $($($($(".gridss").children()[i]).children()[0]).children()[2]).append(category);
 									
-		                    		var ul = $("<ul class='period'></ul>");
-		                    		$($($($(".gridss").children()[i]).children()[0]).children()[2]).append(ul);
+		                    	// 	var ul = $("<ul class='period'></ul>");
+		                    	// 	$($($($(".gridss").children()[i]).children()[0]).children()[2]).append(ul);
 	
-		                    		var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
-									$($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
-	
-									var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>상 태(DB)</a>");
-									$($($(".gridss").children()[i]).children()[0]).append(a);
-	
-									var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='1'/></form>");
-									$($($(".gridss").children()[i]).children()[0]).append(form);
+		                    	// 	var li=$("<li class='start'><span>"+form_list[i].startDate+"</span></li> <li><span>~</span></li> <li class='end'><span>"+form_list[i].endDate+"</span></li>");
+									// $($($($($(".gridss").children()[i]).children()[0]).children()[2]).children()[2]).append(li);
+
+									// if(form_list[i].state_id==0){
+									// 	var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청완료</a>");
+									// 	$($($(".gridss").children()[i]).children()[0]).append(a);
+									// }
+									// else{
+									// 	var a=$("<a id='form_"+form_list[i].id+"' class='filled-button' onClick = 'openForm("+form_list[i].id+");'>신청하기</a>");
+									// 	$($($(".gridss").children()[i]).children()[0]).append(a);
+									// }
+									// var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+									// $($($(".gridss").children()[i]).children()[0]).append(form);
 									
-			                	}
+			                	// }
+
+                        /*var tools = $('.grid').children().val();
+                        var getty = $('<p></p>');
+                        $('.grid').append(getty);
+                        console.log("shit : "+tools);
+                        */
+                               var form_list=${form_list};
+                               var category_list=${category_list};
+                               for(var i=0; i<category_list.length;i++){
+                                  var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+                                  $(".ul_filters").append(filter_li);
+                              }
+
+                             
+                               
+                               for(var i=0; i < form_list.length; i++){
+                                  var timestmp = form_list[i].startDate;
+                                  var ndate = new Date();
+                                  ndate.setTime(timestmp);
+                                  //form_list[i].startDate = date("Y-m-d", form_list[i].startDate);
+                                  //form_list[i].endDate = date("Y-m-d", form_list[i].endDate);
+                                 /*설문지 별 div 만듦 (div1)*/
+                                 var divOne = $("<div class='col-lg-4 col-md-4 grid-item category_"+ form_list[i].category_id+"'></div>"); 
+                                   $(".grid").append(divOne);
+   
+                                   /* div1의 안에 들어갈 div => "product-item" */
+                                 var divTwo = $("<div></div>"); 
+                                 divTwo.addClass("product-item");
+                                 $($(".grid").children()[i]).append(divTwo);
+                      
+                           var formContent= $("<div class='down-content'></div>");
+                           $($($(".grid").children()[i]).children()[0]).append(formContent);
+                           
+                           var formName =  $("<h6 class='formDate'>"+form_list[i].startDate+"~"+form_list[i].endDate+"</h6><h4 class='form'>"+form_list[i].formName +"</h4><p class='discription'>"+form_list[i].explanation+"</p>"); 
+                                 $($($($(".grid").children()[i]).children()[0]).children()[0]).append(formName);
+                           
+                                 var category =  $("<span class='category_name'>"+form_list[i].categoryName +"</span>"); 
+                                 $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
+                             
+                           var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
+                           $($($(".grid").children()[i]).children()[0]).append(a);
+                           
+                            }
+
                             });
 
-                            function openForm(form_id){
-                                
-                            	$("#myform_"+ form_id).children("input").val(form_id);
-
-                            		/* var buf = 	$("#myform_"+ form_id).children("input").val();
-                                console.log("form id : "+form_id+ " / form create : " + buf); */
-                                
-	                            //	$('#select_formID').value = form_id;
-	                            	//$("#myform").attr("action", "form");
-	                            	$("#myform_"+form_id).submit();
+                     function openForm(form_id){
+                               $("#myform_"+form_id).submit();
                             }
 
 
                             $(document).ready( function() {   
 
-                            	var $grid = $('.gridss').isotope({
-                            	  itemSelector: '.grid-item',
-                            	  percentPosition: true,
+                               var $grid = $('.grid').isotope({
+                                 itemSelector: '.grid-item',
+                                 percentPosition: true,
                                   masonry: {
                                     columnWidth: ".grid-item"
                                   }
-                            	});
+                               });
 
-                            	// filter items on button click
-                            	$('.ul_filters').on( 'click', 'li', function() {
-                            	  var filterValue = $(this).attr('data-filter');
-                            	  $grid.isotope({ filter: filterValue });
-                            	  $('.ul_filters li').removeClass('active');
-                            	  $(this).addClass('active');
-                            	});
 
+                               // filter items on button click
+                               $('.ul_filters').on( 'click', 'li', function() {
+                                 var filterValue = $(this).attr('data-filter');
+                                 $grid.isotope({ filter: filterValue });
+                                 $('.ul_filters li').removeClass('active');
+                                 $(this).addClass('active');
+                               });
+
+
+                            	var $table = $('.gridss').isotope({
+                            		itemSelector: '.grid-item',
+                              	  	percentPosition: true,
+                      	          getSortData: {
+                      	              status : '[data-status]', 
+                      	           }
+                      	        });
+                      	        
+                            	$('.filter-status').on('change', function() {
                             
+                              	  var filterValue = $(this).find(':selected').attr('data-filter');
+                              	  console.log(filterValue);
+                              	  $table.isotope({ filter: filterValue });
+                              	});
 
-                          
                             });
                             </script>
 
 
 </head>
 <body>
-	
-	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+   
+   <jsp:include page="/WEB-INF/views/basic/header.jsp" />
     
     <main>
     
     <div class="board1">
-		<div class="board_image">
+      <div class="board_image">
                 <img src="<%=request.getContextPath()%>/resources/img/home_4.jpg" alt="img section">
          </div>
         <div class="board_section">
-	        <div class="title">
-	        	<h1><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 <span class="swLink"><a href='#'>Link</a></span></h1>
-	        </div>
+           <div class="title">
+              <h2><a href="https://hisnet.handong.edu"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 </span></a></h2>
+           </div>
                 <div class="tablelist">
-	                <table class="table table-hover">  
-						  <tr id="headTable"><th>Id</th><th>title</th></tr>  
-						  <tr><td>101</td><td>2021-1학기 맥북 신청 일정 </td></tr>  
-						  <tr><td>102</td><td>2021 하계 SW 캠프 일정 공지 </td></tr>  
-						  <tr><td>103</td><td>2021 1학기 마일리지 신청 </td></tr>  
-						  <tr><td>104</td><td>2021 여름방학 소프트웨어 봉사단 모집 </td></tr>
-						  <tr><td>105</td><td>2021 2학기 공학 프로젝트 기획 신청  </td></tr>    
-					</table>  
+                   <table class="table table-hover">  
+                    <tr><td>2021-1학기 맥북 신청 일정 </td><td>2021-02-09</td></tr>  
+                    <tr><td>2021 하계 SW 캠프 일정 공지 </td><td>2021-02-06</td></tr>  
+                    <tr><td>2021 1학기 마일리지 신청 </td><td>2021-02-06</td></tr>  
+                    <tr><td>2021 여름방학 소프트웨어 봉사단 모집 </td><td>2021-02-05</td></tr>
+                    <tr><td>2021 2학기 공학 프로젝트 기획 신청  </td><td>2021-02-04</td></tr>    
+               </table>  
                 </div>
       </div>
         
     </div>
-	
+   
  
-        <div class="board2">
-		
-            <div class="products" style="margin-top:0px">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="filters">
-                      <ul class="ul_filters">
-                          <li class="active" data-filter="*">All Products</li>
-                      </ul>
-                      <form class="form-inline">
-                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                          <button id="searchB" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                      </form>
-                    </div>
-                  </div>
-                  <div id="contestsDiv" class="col-md-12">
-                    <div class="filters-content" >
-                    
-                        <div class="gridss"  style="overflow:scroll; height:100px"><!--  class : row 삭제 -->
-                        </div>
-                            
-                            
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div style="border:0;" class="board2">
+      
+            <div class="products">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="filters">
+              <ul class="ul_filters">
+                  <li class="active" data-filter="*">All Products</li>
+              </ul>
+              <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" style="float:right;">
+                    <select name="searchType">
+                       <option value="all" <c:out value="${searchType =='all'? 'selected':'' }"/>>전체</option>
+                       <option value="formName" <c:out value="${searchType =='formName'? 'selected':'' }"/>>제목</option>
+                       <option value="categoryName" <c:out value="${searchType =='categoryName'? 'selected':'' }"/>>카테고리</option>
+                    </select>
+                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                 </form>
+              
             </div>
+          </div>
+          <div id="contentsDiv" class="col-md-12">
+            <div class="filters-content">
+                <div class="row grid">
+                   
 
-	</main>
-	
-	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
-	
-	
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+            </div><!-- board2 -->
+
+   </main>
+   <footer>
+      <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
+   </footer>
+   
+   
+   
 </body>
 </html>

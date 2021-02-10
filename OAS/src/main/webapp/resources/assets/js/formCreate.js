@@ -110,7 +110,10 @@ $( document ).ready(function() {
 	});
 
 	//메뉴바 이동 코드
-	var count = 0;
+	var count = $("div#list").children().length-1;
+	
+	if(count<0)
+		count=0;
 	
 	$(window).scroll(function(){
 	  var scrollTop = $(document).scrollTop();
@@ -122,19 +125,19 @@ $( document ).ready(function() {
 	$("#list").on('change', ".field_type", function(){
 	    var content;
 	    if(this.value=="textarea"){
-	      content = "<textarea disabled></textarea>";
+	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
 	    else if(this.value=="select"){
-	      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"list_select\"></div>";
+	      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"list_select\"></div>";
 	    }
 	    else if(this.value=="radio"){
-	      content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_radio\">옵션에 추가</button><div class=\"list_radio\"></div>";
+	      content = "<input class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
 	    }
 	    else if(this.value=="checkbox"){
-	      content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_chxbox\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+	      content = "<input class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 	    }
 	    else{
-	      content = "<input type=\""+this.value+"\" disabled/>";
+	      content = "<input class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    }
 	    $(this).siblings(".content").html(content);
 	});
@@ -142,6 +145,7 @@ $( document ).ready(function() {
 	//field 추가
 	$("#menu-bar").click(function(){
 	  count++;
+	  
 	  $("#field_add").find(".field").attr("id", "field"+count);
 	  $("#field_add").find(".isEssential").attr("name", "isEssential"+count);
 	  $("#field_add").find(".field_title").attr("name", "f_title"+count);
@@ -150,6 +154,7 @@ $( document ).ready(function() {
 	  $("#field_add").find(".index").attr("value", count);
 	  $("#count").val(count);
 	  $("#list").append($("#field_add").html());
+
 	});
 	
 	//field 삭제
@@ -159,6 +164,8 @@ $( document ).ready(function() {
 	
 	//객관식 아이템 추가
 	$("#list").on('click', ".btn_add_radio", function(){
+	
+	  
 	  var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
 	  $(this).parent().siblings(".count").val(r_cnt);
 	  var idx = $(this).parent().siblings(".index").val();
