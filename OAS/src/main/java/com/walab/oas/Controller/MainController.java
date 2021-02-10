@@ -1,10 +1,12 @@
 package com.walab.oas.Controller;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -153,6 +155,16 @@ public class MainController {
 
 		System.out.println("<goToForm> controller end");
 		return mav;
+	}
+	
+	//handong 이메일로 로그인을 하지 않아 403 에러 발생 시 
+	@RequestMapping(value = "/error403", method = { RequestMethod.POST, RequestMethod.GET })
+	public void errorOccur(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		response.setContentType("text/html; charset=utf-8");
+		System.out.println("error403발생");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('한동 이메일(handong.edu)로 로그인해주세요'); location.href='/'</script>");
+		out.flush();
 	}
 	
 }

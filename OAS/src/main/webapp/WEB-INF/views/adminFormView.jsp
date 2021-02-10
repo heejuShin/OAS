@@ -95,7 +95,7 @@
 			</div>
 			
 			<div id="tab2" class="tabcontent">
-				<%-- <jsp:include page="/WEB-INF/views/adminFormResult.jsp" /> --%>
+				<jsp:include page="/WEB-INF/views/adminFormResult.jsp" />
 			</div>
 		</div>
 	</main>
