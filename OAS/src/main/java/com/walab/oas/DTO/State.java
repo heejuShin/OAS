@@ -14,7 +14,7 @@ public class State {
 
 	@Override
 	public String toString() {
-		return "State [id=" + id + ", form_id=" + form_id + ", stateName=" + stateName + ", isDefualt=" + isDefualt
+		return "State [id=" + id + ", form_id=" + form_id + ", stateName=" + stateName + ", isDefault=" + isDefault
 				+ ", regDate=" + regDate + "]";
 	}
 
