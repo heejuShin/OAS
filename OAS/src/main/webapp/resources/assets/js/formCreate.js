@@ -131,7 +131,7 @@ $( document ).ready(function() {
 	      content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"list_select\"></div>";
 	    }
 	    else if(this.value=="radio"){
-	      content = "<input class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
+	      content = "<input class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
 	    }
 	    else if(this.value=="checkbox"){
 	      content = "<input class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
@@ -165,16 +165,31 @@ $( document ).ready(function() {
 	//객관식 아이템 추가
 	$("#list").on('click', ".btn_add_radio", function(){
 	
-	  
-	  var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
-	  $(this).parent().siblings(".count").val(r_cnt);
-	  var idx = $(this).parent().siblings(".index").val();
-	  $("#radio_add").find(".radio_real").attr("name", idx+"content"+String(r_cnt));
-	  $("#radio_add").find(".radio_real").attr("value",$(this).siblings("input").val());
-	  $("#radio_add").find("label").html($(this).siblings("input").val());
-	  $(this).siblings(".list_radio").append($("#radio_add").html());
-	  $(this).siblings("input").val("");
+	  //문자열 처리 (, 기준)
+		var inputs = $(this).siblings('input').val();
+		var lastChar = inputs.charAt(inputs.length-1); 
+
+		if(lastChar == ','){
+			inputs = inputs.slice(0,-1); //마지막 문자 콤마(,) 지움 
+		}
+		
+		inputs = inputs.split(",");
+		
+		for(var i = 0 ; i < inputs.length; i++){
+			var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
+			  $(this).parent().siblings(".count").val(r_cnt);
+			  
+			  var idx = $(this).parent().siblings(".index").val();
+			  
+			  $("#radio_add").find(".radio_real").attr("name", idx+"content"+String(r_cnt));
+			  $("#radio_add").find(".radio_real").attr("value",inputs[i]);
+			  $("#radio_add").find("label").html(inputs[i]);
+			  $(this).siblings(".list_radio").append($("#radio_add").html());
+			  
+		}
+		$(this).siblings("input").val("");
 	});
+	
 	//아이템 삭제
 	$("#list").on('click', ".remove_item", function(){
 	  $(this).parent().remove();
