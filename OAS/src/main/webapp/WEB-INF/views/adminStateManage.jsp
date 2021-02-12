@@ -57,10 +57,10 @@
 	
 	<!-- main -->
     <main>
-
+	<form action = "./state/save" method="post">
          <div id="headTitle"><h2>상태 관리</h2></div>
 			<div class="wrap-input100  bg1" style="font-size: 15px;">
-				<select class="form-control" style="width: 80%; border:none;" id="state" multiple="multiple">
+				<select class="form-control" id="state" style="width: 80%; border:none;" id="state" multiple="multiple">
 			          <option selected="selected" value="대기중">대기 중</option>
 			          <option selected="selected" value="입금전">입금 전</option>
 			          <option selected="selected" value="방문요망">방문요망</option>
@@ -73,14 +73,16 @@
 			      
 			      <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
 			</div>
+			<input type="hidden" id="state_selected" name="state" style="width: 1000px;"/>
+			
 			
 		<div class="button_div">
-            <button style="border-color: #28a745; color: #28a745" onclick="location.href='/admin/state/save'">저장</button>
-            <button style="border-color: red; color: red;" name="deleteB" onclick="location.href='/admin/state'">초기화</button>
-            <button style="border-color: black; color: black;" name="manageB" onclick="location.href='/admin/mypage'">마이페이지</button>
+            <button style="border-color: #28a745; color: #28a745" type="submit">저장</button>
+            <button style="border-color: red; color: red;" name="deleteB" onclick="location.href='./state'">초기화</button>
+            <button style="border-color: black; color: black;" name="manageB" onclick="location.href='./'">마이페이지</button>
         
         </div>  
-
+	</form>
 		
 
 
@@ -101,5 +103,25 @@ $( document ).ready(function() {
     	tags : true
     });
 });
-  
+
+
+$('#state').on('select2:select', function(e) {
+    var id = e.params.data.id;
+    var value = $(this).val();
+    var s = value.toString();
+    $("#state_selected").val(s); 
+    //console.log(document.getElementById('state_selected').value);
+      });
+$('#state').on('select2:unselect', function(e) {
+    var id = e.params.data.id;
+    var value = $(this).val();
+    var s = value.toString();
+    $("#state_selected").val(s); 
+    //console.log(document.getElementById('state_selected').value);
+      });
+      
+  $("#state").select2({
+      tags: true,
+      tokenSeparators: [',', ' ']
+  })
     </script>

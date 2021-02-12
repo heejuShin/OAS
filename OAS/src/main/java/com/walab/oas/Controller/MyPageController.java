@@ -20,12 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.SearchCriteria;
+import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.User;
 
 @RestController
@@ -36,6 +38,8 @@ public class MyPageController {
 	private MyPageDAO mypageDao; 
 	@Autowired
 	private MainDAO mainDao; 
+	@Autowired
+	private AdminDAO adminDAO;
 	
 	// 게시판 페이징
 		@RequestMapping(value="/admin/mypage")
@@ -80,6 +84,24 @@ public class MyPageController {
 		@RequestMapping(value="/admin/mypage/state")
 		public ModelAndView manageDefaultState (HttpSession session) {
 			ModelAndView mav = new ModelAndView("adminStateManage");
+			return mav;
+		}
+		
+		@RequestMapping(value="/admin/mypage/state/save", method=RequestMethod.POST)
+		public ModelAndView saveDefaultState (HttpServletRequest request) throws Exception {
+			ModelAndView mav = new ModelAndView("redirect:/admin/mypage/state");
+			
+			State state= new State();
+			String statename = request.getParameter("state");
+			String[] statenames = statename.split(",");
+			adminDAO.deleteDefaultState();
+			for (int i = 0; i < statenames.length; i++) {
+				state.setStateName(statenames[i]);
+				state.setIsDefualt(1);
+				state.setForm_id(0);
+				adminDAO.createState(state);
+			}
+			
 			return mav;
 		}
 		

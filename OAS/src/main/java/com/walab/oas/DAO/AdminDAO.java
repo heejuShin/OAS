@@ -41,8 +41,10 @@ public class AdminDAO {
 		return sqlSession.insert(namespace + ".formCreate", form);
 	}
 	public void createState(State state) throws Exception{
-		System.out.println("stateCreate done");
 		 sqlSession.insert(namespace + ".stateCreate", state);
+	}
+	public void deleteDefaultState() {
+		sqlSession.delete(namespace + ".deleteDefaultState");
 	}
 	
 	public int createField(Field field) throws Exception{

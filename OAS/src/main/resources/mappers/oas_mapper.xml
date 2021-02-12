@@ -387,5 +387,9 @@
 		UPDATE User SET isDelete = 1 WHERE id = #{userID};
 	</update>
 	
+	<delete id="deleteDefaultState">
+		DELETE FROM State WHERE form_id = 0;
+	</delete>
+	
 </mapper>
 

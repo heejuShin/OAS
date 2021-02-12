@@ -266,6 +266,13 @@ $('#state').on('select2:select', function(e) {
     $("#state_selected").val(s); 
     //console.log(document.getElementById('state_selected').value);
       });
+$('#state').on('select2:unselect', function(e) {
+    var id = e.params.data.id;
+    var value = $(this).val();
+    var s = value.toString();
+    $("#state_selected").val(s); 
+    //console.log(document.getElementById('state_selected').value);
+      });
   $("#state").select2({
       tags: true,
       tokenSeparators: [',', ' ']
