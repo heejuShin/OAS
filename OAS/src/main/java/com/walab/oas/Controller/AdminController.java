@@ -57,7 +57,7 @@ public class AdminController {
 	@RequestMapping(value = "/form/create")
 	  public ModelAndView createForm() throws Exception {
 		ModelAndView mav = new ModelAndView();
-		
+
 		List<Category> category_list = mainDao.categoryList();
 		JSONArray jArray = new JSONArray();
 		
@@ -87,7 +87,7 @@ public class AdminController {
 		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
-			
+
 			Form form = new Form();
 			Category cg = new Category();
 			int category_id = 0;
@@ -109,8 +109,10 @@ public class AdminController {
 			}finally {
 				System.out.println("finally category id "+category_id);
 				form.setCategory_id(category_id);
-				//int user_id = Integer.parseInt(request.getParameter("user_id"));
-				int user_id = (Integer)session.getAttribute("id");
+				int user_id=0;
+				if(session.getAttribute("id")!=null) {
+					user_id=(Integer) session.getAttribute("id");
+				}
 				form.setUser_id(user_id);
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
@@ -132,7 +134,23 @@ public class AdminController {
 				form.setEnd(end);
 				
 				adminDAO.createForm(form);
+				int form_id=adminDAO.getFormId(url); 
+				//state
 				
+				State state= new State();
+				String statename = request.getParameter("state");
+				//System.out.println(statename);
+				String[] statenames = statename.split(",");
+				for (int i = 0; i < statenames.length; i++) {
+					state.setStateName(statenames[i]);
+					if(statenames[i]=="대기중")
+						state.setIsDefualt(1);
+					else state.setIsDefualt(0);
+					state.setForm_id(form_id);
+					adminDAO.createState(state);
+				}
+				
+
 				//Field
 				int f_cnt = Integer.parseInt(request.getParameter("count"));
 				for(int i=1; i<=f_cnt; i++) {
@@ -141,7 +159,7 @@ public class AdminController {
 					if(title != null) {
 						
 						//int form_id = 1;
-						int form_id=adminDAO.getFormId(url); 
+						
 						field.setForm_id(form_id); 
 						field.setFieldName(title); 
 						String fieldType = request.getParameter("f_type"+Integer.toString(i));
@@ -333,7 +351,7 @@ public class AdminController {
 	//신청폼 update
 	@SuppressWarnings("finally")
 	@RequestMapping(value="/form/view/formUpdate",method=RequestMethod.POST)
-	public @ResponseBody ModelAndView modifyFormData(HttpServletRequest request) throws Exception {
+	public @ResponseBody ModelAndView modifyFormData(HttpServletRequest request, HttpSession session) throws Exception {
 
 		ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 		System.out.println("in form update><");
@@ -364,7 +382,10 @@ public class AdminController {
 				form.setCategory_id(category_id);
 				
 				form.setId(form_id);
-				int user_id = Integer.parseInt(request.getParameter("user_id"));
+				int user_id=0;
+				if(session.getAttribute("id")!=null) {
+					user_id=(Integer) session.getAttribute("id");
+				}
 				form.setUser_id(user_id);
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);

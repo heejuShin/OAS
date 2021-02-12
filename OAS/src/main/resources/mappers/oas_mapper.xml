@@ -322,7 +322,7 @@
 	<!-- User 정보 가져오기  -->
 	 <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
 	  <![CDATA[
-			SELECT * FROM User;
+			SELECT * FROM User WHERE isDelete =0;
 	  ]]>
 	</select> 
 	
@@ -381,5 +381,11 @@
    	<select id="isUserExist" resultType="int">
     	select COUNT(*) from User where email = #{email};
     </select>
+    
+    <!-- user 탈퇴시키기  -->
+	<update id="userDelete" parameterType="int" >
+		UPDATE User SET isDelete = 1 WHERE id = #{userID};
+	</update>
+	
 </mapper>
 

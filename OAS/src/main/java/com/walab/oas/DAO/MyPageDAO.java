@@ -79,4 +79,34 @@ public class MyPageDAO {
 		sqlSession.update("modifyInfo", user);
 	}
 	
+	//user 신청 안 한 신청폼 가져오기
+	public List<Form> noApplyForm(SearchCriteria cri){ //admin의 폼리스트 가져오기
+		
+		return sqlSession.selectList("noApplyForm", cri);
+	}
+	public int countUserTab2(String searchType, String keyword) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("countUserTab2", map);
+	}
+	
+	//신청했던 과거 폼들 가져오기
+	//user 신청한 한 신청폼 가져오기
+	public List<Form> pastApplyForm(SearchCriteria cri){ //admin의 폼리스트 가져오기
+		
+		return sqlSession.selectList("pastApplyForm", cri);
+	}
+	public int countUserTab3(String searchType, String keyword) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne("countUserTab3", map);
+	}
+
+	//유저 탈퇴 처리
+	public void deleteUser(int userID) {
+		// TODO Auto-generated method stub
+		sqlSession.update("userDelete", userID);
+	}
 }

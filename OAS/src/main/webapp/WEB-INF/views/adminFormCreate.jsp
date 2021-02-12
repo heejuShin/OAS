@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=11">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=16">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -27,6 +27,7 @@
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+	
 	
 </head>
 
@@ -59,7 +60,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-		<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
+		<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     
@@ -125,14 +126,19 @@
 			          <option selected="selected" value="예약">예약</option>    
 			      </select>
 			</div>
+
 			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
+
+			<input type="hidden" id="state_selected" name="state"/>
+			
               				<input type="hidden" id="count" name="count" value="0"/>
 			
 			<div id="list" style="width: inherit;">
 			
 			</div> 
+			
 			
 			<!-- input type : submit -->
 				<div id="submitDiv" class="container-contact100-form-btn form edit button">
@@ -150,15 +156,18 @@
         <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
 	        <p>
-	        <span class="modal_title">제목 : </span><span id="confirm_title"></span><br>
-	        <span class="modal_title">분류 : </span><span id="confirm_category"></span><br>
-	        <span class="modal_title">기간 : </span><span id="confirm_start"></span> ~ <span id="confirm_end"></span> <br>
-	        <span class="modal_title">링크 : </span><input id="link" type="text" name="url"/>
+	        <span class="modal_title">제목 : </span><span id="confirm_title" class="modal_content"></span><br>
+	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
+	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
+	        <span class="modal_title">링크 : </span><input id="link" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
 	        </p>
-	        <button type="submit" id="form_submit" class="submit">확인</button>
-	        <a class="modal_close_btn"><button type="button">취소</button></a>
+	        <div id="modal_buttons">
+	        	<button type="submit" id="form_submit" class="submit modal_bts">확인</button>
+	        	<button type="button" class="modal_bts modal_close_btn">취소</button>
+	        </div>
+	        
     	</div>
     	
     	<div id="preview_modal">
@@ -245,15 +254,23 @@
 </html>
 
 <script>
+$( document ).ready(function() {
+	var value = $("#state").val();
+    var s = value.toString();
+    $("#state_selected").val(s); 
+})
 $('#state').on('select2:select', function(e) {
     var id = e.params.data.id;
     var value = $(this).val();
-  });
-  
+    var s = value.toString();
+    $("#state_selected").val(s); 
+    //console.log(document.getElementById('state_selected').value);
+      });
   $("#state").select2({
       tags: true,
       tokenSeparators: [',', ' ']
   })
+  
 var category_list = ${category_list};
 var categoryNum = $("<input name='categoryNum' value='"+category_list.length+"' type='hidden'>");
 $(".form-div").append(categoryNum);

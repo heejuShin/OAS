@@ -105,6 +105,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">Login</a>
               </li>
+              <input id="logincheck" value="false" type="hidden"/>
               </c:if>
               <c:if test="${admin != null}">
               <li class="nav-item">
