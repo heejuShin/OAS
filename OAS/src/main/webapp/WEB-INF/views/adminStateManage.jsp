@@ -60,15 +60,7 @@
 	<form action = "./state/save" method="post">
          <div id="headTitle"><h2>상태 관리</h2></div>
 			<div class="wrap-input100  bg1" style="font-size: 15px;">
-				<select class="form-control" id="state" style="width: 80%; border:none;" id="state" multiple="multiple">
-			          <option selected="selected" value="대기중">대기 중</option>
-			          <option selected="selected" value="입금전">입금 전</option>
-			          <option selected="selected" value="방문요망">방문요망</option>
-			          <option selected="selected" value="완료">완료</option>
-			          <option selected="selected" value="불가">불가</option>
-			          <option selected="selected" value="신청중">신청 중</option>
-			          <option selected="selected" value="신청마감">신청마감</option>
-			          <option selected="selected" value="예약">예약</option>    
+				<select class="form-control" id="state" style="width: 80%; border:none;" id="state" multiple="multiple"> 
 			      </select>
 			      
 			      <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
@@ -104,6 +96,12 @@ $( document ).ready(function() {
     });
 });
 
+var state_list = ${state_list};
+for (var i = 0; i < state_list.length; i++) {
+	var selectOption = $("<option selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
+	$(".form-control").append(selectOption);
+}
+
 
 $('#state').on('select2:select', function(e) {
     var id = e.params.data.id;
@@ -124,4 +122,5 @@ $('#state').on('select2:unselect', function(e) {
       tags: true,
       tokenSeparators: [',', ' ']
   })
+ 
     </script>

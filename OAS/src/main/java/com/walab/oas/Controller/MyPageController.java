@@ -84,6 +84,23 @@ public class MyPageController {
 		@RequestMapping(value="/admin/mypage/state")
 		public ModelAndView manageDefaultState (HttpSession session) {
 			ModelAndView mav = new ModelAndView("adminStateManage");
+			
+			List<State> state_list = mainDao.stateList(0);
+			JSONArray jArray = new JSONArray();
+			
+			try{
+				for (int i = 0; i < state_list.size() ; i++) {   
+		    		JSONObject ob2 =new JSONObject();
+		    		ob2.put("id", state_list.get(i).getId());
+			        ob2.put("stateName", state_list.get(i).getStateName());
+		            jArray.put(ob2);
+				}
+			}catch(JSONException e){
+		    	e.printStackTrace();
+		    }
+			
+			mav.addObject("state_list",jArray);
+			
 			return mav;
 		}
 		

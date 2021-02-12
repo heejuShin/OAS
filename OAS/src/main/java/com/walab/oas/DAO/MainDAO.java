@@ -47,7 +47,9 @@ public class MainDAO{
 		return sqlSession.selectList(namespace + ".fieldInfo", formID);
 	}
 	
-	
+	public List<State> stateList(int formID) {
+		return sqlSession.selectList(namespace + ".stateListbyId", formID);
+	}	
 	
 	
 }

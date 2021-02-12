@@ -52,6 +52,12 @@
 			 ]]> 
 	</select>
 	
+	<select id="stateListbyId" resultType="com.walab.oas.DTO.State">
+	    	<![CDATA[
+			 	select * from State where form_id = #{formID};
+			 ]]> 
+	</select>
+	
 	<!-- userMyPage 게시글 -->
 	<select id="userlist" resultType="com.walab.oas.DTO.Form">
 	 SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
