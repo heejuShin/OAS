@@ -111,8 +111,10 @@ public class AdminController {
 			}finally {
 				System.out.println("finally category id "+category_id);
 				form.setCategory_id(category_id);
-				//int user_id = Integer.parseInt(request.getParameter("user_id"));
-				int user_id =  2; //(Integer)session.getAttribute("id");
+				int user_id=0;
+				if(session.getAttribute("id")!=null) {
+					user_id=(Integer) session.getAttribute("id");
+				}
 				form.setUser_id(user_id);
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
@@ -351,7 +353,7 @@ public class AdminController {
 	//신청폼 update
 	@SuppressWarnings("finally")
 	@RequestMapping(value="/form/view/formUpdate",method=RequestMethod.POST)
-	public @ResponseBody ModelAndView modifyFormData(HttpServletRequest request) throws Exception {
+	public @ResponseBody ModelAndView modifyFormData(HttpServletRequest request, HttpSession session) throws Exception {
 
 		ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 		System.out.println("in form update><");
@@ -382,7 +384,10 @@ public class AdminController {
 				form.setCategory_id(category_id);
 				
 				form.setId(form_id);
-				int user_id = Integer.parseInt(request.getParameter("user_id"));
+				int user_id=0;
+				if(session.getAttribute("id")!=null) {
+					user_id=(Integer) session.getAttribute("id");
+				}
 				form.setUser_id(user_id);
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);

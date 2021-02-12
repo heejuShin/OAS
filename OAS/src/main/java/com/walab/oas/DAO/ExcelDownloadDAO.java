@@ -84,7 +84,7 @@ public class ExcelDownloadDAO {
         String nametime = format.format(time);
         
         try {
-			response.setHeader("Content-Disposition", "attachment;filename="+new String(fa.get(1).getBytes("utf-8"),"8859_1")+"-"+nametime.substring(2)+".xls");
+			response.setHeader("Content-Disposition", "attachment;filename="+new String(fa.get(1).getBytes("utf-8"),"8859_1")+"_"+nametime.substring(2)+".xls");
 		} catch (UnsupportedEncodingException e1) {
 			response.setHeader("Content-Disposition", "attachment;filename=formResult.xls");
 		}

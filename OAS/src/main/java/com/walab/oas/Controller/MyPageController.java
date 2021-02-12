@@ -84,7 +84,10 @@ public class MyPageController {
 			ModelAndView mav = null;
 			
 			mav = new ModelAndView("userMypage");
-			int user_id=1;
+			int user_id=0;
+			if(session.getAttribute("id")!=null) {
+				user_id=(Integer) session.getAttribute("id");
+			}
 			
 			//카테고리 리스트
 			List<Category> categoryt=mainDao.categoryList();
@@ -178,8 +181,11 @@ public class MyPageController {
 		@RequestMapping(value= "/userInformation") // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
 		@ResponseBody
 		public List<User> getUserInfo(HttpSession session) throws Exception {
-				
-			String email="21700000@handong.edu";
+			
+			String email = "21700000@handong.edu";
+			if(session.getAttribute("email")!=null) {
+				email = (String)session.getAttribute("email");
+			}
 				
 			List<User> userinfo = mypageDao.getUserInfo(email);
 				

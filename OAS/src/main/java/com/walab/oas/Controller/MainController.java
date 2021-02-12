@@ -49,10 +49,18 @@ public class MainController {
 	public ModelAndView goMypage(SearchCriteria cri,HttpSession session) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
+		//로그인 안되어있는데 header가 Load 안된경우
+		if(session.getAttribute("ID")==null) {
+			//session.invalidate();
+			//mav = new ModelAndView("redirect:/");
+			//return mav;
+		}
 		
-//		int user_id=(Integer) session.getAttribute("ID");
-		int user_id= 1; //세션이 있으면 그 사람 user_id로, 아니면 user_id는 0으로 설정해야함
-		
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		//세션이 있으면 그 사람 user_id로, 아니면 user_id는 0으로 설정해야함
 		cri.setUser_id(user_id);
 		List<Form> form_list=mainDao.formList(cri);
 		List<Category> category_list=mainDao.categoryList();
