@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -99,7 +100,6 @@ public class AdminController {
 				System.out.println("Cathch start");
 				String nCg = request.getParameter("category_id");
 				System.out.println("Cathch start");
-				//category_id = Integer.parseInt(request.getParameter("categoryNum")) +1;
 				cg.setCategoryName(nCg);
 				System.out.println("Cathch start");
 				adminDAO.addCategory(cg);
@@ -216,13 +216,13 @@ public class AdminController {
 	
 	//신청폼 (Admin) Result Check page
 	@RequestMapping(value = "/form/view/{link}")
-	public ModelAndView resultForm(HttpServletRequest request) throws Exception {
+	public ModelAndView resultForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
 	   
+		int form_id=adminDAO.getFormId(link); 
 		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
-		int form_id = 1;
 		System.out.println("form_id: "+form_id);
 		List<Result> submitterList= adminDAO.submitterList(form_id);
 		List<State> stateList=adminDAO.stateList(form_id);
@@ -538,7 +538,7 @@ public class AdminController {
 	
 	//신청폼 (Admin) View
 	@RequestMapping(value = "/form/result/{link}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
-	  public ModelAndView readForm(HttpServletRequest request) throws Exception {
+	  public ModelAndView readForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 		List<ReadResult> read_list=adminDAO.getReadList();
@@ -546,8 +546,7 @@ public class AdminController {
 		List<Result> date_list = adminDAO.getDate();
 		
 		//String form_id  = request.getParameter("select_formID");
-		//int form_ID = Integer.parseInt(form_id);
-		int form_ID =1;
+		int form_ID=adminDAO.getFormId(link); 
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -682,10 +681,7 @@ public class AdminController {
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
 		String categoryName = adminDAO.getCategoryName_one(form_ID);
-		System.out.println(form_info.get(0).getUser_id());
 		User user_info = adminDAO.getUserInfobyId(form_info.get(0).getUser_id());
-		System.out.println("-->"+form_info.toString());
-		System.out.println("-->"+field_list.toString());
 
 		
 		ArrayList<String> formQ = new ArrayList<String>();
@@ -770,7 +766,6 @@ public class AdminController {
 			   
 		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
 		int form_id = Integer.parseInt(request.getParameter("select_formID"));
-		System.out.println("form_id: "+form_id);
 		List<Result> submitterList= adminDAO.submitterList(form_id);
 				
 		ObjectMapper mapper=new ObjectMapper();
