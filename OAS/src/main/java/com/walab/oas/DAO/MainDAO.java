@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
-import com.walab.oas.DTO.Form_ver2;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;

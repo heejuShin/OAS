@@ -148,8 +148,8 @@
             
             <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
 	  			
-	  			<input type="hidden" name="searchType" value="all">
-	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	  			<input type="hidden" id="searchType" name="searchType" value="all">
+	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   			</form>
             
@@ -161,7 +161,7 @@
                       <tr>
                           <th>링크</th>
                           <th>
-							<select class="filters filter-category" data-filter-group='category'>
+							<select class="filters filter-category" id="categoryName" data-filter-group='category'>
 			  					<option data-filter='' value="*">카테고리</option>
 			  				</select>
 						  </th>
@@ -171,11 +171,11 @@
                           <th data-priority="2">등록자</th>
                           
                           <th data-priority="1">
-							<select class="filters filter-status" data-filter-group='status'>
+							<select class="filters filter-status" id="status" data-filter-group='status'>
 			  					<option data-filter='' value="*">상태</option>
-			  					<option data-filter='.예약' value=".예약">예약</option>
-			  					<option data-filter='.신청중' value=".신청중">신청중</option>
-			  					<option data-filter='.신청마감' value=".신청마감">신청마감</option>
+			  					<option data-filter='.예약' value="예약">예약</option>
+			  					<option data-filter='.신청중' value="신청중">신청중</option>
+			  					<option data-filter='.신청마감' value="신청마감">신청마감</option>
 			  				</select>
 						  </th>
                           <th data-priority="1"></th>
@@ -191,17 +191,17 @@
           <ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}'>&laquo;</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>&laquo;</a>
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}'>${idx}</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>${idx}</a>
 			    </li>
 			    </c:forEach>
 			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>&raquo;</a>
 			    </li>
 			    </c:if>
 		  </ul>
@@ -232,7 +232,7 @@
 
 								var categoryList=${categoryList};
 								for(var i=0; i < categoryList.length; i++){
-									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
+									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='"+categoryList[i].categoryName+"'>"+categoryList[i].categoryName+"</option>");
 									$(".filter-category").append(option);
 								}
                                 
@@ -259,29 +259,55 @@
 	                    		    var td5 = $("<td>"+adminList[i].userName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td5);
 
-									//모집중(수정가능), 모집마감(삭제가능), 예약(수정가능)
-									//예약
+									//모집중(수정가능,결과보기), 모집마감(결과보기,신청자가 없으면 삭제 가능), 예약(수정가능,삭제가능)
+									//예약(수정,삭제)
 	                    			if(new Date(adminList[i].startDate) > new Date()){
 	                    				var td6 = $("<td>예약</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-										var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
+										var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a><a href='#' id='deleteForm_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a></td>");
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
+										var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										$($(".tbodies").children()[i]).append(form2);
 
 										$(".form-item"+i).addClass('예약');
 										$(".form-item"+i).attr('data-status','예약');
 	                    			}
-	                    			//모집마감
+	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
 	                    			else if(new Date()>new Date(adminList[i].endDate)){
 	                    				var td6 = $("<td>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    			
-	                    				var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a></td>");
+	                    				var a=$("<td><a href='#' id='resultForm_"+adminList[i].id+"' class='filled-button' onClick = 'resultForm(this);'>결과</a></td>");
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
+										
+										var resultCount;
+										$.ajax({ //해당 form의 신청자 count가져오기
+											url : "resultCount",
+										  	type : "post",
+										  	data:{"form_id":adminList[i].id},
+										  	dataType : "json",
+										  	async: false,
+										  	success: function(data){
+										  		resultCount = data;
+										  	},
+										  	error:function(request, status, error){
+
+												alert("code:"+request.status+"\n"+"\n"+"error:"+error);
+
+											}
+										});
+
+										if(resultCount==0){
+											var plus_a=$("<a href='#' id='deleteForm_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a>");
+											$($(".tbodies").children()[i]).find("#resultForm_"+adminList[i].id).parent().append(plus_a);
+											var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+											$($(".tbodies").children()[i]).append(form2);
+										}
 
 										$(".form-item"+i).addClass('신청마감');
 										$(".form-item"+i).attr('data-status','신청마감');
@@ -293,10 +319,12 @@
 		                    			var td6 = $("<td>신청중</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-		                    			var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
+		                    		    var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a><a href='#' id='resultForm_"+adminList[i].id+"' class='filled-button' onClick = 'resultForm(this);'>결과</a></td>");
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
+										var form2=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										$($(".tbodies").children()[i]).append(form2);
 
 										$(".form-item"+i).addClass('신청중');
 										$(".form-item"+i).attr('data-status','신청중');
@@ -321,38 +349,18 @@
                             function deleteForm(obj){
                             	$(obj).parent().siblings("#deleteForm").submit();
                             }
+                            function resultForm(obj){
+                            	$(obj).parent().siblings("#resultForm").submit();
+                            }
 
                           $(document).ready( function() {   
-                        	//테이블 카테고리, 상태 select
-                    	       var $table = $('.tbodies').isotope({
-                    	          itemSelector: '.item-row',
-                	              llayoutMode: 'vertical',
-                    	          getSortData: {
-                    	              category : '[data-category]',
-                    	              status : '[data-status]', 
-                    	           }
-                    	        });
-
-                    	        var filters = {};
-                    	        // bind filter on select change,
+                    	        // select change,
                     	        $('.filters').on( 'change', function() {
-                    	          // get filter value from option value
-                    	          var $this = $(this);
-                    	          var filterGroup = $this.attr('data-filter-group');
-                    	          // set filter for group
-                    	          //filters[filterGroup] = $this.value;
-                    	          filters[filterGroup] = $this.find(':selected').attr('data-filter');
-
-                    	       	  // combine filters
-                    	          var filterValue = '';
-                    	          for (var prop in filters) {
-                    	            filterValue += filters[prop];
-                    	          }
-                    	          console.log(filterValue);
-                    	          
-                    	          $table.isotope({ 
-                    	            filter : filterValue 
-                    	          });
+                        	        console.log($(this).attr("id"));
+                        	        console.log($(this).val());
+									$("#searchType").val($(this).attr("id"));
+									$("#keyword").val($(this).val());
+									$(".form-inline").submit();
                     	        });
 
                           });

@@ -115,5 +115,12 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".excelResultContent", id);
 	}
 	
+	public int resultCount(int form_id) throws Exception{
+		return sqlSession.selectOne(namespace+ ".resultCount", form_id);
+	}
 	
+	//선택한 form 삭제
+	public void deleteForm(int formID) throws Exception {
+		sqlSession.delete(namespace + ".deleteForm",formID);
+	}
 }

@@ -34,7 +34,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.ExcelDownloadDAO;
 import com.walab.oas.DAO.MainDAO;
-
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
@@ -53,7 +52,6 @@ public class AdminController {
 	private AdminDAO adminDAO;
 	@Autowired
 	private MainDAO mainDao;
-	
 	
 	//신청폼 (Admin) Create
 	@RequestMapping(value = "/form/create")
@@ -173,10 +171,10 @@ public class AdminController {
 									item.setIsDefault(isDefault);
 									adminDAO.createItem(item);
 								}
-							}
+							}//item 반복문
 						}
 					}
-				}				
+				}	//field 반복문			
 				return mav;
 			}
 		}
@@ -717,5 +715,52 @@ public class AdminController {
 		ExcelDownloadDAO ed = new ExcelDownloadDAO();
 		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
 	}
+	
+	//신청폼 수정 페이지에서 field 가져오기
+	@RequestMapping(value= "/resultCount", method = RequestMethod.POST) 
+	@ResponseBody
+	public int getResultCount(HttpServletRequest request) throws Exception {
+		int form_id=Integer.parseInt(request.getParameter("form_id"));
+		
+		int resultCount=adminDAO.resultCount(form_id);
+				
+		return resultCount;
+	}	
+	
+	@RequestMapping(value = "/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
+		
+		String formID=request.getParameter("select_formID");
+		System.out.println(formID);
+		
+		adminDAO.deleteForm(Integer.parseInt(formID));
+		
+		System.out.println("Delete success!!!");
+		
+		return new ModelAndView("redirect:/admin/mypage");
+	}
+	
+	//admin mypage의 결과 버튼 누를때
+	@RequestMapping(value = "/resultForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	public ModelAndView resultFormOnly(HttpServletRequest request) throws Exception {
+		
+		//밑에는 check page 관련 controller입니당.
+		ModelAndView mav = new ModelAndView();
+			   
+		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
+		int form_id = Integer.parseInt(request.getParameter("select_formID"));
+		System.out.println("form_id: "+form_id);
+		List<Result> submitterList= adminDAO.submitterList(form_id);
+				
+		ObjectMapper mapper=new ObjectMapper();
+		String jArray=mapper.writeValueAsString(submitterList);
+			
+		mav.addObject("form_id",form_id);
+		mav.addObject("submitterList", jArray);
+				
+		mav.setViewName("adminFormResultOnly");
+		return mav;
+	}
+	
 	
 }

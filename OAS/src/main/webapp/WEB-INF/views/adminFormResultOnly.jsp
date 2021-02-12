@@ -7,12 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script>
-var message=${msg};
-alert(msg);
-
-document.location.href="home.jsp";
-</script>
-errorPage입니당
+	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+	<jsp:include page="/WEB-INF/views/adminFormCheck.jsp" />
+	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 </body>
 </html>

@@ -4,6 +4,7 @@ public class SearchCriteria extends Criteria{
 	
 	private String searchType;
 	private String keyword;
+	private String filterType;
 	private int user_id;
 
 	public String getSearchType() {
@@ -11,7 +12,7 @@ public class SearchCriteria extends Criteria{
 	}
 
 	public void setSearchType(String searchType) {
-		this.searchType = "all";
+		this.searchType = searchType;
 	}
 
 	public String getKeyword() {
@@ -20,6 +21,14 @@ public class SearchCriteria extends Criteria{
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public String getFilterType() {
+		return filterType;
+	}
+
+	public void setFilterType(String filterType) {
+		this.filterType = filterType;
 	}
 
 	public int getUser_id() {
@@ -32,7 +41,7 @@ public class SearchCriteria extends Criteria{
 
 	@Override
 	public String toString() {
-		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", user_id=" + user_id + "]";
+		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", filterType=" + filterType
+				+ ", user_id=" + user_id + "]";
 	}
-
 }

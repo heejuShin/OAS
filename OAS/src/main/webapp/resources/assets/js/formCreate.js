@@ -89,6 +89,7 @@ $( document ).ready(function() {
 	            modal.hide();
 	        });
 	}
+	
 	$('#confirm').on('click', function() {
 		$("#modal_message").html("설문지 작성이 완료되었습니다.");
 		var name = $("#formName").val();
@@ -107,6 +108,70 @@ $( document ).ready(function() {
 	    $("#confirm_end").html($("#endDate").val()+ " " + $("#endTime").val());
 	    // 모달창 띄우기
 	    modal('confirm_modal');
+	});
+	
+	
+	$('#preview').on('click', function() {
+		console.log("preview test");
+		
+		//formName,categoryName, explanation, plusPoint, isAvailable, isUerEdit, minusPoint, startDate, startTime, endDate,endTime
+		var form_name= $("input[name=formName]").val();
+		//var categoryName= $("input[name=categoryNum]").val();
+		var form_detail=$("textarea[name=explanation]").val();
+		
+		var form_startDate=$("input[name=startDate]").val();
+		var form_endDate=$("input[name=endDate]").val();
+		
+		//f_cnt(field count), f_title, f_type, isEssential, 
+		var f_cnt=$("input[name=count]").val();
+		
+		var field_id = new Array(f_cnt+1);
+		var field_name = new Array(f_cnt+1);
+		var field_type= new Array(f_cnt+1);
+		var field_star=new Array(f_cnt+1);
+		var item_count=new Array(f_cnt+1);
+		
+		var content=new Array(i_cnt+1);
+		var isDefault=new Array(i_cnt+1);
+		
+		var i_cnt;
+		for(var i=1; i<=f_cnt; i++){ 
+			field_id[i]= i;
+			
+			field_name[i]= $("input[name='f_title"+i+"']").val();
+			field_type[i]= $("input[name='f_type"+i+"']").val();
+			field_star[i]= $("input[name='isEssential"+i+"']").val();
+			i_cnt=$("input[name='count"+i+"']").val();
+			item_count[i]=i_cnt;
+			if(field_type[i]=="select" || field_type[i]=="checkbox" || field_type[i]=="radio"){
+				for(var j=1; j<=i_cnt; j++){ 
+					content[i]=$("input[name='"+i+"f_title"+j+"']").val();
+					isDefault[i]=0;
+				} 
+			}
+		}
+		
+		//i_cnt (item count), content, 
+	    // 모달창 띄우기
+	    
+	    var sendData={"form_name":form_name,"form_detail":form_detail,"form_startDate":form_startDate,"form_endDate":form_endDate,"f_cnt":f_cnt,"field_id":field_id,"field_name":field_name,"field_type":field_type,"field_star":field_star,"item_count":item_count,"content":content,"isDefault":isDefault};
+	    
+	    console.log(sendData);
+	    $.ajax({
+			url: "/preview",
+		 	type:'POST',
+		   	traditional : true,
+		   	data: sendData,
+		  	success:function(result){
+		    	$("#preview_modal").html(result);
+		     	
+		   	},
+		   	error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		});
+		          		
+	    modal('preview_modal');
 	});
 
 	//메뉴바 이동 코드

@@ -95,84 +95,23 @@ public class MyPageController {
 			//userTab1 신청폼 개수 가져오기 (TAB1)
 			cri.setUser_id(user_id);
 			List<Form> userList = mypageDao.userList(cri); //admin의 폼 데이터 리스트를 가져온다
-			int count1 = mypageDao.countUserTab1(cri.getSearchType(), cri.getKeyword());
+			System.out.println(cri);
+			int count1 = mypageDao.countUserTab1(cri.getSearchType(), cri.getKeyword(), cri.getFilterType(),user_id);
+			
+			System.out.println("userList"+count1);
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(count1);
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(userList);
+			System.out.println(jArray);
 			mav.addObject("userList", jArray);
-			mav.addObject("count1", count1);
+			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);
-		
-			
-			//TAB2
-			List<Form> userTab2=mypageDao.noApplyForm(cri);
-			PageMaker pageMaker2 = new PageMaker();
-			pageMaker2.setCri(cri);
-			int count2 = mypageDao.countUserTab2(cri.getSearchType(), cri.getKeyword());
-			pageMaker2.setTotalCount(count2);
-			ObjectMapper mapper2=new ObjectMapper();
-			String userTabStrint2=mapper2.writeValueAsString(userTab2);
-			mav.addObject("userTab2", userTabStrint2);
-			mav.addObject("count2", count2);
-			mav.addObject("pageMaker2", pageMaker2);
-			
-			//TAB3
-			List<Form> userTab3=mypageDao.pastApplyForm(cri);
-			int count3 = mypageDao.countUserTab3(cri.getSearchType(), cri.getKeyword());
-			PageMaker pageMaker3 = new PageMaker();
-			pageMaker3.setCri(cri);
-			pageMaker3.setTotalCount(count3);
-			ObjectMapper mapper3=new ObjectMapper();
-			String userTabStrint3=mapper3.writeValueAsString(userTab3);
-			mav.addObject("userTab3", userTabStrint3);
-			mav.addObject("count3", count3);
-			mav.addObject("pageMaker3", pageMaker3);
-			
 			
 			mav.addObject("keyword", cri.getKeyword());
 			
 			return mav;
-		}
-		
-		/*
-		@RequestMapping(value = "/userTab2" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-		@ResponseBody
-		public List<Form> userTab2(HttpSession session,HttpServletRequest request,SearchCriteria cri) throws Exception {
-			int user_id=Integer.parseInt(request.getParameter("user_id"));
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()));
-			
-			List<Form> formList=mypageDao.noApplyForm(cri,user_id);
-			return formList;
-		}*/
-		/*
-		@RequestMapping(value = "/userTab3" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-		@ResponseBody
-		public List<Form> userTab3(HttpSession session,HttpServletRequest request,SearchCriteria cri) throws Exception {
-			int user_id=Integer.parseInt(request.getParameter("user_id"));
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()));
-			
-			List<Form> formList=mypageDao.pastApplyForm(cri,user_id);
-			System.out.println("formTab3: "+formList);
-			return formList;
-		}*/
-		
-		@RequestMapping(value = "/admin/deleteForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-		public ModelAndView deleteForm(HttpSession session,HttpServletRequest request) throws Exception {
-			
-			String formID=request.getParameter("select_formID");
-			System.out.println(formID);
-			
-			mypageDao.deleteForm(Integer.parseInt(formID));
-			
-			System.out.println("Delete success!!!");
-			
-			return new ModelAndView("redirect:/admin/mypage");
 		}
 		
 		@RequestMapping(value= "/userInformation") // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
@@ -232,24 +171,24 @@ public class MyPageController {
 			return mav;
 		}
 				
-				//유저 레벨 변경하기 
-				@RequestMapping(value = "/admin/setLevel") 
-				public void setLevels (HttpSession session, HttpServletRequest request) throws Exception {
-					System.out.println("<setLevels> controller");
+		//유저 레벨 변경하기 
+		@RequestMapping(value = "/admin/setLevel") 
+		public void setLevels (HttpSession session, HttpServletRequest request) throws Exception {
+			System.out.println("<setLevels> controller");
 					
-					String[] userIDs  = request.getParameterValues("userIDs[]");
-					String userLevel = request.getParameter("newState");
+			String[] userIDs  = request.getParameterValues("userIDs[]");
+			String userLevel = request.getParameter("newState");
 					
-					for(int i=0; i < userIDs.length ;i++) {
-						User user = new User();
-						user.setId(Integer.parseInt(userIDs[i]));
-						user.setAdmin(Integer.parseInt(userLevel));
-						System.out.println(user);
-						mypageDao.updateAdmin(user);
-					}
-					System.out.println("<setLevels> controller Finish");
+			for(int i=0; i < userIDs.length ;i++) {
+				User user = new User();
+				user.setId(Integer.parseInt(userIDs[i]));
+				user.setAdmin(Integer.parseInt(userLevel));
+				System.out.println(user);
+				mypageDao.updateAdmin(user);
+			}
+			System.out.println("<setLevels> controller Finish");
 					
-				}
+		}
 		
 
 }

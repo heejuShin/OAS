@@ -226,7 +226,7 @@
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
- 								$($($(".gridss").children()[i]).children()[0]).append(form);
+ 								$($($(".grid").children()[i]).children()[0]).append(form);
                            
                             }
 
@@ -257,7 +257,7 @@
                                });
 
 
-                            	var $table = $('.gridss').isotope({
+                            	var $table = $('.grid').isotope({
                             		itemSelector: '.grid-item',
                               	  	percentPosition: true,
                       	          getSortData: {

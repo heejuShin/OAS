@@ -117,6 +117,8 @@
         color: #d13a34;
         font-weight: bold;
       }
+      
+      /* submit 모달 */
       #confirm_modal {
         display: none;
         width: 600px;
@@ -142,6 +144,16 @@
       	font-weight: bold;
       	width: 50px;
       }
+      #preview_modal {
+        display: none;
+        width: 800px;
+        padding: 30px 60px;
+        background-color: #fefefe;
+        border: 1px solid #888;
+        border-radius: 3px;
+      }
+      
+      
       button{
       	border: 1px solid #ccc;
       	border-radius: 4px;

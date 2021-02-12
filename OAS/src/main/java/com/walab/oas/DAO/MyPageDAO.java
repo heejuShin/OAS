@@ -45,20 +45,17 @@ public class MyPageDAO {
 		return sqlSession.selectList("userlist", cri);
 	}
 	
-	public int countUserTab1(String searchType, String keyword) {
-		Map<String, String> map = new HashMap<String, String>();
+	public int countUserTab1(String searchType, String keyword, String filterType,int user_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
+		map.put("filterType", filterType);
+		map.put("user_id", user_id);
 		return sqlSession.selectOne("countUserTab1", map);
 	}
 	
 	public int countBoardList() {
 		return sqlSession.selectOne(namespace +".countBoardList");
-	}
-	
-	//선택한 form 삭제
-	public void deleteForm(int formID) throws Exception {
-		sqlSession.delete(namespace + ".deleteForm",formID);
 	}
 	
 	//user info 가져오기 
@@ -82,28 +79,4 @@ public class MyPageDAO {
 		sqlSession.update("modifyInfo", user);
 	}
 	
-	//user 신청 안 한 신청폼 가져오기
-	public List<Form> noApplyForm(SearchCriteria cri){ //admin의 폼리스트 가져오기
-		
-		return sqlSession.selectList("noApplyForm", cri);
-	}
-	public int countUserTab2(String searchType, String keyword) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("searchType", searchType);
-		map.put("keyword", keyword);
-		return sqlSession.selectOne("countUserTab2", map);
-	}
-	
-	//신청했던 과거 폼들 가져오기
-	//user 신청한 한 신청폼 가져오기
-	public List<Form> pastApplyForm(SearchCriteria cri){ //admin의 폼리스트 가져오기
-		
-		return sqlSession.selectList("pastApplyForm", cri);
-	}
-	public int countUserTab3(String searchType, String keyword) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("searchType", searchType);
-		map.put("keyword", keyword);
-		return sqlSession.selectOne("countUserTab3", map);
-	}
 }

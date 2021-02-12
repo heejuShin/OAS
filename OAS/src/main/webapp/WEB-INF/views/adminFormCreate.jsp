@@ -125,8 +125,9 @@
 			          <option selected="selected" value="예약">예약</option>    
 			      </select>
 			</div>
-			 				<input name="plusPoint" type="hidden" value="0"/> <!— type="number" —>
-              				<input name="minusPoint" type="hidden" value="0"/> <!— type="number" —>
+			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
+			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
+              				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
               				<input type="hidden" id="count" name="count" value="0"/>
 			
 			<div id="list" style="width: inherit;">
@@ -135,7 +136,7 @@
 			
 			<!-- input type : submit -->
 				<div id="submitDiv" class="container-contact100-form-btn form edit button">
-					<button class="contact100-form-btn" type="button" id="confirm">
+					<button class="contact100-form-btn" type="button" id="preview">
 						<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
 					</button>
 				</div>
@@ -146,7 +147,7 @@
             <button type="button" class="cancle">취소</button>
           </div>
 
-        	<div id="confirm_modal">
+        <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
 	        <p>
 	        <span class="modal_title">제목 : </span><span id="confirm_title"></span><br>
@@ -157,6 +158,13 @@
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
 	        </p>
 	        <button type="submit" id="form_submit" class="submit">확인</button>
+	        <a class="modal_close_btn"><button type="button">취소</button></a>
+    	</div>
+    	
+    	<div id="preview_modal">
+	        <button class="contact100-form-btn" type="button" id="confirm">
+				<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+			</button>
 	        <a class="modal_close_btn"><button type="button">취소</button></a>
     	</div>
       </form>

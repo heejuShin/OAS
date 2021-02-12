@@ -1,9 +1,7 @@
 package com.walab.oas.Controller;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +13,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +26,6 @@ import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
-import com.walab.oas.DTO.Form_ver2;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.Result;
@@ -43,6 +41,12 @@ public class MainController {
 	@Autowired
 	private MainDAO mainDao; 
 	
+	@RequestMapping(value="/oauth/error")
+	public ModelAndView googleAuthError( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode) {
+		mav.addObject("msg","Handong.edu 메일로 로그인해주세요:)");
+		mav.setViewName("error/errorPage");
+		return mav;
+	}
 	
 	//메인페이지 가기
 	@RequestMapping(value = "/") // GET 방식으로 페이지 호출
@@ -96,10 +100,8 @@ public class MainController {
 		System.out.println("<goToForm> controller");
 
 		ModelAndView mav = new ModelAndView();
-		//int form_ID = Integer.parseInt(request.getParameter("select_formID"));
-		int form_ID = 1;
-		//int stateID = Integer.parseInt(request.getParameter("stateID"));
-		int stateID = 0;
+		int form_ID = Integer.parseInt(request.getParameter("select_formID"));
+		int stateID = Integer.parseInt(request.getParameter("stateID"));
 
 		System.out.println(stateID);
 		if(stateID==0) { //아직 신청하지 않았다면
