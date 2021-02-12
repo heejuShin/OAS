@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
 
 import com.walab.oas.DAO.MyPageDAO;
@@ -41,6 +43,9 @@ public class MainController {
 	@Autowired
 	private MainDAO mainDao; 
 	
+	@Autowired
+	private AdminDAO adminDAO;
+	
 	@RequestMapping(value="/oauth/error")
 	public ModelAndView googleAuthError( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode) {
 		mav.addObject("msg","Handong.edu 메일로 로그인해주세요:)");
@@ -54,7 +59,7 @@ public class MainController {
 		
 		ModelAndView mav = new ModelAndView();
 		//로그인 안되어있는데 header가 Load 안된경우
-		if(session.getAttribute("ID")==null) {
+		if(session.getAttribute("id")==null) {
 			//session.invalidate();
 			//mav = new ModelAndView("redirect:/");
 			//return mav;
@@ -103,12 +108,18 @@ public class MainController {
 	}
 	
 	//home 페이지에서 폼을 눌렀을 때,
-	@RequestMapping(value = "/form") // GET 방식으로 페이지 호출
-	public ModelAndView goToForm(HttpSession session, HttpServletRequest request) throws Exception {
+	@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
+	public ModelAndView goToForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<goToForm> controller");
 
+		/* 삭제 말아주세요!
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}*/
+		
 		ModelAndView mav = new ModelAndView();
-		int form_ID = Integer.parseInt(request.getParameter("select_formID"));
+		int form_ID=adminDAO.getFormId(link); 
 		int stateID = Integer.parseInt(request.getParameter("stateID"));
 
 		System.out.println(stateID);
