@@ -77,6 +77,12 @@ public class MyPageController {
 			return mav;
 		}
 		
+		@RequestMapping(value="/admin/mypage/state")
+		public ModelAndView manageDefaultState (HttpSession session) {
+			ModelAndView mav = new ModelAndView("adminStateManage");
+			return mav;
+		}
+		
 		
 		
 		@RequestMapping(value="/mypage")

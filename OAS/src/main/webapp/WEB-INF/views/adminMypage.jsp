@@ -210,6 +210,7 @@
             <button onclick="location.href='<%=request.getContextPath()%>/admin/form/create'">create</button>
             <button name="deleteB">Delete</button>
             <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/manage'">회원 관리</button>
+            <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/mypage/state'">상태 관리</button>
         
           </div>    
       </div> <!-- end container -->
