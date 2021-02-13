@@ -48,7 +48,7 @@
 	
 	<select id="category_list" resultType="com.walab.oas.DTO.Category">
 	    	<![CDATA[
-			 	select id,categoryName from Category;
+			 	select id,categoryName from Category where id <> 0;
 			 ]]> 
 	</select>
 	
