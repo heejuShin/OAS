@@ -109,6 +109,10 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".getDate");		
 	}
 	
+	public int IsCategoryDeleted(int form_id) {
+		return sqlSession.selectOne(namespace +".IsCategoryDeleted", form_id);
+	}
+	
 	public User getUserInfobyId(int id) {
 		return sqlSession.selectOne(namespace+".getUserInfobyId", id);
 	}
