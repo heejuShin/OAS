@@ -55,9 +55,9 @@
 	        <div id="select_control">
 		        <div id="controlDiv">
 		          <select id ="allLevel" class="form-control" name="levelName">
-		            <option value="0" selected>학생</option>
+		            <option value="2" selected>학생</option>
 		            <option value="1">선생님</option>
-		            <option value="2">관리자</option>
+		            <option value="0">관리자</option>
 		          </select>
 		          <button name='stateB' id="stateB">적용</button>
 		        </div>
@@ -102,7 +102,7 @@
 			 var userEmail = $('<td>'+UserInfo[i].userEmail+'</td>');
 			 var studentID = $('<td>'+UserInfo[i].studentID+'</td>');
 			 var studentMajor = $('<td>'+UserInfo[i].studentMajor+'</td>');
-			 var userLevel = $('<td><input type="radio"  value="0"> 학생<input type="radio"  value="1"> 선생님<input type="radio"  value="2"> 관리자</td>');
+			 var userLevel = $('<td><input type="radio"  value="2"> 학생<input type="radio"  value="1"> 선생님<input type="radio"  value="0"> 관리자</td>');
 			 var deleteButton = $('<td><button class="askDelete">탈퇴</button><input type="hidden" value="'+UserInfo[i].id+'"></td>');
 			 
 			 

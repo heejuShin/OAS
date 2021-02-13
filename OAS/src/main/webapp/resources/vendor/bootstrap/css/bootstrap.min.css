@@ -1763,7 +1763,7 @@ pre code {
 .form-control {
 	display: block;
 	width: 100%;
-	height: calc(2.25rem + 2px);
+	height: calc(2.25rem + 7px);
 	padding: .375rem .75rem;
 	font-size: 1rem;
 	line-height: 1.5;
@@ -2254,7 +2254,7 @@ textarea.form-control {
 
 .btn {
 	display: inline-block;
-	font-weight: 400;
+	font-weight: 600;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -2264,7 +2264,7 @@ textarea.form-control {
 	user-select: none;
 	border: 1px solid transparent;
 	padding: .375rem .75rem;
-	font-size: 1rem;
+	font-size: 12px;
 	line-height: 1.5;
 	border-radius: .25rem;
 	transition: color .15s ease-in-out, background-color .15s ease-in-out,
@@ -4628,7 +4628,10 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	display: flex;
 	padding-left: 0;
 	list-style: none;
-	border-radius: .25rem
+	border-radius: .25rem;
+	width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .page-link {

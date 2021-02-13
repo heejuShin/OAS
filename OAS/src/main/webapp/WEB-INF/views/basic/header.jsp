@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   
     <!-- Bootstrap core CSS -->
-  <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css?ver=2" rel="stylesheet">
 	
 	<!-- Additional CSS Files -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
@@ -68,6 +68,19 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        if($(location).attr('pathname') != "/oas/" || $(location).attr('pathname') != "/"){
+        			$(".active").removeClass("active");
+
+		    	$('.nav-link').each(function(){
+			        	if($(location).attr('pathname') == $(this).attr('href'))
+							$(this).parent().addClass('active');
+		    	});
+        }    
+    });
+    </script>
     
 </head>
 <body>
@@ -81,14 +94,24 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto navbar_right">
               <li class="nav-item active">
-                <a class="nav-link" href="<%=request.getContextPath()%>">Home
+                <a class="nav-link"  href="<%=request.getContextPath()%>">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
               <c:set var="admin" value="${admin }" />
 			  <c:if test="${admin == 0 || admin == 1}">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage">Admin My Page</a>
+                <a class="nav-link"  href="<%=request.getContextPath()%>/admin/mypage" >My Page</a>
+              </li>
+              </c:if>
+              <c:if test="${admin == 0 || admin == 1}">
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/form/create">Form Create</a>
+              </li>
+              </c:if>
+               <c:if test="${admin == 0 || admin == 1}">
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/manage">User management</a>
               </li>
               </c:if>
               <c:if test="${admin == 2 }">
