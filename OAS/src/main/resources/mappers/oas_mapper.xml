@@ -284,7 +284,7 @@
 	INNER JOIN
 	(select field_id, content from ResultContent 
 	INNER JOIN Result ON (ResultContent.result_id=Result.id)
-	where ResultContent.result_id=10) A ON (Field.id=A.field_id) where Field.form_id=1;
+	where ResultContent.result_id=39) A ON (Field.id=A.field_id) where Field.form_id=1;
 	</select>
 	
 	<!-- 개별보기에 카테고리 가져오기  -->
@@ -306,8 +306,13 @@
 	
 	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
 	<select id='getDate' resultType="com.walab.oas.DTO.Result">
-	SELECT * FROM Result where Result.id=10;
+	SELECT * FROM Result where Result.id=39;
 	</select><!-- where Result.id=#{해당 응답지 id} -->
+	
+	<select id="IsCategoryDeleted" resultType="int">
+	SELECT COUNT(*) FROM Category where Category.id IN
+	(SELECT category_id from Form where Form.id = 1);
+	</select>
 	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
