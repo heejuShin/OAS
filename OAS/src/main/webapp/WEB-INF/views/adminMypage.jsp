@@ -12,13 +12,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <title>Admin my page</title>
 
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
-
+    <!--  button css-->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/buttonstyle.css?v=2">
+	
    
     <!-- Latest compiled and minified Bootstrap JavaScript -->
 	<script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
@@ -34,50 +35,7 @@
     <!-- 필터링 -->
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     
-    <style type="text/css">
-    html, body{height:100%;}
-        	
-    	.page-header{
-    		display:block;
-    		overflow: auto;
-    		}
-    		
-    	.page-header div{
-    		display:block;
-    		float:left;
-    	}
-    	#profileImg{
-    	width:70px;
-    	height:70px;
-    	
-    	}
-    	.filter_search{
-    		clear:both;
-    	
-    	}
-    	#welcomeMsg h1{
-    		width:max-content;
-    		margin:5% 0% 5% 5%;
-    	}
-    	
-    	#settingsIcon{
-    	width:35px;
-    	height:35px;
-    	}
-    	
-    	.item-row{
-    		position: relative !important;
-    		left: initial;
-    		top: initial;
-    		
-    	}
-    	.filters{
-    		border:none;
-    	}
-    	.filters:focus{
-    		outline:none;
-    	}
-    </style>
+  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=1">
     
     <script>
     $(document).ready( function() {
@@ -133,28 +91,20 @@
 
   <jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
+  
+  <main>
+  
+  	<div id="headTitle">
+		    	<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+     </div>
 
 
     <section id="demo">
     <div class="container">
-      <div class="page-header" style="border-bottom: 1px solid black; margin : 3% 0%; padding-bottom: 2%">
-              <div><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"></div>
-		    	<div id="welcomeMsg"><h1 >안녕하세요 ${name }님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
-		    	<div></div>
-          </div>
-          <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
-            
-            
-            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			
-	  			<input type="hidden" name="searchType" value="all">
-	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  			</form>
-            
-          </nav>
-          <!--End_Filter and Search part-->
+  
+   
+          
+          
           <div class="table-responsive" data-pattern="priority-columns">
               <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
                   <thead>
@@ -178,7 +128,8 @@
 			  					<option data-filter='.신청마감' value=".신청마감">신청마감</option>
 			  				</select>
 						  </th>
-                          <th data-priority="1"></th>
+                          <th data-priority="1">폼 관리</th>
+                          <th data-priority="1">폼 신청</th>
                       </tr>
                   </thead>
                   
@@ -187,33 +138,55 @@
                       
                   </tbody>
               </table>
-          </div>      
-          <ul class="pagination">
-			    <c:if test="${pageMaker.prev}">
-			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}'>&laquo;</a>
-			    </li>
-			    </c:if>
-			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}'>${idx}</a>
-			    </li>
-			    </c:forEach>
-			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
-			    </li>
-			    </c:if>
-		  </ul>
+          </div> 
+          <div id="moreContent">  
+	          <ul class="pagination">
+				    <c:if test="${pageMaker.prev}">
+				    <li>
+				        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}'>&laquo;</a>
+				    </li>
+				    </c:if>
+				    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+				    <li>
+				        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}'>${idx}</a>
+				    </li>
+				    </c:forEach>
+				    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+				    <li>
+				        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
+				    </li>
+				    </c:if>
+			  </ul>
+		  </div>
 		  
-          <div class="button_div">
+		  <!--Start_Filter and Search part-->
+          <nav class="filter_search" >
+           
+            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
+	  			<input type="hidden" name="searchType" value="all">
+	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
+  			</form>
+            
+          </nav>
+           <!--End_Filter and Search part-->   
+           
+          <%-- <button type="button" class="btn mb-md-0 mb-2 btn-outline iconButton"><img class="iconImg" src="<%=request.getContextPath()%>/resources/img/trash2.png"></button>
+          <button type="button" class="btn mb-md-0 mb-2 btn-outline iconButton"><img class="iconImg" src="<%=request.getContextPath()%>/resources/img/edit2.png"></button>
+          <button type="button" class="btn mb-md-0 mb-2 btn-outline iconButton"><img class="iconImg"  src="<%=request.getContextPath()%>/resources/img/form.png"></button>
+          <button type="button" class="btn mb-2 mb-md-0 btn-round btn-outline">신청하기 </button> --%>
+          
+         
+		  
+         <%--  <div class="button_div">
             <button onclick="location.href='<%=request.getContextPath()%>/admin/form/create'">create</button>
             <button name="deleteB">Delete</button>
-            <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/manage'">회원 관리</button>
+            <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/manage'">회원 관리</button> 
         
-          </div>    
+          </div>    --%>
       </div> <!-- end container -->
   </section> <!-- end section -->
+  </main>
      
     <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 <!-- 
@@ -265,7 +238,7 @@
 	                    				var td6 = $("<td>예약</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-										var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
+										var a=$("<td><button id='form_result_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='form_result_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button></td>");
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
@@ -278,7 +251,7 @@
 	                    				var td6 = $("<td>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    			
-	                    				var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a></td>");
+	                    				var a=$("<td><button id='form_result_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
@@ -293,14 +266,19 @@
 		                    			var td6 = $("<td>신청중</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-		                    			var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
+		                    			var a=$("<td><button id='form_result_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='form_result_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
-										$($(".tbodies").children()[i]).append(form);
+										var form=$("<form id='form' action='../form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										
+<%-- 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value=''/></form>");
+ --%>										$($(".tbodies").children()[i]).append(form);
 
 										$(".form-item"+i).addClass('신청중');
 										$(".form-item"+i).attr('data-status','신청중');
 			                    	}
+	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;'>신청하기 </button></td>"); 
+	                    		    $($(".tbodies").children()[i]).append(td7);
+			                    	
 			                	}
 
 	                            $('.urlCopyBtn').click(function(){
