@@ -565,6 +565,8 @@ public class AdminController {
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
+		int isDeleted = adminDAO.IsCategoryDeleted(form_ID);
+
 		
 		//read_list json 처리 
 				JSONArray readContent = new JSONArray();
@@ -644,6 +646,7 @@ public class AdminController {
 			            
 			        jArray2.put(ob);      
 		    }
+			System.out.println("=============================");
 		        System.out.println(jArray2.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
@@ -660,7 +663,7 @@ public class AdminController {
 				            
 				        reg_edit_date.put(ob);      
 			    }
-			    	System.out.println("--------------------------------------");
+			    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~");
 			    	System.out.println(reg_edit_date.toString());
 			    }catch(JSONException e){
 			        e.printStackTrace();
@@ -672,6 +675,7 @@ public class AdminController {
 		 mav.addObject("field_list", jArray2);
 		 mav.addObject("read_list",readContent);
 		 mav.addObject("category_name",c_name);
+		 mav.addObject("category_isDeleted",isDeleted);
 		 mav.addObject("date_list",reg_edit_date);
 		 
 		 //System.out.println(read_list);
