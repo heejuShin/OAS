@@ -68,6 +68,10 @@
 		}
 </style>
 <script>
+	function replaceAll(str, searchStr, replaceStr) {
+	  return str.split(searchStr).join(replaceStr);
+	}
+
 	$(document).ready(function () {
 		
 		var formInfo = ${form_info};
@@ -75,6 +79,7 @@
 		var category = ${category_name};
 		var date = ${date_list};
 		var resultContent = ${read_list};
+		var category_isDeleted = ${category_isDeleted};
 		
 		console.log("step1");
 		//form title & explation 만들기 
@@ -83,7 +88,8 @@
 		$('#form_explation').text(formInfo[0].form_detail);
 		$('#startDate').text(formInfo[0].form_startDate);
 		$('#endDate').text(formInfo[0].form_endDate);
-		$('#category_name').text(category[0].categoryName);
+		if(category_isDeleted == 0){$('#category_name').text("카테고리 없음");}
+		else{$('#category_name').text(category[0].categoryName);}
 		$('#regDate').text("제출 일자: " + date[0].regDate);
 		if(date[0].editDate != "2000-01-01 00:00:00"){
 			$('#editDate').text("마지막 수정 날짜: " + date[0].editDate);
@@ -96,10 +102,10 @@
 			console.log("step3");
 				//form 제출시 확인 필요한 필드 클래스 명으로 지정 
 				if(fieldInfo[i].field_star == 1){
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'>"+fieldInfo[i].field_name+" <span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'><b>"+fieldInfo[i].field_name+"</b><span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
  						$("#fieldInputs").append(divTitle);
  				}else{
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'>"+fieldInfo[i].field_name+" </p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'><b>"+fieldInfo[i].field_name+"</b></p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
 						$("#fieldInputs").append(divTitle);
 					} 
 				console.log("step3.5");
@@ -122,71 +128,80 @@
 							alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
 						}
 						}); //옵션 부르기 끝
-						
-					//console.log(" 옵션 확인 ");
-					console.log(optionlist);
 					 if(fieldInfo[i].field_type == 'select'){
 						 console.log("step5");
 						 var selectID = "select" + fieldInfo[i].field_id;
 						 $("#field_"+ fieldInfo[i].field_id).children('p').attr("for",selectID);
- 						  var selectTag = $("<select id='"+selectID+"' class='form-control' name='content' disabled></select>");
+						 if(resultContent[i].content != ""){
+ 						  	var selectTag = $("<p id='"+selectID+"' class='input-radio100' name='content'>"+resultContent[i].content+"</p>");
+						 }else{
+							 var selectTag = $("<p id='"+selectID+"' class='input-radio100' name='content'>선택하지 않음 </p>");
+						 }
  							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(selectTag);
-					 }
-					 for(var idx=0; idx < optionlist.length; idx++){
-						 console.log("step6");
-						 
-								 $("#field_"+ fieldInfo[i].field_id).children(".inputDiv").addClass("marginTop")
-							if(fieldInfo[i].field_type == 'select'){
+				 	 }else if(fieldInfo[i].field_type == 'checkbox'){
+					 	 	//alert(resultContent[i].content);
+							var rC_list =replaceAll(resultContent[i].content,"$","/");
+							console.log("step5");
+							if(resultContent[i].content != ""){
+								var listTag = $("<p class='checkbox-wrap' name='content'>"+rC_list+"</p>");
 								
-									if(optionlist[idx].content == resultContent[i].content){
-										var optionTag = $("<option value='"+optionlist[idx].content+"' selected>"+optionlist[idx].content+"</option>");
-										//alert(optionlist[idx].content); 
-									}else{
-										var optionTag = $("<option value='"+optionlist[idx].content+"' >"+optionlist[idx].content+"</option>");
-									}
-									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").children('select').append(optionTag);
-						  
-							 }else if(fieldInfo[i].field_type == 'radio'){
-								 	//alert(optionlist[idx].content);
-									var values = optionlist[idx].content;
-									var labelNum = fieldInfo[i].field_id +"-"+ idx;
-									
-									if(values == resultContent[i].content){
-										var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' checked disabled><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
-									}else{
-										var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' disabled><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
-									}
-									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
-									
-							  }else if(fieldInfo[i].field_type == 'checkbox'){
-								  
-									var values = optionlist[idx].content;
-									if(values == resultContent[i].content){
-										var listTag = $("<label class='checkbox-wrap'> "+values+"<input type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' checked disabled><span class='checkmark'></span></label>");
-							  		}else{
-							  			var listTag = $("<label class='checkbox-wrap'> "+values+"<input type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"' disabled><span class='checkmark'></span></label>");
-							  		}
-									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
-									
-							  }
-					   }//option만큼 반복 
+					  		}else{
+					  			var listTag = $("<p class='checkbox-wrap' name='content'>선택하지 않음 </p>");
+					  			//alert(optionlist.length);
+					  		}
+					  		
+							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
 							
-					 
-				}else if(fieldInfo[i].field_type == 'textarea'){
-						var textTag = $("<textarea class='input100' name='content' readonly>"+resultContent[i].content+"</textarea>");
+					  }else if(fieldInfo[i].field_type == 'radio'){
+						 	//alert(optionlist[idx].content);
+							console.log("step5");
+							if(resultContent[i].content == ""){
+								var listTag = $("<p class='input-radio100' name='content'>선택 안함 </p>");
+							}else{
+								var listTag = $("<p class='input-radio100' name='content'>"+resultContent[i].content+"</p>");
+							}
+							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
+							
+					  }
+					//console.log(" 옵션 확인 ");
+					console.log(optionlist.length);
+					console.log(optionlist);
+							
+				}else if(fieldInfo[i].field_type == 'textarea'){//타입이 textarea일 때 
+					if(resultContent[i].content != "")
+						var textTag = $("<p class='input100' name='content'>"+resultContent[i].content+"</p>");
+					else
+						var textTag = $("<p class='input100' name='content'>응답 내역 없음 </p>");
 						//alert(resultContent[i].content);
-						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(textTag);
+					$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(textTag);
 				}else{
-						var inputTag = $("<input class= 'input100' type='"+fieldInfo[i].field_type +"' name='content' value='"+resultContent[i].content+"' readonly>");
-					//alert(resultContent[i].content);
-						if(fieldInfo[i].field_type == 'text')
+						if(fieldInfo[i].field_type == 'text'){//타입이 text일 때 
+							if(resultContent[i].content != ""){
+								var inputTag = $("<p class= 'input100' name='content'>"+resultContent[i].content+"</p>");
+							}
+							else{
+								var inputTag = $("<p class= 'input100' name='content'>응답 내역 없음 </p>");
+							}
 							inputTag.addClass("bottomLine");
-						else if(fieldInfo[i].field_type == 'file'){
-							if(fieldInfo[i].field_file){
+						}
+						else if(fieldInfo[i].field_type == 'file'){//type이 file일때 
+							var inputTag = $("<p class= 'input100' type='"+fieldInfo[i].field_type +"' name='content'>"+resultContent[i].content+"</p>");
+							if(fieldInfo[i].field_file != ""){
 								var downTag = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
 								$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(downTag);
+							}else{
+								var downTag = $("<p class= 'input100' name='content'>제출 내역 없음 </p>");
 							}
 							inputTag.addClass("fileinput");
+						}
+						else{//type이 date일때
+							if(resultContent[i].content != ""){
+								var inputTag = $("<p class= 'input100' name='content'>"+resultContent[i].content+"</p>");
+							}
+							else{
+								var inputTag = $("<p class= 'input100' name='content'>응답 내역 없음 </p>");
+							}
+							inputTag.addClass("bottomLine");
 						}
 						
 						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(inputTag);
@@ -206,64 +221,53 @@ $(function() {
 	})
 });
 </script>
-<script> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
-</script>
 </head>
 <body>
+	<button onclick="document.getElementById('id01').style.display='block'"
+		class="w3-button w3-black">개별 보기</button>
 
-	<ul class="under_tab">
-		<li class="under_current" data-tab="under_tab1"><a href="#">상태체크</a></li>
-		<li data-tab="under_tab2"><a href="#">개별보기</a></li>
-	</ul>
-	
-	<div id="under_tab1" class="under_tabcontent">
-		<jsp:include page="/WEB-INF/views/adminFormCheck.jsp" />
-	</div>
-	
-	<div id="under_tab2" class="under_tabcontent under_current">
-		<form id='userForm'>
-		  <div id="form_div">		
-		    <div class="form view title">
-          		<h5 id='category_name' style="float: right"></h5>
-          		<h2 id="form_title" style="margin-top: 0px"></h2>
-			<h5 id="form_date" style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;"><span id="startDate"></span>~<span id="endDate"></span></h5>
-			<p id="form_explation"></p>
-      		    </div>
-		 	<div class="form view field" id="date" style="height: 120px;">        
-			    <p id="regDate"></p><br>
-			    <p id="editDate"></p>
-			</div>
-			</div>
-			</form>
-			</div>
-	<div class="container-contact100">
-		<div class="wrap-contact100">
-			<form class="contact100-form" id="userForm" method="POST">
-				<input type="hidden" name="form_index" value="${form_ID}" >
-				<span class="contact100-form-title" id="form_title"> </span>
-
-				<div class="wrap-input100 bg0">
-					<p class="label-input100 form_explanation" ></p>
+	<div id="id01" class="w3-modal">
+		<div class="w3-modal-content w3-card-4 ">
+			<span onclick="document.getElementById('id01').style.display='none'"
+				class="w3-button w3-display-topright">&times;</span>
+			<div class="w3-container">
+				<div id="under_tab2" class="under_tabcontent under_current">
+					<form id='userForm'>
+						<div id="form_div">
+							<div class="form view title" style="overflow:scroll;">
+								<h5 id='category_name' style="float: right"></h5>
+								<h2 id="form_title" style="margin-top: 0px"></h2>
+								<h5 id="form_date"
+									style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;">
+									<span id="startDate"></span>~<span id="endDate"></span>
+								</h5>
+								<p id="form_explation"></p>
+								<p id="regDate"></p>
+								<p id="editDate"></p>
+							</div>
+							<div class="form view field" style="height: 650px;overflow:scroll;">
+								<div id="fieldInputs" class="contact100-form">
+									<!-- field insert 구역 -->
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
-				
-				<div id="fieldInputs"  class="contact100-form">
-						<!-- field insert 구역 -->
-				</div>
-
-				
-			</form>
+			</div>
 		</div>
 	</div>
 </body>
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
 
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
