@@ -120,7 +120,8 @@ public class MainController {
 		
 		ModelAndView mav = new ModelAndView();
 		int form_ID=adminDAO.getFormId(link); 
-		int stateID = Integer.parseInt(request.getParameter("stateID"));
+		int stateID = 0;
+		//int stateID = Integer.parseInt(request.getParameter("stateID"));
 
 		System.out.println(stateID);
 		if(stateID==0) { //아직 신청하지 않았다면

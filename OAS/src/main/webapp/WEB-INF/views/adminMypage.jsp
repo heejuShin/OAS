@@ -246,7 +246,10 @@
 	                    		   	$(".tbodies").append(divOne);
 	
 	                    		   	/* tr의 안에 들어갈 td */
-	                    		    var td1 = $("<td><input type='hidden'  id='url' value="+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a></td>"); 
+	                    		   	var whole_addr = $(location).attr('href');
+	                    		   	var addr_slice = whole_addr.split('/');
+	                    		   	var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
+	                    		    var td1 = $("<td><input type='hidden'  id='url' value="+addr+"/form/"+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td1);
 	
 	                    		    var th1 = $("<th>"+adminList[i].categoryName+"<span class='co-name'></span></th>"); 
@@ -335,7 +338,6 @@
 	                            $('.urlCopyBtn').click(function(){
 	                         
 	                            	$(this).siblings("#url").attr("type","text");
-	                                 
 	                            	$(this).siblings("#url").select();
 									document.execCommand('copy');
 
