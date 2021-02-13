@@ -190,6 +190,7 @@
                                var category_list=${category_list};
                                for(var i=0; i<category_list.length;i++){
                                   var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+                                  if(category_list[i].id!=0)
                                   $(".ul_filters").append(filter_li);
                               }
 

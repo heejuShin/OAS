@@ -117,23 +117,16 @@
 			
 			<div class="wrap-input100  bg1" >
 				<p class="label-input100" style="margin-bottom:5px">상태 선택<span class="essential"> * </span></p>
-				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px">
-			          <option selected="selected" value="대기중">대기 중</option>
-			          <option selected="selected" value="입금전">입금 전</option>
-			          <option selected="selected" value="방문요망">방문요망</option>
-			          <option selected="selected" value="완료">완료</option>
-			          <option selected="selected" value="불가">불가</option>
-			          <option selected="selected" value="신청중">신청 중</option>
-			          <option selected="selected" value="신청마감">신청마감</option>
-			          <option selected="selected" value="예약">예약</option>    
-			      </select>
+				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px" class="form-state">
+  
+			    </select>
 			</div>
 
 			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 
-			<input type="hidden" id="state_selected" name="state"/>
+			<input type="hidden" id="state_selected" name="state" style="width:1000px;"/>
 			
               				<input type="hidden" id="count" name="count" value="0"/>
 			
@@ -253,7 +246,13 @@
     </footer>
     
 <script>
-$( document ).ready(function() {
+
+	var state_list = ${state_list};
+	for (var i = 0; i < state_list.length; i++) {
+		var selectOption = $("<option selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
+		$("#state").append(selectOption);
+	}
+	
 	var value = $("#state").val();
     var s = value.toString();
     $("#state_selected").val(s); 
@@ -261,8 +260,16 @@ $( document ).ready(function() {
 	var today=moment(new Date()).format('YYYY-MM-DD');
     $('#startDate').val(today);
     $('#endDate').val(today);
-})
+
+   
 $('#state').on('select2:select', function(e) {
+    var id = e.params.data.id;
+    var value = $(this).val();
+    var s = value.toString();
+    $("#state_selected").val(s); 
+    //console.log(document.getElementById('state_selected').value);
+      });
+$('#state').on('select2:unselect', function(e) {
     var id = e.params.data.id;
     var value = $(this).val();
     var s = value.toString();

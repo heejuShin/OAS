@@ -42,8 +42,10 @@ public class AdminDAO {
 		return sqlSession.insert(namespace + ".formCreate", form);
 	}
 	public void createState(State state) throws Exception{
-		System.out.println("stateCreate done");
 		 sqlSession.insert(namespace + ".stateCreate", state);
+	}
+	public void deleteDefaultState() {
+		sqlSession.delete(namespace + ".deleteDefaultState");
 	}
 	
 	public int createField(Field field) throws Exception{
@@ -106,6 +108,10 @@ public class AdminDAO {
 	
 	public List<Result> getDate(){		
 		return sqlSession.selectList(namespace+".getDate");		
+	}
+	
+	public int IsCategoryDeleted(int form_id) {
+		return sqlSession.selectOne(namespace +".IsCategoryDeleted", form_id);
 	}
 	
 	public User getUserInfobyId(int id) {

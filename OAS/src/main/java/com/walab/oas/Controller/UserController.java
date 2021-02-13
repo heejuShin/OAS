@@ -52,7 +52,12 @@ public class UserController {
 		//result 기록  
 		String formID  = request.getParameter("form_index");
 		int  form_id = Integer.parseInt(formID);
-	    int user_id  = 1; //세션 나오면 바꿔야 함 
+		
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+
 	    int state_id  = userDao.getState(form_id);
 	    
 	    Result result = new Result();
