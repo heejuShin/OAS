@@ -116,6 +116,12 @@ public class LoginController {
       
       Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
       
+      if(!userInfo.get("email").contains("handong.edu")) {
+    	  
+    	  mav.setViewName("loginError");
+    	  return mav;
+      }
+    	  
       
       User user = new User();
       user.setEmail(userInfo.get("email"));

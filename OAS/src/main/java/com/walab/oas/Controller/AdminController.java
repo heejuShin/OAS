@@ -79,6 +79,79 @@ public class AdminController {
 		mav.setViewName("adminFormCreate");
 		return mav;
 	}
+	
+	@RequestMapping(value="/form/preview",method=RequestMethod.POST)
+	@ResponseBody 
+	public ModelAndView previewFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		System.out.println("preview!!");
+		String form_name  = request.getParameter("form_name");
+	    String form_detail  = request.getParameter("form_detail");
+	    String form_startDate  = request.getParameter("form_startDate");
+	    String form_endDate  = request.getParameter("form_endDate");
+	    
+	    JSONArray jArray = new JSONArray();
+	    JSONObject ob2 =new JSONObject();
+	    ob2.put("form_name", form_name);
+	    ob2.put("form_detail", form_detail);
+	    ob2.put("form_startDate", form_startDate);
+	    ob2.put("form_endDate", form_endDate);
+	    jArray.put(ob2);
+	    mav.addObject("form_info", jArray);
+	    
+	    int f_cnt=Integer.parseInt(request.getParameter("f_cnt"));
+	    String []field_id = request.getParameterValues("field_id");
+	    String []field_name = request.getParameterValues("field_name");
+	    String []field_type = request.getParameterValues("field_type");
+	    String []field_star = request.getParameterValues("field_star");
+	    String []item_count = request.getParameterValues("item_count");
+	    
+	    
+	    String []content = request.getParameterValues("content");
+	    String []isDefault = request.getParameterValues("isDefault");
+	    
+		
+		JSONArray jArray2 = new JSONArray();
+		JSONArray jArray3 = new JSONArray();
+	    try {
+	    	int idx=0;
+	    	
+	    	for (int i = 1; i <= f_cnt ; i++) {   
+		    	JSONObject ob =new JSONObject();
+		    	
+		        ob.put("field_id", field_id[i]);
+		        ob.put("field_name", field_name[i]);
+		        ob.put("field_type", field_type[i]);
+		        ob.put("field_star", field_star[i]);
+		        ob.put("item_count", Integer.parseInt(item_count[i]));
+		        
+		        if("radio".equals(field_type[i])||"checkbox".equals(field_type[i])||"select".equals(field_type[i])) {
+		        	for (int j = 1; j <= Integer.parseInt(item_count[i]) ; j++) {
+		        		idx++;
+		        		JSONObject ob3 =new JSONObject();
+			        	ob3.put("content", content[idx]);
+			        	ob3.put("isDefault", isDefault[idx]);
+			        	jArray3.put(ob3);
+		        	}
+		        }
+		         
+		        jArray2.put(ob);
+		        
+		    }
+	    }catch(JSONException e){
+	        e.printStackTrace();
+	    }
+	    
+	    System.out.println(jArray3);
+	    
+	    mav.addObject("optionList", jArray3);
+		mav.addObject("field_list", jArray2);
+		mav.addObject("form_info", jArray);
+		mav.setViewName("userFormPreview");
+		
+		return mav;
+	}
 
 	//신청폼 create
 		@SuppressWarnings("finally")
@@ -270,13 +343,14 @@ public class AdminController {
 		}catch(JSONException e){
 	    	e.printStackTrace();
 	    }
+		
+		int isUserEdit=adminDAO.getUserEdit(form_id);
 	
 		mav.addObject("form_id",form_id);
 		mav.addObject("category_list",jArray3);
-		mav.addObject("submitterList", jArray);
-		mav.addObject("stateList", jArray2);
+		mav.addObject("isUserEdit", isUserEdit);
 		
-		mav.setViewName("adminFormView");
+		mav.setViewName("adminFormUpdate");
 		return mav;
 	}
 	
@@ -348,6 +422,80 @@ public class AdminController {
 		return formDetailItem;
 	}	
 	
+	@RequestMapping(value="/form/view/preview",method=RequestMethod.POST)
+	@ResponseBody 
+	public ModelAndView previewFormUpdate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		System.out.println("preview!!");
+		String form_name  = request.getParameter("form_name");
+	    String form_detail  = request.getParameter("form_detail");
+	    String form_startDate  = request.getParameter("form_startDate");
+	    String form_endDate  = request.getParameter("form_endDate");
+	    
+	    JSONArray jArray = new JSONArray();
+	    JSONObject ob2 =new JSONObject();
+	    ob2.put("form_name", form_name);
+	    ob2.put("form_detail", form_detail);
+	    ob2.put("form_startDate", form_startDate);
+	    ob2.put("form_endDate", form_endDate);
+	    jArray.put(ob2);
+	    mav.addObject("form_info", jArray);
+	    
+	    int f_cnt=Integer.parseInt(request.getParameter("f_cnt"));
+	    String []field_id = request.getParameterValues("field_id");
+	    String []field_name = request.getParameterValues("field_name");
+	    String []field_type = request.getParameterValues("field_type");
+	    String []field_star = request.getParameterValues("field_star");
+	    String []item_count = request.getParameterValues("item_count");
+	    
+	    
+	    String []content = request.getParameterValues("content");
+	    String []isDefault = request.getParameterValues("isDefault");
+	    
+		
+		JSONArray jArray2 = new JSONArray();
+		JSONArray jArray3 = new JSONArray();
+	    try {
+	    	int idx=0;
+	    	
+	    	for (int i = 1; i <= f_cnt ; i++) {   
+		    	JSONObject ob =new JSONObject();
+		    	
+		        ob.put("field_id", field_id[i]);
+		        ob.put("field_name", field_name[i]);
+		        ob.put("field_type", field_type[i]);
+		        ob.put("field_star", field_star[i]);
+		        ob.put("item_count", Integer.parseInt(item_count[i]));
+		        
+		        if("radio".equals(field_type[i])||"checkbox".equals(field_type[i])||"select".equals(field_type[i])) {
+		        	for (int j = 1; j <= Integer.parseInt(item_count[i]) ; j++) {
+		        		idx++;
+		        		JSONObject ob3 =new JSONObject();
+			        	ob3.put("content", content[idx]);
+			        	ob3.put("isDefault", isDefault[idx]);
+			        	jArray3.put(ob3);
+		        	}
+		        }
+		         
+		        jArray2.put(ob);
+		        
+		    }
+	    }catch(JSONException e){
+	        e.printStackTrace();
+	    }
+	    
+	    System.out.println(jArray3);
+	    
+	    mav.addObject("optionList", jArray3);
+		mav.addObject("field_list", jArray2);
+		mav.addObject("form_info", jArray);
+		mav.setViewName("userFormPreview");
+		
+		return mav;
+	}
+
+	
 	//신청폼 update
 	@SuppressWarnings("finally")
 	@RequestMapping(value="/form/view/formUpdate",method=RequestMethod.POST)
@@ -395,7 +543,7 @@ public class AdminController {
 				form.setUrl(url);
 				int isAvailable = 0; //TODO
 				form.setIsAvailable(isAvailable);
-				int isUserEdit = 0; //TODO
+				int isUserEdit = Integer.parseInt(request.getParameter("isUserEdit")); //TODO
 				form.setIsUserEdit(isUserEdit);
 				int plusPoint = Integer.parseInt(request.getParameter("plusPoint"));
 				form.setPlusPoint(plusPoint);
@@ -516,7 +664,7 @@ public class AdminController {
 	}
 	
 	//신청폼 체크 각 제출자 상태 update
-	@RequestMapping(value = "/form/view/check" ,method=RequestMethod.POST)
+	@RequestMapping(value = "/form/update/check" ,method=RequestMethod.POST)
 	public void checkResult(HttpServletRequest request) throws Exception {
 		
 		
@@ -772,16 +920,30 @@ public class AdminController {
 		int form_id = Integer.parseInt(request.getParameter("select_formID"));
 		System.out.println("form_id: "+form_id);
 		List<Result> submitterList= adminDAO.submitterList(form_id);
-				
+		
 		ObjectMapper mapper=new ObjectMapper();
 		String jArray=mapper.writeValueAsString(submitterList);
 			
+		List<State> stateList=adminDAO.stateList(form_id);
+		ObjectMapper mapper2=new ObjectMapper();
+		String jArray2=mapper2.writeValueAsString(stateList);
+		
+		int isUserEdit=adminDAO.getUserEdit(form_id);
+		
 		mav.addObject("form_id",form_id);
 		mav.addObject("submitterList", jArray);
+		mav.addObject("stateList", jArray2);
+		mav.addObject("isUserEdit",isUserEdit);
 				
-		mav.setViewName("adminFormResultOnly");
+		mav.setViewName("adminFormCheck");
 		return mav;
 	}
 	
-	
+	@RequestMapping(value= "/form/update/changeUserEdit", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	public void changeUserEdit(HttpServletRequest request, HttpSession session) throws Exception {
+			
+		int form_id=Integer.parseInt(request.getParameter("form_id"));
+		int isUserEdit=Integer.parseInt(request.getParameter("isUserEdit"));
+		adminDAO.changeUserEdit(form_id,isUserEdit);
+	}
 }

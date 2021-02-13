@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=16">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=11">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -27,7 +27,6 @@
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
-	
 	
 </head>
 
@@ -60,17 +59,20 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-		<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    
+    <!-- resizable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
 	<!-- 카테고리 관련 CDN -->
 	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<!-- select2 javascript cdn -->
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
-	
-	
-	
+
+	<!-- momment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     
     <div class="container-contact100">
     
@@ -101,12 +103,12 @@
 			
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
 				<p class="label-input100">신청 시작일</p>
-				<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" class="input100" name="startTime" type="time" value="10:00" required/>
+				<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="" required/> <input id="startTime" class="input100" name="startTime" type="time" value="10:00" required/>
 			</div>
 			
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
 				<p class="label-input100">신청 마감일</p>
-				<input class="input100" id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" class="input100" name="endTime" type="time" value="23:00" required/>
+				<input class="input100" id="endDate" name="endDate" type="date" value="" required/> <input id="endTime" class="input100" name="endTime" type="time" value="23:00" required/>
 			</div>
 			
 			<div class="wrap-input100  bg1" >
@@ -170,15 +172,14 @@
 	        
     	</div>
     	
-    	<div id="preview_modal">
-	        <button class="contact100-form-btn" type="button" id="confirm">
-				<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
-			</button>
-	        <a class="modal_close_btn"><button type="button">취소</button></a>
-    	</div>
+    	
       </form>
       	</div>
 	</div>
+	
+		<div id="preview_modal">
+	        
+    	</div>
 
       <div class="add" id="field_add">
         <div class="wrap-input100 bg0 form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
@@ -250,14 +251,16 @@
         </div>
       </div>
     </footer>
-
-</html>
-
+    
 <script>
 $( document ).ready(function() {
 	var value = $("#state").val();
     var s = value.toString();
     $("#state_selected").val(s); 
+
+	var today=moment(new Date()).format('YYYY-MM-DD');
+    $('#startDate').val(today);
+    $('#endDate').val(today);
 })
 $('#state').on('select2:select', function(e) {
     var id = e.params.data.id;
@@ -285,6 +288,7 @@ $(".form-control").select2({
 	tags : true
 });
 
+
 /** TODO
 * 그래도 어느 정도의 CSS
 * 상태 선택
@@ -294,3 +298,4 @@ $(".form-control").select2({
 **/
 
 </script>
+</html>

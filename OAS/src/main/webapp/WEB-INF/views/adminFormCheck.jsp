@@ -160,7 +160,7 @@ table caption {
  </head>
 <body>
 
-
+	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
     <!-- main -->
     <main>
 
@@ -169,13 +169,21 @@ table caption {
         <div>
           <h2>Check</h2>
         </div>
-        <div id="controlDiv">
-          <select id ="allState" name="stateName">
-          	<!-- js로 option list 넣기 -->
-          </select>
-          <button name='stateB'>적용</button>
-        </div>
         
+        <div>
+	        <div id="controlDiv">
+	          <select id ="allState" name="stateName">
+	          	<!-- js로 option list 넣기 -->
+	          </select>
+	          <button name='stateB'>적용</button>
+	        </div>
+	        
+	        <div>
+				<label>응답받기</label>
+				<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
+				<input type="hidden" id="isUserEdit" name="isUserEdit" value="">
+			</div>
+		</div>
 
         <!-- <div class="container">
           <div class="row">
@@ -183,7 +191,7 @@ table caption {
               <div class="table-responsive tableDiv" data-pattern="priority-columns">
               
                 <table id="checklist" summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" class="table table-bordered table-hover">
-                  <caption class="text-center">An example of a responsive table based on RWD-Table-Patterns' <a href="http://gergeo.se/RWD-Table-Patterns/" target="_blank"> solution</a>:</caption>
+                  <caption class="text-center"> a responsive table based on RWD-Table-Patterns' <a href="http://gergeo.se/RWD-Table-Patterns/" target="_blank"> solution</a>:</caption>
                   
                   <!-- column name list -->
                   <thead> 
@@ -223,6 +231,18 @@ table caption {
 
                       var submitterList=${submitterList};
                       var stateList=${stateList};
+                      var isUserEdit=${isUserEdit};
+                      var form_id=${form_id};
+
+                      if(isUserEdit==0){
+                  		$("#isUserEditCheck").attr("checked",true);
+                		$("#isUserEditCheck").attr("value","0");
+                	  }
+                      else{
+                    	$("#isUserEditCheck").attr("checked",false);
+                  		$("#isUserEditCheck").attr("value","1");
+                      }
+                          
 
                       for(var x=0; x < stateList.length; x++){
                     	  if(stateList[x].stateName=="대기중"){
@@ -284,6 +304,33 @@ table caption {
 		              		    }
 				        	}
 	                	}
+
+                      $("#isUserEditCheck").change(function(){
+                          console.log("userEditCheck!!");
+                          if($("#isUserEditCheck").is(":checked")){
+                              $("#isUserEdit").attr("value","0");
+                          }else{
+                              $("#isUserEdit").attr("value","1");
+                          }
+
+                          var isUserEdit= $("#isUserEdit").val();
+
+                          $.ajax({ //해당 폼의 userEdit 바꾸기
+              	  			url : '<%=request.getContextPath()%>/admin/form/update/changeUserEdit',
+              	  			data:{"form_id":form_id,"isUserEdit":isUserEdit},
+	              	  		type:'POST',
+	                        traditional : true,
+              	  			success: function(){
+              	  				console.log("isUserEdit Change"); 	
+              	  					  		
+              	  			},
+              			  	error:function(request, status, error){
+              		
+              				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+              		
+              				}
+              	  	  	});
+                      });
                   });
                   </script>
                   
@@ -308,7 +355,8 @@ table caption {
       
     </main>
     <!-- main End -->
-
+	
+	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 
     <!-- Bootstrap core JavaScript -->
     <script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>

@@ -24,7 +24,7 @@
 		ORDER BY state_id IS NULL ASC,id ASC
 	</select>  -->
     <select id="form_list" resultType="com.walab.oas.DTO.Form">
-		select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation, startDate,endDate, ifnull(state_id,0)as state_id from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE f.id>=0
+		select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation, startDate,endDate, ifnull(state_id,0)as state_id,isUserEdit from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE isUserEdit=0
 		<include refid="searchMain" />
 		ORDER BY state_id IS NULL ASC,id ASC
 	</select> 
@@ -58,7 +58,7 @@
 		FROM (SELECT s.*,categoryName FROM 
             (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM 
 				(SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM 
-					(SELECT * FROM Result WHERE Result.user_id=${user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id 
+					(SELECT * FROM Result WHERE Result.user_id=${user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isUserEdit=0
 						<include refid="userFilter" />
 							 )as s LEFT OUTER JOIN Category ON s.category_id=Category.id) as c INNER join User as u ON (c.user_id = u.id)
 		 
@@ -71,7 +71,7 @@
 	<select id="countUserTab1" resultType="int">
 		SELECT count(*)
 			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM 
-            (SELECT * FROM Result WHERE Result.user_id=${user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id 
+            (SELECT * FROM Result WHERE Result.user_id=${user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isUserEdit=0
             <include refid="userFilter" />
             ) as s  
              LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
@@ -84,19 +84,19 @@
 	<sql id="userFilter">
 		<choose>
 			<when test="filterType == 'all'">
-				WHERE (date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL) OR (date(now()) between date(startDate) AND date(endDate))
+				AND (date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL) OR (date(now()) between date(startDate) AND date(endDate))
 			</when>
 			<when test="filterType == 'applyForm'">
-				WHERE date(now()) between date(startDate) AND date(endDate) AND state_id IS NOT NULL
+				AND date(now()) between date(startDate) AND date(endDate) AND state_id IS NOT NULL
 			</when>
 			<when test="filterType == 'noApplyForm'">
-				WHERE date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL
+				AND date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL
 			</when>
 			<when test="filterType == 'pastForm'">
-				WHERE date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL
+				AND date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL
 			</when>
 			<otherwise>
-				WHERE (date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL) OR (date(now()) between date(startDate) AND date(endDate))
+				AND (date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL) OR (date(now()) between date(startDate) AND date(endDate))
 			</otherwise>
 		</choose>
 	</sql>
@@ -111,7 +111,7 @@
 	<!-- 페이징 -->
 	<!-- 페이징 적용 게시글 + 검색 -->
 	<select id="adminlist" resultType="com.walab.oas.DTO.Form">
-			SELECT c.id,c.category_id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName
+			SELECT c.id,c.category_id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,isUserEdit
 			FROM (SELECT Form.*,categoryName FROM Form LEFT OUTER JOIN Category ON Form.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
@@ -158,10 +158,10 @@
 						AND c.startDate > date(now())
 					</when>
 					<when test="keyword == '신청중'">
-						AND date(now()) between date(c.startDate) AND date(c.endDate)
+						AND (date(now()) between date(c.startDate) AND date(c.endDate)) AND isUserEdit=0 
 					</when>
 					<when test="keyword == '신청마감'">
-						AND date(now()) > c.endDate
+						AND date(now()) > c.endDate OR isUserEdit=1
 					</when>
 				</choose>
 			</when>
@@ -385,6 +385,14 @@
     <!-- user 탈퇴시키기  -->
 	<update id="userDelete" parameterType="int" >
 		UPDATE User SET isDelete = 1 WHERE id = #{userID};
+	</update>
+	
+	<select id="getUserEdit" resultType="int">
+    	select isUserEdit from Form where id = #{form_id};
+    </select>
+    
+	<update id="changeUserEdit" parameterType="int" >
+		UPDATE Form SET isUserEdit = ${isUserEdit} WHERE id = #{form_id};
 	</update>
 	
 </mapper>

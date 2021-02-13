@@ -172,7 +172,7 @@
                           
                           <th data-priority="1">
 							<select class="filters filter-status" id="status" data-filter-group='status'>
-			  					<option data-filter='' value="*">상태</option>
+			  					<option data-filter='' value="*" selected>상태</option>
 			  					<option data-filter='.예약' value="예약">예약</option>
 			  					<option data-filter='.신청중' value="신청중">신청중</option>
 			  					<option data-filter='.신청마감' value="신청마감">신청마감</option>
@@ -191,17 +191,17 @@
           <ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>&laquo;</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&laquo;</a>
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>${idx}</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
 			    </li>
 			    </c:forEach>
 			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>&raquo;</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&raquo;</a>
 			    </li>
 			    </c:if>
 		  </ul>
@@ -276,7 +276,7 @@
 										$(".form-item"+i).attr('data-status','예약');
 	                    			}
 	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
-	                    			else if(new Date()>new Date(adminList[i].endDate)){
+	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isUserEdit==1){
 	                    				var td6 = $("<td>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    			

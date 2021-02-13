@@ -1,5 +1,6 @@
 package com.walab.oas.DAO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -126,5 +127,16 @@ public class AdminDAO {
 	//선택한 form 삭제
 	public void deleteForm(int formID) throws Exception {
 		sqlSession.delete(namespace + ".deleteForm",formID);
+	}
+	
+	public int getUserEdit(int form_id) throws Exception{
+		return sqlSession.selectOne(namespace+ ".getUserEdit", form_id);
+	}
+	
+	public void changeUserEdit(int form_id,int isUserEdit)throws Exception{
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("isUserEdit", isUserEdit);
+		sqlSession.update(namespace+ ".changeUserEdit", map);
 	}
 }
