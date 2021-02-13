@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <!-- js -->
 <!-- Bootstrap core JavaScript -->
