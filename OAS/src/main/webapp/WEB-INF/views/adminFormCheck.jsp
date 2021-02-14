@@ -266,7 +266,7 @@ table caption {
 	              		   	/* tr의 안에 들어갈 td */
 	              		    var td1 = $("<td><input type='checkbox' name='result' value='"+submitterList[i].id+"'/></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td1);
-	
+	  
 	              		    var td2 = $("<td>"+(i+1)+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td2);
 	
@@ -287,6 +287,7 @@ table caption {
 
 	              		  	var td8 = $("<td></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td8);
+	     
 
 	              		    //select
 	              		  	var selectInput= $("<select name='state'></select>"); 
