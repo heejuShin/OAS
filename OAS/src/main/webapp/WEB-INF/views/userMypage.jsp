@@ -32,58 +32,6 @@
     
    
      <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=1">
-    
-  
-    
-
-      <script>
-      $(document).ready(function () {
-
-  		var categoryList=${categoryList};
-  		for(var i=0; i < categoryList.length; i++){
-  			var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
-  			$(".filter-category").append(option);
-  		}
-
-  		
-  		var userList=${userList};
-  	   	for(var i=0; i < userList.length; i++){
-  	                                
-  		   	/*설문지 별 tr 만듦*/
-  		  	var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>"); 
-  		   	$(".tbodies").append(divOne);
-  	
-  			/* tr의 안에 들어갈 td */
-  		 	var td1 = $("<td>"+(i+1)+"</td>"); 
-  		 	$($(".tbodies").children()[i]).append(td1);
-  		
-  			var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
-  			$($(".tbodies").children()[i]).append(th1);
-  	
-  		  	var td2 = $("<td>"+userList[i].formName+"</td>"); 
-  		 	$($(".tbodies").children()[i]).append(td2);
-  	
-  		 	var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
-  		  	$($(".tbodies").children()[i]).append(td3);
-  	
-  		  	var td4 = $("<td>"+moment(userList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
-  			$($(".tbodies").children()[i]).append(td4);
-  	
-  			var td5 = $("<td>"+userList[i].userName+"</td>"); 
-  		  	$($(".tbodies").children()[i]).append(td5);
-  		                    			
-  			var a=$("<td><button type='button' id='form_"+userList[i].id +"' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button></td>");
-  			$($(".tbodies").children()[i]).append(a);
-  		
-  			var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
-  			$($(".tbodies").children()[i]).append(form);
-  										
-  		}
-
-  	});
-        
-      </script>
-
   </head>
 
   <body>

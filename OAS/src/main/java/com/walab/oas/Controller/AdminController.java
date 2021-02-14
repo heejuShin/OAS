@@ -310,39 +310,7 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 	   
 		int form_id=adminDAO.getFormId(link); 
-		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
-		System.out.println("form_id: "+form_id);
-		List<Result> submitterList= adminDAO.submitterList(form_id);
-		List<State> stateList=adminDAO.stateList(form_id);
 		
-		JSONArray jArray = new JSONArray();
-		JSONArray jArray2 = new JSONArray();
-		
-		try {
-        	for (int i = 0; i < submitterList.size() ; i++) {   
-        		JSONObject ob =new JSONObject();
-        		ob.put("id", submitterList.get(i).getId());
-		        ob.put("userName", submitterList.get(i).getUserName());
-	            ob.put("department", submitterList.get(i).getDepartment());
-	            ob.put("studentId", submitterList.get(i).getStudentId());
-	            ob.put("email", submitterList.get(i).getEmail());
-	            ob.put("regDate", submitterList.get(i).getRegDate());
-	            ob.put("state_id", submitterList.get(i).getState_id());
-	            jArray.put(ob);
-	        }
-        	
-        	for (int i = 0; i < stateList.size() ; i++) {   
-        		JSONObject ob =new JSONObject();
-        		ob.put("id", stateList.get(i).getId());
-        		ob.put("stateName", stateList.get(i).getStateName());
-        		ob.put("form_id", stateList.get(i).getForm_id());
-        		ob.put("regDate", stateList.get(i).getRegDate());
-	            jArray2.put(ob);
-	        }
-
-        }catch(JSONException e){
-        	e.printStackTrace();
-        }
 		
 		List<Category> category_list = mainDao.categoryList();
 		JSONArray jArray3 = new JSONArray();
