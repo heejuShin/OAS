@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 	<style>
 		.tableDiv{
@@ -19,7 +20,6 @@
     margin-right: 10%;
     width: 75%;
 }
-
 #controlDiv{
     display: block;
     width: 75%;
@@ -27,7 +27,6 @@
     
     padding: 1% 32% ;
 }
-
 /* table css */
 h2 {
     text-align: center;
@@ -60,29 +59,23 @@ table caption {
       
       
       $(document).ready(function () {
-
         //함수1. 체크박스 전체 선택 / 해제 함수
         $("#allCheck").click(function () {
-
           if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
             $("input[type=checkbox]").prop("checked",true); // 전체선택 체크박스가 해제된 경우 
           } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
             $("input[type=checkbox]").prop("checked",false); 
           } 
         });
-
         //함수2. 체크박스 해제시 전체 체크박스 해제
         $("input:checkbox[name=result]").click(function () {
-
           if($(this).is(":checked") == false){
             $("#allCheck").prop("checked",false);
           }
             
         });
-
         //함수3. '적용' 버튼 클릭시 함수 (체크된 라인의 상태가 바뀜)
         $("button[name='stateB']").click(function () {
-
 	          var state = $("select[name=stateName]").val(); // 적용할 state_id 
 	
 	          //체크된 박스의 라인에 존재하는 상태 값 변경
@@ -94,11 +87,9 @@ table caption {
 	        //check box 전체 해제
 	        $("input[type=checkbox]").prop("checked",false); 
         });
-
         
 		//확인 버튼을 눌렀을 때
         $("button[name='stateSubmitB']").click(function () {
-
         	var result_ids = new Array(); //checkbox의 value를 담는다.
         	var result_states = new Array(); //select의 value를 담는다.
           
@@ -108,9 +99,7 @@ table caption {
 		         var eachState=$(this).parent().siblings().children("select").val();
 		         result_states.push(eachState);
            });
-
            var sendData = {"resultIDarray": result_ids, "stateArray" : result_states};
-
           //컨트롤러로 정보 전송(ajax) result_id로 state_name update
            $.ajax({
                url: "<%=request.getContextPath()%>/admin/form/update/check",
@@ -124,19 +113,14 @@ table caption {
             	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                }
        		});
-
         });
-
 		/*
         //함수4. 개별 상태 변경 select
         $("select[name=state]").on('change',function () {
-
           var resultID = $(this).parent().siblings().children("input:checkbox").val();
           var newState = $(this).val();
-
           alert("resultID : " + resultID + ", newState : " + newState);
           //resultID, newState 위와 동일하게 ajax로 전달
-
           //   var sendData = {"resultIDarray": resultID, "newState" : state};
           //   $.ajax({
           //           url:"",
@@ -151,10 +135,7 @@ table caption {
           //   });
  
         });*/
-
-
       });
-
   
     </script>
  </head>
@@ -228,12 +209,10 @@ table caption {
                   <script>
                	  //표 동적 생성하는 부분
                   $(document).ready(function () {
-
                       var submitterList=${submitterList};
                       var stateList=${stateList};
                       var isUserEdit=${isUserEdit};
                       var form_id=${form_id};
-
                       if(isUserEdit==0){
                   		$("#isUserEditCheck").attr("checked",true);
                 		$("#isUserEditCheck").attr("value","0");
@@ -243,7 +222,6 @@ table caption {
                   		$("#isUserEditCheck").attr("value","1");
                       }
                           
-
                       for(var x=0; x < stateList.length; x++){
                     	  if(stateList[x].stateName=="대기중"){
                     		  var optionName= $("<option value='"+stateList[x].id+"' selected>"+stateList[x].stateName+"</option>"); 
@@ -254,7 +232,6 @@ table caption {
 	                    	  $("#allState").append(optionName);
                     	  }
                       }
-
                       
                       //제출자 리스트
                       for(var i=0; i < submitterList.length; i++){
@@ -278,17 +255,14 @@ table caption {
 	
 	              		    var td5 = $("<td>"+submitterList[i].studentId+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td5);
-
 	              		  	var td6 = $("<td>"+submitterList[i].email+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td6);
 	              			
 	              		  	var td7 = $("<td>"+submitterList[i].regDate+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td7);
-
 	              		  	var td8 = $("<td></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td8);
 	     
-
 	              		    //select
 	              		  	var selectInput= $("<select name='state'></select>"); 
 	              		    $($($("#tbodies").children()[i]).children()[7]).append(selectInput);
@@ -305,7 +279,6 @@ table caption {
 		              		    }
 				        	}
 	                	}
-
                       $("#isUserEditCheck").change(function(){
                           console.log("userEditCheck!!");
                           if($("#isUserEditCheck").is(":checked")){
@@ -313,9 +286,7 @@ table caption {
                           }else{
                               $("#isUserEdit").attr("value","1");
                           }
-
                           var isUserEdit= $("#isUserEdit").val();
-
                           $.ajax({ //해당 폼의 userEdit 바꾸기
               	  			url : '<%=request.getContextPath()%>/admin/form/update/changeUserEdit',
               	  			data:{"form_id":form_id,"isUserEdit":isUserEdit},
@@ -323,7 +294,7 @@ table caption {
 	                        traditional : true,
               	  			success: function(){
               	  				console.log("isUserEdit Change"); 	
-              	  					  		
+              	  					  		 
               	  			},
               			  	error:function(request, status, error){
               		
@@ -332,6 +303,8 @@ table caption {
               				}
               	  	  	});
                       });
+                      $("#id01").load("./form/result/2021mac");
+
                   });
                   </script>
                   
@@ -345,6 +318,26 @@ table caption {
               
               </div>
               <!--end of .table-responsive-->
+            
+            <div id="id01" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px">
+			<div class="w3-modal-content w3-card-4 ">
+				<span onclick="document.getElementById('id01').style.display='none'"
+					class="w3-button w3-display-topright">&times;</span>
+				<div class="w3-container">
+				</div>
+			</div>
+			</div>
+			
+			<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px;"> <div class="modal-dialog"> <div class="modal-content"> </div> </div> </div>
+			
+
+              
+              
+             <div style="text-align:center;">
+			<a id="login" style="background:black; color: white; margin-radius: 10px; width: 200px;" data-toggle="modal" data-target="#id01" role="button"> <i class="material-icons">lock</i></a>
+			<a id="login" data-toggle="modal" data-target="#modal" role="button"> <i class="material-icons">lock</i></a>
+			</div>
+
 
         <p class="p">Demo by George Martsoukos. <a href="http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions" target="_blank">See article</a>.</p>
       </div>
@@ -370,6 +363,7 @@ table caption {
     <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
     <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
     <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
+
 
 	
 

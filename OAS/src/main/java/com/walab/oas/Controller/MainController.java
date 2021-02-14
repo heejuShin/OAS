@@ -188,6 +188,7 @@ public class MainController {
 	}
 
 	//handong 이메일로 로그인을 하지 않아 403 에러 발생 시 
+	/*
 	@RequestMapping(value = "/error403", method = { RequestMethod.POST, RequestMethod.GET })
 	public void errorOccur(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		response.setContentType("text/html; charset=utf-8");
@@ -195,6 +196,6 @@ public class MainController {
 		PrintWriter out = response.getWriter();
 		out.println("<script>alert('한동 이메일(handong.edu)로 로그인해주세요'); location.href='/'</script>");
 		out.flush();
-	}
+	}*/
 	
 }
