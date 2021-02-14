@@ -184,6 +184,7 @@
    <select id="submitterList" parameterType="int" resultType="com.walab.oas.DTO.Result">
    		<![CDATA[
 			SELECT Result.id as id, User.id as user_id, userName,department,studentId,email,Result.regDate as regDate,Result.editDate as editDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id};
+
 		]]> 
 		<!-- SELECT Result.id as id,userName,department,studentId,email,Result.regDate as regDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id}; -->
    </select>
@@ -333,7 +334,7 @@
 	<!-- User 정보 가져오기  -->
 	 <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
 	  <![CDATA[
-			SELECT * FROM User WHERE isDelete =0;
+			SELECT * FROM User WHERE isDelete =0 and id<>0;
 	  ]]>
 	</select> 
 	
@@ -409,5 +410,15 @@
 	<delete id="deleteDefaultState">
 		DELETE FROM State WHERE form_id = 0;
 	</delete>
+	
+	<select id="resultInfo" parameterType="int" resultType="com.walab.oas.DTO.Result">
+		select * FROM Result WHERE id = #{result_id};
+	</select>
+	
+	<select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+	  <![CDATA[
+	      SELECT fieldType,fieldName,fileName,isEssential,`index`,content FROM Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id};
+	  ]]>
+	</select>
 </mapper>
 

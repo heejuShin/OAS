@@ -224,14 +224,7 @@ $(function() {
 </script>
 </head>
 <body>
-	<button onclick="document.getElementById('id01').style.display='block'"
-		class="w3-button w3-black">개별 보기</button>
 
-	<div id="id01" class="w3-modal">
-		<div class="w3-modal-content w3-card-4 ">
-			<span onclick="document.getElementById('id01').style.display='none'"
-				class="w3-button w3-display-topright">&times;</span>
-			<div class="w3-container">
 				<div id="under_tab2" class="under_tabcontent under_current">
 					<form id='userForm'>
 						<div id="form_div">
@@ -254,9 +247,6 @@ $(function() {
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
-	</div>
 </body>
 <script>
 // Get the modal

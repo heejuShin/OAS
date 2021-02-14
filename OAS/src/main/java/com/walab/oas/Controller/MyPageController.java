@@ -1,22 +1,26 @@
 package com.walab.oas.Controller;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -105,8 +109,8 @@ public class MyPageController {
 		}
 		
 		@RequestMapping(value="/admin/mypage/state/save", method=RequestMethod.POST)
-		public ModelAndView saveDefaultState (HttpServletRequest request) throws Exception {
-			ModelAndView mav = new ModelAndView("redirect:/admin/mypage/state");
+		public ModelAndView saveDefaultState (HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes ra) throws Exception {
+			ModelAndView mav = new ModelAndView("redirect:/alert");
 			
 			State state= new State();
 			String statename = request.getParameter("state");
@@ -118,9 +122,12 @@ public class MyPageController {
 				state.setForm_id(0);
 				adminDAO.createState(state);
 			}
-			
+			ra.addFlashAttribute("msg", "변경 되었습니다.");
+	        ra.addFlashAttribute("url","oas/admin/mypage/state");
+	        
 			return mav;
 		}
+
 		
 		
 		

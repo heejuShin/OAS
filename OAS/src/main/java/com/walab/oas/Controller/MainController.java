@@ -101,6 +101,12 @@ public class MainController {
 		return mav;
 	}
 	
+	@RequestMapping(value= "/alert")
+	public ModelAndView alert() {
+		ModelAndView mav = new ModelAndView("alert");
+		return mav;
+	}
+	
 	@RequestMapping(value= "/LoignNeed")
 	public ModelAndView LoignNeed() {
 		ModelAndView mav = new ModelAndView("LoignNeed");
@@ -123,7 +129,6 @@ public class MainController {
 		int stateID = 0;
 		//int stateID = Integer.parseInt(request.getParameter("stateID"));
 
-		System.out.println(stateID);
 		if(stateID==0) { //아직 신청하지 않았다면
 			List<Form> form_info = mainDao.forminfo(form_ID);
 			List<Field> field_list = mainDao.fieldList(form_ID);

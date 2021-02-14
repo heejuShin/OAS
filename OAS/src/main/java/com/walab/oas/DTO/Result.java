@@ -18,6 +18,8 @@ public class Result {
 	private String studentId;
 	private String email;
 	
+	private String link;
+	
 
 	@Override
 	public String toString() {
@@ -134,6 +136,14 @@ public class Result {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getLink() {
+		return link;
+	}
+	
+	public void setLink(String link) {
+		this.link = link;
 	}
 	
 }

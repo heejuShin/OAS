@@ -51,7 +51,6 @@
 		console.log("title : " + formInfo[0].form_name);
 		
 		$('#form_title').text(formInfo[0].form_name);
-		
 		$('.form_explanation').text(formInfo[0].form_detail);
 		$('#startDate').text(formInfo[0].form_startDate);
 		$('#endDate').text(formInfo[0].form_endDate);
@@ -246,7 +245,7 @@
 <body>
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form" action="submit" id="userForm" method="POST">
+			<form class="contact100-form" action="../submit" id="userForm" method="POST">
 				<input type="hidden" name="form_index" value="${form_ID}" >
 				<span class="contact100-form-title" id="form_title"> </span>
 
