@@ -80,7 +80,7 @@
 		<div id="menu-bar"><p id="add_p">+</p></div>
 				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
 					<span class="contact100-form-title">
-						Form Create
+						설문 만들기
 					</span>
 					
       
