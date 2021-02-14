@@ -314,12 +314,14 @@
 				<!-- input type : submit -->
 				<div id="submitDiv" class="container-contact100-form-btn form edit button">
 					<button class="contact100-form-btn" type="button" id="confirm">
-						<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+						<span>확인</span>
 					</button>
 					
-					<a class='modal_close_btn'>
-						<button type='button'>취소</button>
-					</a>
+					<button class='modal_close_btn cancleB' type='button'><span>취소</span></button>
+					
+					<!-- <a class='modal_close_btn'>
+						<button class='modal_close_btn' type='button'>취소</button>
+					</a> -->
 				</div>
 			
 		</div>
