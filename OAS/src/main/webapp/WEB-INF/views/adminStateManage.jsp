@@ -26,8 +26,7 @@
 		margin-right: 5px !important;
 	}
 	</style>
-    
-</head>
+	</head>
 <body>
 
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
