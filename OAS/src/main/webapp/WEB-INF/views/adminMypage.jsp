@@ -240,7 +240,7 @@
 	                    				var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='' name='select_formTitle' value='"+adminList[i].formName+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 										
 										var resultCount;
@@ -282,7 +282,7 @@
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
-										var form2=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form2=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='' name='select_formTitle' value='"+adminList[i].formName+"'/></form>");
 										$($(".tbodies").children()[i]).append(form2);
 
 
