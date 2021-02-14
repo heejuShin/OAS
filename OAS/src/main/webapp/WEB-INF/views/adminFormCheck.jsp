@@ -52,6 +52,7 @@ table caption {
     padding-top: 140px;
     font-size: 14px;
 }
+
 		
 	</style>
 	
@@ -312,6 +313,12 @@ table caption {
                     	  var link = "2021mac";
                     	  $("#id01").load("./form/result/"+link);
                     	} );
+                      $( '.modal_close' ).click( function() {
+                    	  //var link =  $(this).siblings(".link").html();
+                    	  console.log("close");
+                    	  var link = "2021mac";
+                    	  $("#id01").css("display", "none");
+                    	} );
 
                   });
                   </script>
@@ -326,8 +333,8 @@ table caption {
               
               </div>
               <!--end of .table-responsive-->
-            
-            <div id="id01" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px">
+              
+            <div id="id01" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
 			<div class="w3-modal-content w3-card-4 ">
 				<span onclick="document.getElementById('id01').style.display='none'"
 					class="w3-button w3-display-topright">&times;</span>

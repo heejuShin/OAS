@@ -261,7 +261,7 @@
 										});
 
 										if(resultCount==0){
-											var plus_a=$("<a href='#' id='deleteForm_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a>");
+											var plus_a=$("<button id='deleteForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'deleteForm(this);'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>");
 											$($(".tbodies").children()[i]).find("#resultForm_"+adminList[i].id).parent().append(plus_a);
 											var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 											$($(".tbodies").children()[i]).append(form2);

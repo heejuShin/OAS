@@ -6,30 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- css -->
-<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-<!-- Bootstrap core CSS -->
-<link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Additional CSS Files -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?a">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!--  Form CSS -->
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css">
+	
+	<!-- checkbox CSS -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+	
+	<!-- Form JS -->
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/popper.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+	
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=1">
 
-<!-- js -->
-<!-- Bootstrap core JavaScript -->
-<script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
-<script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Additional Scripts -->
-<script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
-<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
 <style>
 		.under_tab {
 			list-style: none;
@@ -103,10 +110,10 @@
 			console.log("step3");
 				//form 제출시 확인 필요한 필드 클래스 명으로 지정 
 				if(fieldInfo[i].field_star == 1){
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'><b>"+fieldInfo[i].field_name+"</b><span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'><b>"+fieldInfo[i].field_name+"</b><span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
  						$("#fieldInputs").append(divTitle);
  				}else{
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'><b>"+fieldInfo[i].field_name+"</b></p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'><b>"+fieldInfo[i].field_name+"</b></p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
 						$("#fieldInputs").append(divTitle);
 					} 
 				console.log("step3.5");
@@ -115,28 +122,15 @@
 					console.log("step4");
 					var optionlist;
 					var fieldID = fieldInfo[i].field_id;
-					//field별 옵션 호출 
-					 $.ajax({
-						url:'<%=request.getContextPath()%>/getItem',
-						type:'POST',
-						data: {fieldID : fieldInfo[i].field_id} ,
-						dataType : 'json',
-						async: false,
-						success:function(data){
-							optionlist = data;
-						},
-						error:function(jqXHR, textStatus, errorThrown){
-							alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-						}
-						}); //옵션 부르기 끝
+					
 					 if(fieldInfo[i].field_type == 'select'){
 						 console.log("step5");
 						 var selectID = "select" + fieldInfo[i].field_id;
 						 $("#field_"+ fieldInfo[i].field_id).children('p').attr("for",selectID);
 						 if(resultContent[i].content != ""){
- 						  	var selectTag = $("<p id='"+selectID+"' class='input-radio100' name='content'>"+resultContent[i].content+"</p>");
+ 						  	var selectTag = $("<p id='"+selectID+"' class='label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
 						 }else{
-							 var selectTag = $("<p id='"+selectID+"' class='input-radio100' name='content'>선택하지 않음 </p>");
+							 var selectTag = $("<p id='"+selectID+"' class='label-input100 nameMargin answerP' name='content'>선택하지 않음 </p>");
 						 }
  							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(selectTag);
 				 	 }else if(fieldInfo[i].field_type == 'checkbox'){
@@ -144,10 +138,10 @@
 							var rC_list =replaceAll(resultContent[i].content,"$","/");
 							console.log("step5");
 							if(resultContent[i].content != ""){
-								var listTag = $("<p class='checkbox-wrap' name='content'>"+rC_list+"</p>");
+								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>"+rC_list+"</p>");
 								
 					  		}else{
-					  			var listTag = $("<p class='checkbox-wrap' name='content'>선택하지 않음 </p>");
+					  			var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>선택하지 않음 </p>");
 					  			//alert(optionlist.length);
 					  		}
 					  		
@@ -157,9 +151,9 @@
 						 	//alert(optionlist[idx].content);
 							console.log("step5");
 							if(resultContent[i].content == ""){
-								var listTag = $("<p class='input-radio100' name='content'>선택 안함 </p>");
+								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>선택 안함 </p>");
 							}else{
-								var listTag = $("<p class='input-radio100' name='content'>"+resultContent[i].content+"</p>");
+								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
 							}
 							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
 							
@@ -170,20 +164,20 @@
 							
 				}else if(fieldInfo[i].field_type == 'textarea'){//타입이 textarea일 때 
 					if(resultContent[i].content != "")
-						var textTag = $("<p class='input100' name='content'>"+resultContent[i].content+"</p>");
+						var textTag = $("<p class='label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
 					else
-						var textTag = $("<p class='input100' name='content'>응답 내역 없음 </p>");
+						var textTag = $("<p class='label-input100 nameMargin answerP' name='content'>응답 내역 없음 </p>");
 						//alert(resultContent[i].content);
 					$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(textTag);
 				}else{
 						if(fieldInfo[i].field_type == 'text'){//타입이 text일 때 
 							if(resultContent[i].content != ""){
-								var inputTag = $("<p class= 'input100' name='content'>"+resultContent[i].content+"</p>");
+								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
 							}
 							else{
-								var inputTag = $("<p class= 'input100' name='content'>응답 내역 없음 </p>");
+								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>응답 내역 없음 </p>");
 							}
-							inputTag.addClass("bottomLine");
+							
 						}
 						else if(fieldInfo[i].field_type == 'file'){//type이 file일때 
 							var inputTag = $("<p class= 'input100' type='"+fieldInfo[i].field_type +"' name='content'>"+resultContent[i].content+"</p>");
@@ -191,16 +185,16 @@
 								var downTag = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
 								$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(downTag);
 							}else{
-								var downTag = $("<p class= 'input100' name='content'>제출 내역 없음 </p>");
+								var downTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>제출 내역 없음 </p>");
 							}
 							inputTag.addClass("fileinput");
 						}
 						else{//type이 date일때
 							if(resultContent[i].content != ""){
-								var inputTag = $("<p class= 'input100' name='content'>"+resultContent[i].content+"</p>");
+								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
 							}
 							else{
-								var inputTag = $("<p class= 'input100' name='content'>응답 내역 없음 </p>");
+								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>응답 내역 없음 </p>");
 							}
 							inputTag.addClass("bottomLine");
 						}
@@ -224,8 +218,36 @@ $(function() {
 </script>
 </head>
 <body>
+<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form" action="submit" id="userForm" method="POST">
+				<span class="contact100-form-title" id="form_title"></span>
 
-				<div id="under_tab2" class="under_tabcontent under_current">
+				<div class="wrap-input100 bg0">
+					<p class="label-input100 submit_dates">카테고리 : <span id="category_name"></span></p>
+					<p class="label-input100 form_explanation"  id="form_explation"></p>
+					<p class="label-input100 form_date"> 신청 기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>
+					
+					<p class="label-input100 submit_dates"><span id="regDate"></span> / <span id="editDate"></span></p>
+				</div>
+				
+				<div id="fieldInputs"  class="contact100-form">
+						<!-- field insert 구역 -->
+						
+				</div>
+			</form>
+			
+				<!-- home button -->
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn modal_close" >
+						<span>닫기</span>
+					</button>
+				</div>
+			
+		</div>
+	</div>
+
+				<!-- <div id="under_tab2" class="under_tabcontent under_current" style="border:1px solid red">
 					<form id='userForm'>
 						<div id="form_div">
 							<div class="form view title" style="overflow:scroll;">
@@ -241,12 +263,14 @@ $(function() {
 							</div>
 							<div class="form view field" style="height: 650px;overflow:scroll;">
 								<div id="fieldInputs" class="contact100-form">
-									<!-- field insert 구역 -->
+									field insert 구역
 								</div>
 							</div>
 						</div>
 					</form>
-				</div>
+				</div> -->
+				
+				
 </body>
 <script>
 // Get the modal

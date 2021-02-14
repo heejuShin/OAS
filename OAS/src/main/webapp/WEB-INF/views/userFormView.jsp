@@ -39,6 +39,7 @@
 
 </head>
 <body>
+
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
@@ -66,6 +67,7 @@
 			
 		</div>
 	</div>
+	
 </body>
 
 <script>
@@ -84,8 +86,14 @@
 		$('#startDate').text(formInfo[0].form_startDate);
 		$('#endDate').text(formInfo[0].form_endDate);
 		$('#submitDate').text(formInfo[0].form_submitDate);
-		$('#editDate').text(formInfo[0].form_editDate);
-
+		if(formInfo[0].form_editDate != "2000-01-01 00:00:00"){
+			$('#editDate').text(formInfo[0].form_editDate);
+		}else{
+			$('#editDate').text(formInfo[0].form_submitDate);
+		}
+		
+/* 		$('#editDate').text(formInfo[0].form_editDate);
+ */
 		console.log("step2");
 
 		for(var i = 0 ; i < fieldInfo.length; i++){
