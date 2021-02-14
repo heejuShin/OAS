@@ -40,7 +40,7 @@ import com.walab.oas.DTO.User;
 
 @RestController
 @RequestMapping(value = "/login")
-@SessionAttributes("ses")
+//@SessionAttributes("ses")
 public class LoginController {
    
    @Autowired
