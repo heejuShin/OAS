@@ -71,7 +71,7 @@
     <script type="text/javascript">
     $(document).ready(function () {
 
-        if($(location).attr('pathname') != "/oas/" || $(location).attr('pathname') != "/"){
+        if($(location).attr('pathname') != "/oas/" && $(location).attr('pathname') != "/"){
         			$(".active").removeClass("active");
 
 		    	$('.nav-link').each(function(){
