@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.walab.oas.Board.BoardDAO;
+import com.walab.oas.Board.BoardService;
+import com.walab.oas.Board.BoardServiceImpl;
+import com.walab.oas.Board.BoardVO;
 import com.walab.oas.DAO.MainDAO;
 
 import com.walab.oas.DAO.MyPageDAO;
@@ -41,11 +46,15 @@ public class MainController {
 	@Autowired
 	private MainDAO mainDao; 
 	
+	@Autowired
+	BoardService boardService;
 	
 	//메인페이지 가기
 	@RequestMapping(value = "/") // GET 방식으로 페이지 호출
-	public ModelAndView goMypage(SearchCriteria cri,HttpSession session) throws Exception {
+	public ModelAndView goMypage(SearchCriteria cri,HttpSession session, BoardVO vo, Model model) throws Exception {
 		
+		model.addAttribute("list", boardService.getBoardList());
+        
 		ModelAndView mav = new ModelAndView();
 		
 //		int user_id=(Integer) session.getAttribute("ID");
