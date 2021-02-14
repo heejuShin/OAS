@@ -164,8 +164,6 @@
           </nav>
 		   <!--End_Filter and Search part-->  
 	
-         
-		  <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/mypage/state'">상태 관리</button>
 		  
       </div> <!-- end container -->
   </section> <!-- end section -->

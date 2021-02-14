@@ -69,8 +69,7 @@
 			
 		<div class="button_div">
             <button style="border-color: #28a745; color: #28a745" type="submit">저장</button>
-            <button style="border-color: red; color: red;" name="deleteB" onclick="location.href='./state'">초기화</button>
-            <button style="border-color: black; color: black;" name="manageB" onclick="location.href='./'">마이페이지</button>
+            <button type="button" style="border-color: black; color: black;" name="deleteB" onclick="location.href='./state'">초기화</button>
         
         </div>  
 	</form>
