@@ -668,7 +668,7 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) View
-	@RequestMapping(value = "/form/result/{link}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
+	@RequestMapping(value = "/form/result/{link}/{id}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
 	  public ModelAndView readForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		

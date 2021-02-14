@@ -247,7 +247,9 @@ $(function() {
 		</div>
 	</div>
 
-				<!-- <div id="under_tab2" class="under_tabcontent under_current" style="border:1px solid red">
+				<!-- <span onclick="document.getElementById('id01').style.display='none'"
+					class="w3-button w3-display-topright">&times;</span>
+				<div id="under_tab2" class="under_tabcontent under_current" style="border:1px solid red">
 					<form id='userForm'>
 						<div id="form_div">
 							<div class="form view title" style="overflow:scroll;">

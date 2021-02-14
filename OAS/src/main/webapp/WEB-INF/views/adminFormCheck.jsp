@@ -246,7 +246,7 @@ table caption {
 	              		    var td1 = $("<td><input type='checkbox' name='result' value='"+submitterList[i].id+"'/></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td1);
 	              		    
-	              		  	var td9 = $("<td><a class=\"modal_open\" id=\"button\" style=\"background:black; width: 100%; color: white; margin-radius: 10px;\" data-toggle=\"modal\" data-target=\"#id01\" role=\"button\"> <i class=\"material-icons\">보기</i></a></td>"); 
+	              		  	var td9 = $("<td><button onclick=\"document.getElementById('yourModal').style.display='block'\" class=\"modal_open w3-button w3-black\" data-toggle=\"modal\" data-target=\"#yourModal\">개별 보기</button></td>"); 
 	              		  	$($("#tbodies").children()[i]).append(td9);
 	  
 	              		    var td2 = $("<td>"+(i+1)+"</td>"); 
@@ -311,14 +311,21 @@ table caption {
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "2021mac";
-                    	  $("#id01").load("./form/result/"+link);
+			  var id = $(this).siblings(".result_id").val();
+                    	  $("#yourModal").load("./form/result/"+link+"/"+id);
                     	} );
                       $( '.modal_close' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  console.log("close");
                     	  var link = "2021mac";
-                    	  $("#id01").css("display", "none");
+                    	  $("#yourModal").css("display", "none");
                     	} );
+			  
+		      
+		      $(".w3-button").on('click', "#yourModal", function(){
+                    	  $("#yourModal").modal("hide");
+                    	  alert("버튼 확인 ");
+                      });
 
                   });
                   </script>
@@ -334,10 +341,8 @@ table caption {
               </div>
               <!--end of .table-responsive-->
               
-            <div id="id01" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
+            <div id="yourModal" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
 			<div class="w3-modal-content w3-card-4 ">
-				<span onclick="document.getElementById('id01').style.display='none'"
-					class="w3-button w3-display-topright">&times;</span>
 				<div class="w3-container">
 				</div>
 			</div>
@@ -346,11 +351,7 @@ table caption {
 			<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px;"> <div class="modal-dialog"> <div class="modal-content"> </div> </div> </div>
 			
 
-              
-              
-             <div style="text-align:center;">
-			<a id="login" style="background:black; color: white; margin-radius: 10px; width: 200px;" data-toggle="modal" data-target="#id01" role="button"> <i class="material-icons">lock</i></a>
-			</div>
+
 
 
         <p class="p">Demo by George Martsoukos. <a href="http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions" target="_blank">See article</a>.</p>
