@@ -15,7 +15,7 @@
   
 
   <!-- Latest compiled and minified Bootstrap CSS -->
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css?h">
   
     <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap/css/bootstrap.min.css?ver=2" rel="stylesheet">
@@ -101,22 +101,27 @@
               <c:set var="admin" value="${admin }" />
 			  <c:if test="${admin == 0 || admin == 1}">
               <li class="nav-item">
-                <a class="nav-link"  href="<%=request.getContextPath()%>/admin/mypage" >My Page</a>
+                <a class="nav-link"  href="<%=request.getContextPath()%>/admin/mypage" >마이페이지</a>
               </li>
               </c:if>
               <c:if test="${admin == 0 || admin == 1}">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/form/create">Form Create</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/form/create">설문 만들기</a>
               </li>
               </c:if>
                <c:if test="${admin == 0 || admin == 1}">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/manage">User management</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/manage">유저 관리</a>
+              </li>
+              </c:if>
+              <c:if test="${admin == 0 || admin == 1}">
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage/state">상태 관리</a>
               </li>
               </c:if>
               <c:if test="${admin == 2 }">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/mypage">User myPage</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/mypage">마이페이지</a>
               </li>
               </c:if>
               <!--
@@ -126,13 +131,13 @@
               -->
               <c:if test="${admin eq null}">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">Login</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login/redirectUrl">로그인</a>
               </li>
               <input id="logincheck" value="false" type="hidden"/>
               </c:if>
               <c:if test="${admin != null}">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login/logout">Logout</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login/logout">로그아웃</a>
               </li>
               </c:if>
               <!--<li class="nav-item">
