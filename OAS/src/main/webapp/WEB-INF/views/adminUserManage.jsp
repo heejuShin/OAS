@@ -6,29 +6,88 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-    <!-- 해린 css -->
+	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=2">
+	
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- <style>
-      main{
-        margin: 5%;
-      }
-      #controlDiv{
-      display:block;
-      	margin:2%;
-      	text-align:center;
-      }
+    
+</head>
+<body>
+
+	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+
+	<!-- main -->
+    <main>
+
+         <div id="headTitle"><h2>회원 관리</h2></div>
+        
+        <!-- user table  -->
+              <div class="table-responsive tableDiv" data-pattern="priority-columns">
+              
+                <table id="checklist" summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" class="table table-bordered table-hover">
+<!--                   <caption class="text-center">An example of a responsive table based on RWD-Table-Patterns' <a href="http://gergeo.se/RWD-Table-Patterns/" target="_blank"> solution</a>:</caption>
+ -->                
+ 						<!-- column name list -->
+		                  <thead> 
+		                  	
+		                    <tr>
+		                      <th><input type="checkbox" id="allCheck" /></th>
+		                      <th data-priority="1">NO</th>
+		                      <th data-priority="2">이름</th>
+		                      <th data-priority="3">전화번호</th>
+		                      <th data-priority="4">이메일</th>
+		                      <th data-priority="5">학번</th>
+		                      <th data-priority="6">전공</th>
+		                      <th data-priority="7">회원 등급</th>
+		                      <th data-priority="8">탈퇴 관리</th>
+		                    </tr>
+		                  </thead> 
+		                  
+		                  <!-- user information list -->
+		                  <tbody id="userlist"></tbody>
+
+                </table>
+              </div><!-- user table End -->
+              
+              
+  			<!-- select controller  -->
+	        <div id="select_control">
+		        <div id="controlDiv">
+		          <select id ="allLevel" class="form-control" name="levelName">
+		            <option value="2" selected>학생</option>
+		            <option value="1">선생님</option>
+		            <option value="0">관리자</option>
+		          </select>
+		          <button name='stateB' id="stateB">적용</button>
+		        </div>
+	        </div><!-- select controller end -->
       
-       thead{
-      border-top: 1px solid #ddd;} 
       
-      .tableDiv{
-      margin-top:2%;
-      
-      }
-    </style>
-	 <script type="text/javascript">
+		      <!-- modal  -->
+		      <div id="modal"></div>
+		      <div id="deleteModal" style="display:none">
+		      	<p><span  style="color:red" id="deleteUser"> </span> 님을 탈퇴 처리 하시겠습니까?</p>
+		      	<div id="modal_buttons">
+		      		<button id="deleteB" class="checkB">예</button>
+		      		<button id="notDeleteB" class="checkB">아니오</button>
+		      	</div>
+		      </div><!-- modal end  -->
+    
+    
+		    <!-- deleteForm  -->
+		    <form id="userDeleteForm" method="POST"  action="deleteUser">
+		    		<input type="hidden" value="" name="userID" id="deleteUserID">
+		    </form>
+
+    </main>
+
+
+	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
+
+
+</body>
+<script type="text/javascript">
 
 	 $(document).ready(function(){
 		 var UserInfo = ${userData};
@@ -38,12 +97,13 @@
 			 var sectionTag = $('<tr id="user_'+UserInfo[i].id+'"></tr>'); 
 			 var userCheck = $('<td><input type="checkbox" name="result" value="'+UserInfo[i].id+'"/></td>');
 			 var userNo = $('<td>'+no+'</td>');
-			 var userName = $('<td>'+UserInfo[i].userName+'</td>');
+			 var userName = $('<td class="userName">'+UserInfo[i].userName+'</td>');
 			 var userNumber = $('<td>'+UserInfo[i].userNumber+'</td>');
 			 var userEmail = $('<td>'+UserInfo[i].userEmail+'</td>');
 			 var studentID = $('<td>'+UserInfo[i].studentID+'</td>');
 			 var studentMajor = $('<td>'+UserInfo[i].studentMajor+'</td>');
-			 var userLevel = $('<td><input type="radio"  value="0"> 학생<input type="radio"  value="1"> 선생님<input type="radio"  value="2"> 관리자</td>');
+			 var userLevel = $('<td><input type="radio"  value="2"> 학생<input type="radio"  value="1"> 선생님<input type="radio"  value="0"> 관리자</td>');
+			 var deleteButton = $('<td><button class="askDelete">탈퇴</button><input type="hidden" value="'+UserInfo[i].id+'"></td>');
 			 
 			 
 			 $('#userlist').append(sectionTag);
@@ -56,6 +116,7 @@
 			 $('#user_'+UserInfo[i].id).append(studentID);
 			 $('#user_'+UserInfo[i].id).append(studentMajor);
 			 $('#user_'+UserInfo[i].id).append(userLevel);
+			 $('#user_'+UserInfo[i].id).append(deleteButton);
 			 $('#user_'+UserInfo[i].id).children().children('input:radio').attr("name", "userRadio_"+UserInfo[i].id);
 			 $('#user_'+UserInfo[i].id).children().children('input:radio[value='+UserInfo[i].userLevel+']').attr("checked","checked");
 
@@ -70,6 +131,24 @@
 	            $("input[type=checkbox]").prop("checked",false); 
 	          } 
 	        });
+
+			 //modal창 열기
+	        $(".askDelete").click(function () {
+		        $('#deleteUser').text($(this).parent().siblings('.userName').text());
+		        $("#deleteUserID").val($(this).siblings('input').val());
+	        	  $("#modal").fadeIn(300);
+	        	$("#deleteModal").fadeIn(300);
+		        });
+
+	        $("#modal, #notDeleteB").on('click',function(){
+	        	  $("#modal").fadeOut(300);
+	        	  $("#deleteModal").fadeOut(300);
+	        	});
+
+	        $("#deleteB").on('click',function(){
+		       console.log("삭제");
+	        	  $("#userDeleteForm").submit();
+	        	});
 
 	        
 
@@ -156,89 +235,4 @@
 		 
   
     </script>
- </head>
-<body>
-
-<jsp:include page="/WEB-INF/views/basic/header.jsp" />
-
-<!-- main -->
-    <main>
-
-      
-      <div >
-        <div>
-          <h2>User Management:)</h2>
-        </div>
-        <!-- controller start -->
-        <div id="controlDiv">
-          <select id ="allLevel" class="" name="levelName">
-            <option value="0" selected>학생</option>
-            <option value="1">선생님</option>
-            <option value="2">관리자</option>
-          </select>
-          <button name='stateB'>적용</button>
-        </div>
-        <!-- controller end -->
-        <!-- list start -->
-
-              <div class="table-responsive tableDiv" data-pattern="priority-columns">
-              
-                <table id="checklist" summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" class="table table-bordered table-hover">
-                  <caption class="text-center">An example of a responsive table based on RWD-Table-Patterns' <a href="http://gergeo.se/RWD-Table-Patterns/" target="_blank"> solution</a>:</caption>
-                  
-                  <!-- column name list -->
-                  <thead> 
-                    <tr>
-                      <th><input type="checkbox" id="allCheck" /></th>
-                      <th data-priority="1">NO</th>
-                      <th data-priority="2">이름</th>
-                      <th data-priority="3">전화번호</th>
-                      <th data-priority="4">이메일</th>
-                      <th data-priority="5">학번</th>
-                      <th data-priority="6">전공</th>
-                      <th data-priority="7">유저 레벨</th>
-                    </tr>
-                  </thead> 
-
-                  <!-- data list -->
-
-                  <!-- Submit check box's value && select option's value -->
-
-                  <!-- Value RULE -->
-                  <!-- checkbox:value = T:result(id) -->
-                  <!-- select:option:value == T:state(id) -->
-                  <!-- [selected] select:option:value == T:result(state_id) -->
-
-                  <!-- Name RULE -->
-                  <!-- All checkbox name same, All select name same -->
-                  <tbody id="userlist">
-                    
-                  </tbody>
-                  <!-- data list End-->
-
-                </table>
-              
-              </div>
-          
-  <!-- list End -->
-        <p class="p">Demo by George Martsoukos. <a href="http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions" target="_blank">See article</a>.</p>
-      </div>
-      
-      
-    
-
-    
-      
-    </main>
-    <!-- main End -->
-
-
-<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
-
-
-    
-
-	
-
-</body>
 </html>

@@ -12,13 +12,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <title>Admin my page</title>
 
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
-
+    <!--  button css-->
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/buttonstyle.css?v=2">
+	
    
     <!-- Latest compiled and minified Bootstrap JavaScript -->
 	<script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
@@ -34,57 +35,10 @@
     <!-- 필터링 -->
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     
-    <style type="text/css">
-    html, body{height:100%;}
-        	
-    	.page-header{
-    		display:block;
-    		overflow: auto;
-    		}
-    		
-    	.page-header div{
-    		display:block;
-    		float:left;
-    	}
-    	#profileImg{
-    	width:70px;
-    	height:70px;
-    	
-    	}
-    	.filter_search{
-    		clear:both;
-    	
-    	}
-    	#welcomeMsg h1{
-    		width:max-content;
-    		margin:5% 0% 5% 5%;
-    	}
-    	
-    	#settingsIcon{
-    	width:35px;
-    	height:35px;
-    	}
-    	
-    	.item-row{
-    		position: relative !important;
-    		left: initial;
-    		top: initial;
-    		
-    	}
-    	.filters{
-    		border:none;
-    	}
-    	.filters:focus{
-    		outline:none;
-    	}
-    </style>
+  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=2">
     
     <script>
     $(document).ready( function() {
-
-
-	        
-          
         //함수1. 체크박스 전체 선택 / 해제 함수
         $("#allCheck").click(function () {
           if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
@@ -132,36 +86,23 @@
   <body>
 
   <jsp:include page="/WEB-INF/views/basic/header.jsp" />
-
-
+  
+  <main>
+  
+  	<div id="headTitle">
+		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+     </div>
 
     <section id="demo">
     <div class="container">
-      <div class="page-header" style="border-bottom: 1px solid black; margin : 3% 0%; padding-bottom: 2%">
-              <div><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"></div>
-		    	<div id="welcomeMsg"><h1 >안녕하세요 ${name }님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h1></div>
-		    	<div></div>
-          </div>
-          <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
-            
-            
-            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			
-	  			<input type="hidden" name="searchType" value="all">
-	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  			</form>
-            
-          </nav>
-          <!--End_Filter and Search part-->
+
           <div class="table-responsive" data-pattern="priority-columns">
               <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
                   <thead>
                       <tr>
                           <th>링크</th>
                           <th>
-							<select class="filters filter-category" data-filter-group='category'>
+							<select class="filters filter-category" id="categoryName" data-filter-group='category'>
 			  					<option data-filter='' value="*">카테고리</option>
 			  				</select>
 						  </th>
@@ -171,14 +112,15 @@
                           <th data-priority="2">등록자</th>
                           
                           <th data-priority="1">
-							<select class="filters filter-status" data-filter-group='status'>
-			  					<option data-filter='' value="*">상태</option>
-			  					<option data-filter='.예약' value=".예약">예약</option>
-			  					<option data-filter='.신청중' value=".신청중">신청중</option>
-			  					<option data-filter='.신청마감' value=".신청마감">신청마감</option>
+							<select class="filters filter-status" id="status" data-filter-group='status'>
+			  					<option data-filter='' value="*" selected>상태</option>
+			  					<option data-filter='.예약' value="예약">예약</option>
+			  					<option data-filter='.신청중' value="신청중">신청중</option>
+			  					<option data-filter='.신청마감' value="신청마감">신청마감</option>
 			  				</select>
 						  </th>
-                          <th data-priority="1"></th>
+                          <th data-priority="1">폼 관리</th>
+                          <th data-priority="1">폼 신청</th>
                       </tr>
                   </thead>
                   
@@ -187,43 +129,48 @@
                       
                   </tbody>
               </table>
-          </div>      
-          <ul class="pagination">
+
+
+          </div> 
+          <div id="moreContent">  
+	          <ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}'>&laquo;</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&laquo;</a>
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}'>${idx}</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
 			    </li>
 			    </c:forEach>
 			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
+			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&raquo;</a>
 			    </li>
 			    </c:if>
 		  </ul>
+		  </div>
 		  
-          <div class="button_div">
-            <button>create</button>
-            <button name="deleteB">Delete</button>
-            <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/manage'">User management</button>
-            <a href='<%=request.getContextPath()%>/admin/manage'>관리자 페이지</a>
-          </div>    
+		  <!--Start_Filter and Search part-->
+          <nav class="filter_search" >
+           
+            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
+	  			<input type="hidden" name="searchType" value="all">
+	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
+  			</form>
+            
+          </nav>
+		   <!--End_Filter and Search part-->  
+	
+		  
       </div> <!-- end container -->
   </section> <!-- end section -->
+  </main>
      
     <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
-<!-- 
-    from here, the table things
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-        Latest compiled and minified Bootstrap JavaScript
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
-         -->
 	<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
         <script>
 
@@ -232,7 +179,7 @@
 
 								var categoryList=${categoryList};
 								for(var i=0; i < categoryList.length; i++){
-									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
+									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='"+categoryList[i].categoryName+"'>"+categoryList[i].categoryName+"</option>");
 									$(".filter-category").append(option);
 								}
                                 
@@ -245,7 +192,10 @@
 	                    		   	$(".tbodies").append(divOne);
 	
 	                    		   	/* tr의 안에 들어갈 td */
-	                    		    var td1 = $("<td><input type='hidden'  id='url' value="+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a></td>"); 
+	                    		   	var whole_addr = $(location).attr('href');
+	                    		   	var addr_slice = whole_addr.split('/');
+	                    		   	var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
+	                    		    var td1 = $("<td><input type='hidden'  id='url' value="+addr+"/form/"+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td1);
 	
 	                    		    var th1 = $("<th>"+adminList[i].categoryName+"<span class='co-name'></span></th>"); 
@@ -259,29 +209,63 @@
 	                    		    var td5 = $("<td>"+adminList[i].userName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td5);
 
-									//모집중(수정가능), 모집마감(삭제가능), 예약(수정가능)
-									//예약
+									//모집중(수정가능,결과보기), 모집마감(결과보기,신청자가 없으면 삭제 가능), 예약(수정가능,삭제가능)
+									//예약(수정,삭제)
 	                    			if(new Date(adminList[i].startDate) > new Date()){
 	                    				var td6 = $("<td>예약</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-										var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
+
+										var a=$("<td><button id='form_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='deleteForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'deleteForm(this);'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button></td>");
+
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
+										var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										$($(".tbodies").children()[i]).append(form2);
 
 										$(".form-item"+i).addClass('예약');
 										$(".form-item"+i).attr('data-status','예약');
 	                    			}
-	                    			//모집마감
-	                    			else if(new Date()>new Date(adminList[i].endDate)){
-	                    				var td6 = $("<td>신청마감</td>"); 
+	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
+	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isUserEdit==1){
+
+		                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isUserEdit==1)
+	                    					var td6 = $("<td>신청중지</td>"); 
+		                    			else
+		                    				var td6 = $("<td>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    			
-	                    				var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a></td>");
+
+	                    				var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
+
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
+										
+										var resultCount;
+										$.ajax({ //해당 form의 신청자 count가져오기
+											url : "resultCount",
+										  	type : "post",
+										  	data:{"form_id":adminList[i].id},
+										  	dataType : "json",
+										  	async: false,
+										  	success: function(data){
+										  		resultCount = data;
+										  	},
+										  	error:function(request, status, error){
+
+												alert("code:"+request.status+"\n"+"\n"+"error:"+error);
+
+											}
+										});
+
+										if(resultCount==0){
+											var plus_a=$("<button id='deleteForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'deleteForm(this);'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>");
+											$($(".tbodies").children()[i]).find("#resultForm_"+adminList[i].id).parent().append(plus_a);
+											var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+											$($(".tbodies").children()[i]).append(form2);
+										}
 
 										$(".form-item"+i).addClass('신청마감');
 										$(".form-item"+i).attr('data-status','신청마감');
@@ -293,20 +277,26 @@
 		                    			var td6 = $("<td>신청중</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    
-		                    			var a=$("<td><a href='#' id='form_"+adminList[i].id+"' class='filled-button' onClick = 'openForm(this);'>수정</a></td>");
+
+										var a=$("<td><button id='form_"+adminList[i].id+"'  type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
+										var form2=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										$($(".tbodies").children()[i]).append(form2);
+
 
 										$(".form-item"+i).addClass('신청중');
 										$(".form-item"+i).attr('data-status','신청중');
 			                    	}
+	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;'>신청하기 </button></td>"); 
+	                    		    $($(".tbodies").children()[i]).append(td7);
+			                    	
 			                	}
 
 	                            $('.urlCopyBtn').click(function(){
 	                         
 	                            	$(this).siblings("#url").attr("type","text");
-	                                 
 	                            	$(this).siblings("#url").select();
 									document.execCommand('copy');
 
@@ -321,38 +311,18 @@
                             function deleteForm(obj){
                             	$(obj).parent().siblings("#deleteForm").submit();
                             }
+                            function resultForm(obj){
+                            	$(obj).parent().siblings("#resultForm").submit();
+                            }
 
                           $(document).ready( function() {   
-                        	//테이블 카테고리, 상태 select
-                    	       var $table = $('.tbodies').isotope({
-                    	          itemSelector: '.item-row',
-                	              llayoutMode: 'vertical',
-                    	          getSortData: {
-                    	              category : '[data-category]',
-                    	              status : '[data-status]', 
-                    	           }
-                    	        });
-
-                    	        var filters = {};
-                    	        // bind filter on select change,
+                    	        // select change,
                     	        $('.filters').on( 'change', function() {
-                    	          // get filter value from option value
-                    	          var $this = $(this);
-                    	          var filterGroup = $this.attr('data-filter-group');
-                    	          // set filter for group
-                    	          //filters[filterGroup] = $this.value;
-                    	          filters[filterGroup] = $this.find(':selected').attr('data-filter');
-
-                    	       	  // combine filters
-                    	          var filterValue = '';
-                    	          for (var prop in filters) {
-                    	            filterValue += filters[prop];
-                    	          }
-                    	          console.log(filterValue);
-                    	          
-                    	          $table.isotope({ 
-                    	            filter : filterValue 
-                    	          });
+                        	        console.log($(this).attr("id"));
+                        	        console.log($(this).val());
+									$("#searchType").val($(this).attr("id"));
+									$("#keyword").val($(this).val());
+									$(".form-inline").submit();
                     	        });
 
                           });

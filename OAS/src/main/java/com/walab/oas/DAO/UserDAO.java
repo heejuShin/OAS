@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
+import com.walab.oas.DTO.ReadResult;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.User;
@@ -49,6 +51,15 @@ public class UserDAO {
 	}
 	public User findUser(String email) {
 		return sqlSession.selectOne(namespace + ".findUser", email);
+	}
+	public Form forminfo(int formID) {
+		return sqlSession.selectOne(namespace + ".formInfo", formID);
+	}
+	public Result resultinfo(int result_id) {
+		return sqlSession.selectOne(namespace + ".resultInfo", result_id);
+	}
+	public List<ReadResult> getContents(int result_id) {
+		return sqlSession.selectList(namespace + ".getContent",result_id);
 	}
 
 }

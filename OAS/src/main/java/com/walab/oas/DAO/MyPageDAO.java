@@ -45,20 +45,17 @@ public class MyPageDAO {
 		return sqlSession.selectList("userlist", cri);
 	}
 	
-	public int countUserTab1(String searchType, String keyword) {
-		Map<String, String> map = new HashMap<String, String>();
+	public int countUserTab1(String searchType, String keyword, String filterType,int user_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
+		map.put("filterType", filterType);
+		map.put("user_id", user_id);
 		return sqlSession.selectOne("countUserTab1", map);
 	}
 	
 	public int countBoardList() {
 		return sqlSession.selectOne(namespace +".countBoardList");
-	}
-	
-	//선택한 form 삭제
-	public void deleteForm(int formID) throws Exception {
-		sqlSession.delete(namespace + ".deleteForm",formID);
 	}
 	
 	//user info 가져오기 
@@ -105,5 +102,11 @@ public class MyPageDAO {
 		map.put("searchType", searchType);
 		map.put("keyword", keyword);
 		return sqlSession.selectOne("countUserTab3", map);
+	}
+
+	//유저 탈퇴 처리
+	public void deleteUser(int userID) {
+		// TODO Auto-generated method stub
+		sqlSession.update("userDelete", userID);
 	}
 }

@@ -24,7 +24,7 @@
 		ORDER BY state_id IS NULL ASC,id ASC
 	</select>  -->
     <select id="form_list" resultType="com.walab.oas.DTO.Form">
-		select Category.id as category_id, categoryName ,f.id as id, formName,explanation, startDate,endDate, ifnull(state_id,0)as state_id from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE f.id>=0
+		select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation, startDate,endDate, ifnull(state_id,0)as state_id,isUserEdit from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE isUserEdit=0
 		<include refid="searchMain" />
 		ORDER BY state_id IS NULL ASC,id ASC
 	</select> 
@@ -48,71 +48,64 @@
 	
 	<select id="category_list" resultType="com.walab.oas.DTO.Category">
 	    	<![CDATA[
-			 	select id,categoryName from Category;
+			 	select id,categoryName from Category where id <> 0;
 			 ]]> 
 	</select>
 	
+	<select id="stateListbyId" resultType="com.walab.oas.DTO.State">
+	    	<![CDATA[
+			 	select * from State where form_id = #{formID};
+			 ]]> 
+	</select>
+	
+	<!-- userMyPage 게시글 -->
 	<select id="userlist" resultType="com.walab.oas.DTO.Form">
-		
-			SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
-			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM (SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now()) between date(startDate) AND date(endDate)) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
-			INNER join User as u
-			ON (c.user_id = u.id)
+	 SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
+		FROM (SELECT s.*,categoryName FROM 
+            (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM 
+				(SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM 
+					(SELECT * FROM Result WHERE Result.user_id=${user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isUserEdit=0
+						<include refid="userFilter" />
+							 )as s LEFT OUTER JOIN Category ON s.category_id=Category.id) as c INNER join User as u ON (c.user_id = u.id)
+		 
 			<include refid="search" />
 			ORDER BY c.id DESC 
 			LIMIT #{pageStart}, #{perPageNum};
-			
 	</select>
-	<!-- userTab1 게시글 수 -->
+	
+	<!-- userMyPage 게시글 수 -->
 	<select id="countUserTab1" resultType="int">
 		SELECT count(*)
-			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now()) between date(startDate) AND date(endDate)) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
+			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM 
+            (SELECT * FROM Result WHERE Result.user_id=${user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isUserEdit=0
+            <include refid="userFilter" />
+            ) as s  
+             LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id)
 		<include refid="search" />
 
 	</select>
 	
-	<select id="noApplyForm" resultType="com.walab.oas.DTO.Form">
-		
-			SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,ifnull(state_id,0)as state_id
-			FROM (SELECT s.*,categoryName FROM (SELECT state_id,Form.* FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE Result.user_id=#{user_id} )as Result ON Result.form_id=Form.id  WHERE date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
-			INNER join User as u
-			ON (c.user_id = u.id)
-			<include refid="search" />
-			ORDER BY c.id DESC 
-			LIMIT #{pageStart}, #{perPageNum};
-			
-	</select>
-	<!-- userTab2 게시글 수 -->
-	<select id="countUserTab2" resultType="int">
-		SELECT count(*)
-			FROM (SELECT s.*,categoryName FROM (SELECT state_id,Form.* FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE Result.user_id=#{user_id})as Result ON Result.form_id=Form.id  WHERE date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
-			INNER join User as u
-			ON (c.user_id = u.id)
-		<include refid="search" />
-
-	</select>
-	
-	<select id="pastApplyForm" resultType="com.walab.oas.DTO.Form">
-			SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,ifnull(state_id,0)as state_id
-			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM (SELECT * FROM Result WHERE Result.user_id=#{user_id})as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now())>date(endDate) AND (date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()))) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
-			INNER join User as u
-			ON (c.user_id = u.id)
-			<include refid="search" />
-			ORDER BY c.id DESC 
-			LIMIT #{pageStart}, #{perPageNum};
-	</select>
-	<!-- userTab3 게시글 수 -->
-	<select id="countUserTab3" resultType="int">
-		SELECT count(*)
-			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM (SELECT * FROM Result WHERE Result.user_id=1)as st INNER JOIN Form ON st.form_id=Form.id WHERE date(now())>date(endDate) AND (date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()))) as s  LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
-			INNER join User as u
-			ON (c.user_id = u.id)
-		<include refid="search" />
-
-	</select>
-	
+	<sql id="userFilter">
+		<choose>
+			<when test="filterType == 'all'">
+				AND (date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL) OR (date(now()) between date(startDate) AND date(endDate))
+			</when>
+			<when test="filterType == 'applyForm'">
+				AND date(now()) between date(startDate) AND date(endDate) AND state_id IS NOT NULL
+			</when>
+			<when test="filterType == 'noApplyForm'">
+				AND date(now()) between date(startDate) AND date(endDate) AND state_id IS NULL
+			</when>
+			<when test="filterType == 'pastForm'">
+				AND date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL
+			</when>
+			<otherwise>
+				AND (date(now())>date(endDate) AND  date(Form.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now()) AND state_id IS NOT NULL) OR (date(now()) between date(startDate) AND date(endDate))
+			</otherwise>
+		</choose>
+	</sql>
 	
 	<!-- 총 게시글 수 -->
 	<select id="countBoardList" resultType="Integer">
@@ -124,14 +117,13 @@
 	<!-- 페이징 -->
 	<!-- 페이징 적용 게시글 + 검색 -->
 	<select id="adminlist" resultType="com.walab.oas.DTO.Form">
-			SELECT c.id,c.category_id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName
+			SELECT c.id,c.category_id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,isUserEdit
 			FROM (SELECT Form.*,categoryName FROM Form LEFT OUTER JOIN Category ON Form.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
 			<include refid="search" />
 			ORDER BY c.id DESC
 			LIMIT #{pageStart}, #{perPageNum};
-	
 	</select>
 	
 	<!-- 검색 대한 게시글 수 (admin)-->
@@ -144,6 +136,10 @@
 
 	</select>
 	
+	<!-- 폼 신청자 수 (admin)-->
+	<select id="resultCount" resultType="int">
+		SELECT count(*) FROM Result WHERE form_id=#{form_id} 
+	</select>
 	
 	<!-- MyBatis 동적 sql -->
 	<sql id="search">
@@ -162,6 +158,19 @@
 			<when test="searchType == 'categoryName'">
 				AND c.categoryName LIKE CONCAT('%', #{keyword}, '%')
 			</when>
+			<when test="searchType == 'status'">
+				<choose>
+					<when test="keyword == '예약'">
+						AND c.startDate > date(now())
+					</when>
+					<when test="keyword == '신청중'">
+						AND (date(now()) between date(c.startDate) AND date(c.endDate)) AND isUserEdit=0 
+					</when>
+					<when test="keyword == '신청마감'">
+						AND date(now()) > c.endDate OR isUserEdit=1
+					</when>
+				</choose>
+			</when>
 		</choose>
 	</sql>
 	
@@ -174,7 +183,8 @@
    <!-- 해당 폼 제출자 정보 리스트 -->
    <select id="submitterList" parameterType="int" resultType="com.walab.oas.DTO.Result">
    		<![CDATA[
-			SELECT Result.id as id,userName,department,studentId,email,Result.regDate as regDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=1;
+			SELECT Result.id as id, User.id as user_id, userName,department,studentId,email,Result.regDate as regDate,Result.editDate as editDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id};
+
 		]]> 
 		<!-- SELECT Result.id as id,userName,department,studentId,email,Result.regDate as regDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id}; -->
    </select>
@@ -275,7 +285,7 @@
 	INNER JOIN
 	(select field_id, content from ResultContent 
 	INNER JOIN Result ON (ResultContent.result_id=Result.id)
-	where ResultContent.result_id=10) A ON (Field.id=A.field_id) where Field.form_id=1;
+	where ResultContent.result_id=39) A ON (Field.id=A.field_id) where Field.form_id=1;
 	</select>
 	
 	<!-- 개별보기에 카테고리 가져오기  -->
@@ -297,8 +307,13 @@
 	
 	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
 	<select id='getDate' resultType="com.walab.oas.DTO.Result">
-	SELECT * FROM Result where Result.id=10;
+	SELECT * FROM Result where Result.id=39;
 	</select><!-- where Result.id=#{해당 응답지 id} -->
+	
+	<select id="IsCategoryDeleted" resultType="int">
+	SELECT COUNT(*) FROM Category where Category.id IN
+	(SELECT category_id from Form where Form.id = 1);
+	</select>
 	
     <!-- 카테고리 더하기 -->
 	<insert id="add_Category" parameterType="com.walab.oas.DTO.Category">
@@ -319,7 +334,7 @@
 	<!-- User 정보 가져오기  -->
 	 <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
 	  <![CDATA[
-			SELECT * FROM User;
+			SELECT * FROM User WHERE isDelete =0 and id<>0;
 	  ]]>
 	</select> 
 	
@@ -378,5 +393,32 @@
    	<select id="isUserExist" resultType="int">
     	select COUNT(*) from User where email = #{email};
     </select>
+    
+    <!-- user 탈퇴시키기  -->
+	<update id="userDelete" parameterType="int" >
+		UPDATE User SET isDelete = 1 WHERE id = #{userID};
+	</update>
+
+	<select id="getUserEdit" resultType="int">
+    	select isUserEdit from Form where id = #{form_id};
+    </select>
+    
+	<update id="changeUserEdit" parameterType="int" >
+		UPDATE Form SET isUserEdit = ${isUserEdit} WHERE id = #{form_id};
+	</update>
+
+	<delete id="deleteDefaultState">
+		DELETE FROM State WHERE form_id = 0;
+	</delete>
+	
+	<select id="resultInfo" parameterType="int" resultType="com.walab.oas.DTO.Result">
+		select * FROM Result WHERE id = #{result_id};
+	</select>
+	
+	<select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+	  <![CDATA[
+	      SELECT fieldType,fieldName,fileName,isEssential,`index`,content FROM Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id};
+	  ]]>
+	</select>
 </mapper>
 

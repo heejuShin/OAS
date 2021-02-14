@@ -190,6 +190,7 @@
                                var category_list=${category_list};
                                for(var i=0; i<category_list.length;i++){
                                   var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+                                  if(category_list[i].id!=0)
                                   $(".ul_filters").append(filter_li);
                               }
 
@@ -216,23 +217,25 @@
                            
                                  var category =  $("<span class='category_name'>"+form_list[i].categoryName +"</span>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
-
+								 
                                  if(form_list[i].state_id==0){
-                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
+                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
+ 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
+ 								 
  								var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
- 								$($($(".gridss").children()[i]).children()[0]).append(form);
+ 								$($($(".grid").children()[i]).children()[0]).append(form);
                            
                             }
 
                             });
 
                      		function openForm(form_id){
+                         		console.log("openForm");
                                $("#myform_"+form_id).submit();
                             }
 
@@ -257,7 +260,7 @@
                                });
 
 
-                            	var $table = $('.gridss').isotope({
+                            	var $table = $('.grid').isotope({
                             		itemSelector: '.grid-item',
                               	  	percentPosition: true,
                       	          getSortData: {

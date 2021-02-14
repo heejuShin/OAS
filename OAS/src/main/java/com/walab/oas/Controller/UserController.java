@@ -1,6 +1,7 @@
 package com.walab.oas.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,8 +19,11 @@ import com.walab.oas.DAO.UserDAO;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
+import com.walab.oas.DTO.ReadResult;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 @RestController
 @RequestMapping(value = "/") // 주소 패턴
@@ -46,13 +50,18 @@ public class UserController {
 
 	//form 제출하기 
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-	public ModelAndView submitForm (HttpSession session, HttpServletRequest request) throws Exception {
+	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
 		System.out.println("<submitForm> controller");
 		
 		//result 기록  
 		String formID  = request.getParameter("form_index");
 		int  form_id = Integer.parseInt(formID);
-	    int user_id  = 1; //세션 나오면 바꿔야 함 
+		
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+
 	    int state_id  = userDao.getState(form_id);
 	    
 	    Result result = new Result();
@@ -80,10 +89,73 @@ public class UserController {
 		    		userDao.setContent(result_content);
 	    }
 	    
+	    
+		 // 다음 컨트롤러로 전송  
+		 redirectAttr.addFlashAttribute("form_id",form_id);
+		 redirectAttr.addFlashAttribute("result_id",result_id);
+		    
+	    
+	 	System.out.println("<submitForm> controller end");
+		return new ModelAndView("redirect:/userFormView");
+	}
+	
+	//form view
+	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
+	public ModelAndView viewUserForm (HttpSession session, HttpServletRequest request) throws Exception {
+		System.out.println("<viewUserForm> controller");
+		
+		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
+		int form_id=(Integer)redirectMap.get("form_id");
+		int result_id= (Integer)redirectMap.get("result_id");
+		
+		
+		Form form_info = userDao.forminfo(form_id);
+		Result result_info = userDao.resultinfo(result_id);
+		List<ReadResult> resultContent =  userDao.getContents(result_id);
+		
+		//form + result 정보 
+		JSONArray jArray1 = new JSONArray();
+		try {
+			    	JSONObject ob =new JSONObject();
+			        
+			        ob.put("form_name", form_info.getFormName());
+			        ob.put("form_detail", form_info.getExplanation());
+			        ob.put("form_startDate", form_info.getStartDate());
+			        ob.put("form_endDate", form_info.getEndDate());
+			        ob.put("form_submitDate", result_info.getRegDateKor());
+			        ob.put("form_editDate", result_info.getEditDateKor());
+			            
+			        jArray1.put(ob);      
+		    
+		        System.out.println(jArray1.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
+		
+		JSONArray jArray2 = new JSONArray();
+		try {
+		    	for (int i = 0; i < resultContent.size() ; i++) {   
+			    		JSONObject ob =new JSONObject();
+			        
+			        ob.put("field_name", resultContent.get(i).getFieldName());
+			        ob.put("field_type", resultContent.get(i).getFieldType());
+			        ob.put("field_file", resultContent.get(i).getFileName());
+			        ob.put("field_star", resultContent.get(i).getIsEssential());
+			        ob.put("field_index", resultContent.get(i).getIndex());
+			        ob.put("field_content", resultContent.get(i).getContent());
+			            
+			        jArray2.put(ob);      
+		    }
+		        System.out.println(jArray2.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("home");
-		
+		mav.addObject("form_info", jArray1);
+		mav.addObject("field_list", jArray2);
+		mav.setViewName("userFormView");
+		System.out.println("<viewUserForm> controller end");
 		return mav;
 	}
 	

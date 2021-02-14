@@ -41,6 +41,8 @@ $( document ).ready(function() {
 	$(".title").find("input[name=plusPoint]").attr("value",formInfo.plusPoint);
 	$(".title").find("input[name=minusPoint]").attr("value",formInfo.minusPoint);
 	
+
+	
 	//link 값 입력 (ReadOnly)
 	$("#link").val(formInfo.url);
 	$("#link").attr("readonly",true);
@@ -288,6 +290,9 @@ $( document ).ready(function() {
 	$(".title").on('change', "#endDate", function(){
 		$(this).siblings("#isHeaderModified").val("1");
 	});
+	
+	
+
 	
 	
 	$('#edit').on('click', function() {

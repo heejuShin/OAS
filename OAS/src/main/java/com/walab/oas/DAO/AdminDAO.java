@@ -1,5 +1,6 @@
 package com.walab.oas.DAO;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +42,10 @@ public class AdminDAO {
 		return sqlSession.insert(namespace + ".formCreate", form);
 	}
 	public void createState(State state) throws Exception{
-		System.out.println("stateCreate done");
 		 sqlSession.insert(namespace + ".stateCreate", state);
+	}
+	public void deleteDefaultState() {
+		sqlSession.delete(namespace + ".deleteDefaultState");
 	}
 	
 	public int createField(Field field) throws Exception{
@@ -107,6 +110,10 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".getDate");		
 	}
 	
+	public int IsCategoryDeleted(int form_id) {
+		return sqlSession.selectOne(namespace +".IsCategoryDeleted", form_id);
+	}
+	
 	public User getUserInfobyId(int id) {
 		return sqlSession.selectOne(namespace+".getUserInfobyId", id);
 	}
@@ -119,5 +126,23 @@ public class AdminDAO {
 		return sqlSession.selectList(namespace+".excelResultContent", id);
 	}
 	
+	public int resultCount(int form_id) throws Exception{
+		return sqlSession.selectOne(namespace+ ".resultCount", form_id);
+	}
 	
+	//선택한 form 삭제
+	public void deleteForm(int formID) throws Exception {
+		sqlSession.delete(namespace + ".deleteForm",formID);
+	}
+	
+	public int getUserEdit(int form_id) throws Exception{
+		return sqlSession.selectOne(namespace+ ".getUserEdit", form_id);
+	}
+	
+	public void changeUserEdit(int form_id,int isUserEdit)throws Exception{
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("isUserEdit", isUserEdit);
+		sqlSession.update(namespace+ ".changeUserEdit", map);
+	}
 }
