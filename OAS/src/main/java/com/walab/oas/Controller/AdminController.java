@@ -901,6 +901,7 @@ public class AdminController {
 			   
 		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
 		int form_id = Integer.parseInt(request.getParameter("select_formID"));
+		String form_title = request.getParameter("select_formTitle");
 		List<Result> submitterList= adminDAO.submitterList(form_id);
 		
 		ObjectMapper mapper=new ObjectMapper();
@@ -916,6 +917,7 @@ public class AdminController {
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isUserEdit",isUserEdit);
+		mav.addObject("form_title",form_title);
 				
 		mav.setViewName("adminFormCheck");
 		return mav;
