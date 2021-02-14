@@ -178,6 +178,7 @@ table caption {
                   <thead> 
                     <tr>
                       <th><input type="checkbox" id="allCheck" /></th>
+                      <th data-priority="0">보기</th>
                       <th data-priority="1">NO</th>
                       <th data-priority="2">이름</th>
                       <th data-priority="3">전공</th>
@@ -239,10 +240,13 @@ table caption {
 	              		    /*사람 별 tr 만듦*/
 	              		    var divOne = $("<tr class='here'></tr>"); 
 	              		  	$("#tbodies").append(divOne);
-	
-	              		   	/* tr의 안에 들어갈 td */
+	              		  
+	              		  	/* tr의 안에 들어갈 td */
 	              		    var td1 = $("<td><input type='checkbox' name='result' value='"+submitterList[i].id+"'/></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td1);
+	              		    
+	              		  	var td9 = $("<td><a class=\"modal_open\" id=\"button\" style=\"background:black; width: 100%; color: white; margin-radius: 10px;\" data-toggle=\"modal\" data-target=\"#id01\" role=\"button\"> <i class=\"material-icons\">보기</i></a></td>"); 
+	              		  	$($("#tbodies").children()[i]).append(td9);
 	  
 	              		    var td2 = $("<td>"+(i+1)+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td2);
@@ -265,7 +269,7 @@ table caption {
 	     
 	              		    //select
 	              		  	var selectInput= $("<select name='state'></select>"); 
-	              		    $($($("#tbodies").children()[i]).children()[7]).append(selectInput);
+	              		    $($($("#tbodies").children()[i]).children()[8]).append(selectInput);
 	              		    
 	              		    //option
 	              		    for(var j=0; j<stateList.length; j++){
@@ -303,7 +307,11 @@ table caption {
               				}
               	  	  	});
                       });
-                      $("#id01").load("./form/result/2021mac");
+                      $( '.modal_open' ).click( function() {
+                    	  //var link =  $(this).siblings(".link").html();
+                    	  var link = "2021mac";
+                    	  $("#id01").load("./form/result/"+link);
+                    	} );
 
                   });
                   </script>
@@ -335,7 +343,6 @@ table caption {
               
              <div style="text-align:center;">
 			<a id="login" style="background:black; color: white; margin-radius: 10px; width: 200px;" data-toggle="modal" data-target="#id01" role="button"> <i class="material-icons">lock</i></a>
-			<a id="login" data-toggle="modal" data-target="#modal" role="button"> <i class="material-icons">lock</i></a>
 			</div>
 
 
