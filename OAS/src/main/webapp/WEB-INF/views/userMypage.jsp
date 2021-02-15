@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <title>User my page</title>
-    
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
       <!--  button css-->
@@ -31,7 +30,17 @@
     
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
    
-     <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=1">
+     <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=3">
+       
+     
+     
+     <style>
+     @media (min-width: 1200px){
+		.container {
+		    max-width: 100% !important;
+		}
+     }
+     </style>
   </head>
 
   <body>
@@ -105,7 +114,7 @@
         <!--Start_Filter and Search part-->
           <nav class="filter_search" >
             
-            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="GET" >
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="GET" >
               <input type="hidden" name="searchType" value="all">
               <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
               
@@ -172,18 +181,18 @@
          console.log("date:"+new Date());
            //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
            if(new Date()>new Date(userList[i].endDate)){
-              var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm(this);'>"+userList[i].stateName+"</a></td>");
+              var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button></td>");
             $($(".tbodies").children()[i]).append(a);
            }   
            else{
               //신청하기 (그 폼 신청페이지로 넘어가게)
               if(userList[i].state_id==0){
-                 var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm(this);'>신청하기</a></td>");
+                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>신청하기</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
              //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
               else{
-                 var a=$("<td><a href='#' id=' form_"+userList[i].id+"' class='filled-button' onClick = 'openForm(this);'>"+userList[i].stateName+"</a></td>");
+                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
 
