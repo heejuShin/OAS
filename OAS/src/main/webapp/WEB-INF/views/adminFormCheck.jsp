@@ -11,7 +11,12 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+    <style>
+    #yourModal{
+    	height: 600px !important;
+    	overflow: scroll !important;
+    }
+    </style>
     
 
 	
@@ -183,6 +188,7 @@
             <div id="yourModal" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
 			<div class="w3-modal-content w3-card-4 ">
 				<div class="w3-container">
+				내용을 로드중입니다
 				</div>
 			</div>
 			</div>
@@ -308,15 +314,20 @@
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "${link}";
-			  var id = $(this).siblings(".result_id").val();
+			  			  var id = $(this).siblings(".result_id").val();
+			  			  alert(id);
                     	  $("#yourModal").load("../form/result/"+link+"/"+id);
+                    	 
                     	} );
-                      $( '.modal_close' ).click( function() {
-                    	  //var link =  $(this).siblings(".link").html();
-                    	  console.log("close");
-                    	  var link = "2021mac";
-                    	  $("#yourModal").css("display", "none");
-                    	} );
+                      
+                      $("#yourModal").on('click', ".modal_close", function(){
+                    	  //$(".container-contact100").hide();
+                    	  //$(".show").hide();
+                    	  //$(".show").csee("display", "none !important");
+                    	    //bg.remove();
+          	            	//$("#yourModal").hide();
+                    	  //$("#yourModal").css("display", "none");
+                      });
 			  
 		      
 		      $(".w3-button").on('click', "#yourModal", function(){

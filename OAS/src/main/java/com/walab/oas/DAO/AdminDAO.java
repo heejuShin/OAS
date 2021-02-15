@@ -71,6 +71,9 @@ public class AdminDAO {
 	public String getLink(int id) {
 		return sqlSession.selectOne(namespace +".getLink", id);
 	}
+	public String getFormName(int id) {
+		return sqlSession.selectOne(namespace +".getFormName", id);
+	}
 		
 	public int addCategory (Category cg) throws Exception{
 		System.out.println("im here");
