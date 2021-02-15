@@ -24,6 +24,13 @@
 		ORDER BY state_id IS NULL ASC,id ASC
 	</select> 
 	
+	<select id="getLink" resultType="String">
+		select url from Form where id = #{id};
+	</select> 
+	<select id="getFormName" resultType="String">
+		select formName from Form where id = #{id};
+	</select> 
+	
 	<!-- Main Form의 검색 기능 -->
 	<sql id="searchMain">
 		<choose>

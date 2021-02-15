@@ -67,6 +67,13 @@ public class AdminDAO {
 	public int linkDupCheck(String link) {
 		return sqlSession.selectOne(namespace +".linkDupCheck", link);
 	}
+	
+	public String getLink(int id) {
+		return sqlSession.selectOne(namespace +".getLink", id);
+	}
+	public String getFormName(int id) {
+		return sqlSession.selectOne(namespace +".getFormName", id);
+	}
 		
 	public int addCategory (Category cg) throws Exception{
 		System.out.println("im here");

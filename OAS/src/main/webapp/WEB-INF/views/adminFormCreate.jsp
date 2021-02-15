@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -250,7 +251,7 @@
 
 	var state_list = ${state_list};
 	for (var i = 0; i < state_list.length; i++) {
-		var selectOption = $("<option selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
+		var selectOption = $("<option id='"+state_list[i].stateName+"' selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
 		$("#state").append(selectOption);
 	}
 	
@@ -272,6 +273,13 @@ $('#state').on('select2:select', function(e) {
       });
 $('#state').on('select2:unselect', function(e) {
     var id = e.params.data.id;
+    if(id=="대기중"){
+    	alert("'대기중' 옵션은 삭제할 수 없습니다.");
+    	$("#대기중").remove();
+    	$("#select2-state-result-h02g-대기중").remove();
+    	//(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중" data-select2-id="select2-data-2-uqij"><button type="button" class="select2-selection__choice__remove" tabindex="-1" title="Remove item" aria-label="Remove item" aria-describedly="select2-state-container-choice-wzzt-대기중"><span aria-hidden="true">x</span></button><span class="select2-selection__choice__display" id="select2-state-container-choice-wzzt-대기중">대기중</span></li>');
+    	$(".form-state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
+    }
     var value = $(this).val();
     var s = value.toString();
     $("#state_selected").val(s); 
