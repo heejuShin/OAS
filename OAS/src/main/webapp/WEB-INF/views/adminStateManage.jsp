@@ -108,11 +108,14 @@ $('#state').on('select2:select', function(e) {
 $('#state').on('select2:unselect', function(e) {
     var id = e.params.data.id;
     if(id=="대기중"){
-    	alert("'대기중' 옵션은 삭제할 수 없습니다. 페이지를 다시 불러 옵니다.");
-    	$(location).attr('href', './state');
-         //alert($(e).css("display"));
-    	 //alert($("#대기중").attr('selected'));
-    	 //var selectOption = $("<option selected=\"selected\" value='대기증'>대기증</option>");
+    	alert("'대기중' 옵션은 삭제할 수 없습니다.");
+    	$("#대기중").remove();
+    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role"presentation">x</span>대기중</li>');
+    	$(".form-control").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
+    	//$(location).attr('href', './state');
+        //alert($(e).css("display"));
+    	//alert($("#대기중").attr('selected'));
+    	//var selectOption = $("<option selected=\"selected\" value='대기증'>대기증</option>");
     	//$(".form-control").append(selectOption);
     	//alert($(e.params.data).attr('selected'));
     	//$("#대기중").attr('selected', "selected");
