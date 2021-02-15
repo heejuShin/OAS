@@ -85,6 +85,7 @@ tbody {
 .iconButton {
 	margin-right: 7px;
 	position: relative;
+	height: 40px;
 }
 
 .iconButton .tooltiptext {
