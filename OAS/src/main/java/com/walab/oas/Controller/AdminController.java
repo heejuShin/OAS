@@ -933,4 +933,11 @@ public class AdminController {
 		int isAvailable=Integer.parseInt(request.getParameter("isAvailable"));
 		adminDAO.changeAvailable(form_id,isAvailable);
 	}
+	
+    // 게시글 첨부파일 조회
+    @RequestMapping("/getAttach/{bno}")
+    @ResponseBody
+    public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
+        return adminDAO.getAttach(bno);
+    }
 }

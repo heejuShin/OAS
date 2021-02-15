@@ -26,6 +26,7 @@ public class AdminDAO {
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
 	
+    
 	public List<Result> submitterList(int form_id) {
 		return sqlSession.selectList(namespace + ".submitterList",form_id);
 	}
@@ -39,6 +40,7 @@ public class AdminDAO {
 	}
 	
 	public int createForm(Form form) throws Exception{
+		
 		return sqlSession.insert(namespace + ".formCreate", form);
 	}
 	public void createState(State state) throws Exception{
@@ -152,4 +154,39 @@ public class AdminDAO {
 		map.put("isAvailable", isAvailable);
 		sqlSession.update(namespace+ ".changeAvailable", map);
 	}
+	
+    // 게시글 첨부파일 추가
+    public void addAttach(String fullName) throws Exception {
+        sqlSession.insert(namespace + ".addAttach", fullName);
+    }
+
+    // 게시글 첨부파일 조회
+    public List<String> getAttach(Integer bno) throws Exception {
+        return sqlSession.selectList(namespace + ".getAttach", bno);
+    }
+
+    // 게시글 첨부파일 수정
+    public void replaceAttach(String fullName, Integer bno) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("fullName", fullName);
+        paramMap.put("bno", bno);
+
+        sqlSession.insert(namespace + ".replaceAttach", paramMap);
+    }
+
+    // 특정 게시글 첨부파일 일괄 삭제
+    public void deleteAllAttach(Integer bno) throws Exception {
+        sqlSession.delete(namespace + ".deleteAllAttach", bno);
+    }
+
+    // 게시글 첨부파일 삭제
+    public void deleteAttach(String fullName) throws Exception {
+        sqlSession.delete(namespace + ".deleteAttach", fullName);
+    }
+
+    // 특정 게시글의 첨부파일 갯수 갱신
+    public void updateAttachCnt(Integer bno) throws Exception {
+        sqlSession.update(namespace + ".updateAttachCnt", bno);
+    }
 }

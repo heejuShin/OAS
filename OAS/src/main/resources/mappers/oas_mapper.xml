@@ -6,6 +6,33 @@
 
 <mapper namespace="com.walab.oas.mappers.oas_mapper">
 
+    <insert id="addFile">
+        INSERT INTO Field (
+            fileName
+        ) VALUES (
+            #{fileName}
+        )
+    </insert>
+    
+    <select id="getArticleFiles" resultType="string">
+    SELECT fileName
+    FROM Field
+    WHERE fileName = #{fileName}
+	    ORDER BY regDate
+	</select>
+	<insert id="replaceFile">
+    INSERT INTO Field (
+        fileName
+    ) VALUES (
+        #{fileName}
+    )
+</insert>
+
+	<delete id="deleteFile">
+    DELETE FROM Field
+    WHERE fileName = #{fileName}
+	</delete>
+
 	<!--Register -->
     <insert id="joinUser" parameterType="com.walab.oas.DTO.User">
     	<!-- insert into users (name, user_id, pwd, email_address, gender, phone_number, social) values("서인아","sia2650","seoina1324","21700355@handong.edu","여","010-1234-567",0) -->

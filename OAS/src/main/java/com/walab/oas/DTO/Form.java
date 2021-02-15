@@ -1,9 +1,11 @@
 package com.walab.oas.DTO;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
+
+import com.walab.oas.DAO.AdminDAO;
 
 public class Form {
 	private int id;
@@ -27,9 +29,12 @@ public class Form {
 	private String stateName;
 	private int state_id;
 	
+    private static String[] files;
+    private int fileCnt;
+	
 	private String start;
 	private String end;
-	
+    
 
 	@Override
 	public String toString() {
@@ -213,5 +218,22 @@ public class Form {
 		String regDate1 = fm.format(endDate);		
 		return regDate1;
 	}
+	
+	public String[] getFiles() {
+		return files;
+	}
+
+	public int getFileCnt() {
+		return fileCnt;
+	}
+
+    public void setFiles(String[] files) {
+        Form.files = files;
+        setFileCnt(files.length);
+    }
+
+    private void setFileCnt(int fileCnt) {
+        this.fileCnt = fileCnt;
+    }
 	
 }
