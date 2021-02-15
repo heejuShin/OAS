@@ -24,7 +24,9 @@
 
 
  <style>
-   
+
+
+    
    /* 전체   */
       html, body{height:auto}
       
@@ -36,7 +38,7 @@
       /* board1 */
       
       .board1 {
-         height: 300px;
+         height: 280px;
          padding: 0 2%;
       }
       
@@ -58,21 +60,29 @@
       .board_section{
          display: block;  
          width: 73%; 
-         
+         border:1px solid black;
          margin-left:2%;
          
       }
       .title {
-         margin-left:35%;
+      
+         text-align: center;
+      }
+      
+      .title h2{
+      	margin-top: 15px;
+	    font-size: 23px;
+	    font-weight: 800;
+	    font-family: NanumGothic;
       }
       
 
-      .title h1{
+      /* .title h1{
          font-size: 350%;
          font-family: inherit;
          font-style: normal;
          font-weight:700;
-      }
+      } */
       
        .swLink{
          font-size: 50%;
@@ -87,8 +97,8 @@
       }
       
       .title img {
-        width: 8%;
-        height: 8%;
+        width: 40px;
+    	height: 40px;
         object-fit: contain;
         margin-right:1.5%;
         margin-top: -1%;
@@ -109,10 +119,31 @@
          background-color: rgb(223, 223, 223);
       }
       td{
-      text-align: center;}
+      line-height: 2;
+	    font-family: 'NanumGothic';
+	    font-size: 15px;
+	    font-weight: 700;
+      text-align: center;
+      }
       
+      .board_date{
+      	width: 30%;
+      }
+       @media screen and (max-width: 640px) and (min-width: 0px){
+
+.tablelist{
+	 width:100%;	
+	 overflow-x:auto;
+     white-space: nowrap;
+	}
+   
+ table{
+    width:auto;
+ } 
+ 
+ }
       
-      
+     
       /* 검색 필터  */
       
        .products .filters{
@@ -124,12 +155,20 @@
   
       
       .ul_filters{
-        padding: 2% 0;
+        padding: 3% 0;
         width:100%;
       }
+      #search_box .form-inline{
+      	margin-bottom: 1%;
+      }
       
-      .form_inline{
-         width:100%;
+      .form-inline{
+      	width: fit-content;
+      }
+      
+      #search_box .form-inline{
+      	position:relative;
+      	left:calc( 50% - 89px);
       }
       
      
@@ -144,6 +183,9 @@
       	overflow: hidden;
       	background-color:#f7f7f7;
       }
+ /*      .leftDiv{
+      	left: 5%;
+      } */
       
       .down-content p{
      
@@ -156,6 +198,17 @@
     font-weight: 600;
       
       }
+        @media (min-width: 990px){
+
+	.leftDiv{
+		 left: 5% ;
+		}
+ } 
+ 
+ .form {
+    max-height: 20px;
+    overflow: hidden;
+}
       
       .formLink{
       	display:bolck;
@@ -319,7 +372,7 @@
                     <c:forEach items="${list}" var="BoardVO" end="4">
                             <tr>
                             	<td>${BoardVO.title}</td>
-      							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
+      							<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
                             </tr>
                     </c:forEach>
                     </tbody>  
@@ -346,9 +399,9 @@
                   <li class="active" data-filter="*">All Products</li>
               </ul>            
             </div>
+
             <div style="padding-bottom:5px;">
 	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="POST" style="float:right;">
-	                    
 	                    <input type="hidden" name="searchType" value="all">
 	                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -357,9 +410,7 @@
           </div>
           <div id="contentsDiv" class="col-md-12">
             <div class="filters-content">
-                <div class="row grid">
-                   
-
+                <div class="row grid leftDiv">
                 </div>
             </div>
           </div>
