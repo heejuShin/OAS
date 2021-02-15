@@ -95,29 +95,41 @@ $( document ).ready(function() {
 
 var state_list = ${state_list};
 for (var i = 0; i < state_list.length; i++) {
-	var selectOption = $("<option selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
+	var selectOption = $("<option id='"+state_list[i].stateName+"' selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
 	$(".form-control").append(selectOption);
 }
-
 
 $('#state').on('select2:select', function(e) {
     var id = e.params.data.id;
     var value = $(this).val();
     var s = value.toString();
     $("#state_selected").val(s); 
-    //console.log(document.getElementById('state_selected').value);
       });
 $('#state').on('select2:unselect', function(e) {
     var id = e.params.data.id;
-    var value = $(this).val();
-    var s = value.toString();
-    $("#state_selected").val(s); 
-    //console.log(document.getElementById('state_selected').value);
+    if(id=="대기중"){
+    	alert("'대기중' 옵션은 삭제할 수 없습니다.");
+    	$("#대기중").remove();
+    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role"presentation">x</span>대기중</li>');
+    	$(".form-control").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
+    	//$(location).attr('href', './state');
+        //alert($(e).css("display"));
+    	//alert($("#대기중").attr('selected'));
+    	//var selectOption = $("<option selected=\"selected\" value='대기증'>대기증</option>");
+    	//$(".form-control").append(selectOption);
+    	//alert($(e.params.data).attr('selected'));
+    	//$("#대기중").attr('selected', "selected");
+    	//$(e.params.data).attr('selected', "true");
+    	//alert($(e.params.data).attr('selected'));
+    }
+     var value = $(this).val();
+     var s = value.toString();
+     $("#state_selected").val(s); 
       });
       
   $("#state").select2({
       tags: true,
       tokenSeparators: [',', ' ']
-  })
+  });
  
     </script>

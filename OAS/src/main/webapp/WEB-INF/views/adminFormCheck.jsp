@@ -11,7 +11,12 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+    <style>
+    #yourModal{
+    	height: 600px !important;
+    	overflow: scroll !important;
+    }
+    </style>
     
 
 	
@@ -183,8 +188,10 @@
             <div id="yourModal" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
 			<div class="w3-modal-content w3-card-4 ">
 				<div class="w3-container">
+				
 				</div>
 			</div>
+			<p style="margin:200px; font-size: 20px; text-align: center">데이터<br>로드중</p>
 			</div>
 			
 			<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px;"> <div class="modal-dialog"> <div class="modal-content"> </div> </div> </div>
@@ -265,7 +272,7 @@
 	              		  	var selectInput= $("<select name='state'></select>"); 
 	              		    $($($("#tbodies").children()[i]).children()[7]).append(selectInput);
 	              		    
-	              		    var td9 = $("<td><button onclick=\"document.getElementById('yourModal').style.display='block'\" class=\"modal_open viewFormB\" data-toggle=\"modal\" data-target=\"#yourModal\">개별 보기</button></td>"); 
+	              		    var td9 = $("<td><input type='hidden' class='result_id' value='"+submitterList[i].id+"'/><button onclick=\"document.getElementById('yourModal').style.display='block'\" class=\"modal_open viewFormB\" data-toggle=\"modal\" data-target=\"#yourModal\">개별 보기</button></td>"); 
 	              		  	$($("#tbodies").children()[i]).append(td9);
 	              		    
 	              		    //option
@@ -307,22 +314,17 @@
                       });
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
-                    	  var link = "2021mac";
-			  var id = $(this).siblings(".result_id").val();
-                    	  $("#yourModal").load("./form/result/"+link+"/"+id);
+                    	  var link = "${link}";
+			  			  var id = $(this).siblings(".result_id").val();
+                    	  $("#yourModal").load("../form/result/"+link+"/"+id);
+                    	 
                     	} );
-                      $( '.modal_close' ).click( function() {
-                    	  //var link =  $(this).siblings(".link").html();
-                    	  console.log("close");
-                    	  var link = "2021mac";
-                    	  $("#yourModal").css("display", "none");
-                    	} );
+                      
+                      $("#yourModal").on('click', ".modal_close", function(){
+
+                      });
 			  
 		      
-		      $(".w3-button").on('click', "#yourModal", function(){
-                    	  $("#yourModal").modal("hide");
-                    	  alert("버튼 확인 ");
-                      });
 
                   });
                   </script>
