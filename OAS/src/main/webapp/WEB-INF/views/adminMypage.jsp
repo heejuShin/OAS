@@ -39,7 +39,7 @@
   
   <style>
      @media (min-width: 1200px){
-		.container {
+		.adminMypage_main .container {
 		    max-width: 100% !important;
 		}
      }
@@ -101,7 +101,7 @@
 		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
-    <section id="demo">
+    <section id="demo" class="adminMypage_main">
     <div class="container">
 
           <div class="table-responsive" data-pattern="priority-columns">
