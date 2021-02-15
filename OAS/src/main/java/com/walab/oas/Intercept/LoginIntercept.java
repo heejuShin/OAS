@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class AuthIntercept extends HandlerInterceptorAdapter{
+public class LoginIntercept extends HandlerInterceptorAdapter{
    /**
     * This implementation always returns {@code true}.
     */
@@ -30,13 +30,9 @@ public class AuthIntercept extends HandlerInterceptorAdapter{
          throws Exception {
       HttpSession session = request.getSession();
       //System.out.println("error admin int "+ type(session.getAttribute("admin")));
-      
-	      int ad = Integer.parseInt( session.getAttribute("admin").toString());
-	      if(ad == 2) {
-	         mav.setViewName("AccessDenied");
-	      }
-      
-      
+      if(session.getAttribute("admin") == null) {
+    	  mav.setViewName("error/loginError");
+      }
    }
 
 
