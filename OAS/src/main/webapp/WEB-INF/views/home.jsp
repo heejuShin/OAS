@@ -223,11 +223,11 @@
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
+ 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 
- 								var form=$("<form id='myform_"+form_list[i].id+"' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								var form=$("<form id='myform_"+form_list[i].id+"' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form);
                            
                             }

@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+main {
+	margin: 5%;
+	font-family: NanumGothic;
+}
+
+/* page title */
+#headTitle {
+	display: block;
+	margin-bottom: 50px;
+	border-bottom: 3px black solid;
+}
+
+#headTitle h2 {
+	font-size: 30px;
+	font-weight: 800;
+	padding-bottom: 20px;
+}
+
+/* result stop control */
+
+#stopMsg {
+	font-size: 15px;
+	font-weight: 700;
+	color: #ff564a;
+}
+
+#stopControlDiv #isUserEditCheck {
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: 3.5px;
+	margin-right: 2px;
+}
+
+/* table */
+
+table th {
+	font-family: NanumGothic;
+	font-size: 17px;
+	font-weight: 800;
+	text-align: center;
+}
+
+table td {
+	font-family: NanumGothic;
+	font-size: 13px;
+	font-weight: 600;
+	text-align: center;
+}
+
+thead {
+	border-top: 1px solid #ddd;
+}
+
+.tableDiv {
+	clear: both;
+	margin-top: 2%;
+}
+
+/* select control */
+
+#select_control {
+	display: block;
+	width: fit-content;
+	position: absolute;
+	right: 5%;
+	text-align: center;
+}
+
+#controlDiv {
+	display: table;
+	width: fit-content;
+	margin: 2% 0%;
+	text-align: center;
+	overflow: hidden;
+	font-size: 15px;
+	font-weight: 600;
+}
+
+#allState {
+	display: table-cell;
+	width: 110px;
+	font-size: 15px;
+	height: 35px;
+	float: left;
+}
+
+#stateB {
+	display: table-cell;
+	float: left;
+	margin-left: 10px;
+	border: #ffe902 4px solid;
+	background: #ffe902;
+	border-radius: 8px;
+}
+
+#stateB:hover, #stateSubmitB:hover, .viewFormB:hover {
+	filter: brightness(90%);
+}
+
+#stateSubmitB {
+	margin-left: 10px;
+	border: #ff554a 4px solid;
+	background: #ff554a;
+	border-radius: 8px;
+	font-size: 15px;
+}
+
+.viewFormB {
+	color: white;
+	background: #7ea264;
+	border-radius: 5px;
+	border: none;
+	padding: 3% 6%;
+}

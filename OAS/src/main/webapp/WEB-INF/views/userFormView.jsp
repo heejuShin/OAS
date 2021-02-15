@@ -60,7 +60,7 @@
 			
 				<!-- home button -->
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn" id="submitB" onclick="location.href='<%=request.getContextPath()%>'">
+					<button class="contact100-form-btn" id="submitB" onclick="location.href='<%=request.getContextPath()%>/'">
 						<span>메인 페이지로</span>
 					</button>
 				</div>

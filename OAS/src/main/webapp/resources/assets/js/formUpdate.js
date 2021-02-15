@@ -3,7 +3,7 @@ $( document ).ready(function() {
 	var formInfo;
 	var formDetail;
 	
-	var formID=$(".title").find("input[name=formId]").val();
+	var formID=$("input[name=formId]").val();
 	
 	console.log("formID"+formID);
 	
@@ -26,20 +26,20 @@ $( document ).ready(function() {
 		}
 	});
 	
-	$(".title").find("#formName").attr("value",formInfo.formName);
-	$(".title").find("input[name=user_id]").attr("value",formInfo.user_id);
+	$("#formName").attr("value",formInfo.formName);
+	$("input[name=user_id]").attr("value",formInfo.user_id);
 	
 	
-	$(".title").find("#category_select option").attr('selected', false);
-	$(".title").find("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
-	$(".title").find(".select2-selection__rendered").html(formInfo.categoryName);
+	$("#category_select option").attr('selected', false);
+	$("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
+	$(".select2-selection__rendered").html(formInfo.categoryName);
 	
 	
-	$(".title").find("input[name=startDate]").attr("value",formInfo.startDate);
-	$(".title").find("input[name=endDate]").attr("value",formInfo.endDate);
-	$(".title").find("textarea[name=explanation]").html(formInfo.explanation);
-	$(".title").find("input[name=plusPoint]").attr("value",formInfo.plusPoint);
-	$(".title").find("input[name=minusPoint]").attr("value",formInfo.minusPoint);
+	$("input[name=startDate]").attr("value",formInfo.startDate);
+	$("input[name=endDate]").attr("value",formInfo.endDate);
+	$("textarea[name=explanation]").html(formInfo.explanation);
+	$("input[name=plusPoint]").attr("value",formInfo.plusPoint);
+	$("input[name=minusPoint]").attr("value",formInfo.minusPoint);
 	
 
 	
@@ -67,8 +67,8 @@ $( document ).ready(function() {
 	});
 	
 	
-	$(".title").find(".fieldCount").attr("name", "fieldCount"+formInfo.id);
-	$(".title").find(".fieldCount").attr("value", formDetail.length);
+	$(".fieldCount").attr("name", "fieldCount"+formInfo.id);
+	$(".fieldCount").attr("value", formDetail.length);
 	
 	var count=0;
 	
@@ -97,6 +97,8 @@ $( document ).ready(function() {
 	 
 	  $("#field_add").find(".count").attr("name", "count"+count);
 	  $("#field_add").find(".itemCount").attr("name", "itemCount"+count);
+	  $("#field_add").find(".isFieldOri").attr("name", "isFieldOri"+count);
+	  $("#field_add").find(".isFieldOri").attr("value", "1");
 	  $("#field_add").find(".index").attr("value", count);
 	  
 	  //field 유형 나타내기
@@ -170,6 +172,10 @@ $( document ).ready(function() {
 		    	
 		    	$("#radio_add").find(".radio_real").attr("name", idx+"content"+String(r_cnt));
 			    $("#radio_add").find(".radio_real").attr("value",item_list[j].content);
+			    
+			    $("#radio_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(r_cnt));
+			    $("#radio_add").find(".isItemOri").attr("value","1");
+			    
 			    $("#radio_add").find("label").html(item_list[j].content);
 			    
 			    $("#field_add").find(".list_radio").append($("#radio_add").html());
@@ -187,6 +193,9 @@ $( document ).ready(function() {
 		    	
 		    	$("#chxbox_add").find(".checkbox_itemId").attr("name", idx+"itemId"+String(c_cnt));
 			    $("#chxbox_add").find(".checkbox_itemId").attr("value",item_list[j].id);
+		    	
+		    	$("#chxbox_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(c_cnt));
+			    $("#chxbox_add").find(".isItemOri").attr("value","1");
 		    	
 		    	$("#chxbox_add").find(".checkbox_real").attr("name", idx+"content"+String(c_cnt));
 	  			$("#chxbox_add").find(".checkbox_real").attr("value",item_list[j].content);
@@ -257,10 +266,18 @@ $( document ).ready(function() {
 	
 	$("#list").on('click', ".remove_item", function(){
 		$(this).parent().parent().parent().siblings(".isModified").val("1");
+		if($(this).siblings(".isItemOri").val().equals("1")){
+			var num=$(this).parent().parent().parent().siblings(".itemCount").val()-1;
+			$(this).parent().parent().parent().siblings(".itemCount").val(num);
+		}
 	});
 	
 	$("#list").on('click', ".remove", function(){
 		$(this).siblings(".isModified").val("1");
+		if($(this).siblings(".isFieldOri").val().equals("1")){
+			var num=$("#field_add").find(".fieldCount").val()-1;
+			$("#field_add").find(".fieldCount").val(num);
+		}
 	});
 	
 	$("#list").on('change', ".field_type", function(){
@@ -271,28 +288,25 @@ $( document ).ready(function() {
 	    $(this).siblings(".isModified").val("1");
 	});
 	
-	$(".title #formName").on("propertychange change keyup paste input", function() {
+	$("#formName").on("propertychange change keyup paste input", function() {
 	    $(this).siblings("#isHeaderModified").val("1");
 	});
 	
-	$(".title").on('change', "#category_select", function(){
+	$(".bg1").on('change', "#category_select", function(){
 		$(this).siblings("#isHeaderModified").val("1");
 	});
 	
-	$(".title textarea").on("propertychange change keyup paste input", function() {
+	$(".bg1 textarea").on("propertychange change keyup paste input", function() {
 	    $(this).siblings("#isHeaderModified").val("1");
 	});
 	
-	$(".title").on('change', "#startDate", function(){
+	$(".bg1").on('change', "#startDate", function(){
 		$(this).siblings("#isHeaderModified").val("1");
 	});
 	
-	$(".title").on('change', "#endDate", function(){
+	$(".bg1").on('change', "#endDate", function(){
 		$(this).siblings("#isHeaderModified").val("1");
 	});
-	
-	
-
 	
 	
 	$('#edit').on('click', function() {

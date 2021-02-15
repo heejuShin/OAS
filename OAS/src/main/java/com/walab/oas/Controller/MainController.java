@@ -1,10 +1,8 @@
 package com.walab.oas.Controller;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -13,25 +11,18 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
 
-import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Category;
-import com.walab.oas.DTO.Criteria;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
-import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.PageMaker;
-import com.walab.oas.DTO.Result;
-import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.SearchCriteria;
 
 
@@ -113,11 +104,10 @@ public class MainController {
 		return mav;
 	}
 	
-	//home 페이지에서 폼을 눌렀을 때,
-	@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
-	public ModelAndView goToForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
-		System.out.println("<goToForm> controller");
-
+	//home 페이지에서 폼을 눌렀을 때, 신청한 것
+	@RequestMapping("/viewForm/{link}") // GET 방식으로 페이지 호출
+	public ModelAndView viewForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
+		
 		/* 삭제 말아주세요!
 		int user_id=0;
 		if(session.getAttribute("id")!=null) {
@@ -126,14 +116,30 @@ public class MainController {
 		
 		ModelAndView mav = new ModelAndView();
 		int form_ID=adminDAO.getFormId(link); 
-		int stateID = 0;
-		//int stateID = Integer.parseInt(request.getParameter("stateID"));
 
-		if(stateID==0) { //아직 신청하지 않았다면
+		mav.setViewName("userFormView");
+		
+		return mav;
+	}
+
+	//home 페이지에서 폼을 눌렀을 때, 신청안한 것
+		@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
+		public ModelAndView goToForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
+			System.out.println("<goToForm> controller");
+
+			/* 삭제 말아주세요!
+			int user_id=0;
+			if(session.getAttribute("id")!=null) {
+				user_id=(Integer) session.getAttribute("id");
+			}*/
+			
+			ModelAndView mav = new ModelAndView();
+			int form_ID=adminDAO.getFormId(link); 
+			
 			List<Form> form_info = mainDao.forminfo(form_ID);
 			List<Field> field_list = mainDao.fieldList(form_ID);
 			System.out.println(field_list.toString());
-			
+				
 			//form info json 처리 
 			JSONArray jArray1 = new JSONArray();
 			try {
@@ -153,39 +159,32 @@ public class MainController {
 			    }
 			
 			//field info json 처리 
-					JSONArray jArray2 = new JSONArray();
-					try {
-					    	for (int i = 0; i < field_list.size() ; i++) {   
-						    		JSONObject ob =new JSONObject();
-						        
-						        ob.put("field_id", field_list.get(i).getId());
-						        ob.put("field_name", field_list.get(i).getFieldName());
-						        ob.put("field_type", field_list.get(i).getFieldType());
-						        ob.put("field_star", field_list.get(i).getIsEssential());
-						        ob.put("field_file", field_list.get(i).getFieldName());
-						        
-						            
-						        jArray2.put(ob);      
-					    }
-					        System.out.println(jArray2.toString());
-					    }catch(JSONException e){
-					        e.printStackTrace();
-					    }
-			
+			JSONArray jArray2 = new JSONArray();
+			try {
+			    for (int i = 0; i < field_list.size() ; i++) {   
+			    	JSONObject ob =new JSONObject();
+							        
+			        ob.put("field_id", field_list.get(i).getId());
+			        ob.put("field_name", field_list.get(i).getFieldName());
+			        ob.put("field_type", field_list.get(i).getFieldType());
+			        ob.put("field_star", field_list.get(i).getIsEssential());
+				    ob.put("field_file", field_list.get(i).getFieldName());
+							            
+					jArray2.put(ob);      
+			    }
+			    System.out.println(jArray2.toString());
+			}catch(JSONException e){
+				e.printStackTrace();
+			}
+				
 			mav.addObject("form_ID", form_ID);
 			mav.addObject("form_info", jArray1);
 			mav.addObject("field_list", jArray2);
 			mav.setViewName("userFormWrite");
-		}
-		else { //이미 신청한 폼이라면
-			
-			mav.setViewName("userFormView");
-		}
 			
 
-		System.out.println("<goToForm> controller end");
-		return mav;
-	}
-
+			System.out.println("<goToForm> controller end");
+			return mav;
+		}
 	
 }

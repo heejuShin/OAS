@@ -45,7 +45,7 @@
     <main>
     
     <div id="headTitle">
-		    	<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+		    	<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" onclick="userInfo()" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
     
@@ -188,8 +188,11 @@
 				}
 
 			}
-			var form=$("<form id='form' action='form' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
+			var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
 			$($(".tbodies").children()[i]).append(form);
+			var form2=$("<form id='viewForm' action='viewForm/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
+		    $($(".tbodies").children()[i]).append(form2);
+        	
 
 			
 		}
@@ -197,7 +200,11 @@
 	});
 
     function openForm(obj){
-   		$(obj).parent().siblings("#form").submit();
+    	var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
+        if(state_ID==0)
+   			$(obj).parent().siblings("#form").submit();
+        else
+        	$(obj).parent().siblings("#viewForm").submit();
     }
 
     $(document).ready( function() {   
@@ -240,58 +247,5 @@
 </script>
 
   </body>
-   <script type="text/javascript">
-      $(function() {
-    		$('ul.tab li').click(function() {
-    			var activeTab = $(this).attr('data-tab');
-    			$('ul.tab li').removeClass('current');
-    			$('.tabcontent').removeClass('current');
-    			$(this).addClass('current');
-    			$('#' + activeTab).addClass('current');
-    		})
-      });
-      
-    </script>
-  <script>
-	//표 동적 생성하는 부분
-	
-  function openForm(obj){
- 		$(obj).parent().siblings("#form").submit();
-  }
-
-  $(document).ready( function() {   
-  	//테이블 카테고리, 상태 select
-	       var $table = $('.tbodies').isotope({
-	          itemSelector: '.item-row',
-            layoutMode: 'vertical',
-	          getSortData: {
-	              category : '[data-category]',
-	           }
-	        });
-
-	        var filters = {};
-	        // bind filter on select change,
-	        $('.filter-category').on( 'change', function() {
-	          // get filter value from option value
-	          var $this = $(this);
-	          var filterGroup = $this.attr('data-filter-group');
-	          // set filter for group
-	          //filters[filterGroup] = $this.value;
-	          filters[filterGroup] = $this.find(':selected').attr('data-filter');
-
-	       	  // combine filters
-	          var filterValue = '';
-	          for (var prop in filters) {
-	            filterValue += filters[prop];
-	          }
-	          console.log(filterValue);
-	          
-	          $table.isotope({ 
-	            filter : filterValue 
-	          });
-	        });
-
-    });
-  </script>
 
 </html>

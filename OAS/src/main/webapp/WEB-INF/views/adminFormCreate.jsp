@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=11">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=13">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -22,7 +22,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=1">
 	
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -80,7 +80,7 @@
 		<div id="menu-bar"><p id="add_p">+</p></div>
 				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
 					<span class="contact100-form-title">
-						Form Create
+						설문 만들기
 					</span>
 					
       
@@ -88,12 +88,10 @@
           
           <div class="wrap-input100 bg1 rs1-wrap-input100">
 							
-							<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
-								<option value="" selected="" disabled="">카테고리 선택</option>
-								  <input name="categoryNum" value="3" type="hidden">
-							  </select>
-<!-- 							  <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 250px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-category_select-container"><span class="select2-selection__rendered" id="select2-category_select-container" title="카테고리 선택">카테고리 선택</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></span><br>
- -->	
+			<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
+				<option value="" selected="" disabled="">카테고리 선택</option>
+				<input name="categoryNum" value="3" type="hidden">
+			</select>
  		</div>
 
 
@@ -138,8 +136,9 @@
 			<!-- input type : submit -->
 				<div id="submitDiv" class="container-contact100-form-btn form edit button">
 					<button class="contact100-form-btn" type="button" id="preview">
-						<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+						<span>확인</span>
 					</button>
+
 				</div>
 			
 
@@ -181,7 +180,7 @@
 					<input type="hidden" name="isEssential3" class="isEssential" value="0">
 					<input type="hidden" class="index" value="3">
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
-		
+					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
@@ -210,6 +209,7 @@
       <div>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
+      	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
 
@@ -217,6 +217,7 @@
       <div>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+      	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
 

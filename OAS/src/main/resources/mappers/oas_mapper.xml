@@ -9,22 +9,17 @@
 	<!--Register -->
     <insert id="joinUser" parameterType="com.walab.oas.DTO.User">
     	<!-- insert into users (name, user_id, pwd, email_address, gender, phone_number, social) values("서인아","sia2650","seoina1324","21700355@handong.edu","여","010-1234-567",0) -->
-    	 insert into User (userName,admin, email, studentId, department, major, grade, semester)
+    	 insert into User (userName,admin, email, studentId,phoneNum, department, major, grade, semester)
 
-		 values(#{userName},2,#{email}, #{studentId},#{department}, #{major}, #{grade},#{semester})
+		 values(#{userName},2,#{email}, #{studentId},#{phoneNum},#{department}, #{major}, #{grade},#{semester})
     
     	 <selectKey keyProperty="id" resultType="Integer">
 		    SELECT LAST_INSERT_ID()
 		 </selectKey>
     </insert>
-
-	<!-- <select id="form_list" resultType="com.walab.oas.DTO.Form_ver2">
-		select Category.id as category_id, categoryName ,f.id as id, formName,explanation, startDate,endDate, ifnull(state_id,0)as state_id from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE f.id>=0
-		<include refid="searchMain" />
-		ORDER BY state_id IS NULL ASC,id ASC
-	</select>  -->
+    
     <select id="form_list" resultType="com.walab.oas.DTO.Form">
-		select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation, startDate,endDate, ifnull(state_id,0)as state_id,isUserEdit from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE isUserEdit=0
+		select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation,url, startDate,endDate, ifnull(state_id,0)as state_id,isAvailable from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE isAvailable=0
 		<include refid="searchMain" />
 		ORDER BY state_id IS NULL ASC,id ASC
 	</select> 
@@ -60,11 +55,11 @@
 	
 	<!-- userMyPage 게시글 -->
 	<select id="userlist" resultType="com.walab.oas.DTO.Form">
-	 SELECT c.id,c.category_id,c.categoryName, c.formName, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
+	 SELECT c.id,c.category_id,c.categoryName, c.formName,url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,stateName,ifnull(state_id,0)as state_id
 		FROM (SELECT s.*,categoryName FROM 
             (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM 
 				(SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM 
-					(SELECT * FROM Result WHERE Result.user_id=${user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isUserEdit=0
+					(SELECT * FROM Result WHERE Result.user_id=${user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isAvailable=0
 						<include refid="userFilter" />
 							 )as s LEFT OUTER JOIN Category ON s.category_id=Category.id) as c INNER join User as u ON (c.user_id = u.id)
 		 
@@ -77,7 +72,7 @@
 	<select id="countUserTab1" resultType="int">
 		SELECT count(*)
 			FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM 
-            (SELECT * FROM Result WHERE Result.user_id=${user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isUserEdit=0
+            (SELECT * FROM Result WHERE Result.user_id=${user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isAvailable=0
             <include refid="userFilter" />
             ) as s  
              LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
@@ -117,7 +112,7 @@
 	<!-- 페이징 -->
 	<!-- 페이징 적용 게시글 + 검색 -->
 	<select id="adminlist" resultType="com.walab.oas.DTO.Form">
-			SELECT c.id,c.category_id,c.categoryName, c.formName,c.url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,isUserEdit
+			SELECT c.id,c.category_id,c.categoryName, c.formName,url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,date_format(c.regDate, '%Y-%m-%d') as regDate,u.userName,isAvailable
 			FROM (SELECT Form.*,categoryName FROM Form LEFT OUTER JOIN Category ON Form.category_id=Category.id) as c
 			INNER join User as u
 			ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
@@ -164,10 +159,10 @@
 						AND c.startDate > date(now())
 					</when>
 					<when test="keyword == '신청중'">
-						AND (date(now()) between date(c.startDate) AND date(c.endDate)) AND isUserEdit=0 
+						AND (date(now()) between date(c.startDate) AND date(c.endDate)) AND isAvailable=0 
 					</when>
 					<when test="keyword == '신청마감'">
-						AND date(now()) > c.endDate OR isUserEdit=1
+						AND date(now()) > c.endDate OR isAvailable=1
 					</when>
 				</choose>
 			</when>
@@ -373,7 +368,7 @@
 	  ]]>
 	</select>
 	<update id="modifyForm" parameterType="com.walab.oas.DTO.Form">
-		UPDATE `Form` SET category_id=#{category_id}, user_id=#{user_id}, formName= #{formName},explanation= #{explanation},url=#{url},isUserEdit=#{isUserEdit},plusPoint=#{plusPoint},minusPoint=#{minusPoint},startDate=#{start},endDate=#{end} WHERE id=#{id};
+		UPDATE `Form` SET category_id=#{category_id}, user_id=#{user_id}, formName= #{formName},explanation= #{explanation},url=#{url},isAvailable=#{isAvailable},plusPoint=#{plusPoint},minusPoint=#{minusPoint},startDate=#{start},endDate=#{end} WHERE id=#{id};
 	</update>
 	<update id="modifyField" parameterType="com.walab.oas.DTO.Field">
 		UPDATE `Field` SET form_id=#{form_id},fieldType=#{fieldType},fieldName=#{fieldName},isEssential=#{isEssential} WHERE id=#{id};
@@ -387,11 +382,11 @@
     </select>
     
     <select id="findUser" resultType="com.walab.oas.DTO.User">
-    	select * from User where email = #{email};
+    	select * from User where email = #{email} AND isDelete=0;
     </select>
     
    	<select id="isUserExist" resultType="int">
-    	select COUNT(*) from User where email = #{email};
+    	select COUNT(*) from User where email = #{email} AND isDelete=0;
     </select>
     
     <!-- user 탈퇴시키기  -->
@@ -399,12 +394,12 @@
 		UPDATE User SET isDelete = 1 WHERE id = #{userID};
 	</update>
 
-	<select id="getUserEdit" resultType="int">
-    	select isUserEdit from Form where id = #{form_id};
+	<select id="getAvailable" resultType="int">
+    	select isAvailable from Form where id = #{form_id};
     </select>
     
-	<update id="changeUserEdit" parameterType="int" >
-		UPDATE Form SET isUserEdit = ${isUserEdit} WHERE id = #{form_id};
+	<update id="changeAvailable" parameterType="int" >
+		UPDATE Form SET isAvailable = ${isAvailable} WHERE id = #{form_id};
 	</update>
 
 	<delete id="deleteDefaultState">
