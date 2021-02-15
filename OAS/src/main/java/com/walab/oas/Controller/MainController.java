@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.walab.oas.Board.BoardDAO;
+import com.walab.oas.Board.BoardService;
+import com.walab.oas.Board.BoardServiceImpl;
+import com.walab.oas.Board.BoardVO;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
 
@@ -36,6 +41,7 @@ public class MainController {
 	private MainDAO mainDao; 
 	
 	@Autowired
+	BoardService boardService;
 	private AdminDAO adminDAO;
 	
 	@RequestMapping(value="/oauth/error")
@@ -47,8 +53,10 @@ public class MainController {
 	
 	//메인페이지 가기
 	@RequestMapping(value = "/") // GET 방식으로 페이지 호출
-	public ModelAndView goMypage(SearchCriteria cri,HttpSession session) throws Exception {
+	public ModelAndView goMypage(SearchCriteria cri,HttpSession session, BoardVO vo, Model model) throws Exception {
 		
+		model.addAttribute("list", boardService.getBoardList());
+        
 		ModelAndView mav = new ModelAndView();
 		//로그인 안되어있는데 header가 Load 안된경우
 		if(session.getAttribute("id")==null) {

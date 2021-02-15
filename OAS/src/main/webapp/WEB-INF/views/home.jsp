@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.walab.oas.Board.BoardDAO,com.walab.oas.Board.BoardVO,java.util.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- jsp directives, tag library 사용됨. -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -298,15 +305,29 @@
          </div>
         <div class="board_section">
            <div class="title">
-              <h2><a href="https://hisnet.handong.edu"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 </span></a></h2>
+              <h2><a href='<%=request.getContextPath()%>/board/list'><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
            </div>
                 <div class="tablelist">
-                   <table class="table table-hover">  
-                    <tr><td>2021-1학기 맥북 신청 일정 </td><td>2021-02-09</td></tr>  
-                    <tr><td>2021 하계 SW 캠프 일정 공지 </td><td>2021-02-06</td></tr>  
+                   <table class="table table-hover">
+                   	<!-- <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>등록일자 </th>
+                            </tr>
+                    </thead> -->
+                    <tbody>
+                    <c:forEach items="${list}" var="BoardVO" end="4">
+                            <tr>
+                            	<td>${BoardVO.title}</td>
+      							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
+                            </tr>
+                    </c:forEach>
+                    </tbody>  
+                    <%-- <tr><td>2021-1학기 맥북 신청 일정 </td><td>2021-02-09</td></tr>    
                     <tr><td>2021 1학기 마일리지 신청 </td><td>2021-02-06</td></tr>  
                     <tr><td>2021 여름방학 소프트웨어 봉사단 모집 </td><td>2021-02-05</td></tr>
-                    <tr><td>2021 2학기 공학 프로젝트 기획 신청  </td><td>2021-02-04</td></tr>    
+                    <tr><td>2021 2학기 공학 프로젝트 기획 신청  </td><td>2021-02-04</td></tr> --%>
+ 
                </table>  
                 </div>
       </div>

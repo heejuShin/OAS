@@ -11,6 +11,7 @@
 		<typeAlias alias="Field" type="com.walab.oas.DTO.Field" />
 		<typeAlias alias="Item" type="com.walab.oas.DTO.Item" />
 		<typeAlias alias="Category" type="com.walab.oas.DTO.Category" />
+		<typeAlias alias="Board" type="com.walab.oas.Board.BoardVO" />		
 	</typeAliases>
 	
 </configuration>
