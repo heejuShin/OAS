@@ -107,14 +107,14 @@
             
             <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="GET" >
 	  			<input type="hidden" name="searchType" value="all">
-	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
 	  			
 	  			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 	  			<select name="filterType" class="filterType">
 	  				<option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
-	  				<option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>신청현황</option>
-	  				<option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청하기</option>
-	  				<option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청했던폼</option>
+	  				<option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
+	  				<option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청현황</option>
+	  				<option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청결과</option>
 	  			</select>
   			</form>
             
@@ -169,10 +169,10 @@
 	
 			var td5 = $("<td>"+userList[i].userName+"</td>"); 
 		  	$($(".tbodies").children()[i]).append(td5);
-
+			console.log("date:"+new Date());
 		  	//신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
 		  	if(new Date()>new Date(userList[i].endDate)){
-		  		var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm(this);'>신청마감</a></td>");
+		  		var a=$("<td><a href='#' id='form_"+userList[i].id+"' class='filled-button' onClick = 'openForm(this);'>"+userList[i].stateName+"</a></td>");
 				$($(".tbodies").children()[i]).append(a);
 		  	}	
 		  	else{
@@ -201,6 +201,7 @@
 
     function openForm(obj){
     	var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
+		console.log("state_ID:" +state_ID);
         if(state_ID==0)
    			$(obj).parent().siblings("#form").submit();
         else

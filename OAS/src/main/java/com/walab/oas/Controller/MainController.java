@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
@@ -106,18 +107,22 @@ public class MainController {
 	
 	//home 페이지에서 폼을 눌렀을 때, 신청한 것
 	@RequestMapping("/viewForm/{link}") // GET 방식으로 페이지 호출
-	public ModelAndView viewForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
+	public ModelAndView viewForm(@PathVariable String link, HttpSession session, RedirectAttributes redirectAttr) throws Exception {
 		
-		/* 삭제 말아주세요!
+		
 		int user_id=0;
 		if(session.getAttribute("id")!=null) {
 			user_id=(Integer) session.getAttribute("id");
-		}*/
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		int form_ID=adminDAO.getFormId(link); 
+		int result_id=adminDAO.getResultId(form_ID,user_id);
+		
+		redirectAttr.addFlashAttribute("form_id",form_ID);
+		redirectAttr.addFlashAttribute("result_id",result_id);
 
-		mav.setViewName("userFormView");
+		mav.setViewName("redirect:/userFormView");
 		
 		return mav;
 	}

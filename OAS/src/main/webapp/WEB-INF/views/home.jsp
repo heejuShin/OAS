@@ -219,24 +219,29 @@
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
 								 
                                  if(form_list[i].state_id==0){
-                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
+                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm(this);'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
+ 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm(this);'>신청완료</a></div>");
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 
- 								var form=$("<form id='myform_"+form_list[i].id+"' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								var form=$("<form id='myform' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form);
-                           
+ 								var form2=$("<form id='viewForm' action='viewForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								$($($(".grid").children()[i]).children()[0]).append(form2);
                             }
 
                             });
 
-                     		function openForm(form_id){
+                     		function openForm(obj){
                          		console.log("openForm");
-                               $("#myform_"+form_id).submit();
+                         		var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
+                         		if(state_ID==0)
+                           			$(obj).parent().siblings("#myform").submit();
+                                else
+                                	$(obj).parent().siblings("#viewForm").submit();
                             }
 
 

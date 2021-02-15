@@ -50,6 +50,9 @@
 
     <!--body-->
     
+    <!-- momment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
 	<!-- Form JS -->
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
@@ -75,9 +78,7 @@
 	<!-- select2 javascript cdn -->
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 
-	<!-- momment -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    
+	
 	
     <div class="container-contact100">
     

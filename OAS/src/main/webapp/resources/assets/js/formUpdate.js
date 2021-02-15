@@ -35,8 +35,8 @@ $( document ).ready(function() {
 	$(".select2-selection__rendered").html(formInfo.categoryName);
 	
 	
-	$("input[name=startDate]").attr("value",formInfo.startDate);
-	$("input[name=endDate]").attr("value",formInfo.endDate);
+	$("input[name=startDate]").attr("value",moment(formInfo.startDate).format('YYYY-MM-DD'));
+	$("input[name=endDate]").attr("value",moment(formInfo.endDate).format('YYYY-MM-DD'));
 	$("textarea[name=explanation]").html(formInfo.explanation);
 	$("input[name=plusPoint]").attr("value",formInfo.plusPoint);
 	$("input[name=minusPoint]").attr("value",formInfo.minusPoint);

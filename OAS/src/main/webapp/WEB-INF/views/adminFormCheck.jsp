@@ -115,12 +115,6 @@
 	          <button name='stateB'>적용</button>
 	        </div>
 	        
-	        <div>
-				<label>응답받기</label>
-				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
-				<input type="hidden" id="isAvailable" name="isAvailable" value="">
-			</div>
-
 		<div id="headTitle">
 			<h2>[${form_title}] 응답 관리</h2>
 		</div>
@@ -137,9 +131,9 @@
                   <!-- result stop control -->
                   	<tr><th colspan="9">
 	                  			<div id="stopControlDiv">
-	                  				<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
+	                  				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
 									<label id="stopMsg">응답 중단하기</label>
-									<input type="hidden" id="isUserEdit" name="isUserEdit" value="">
+									<input type="hidden" id="isAvailable" name="isAvailable" value="">
 								</div>
 					</th></tr>
 					<!-- column  list -->
@@ -208,12 +202,12 @@
                       var form_id=${form_id};
                       
                       if(isAvailable==0){
-                  		$("#isAvailableCheck").attr("checked",false);
+                  		$("#isAvailableCheck").attr("checked",true);
                 		$("#isAvailableCheck").attr("value","0");
                 	  }
                       else{
 
-                    	$("#isAvailableCheck").attr("checked",true);
+                    	$("#isAvailableCheck").attr("checked",false);
                   		$("#isAvailableCheck").attr("value","1");
                       }
                           
@@ -284,9 +278,9 @@
                       $("#isAvailableCheck").change(function(){
                           console.log("userAvailableCheck!!");
                           if($("#isAvailableCheck").is(":checked")){
-                              $("#isAvailable").attr("value","1");
-                          }else{
                               $("#isAvailable").attr("value","0");
+                          }else{
+                              $("#isAvailable").attr("value","1");
                           }
                           var isAvailable= $("#isAvailable").val();
                           $.ajax({ //해당 폼의 userEdit 바꾸기

@@ -114,7 +114,7 @@
            
             <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
 	  			<input type="hidden" id="searchType" name="searchType" value="all">
-	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
   			</form>
             
@@ -185,9 +185,9 @@
 										$(".form-item"+i).attr('data-status','예약');
 	                    			}
 	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
-	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isAvailable==1){
+	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isAvailable==0){
 
-		                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isAvailable==1)
+		                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isAvailable==0)
 	                    					var td6 = $("<td>신청중지</td>"); 
 		                    			else
 		                    				var td6 = $("<td>신청마감</td>"); 

@@ -112,7 +112,7 @@ public class UserController {
 		Form form_info = userDao.forminfo(form_id);
 		Result result_info = userDao.resultinfo(result_id);
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
-		
+		System.out.println("result_info:"+result_id);
 		//form + result 정보 
 		JSONArray jArray1 = new JSONArray();
 		try {
