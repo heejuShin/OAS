@@ -132,13 +132,13 @@ public class MainController {
 		public ModelAndView goToForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
 			System.out.println("<goToForm> controller");
 
-			/* 삭제 말아주세요!
+			ModelAndView mav = new ModelAndView();
+			
 			int user_id=0;
 			if(session.getAttribute("id")!=null) {
 				user_id=(Integer) session.getAttribute("id");
-			}*/
+			}
 			
-			ModelAndView mav = new ModelAndView();
 			int form_ID=adminDAO.getFormId(link); 
 			
 			List<Form> form_info = mainDao.forminfo(form_ID);
