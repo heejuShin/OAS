@@ -188,9 +188,10 @@
             <div id="yourModal" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
 			<div class="w3-modal-content w3-card-4 ">
 				<div class="w3-container">
-				내용을 로드중입니다
+				
 				</div>
 			</div>
+			<p style="margin:200px; font-size: 20px; text-align: center">데이터<br>로드중</p>
 			</div>
 			
 			<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px;"> <div class="modal-dialog"> <div class="modal-content"> </div> </div> </div>
@@ -320,19 +321,10 @@
                     	} );
                       
                       $("#yourModal").on('click', ".modal_close", function(){
-                    	  //$(".container-contact100").hide();
-                    	  //$(".show").hide();
-                    	  //$(".show").csee("display", "none !important");
-                    	    //bg.remove();
-          	            	//$("#yourModal").hide();
-                    	  //$("#yourModal").css("display", "none");
+
                       });
 			  
 		      
-		      $(".w3-button").on('click', "#yourModal", function(){
-                    	  $("#yourModal").modal("hide");
-                    	  alert("버튼 확인 ");
-                      });
 
                   });
                   </script>
