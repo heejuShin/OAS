@@ -208,7 +208,7 @@ public class AdminController {
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
 				form.setUrl(url);
-				int isAvailable = 0; //TODO
+				int isAvailable = 1; //TODO
 				form.setIsAvailable(isAvailable);
 				int isUserEdit = 0; //TODO
 				form.setIsUserEdit(isUserEdit);
