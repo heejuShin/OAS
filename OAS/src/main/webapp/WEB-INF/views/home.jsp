@@ -223,7 +223,7 @@
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
+ 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 
