@@ -37,50 +37,7 @@
     
   <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=1">
     
-    <script>
-    $(document).ready( function() {
-        //함수1. 체크박스 전체 선택 / 해제 함수
-        $("#allCheck").click(function () {
-          if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
-            $("input[type=checkbox]").prop("checked",true); // 전체선택 체크박스가 해제된 경우 
-          } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
-            $("input[type=checkbox]").prop("checked",false); 
-          } 
-        });
-        //함수2. 'delete' 버튼 클릭시 함수
-        $("button[name='deleteB']").click(function () {
-		  
-          var result_ids = new Array(); //checkbox의 value를 담는다.
-          //체크된 박스의 라인에 존재하는 상태 값 변경
-          $("input[name='result']:checked").each(function() { 
-            var test = $(this).val();
-            console.log(test);
-            result_ids.push(test);
-          });
-          
-          //컨트롤러로 정보 전송(ajax) result_id로 state_id update
-           if(result_ids.length > 0){
-             var sendData = {"resultIDarray": result_ids};
-             
-             $.ajax({
-                     url:"<%=request.getContextPath()%>/admin/deleteForm",
-                     type:'POST',
-                     traditional : true,
-                     data: sendData,
-                     success:function(data){
-                         console.log(" 선택한 폼 삭제 완료!");
-                     },
-                     error:function(request,status,error){
-                  	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                     }
-             });
-           }
-          //check box 전체 해제
-          $("input[type=checkbox]").prop("checked",false); 
-        });
-      });
-        
-    </script>
+   
   </head>
 
   <body>
@@ -156,8 +113,8 @@
           <nav class="filter_search" >
            
             <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			<input type="hidden" name="searchType" value="all">
-	  			<input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	  			<input type="hidden" id="searchType" name="searchType" value="all">
+	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
   			</form>
             
@@ -221,7 +178,7 @@
 										var a=$("<td><button id='form_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='deleteForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'deleteForm(this);'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button></td>");
 
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='updateForm' action='<%=request.getContextPath()%>/admin/form/view/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 										var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form2);
@@ -230,9 +187,9 @@
 										$(".form-item"+i).attr('data-status','예약');
 	                    			}
 	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
-	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isUserEdit==1){
+	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isAvailable==1){
 
-		                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isUserEdit==1)
+		                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isAvailable==1)
 	                    					var td6 = $("<td>신청중지</td>"); 
 		                    			else
 		                    				var td6 = $("<td>신청마감</td>"); 
@@ -242,7 +199,7 @@
 	                    				var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 										
 										var resultCount;
@@ -282,17 +239,22 @@
 
 										var a=$("<td><button id='form_"+adminList[i].id+"'  type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='form' action='<%=request.getContextPath()%>/admin/form/view/{link}' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form=$("<form id='updateForm' action='<%=request.getContextPath()%>/admin/form/view/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
-										var form2=$("<form id='resultForm' action='resultForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+										var form2=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form2);
 
 
 										$(".form-item"+i).addClass('신청중');
 										$(".form-item"+i).attr('data-status','신청중');
 			                    	}
-	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;'>신청하기 </button></td>"); 
+			                    	
+	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td7);
+	                    		    var form3=$("<form id='form' action='../form/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
+	                    		    $($(".tbodies").children()[i]).append(form3);
+	                    		    var form4=$("<form id='viewForm' action='../viewForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
+	                    		    $($(".tbodies").children()[i]).append(form4);
 			                    	
 			                	}
 
@@ -308,7 +270,14 @@
 	                            });
                             });
                             function openForm(obj){
-                           		$(obj).parent().siblings("#form").submit();
+                           		$(obj).parent().siblings("#updateForm").submit();
+                            }
+                            function writeForm(obj){
+                                var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
+                                if(state_ID==0)
+                           			$(obj).parent().siblings("#form").submit();
+                                else
+                                	$(obj).parent().siblings("#viewForm").submit();
                             }
                             function deleteForm(obj){
                             	$(obj).parent().siblings("#deleteForm").submit();

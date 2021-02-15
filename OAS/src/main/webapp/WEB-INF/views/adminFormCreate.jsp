@@ -88,12 +88,10 @@
           
           <div class="wrap-input100 bg1 rs1-wrap-input100">
 							
-							<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
-								<option value="" selected="" disabled="">카테고리 선택</option>
-								  <input name="categoryNum" value="3" type="hidden">
-							  </select>
-<!-- 							  <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 250px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-category_select-container"><span class="select2-selection__rendered" id="select2-category_select-container" title="카테고리 선택">카테고리 선택</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></span><br>
- -->	
+			<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
+				<option value="" selected="" disabled="">카테고리 선택</option>
+				<input name="categoryNum" value="3" type="hidden">
+			</select>
  		</div>
 
 
@@ -181,7 +179,7 @@
 					<input type="hidden" name="isEssential3" class="isEssential" value="0">
 					<input type="hidden" class="index" value="3">
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
-		
+					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
@@ -210,6 +208,7 @@
       <div>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
+      	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
 
@@ -217,6 +216,7 @@
       <div>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+      	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
 

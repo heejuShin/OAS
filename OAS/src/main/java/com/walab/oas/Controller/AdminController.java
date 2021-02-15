@@ -302,7 +302,7 @@ public class AdminController {
 //	}
 //	
 	
-	//신청폼 (Admin) Result Check page
+	//신청폼 (Admin) Result Update page
 	@RequestMapping(value = "/form/view/{link}")
 	public ModelAndView resultForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		
@@ -327,11 +327,8 @@ public class AdminController {
 	    	e.printStackTrace();
 	    }
 		
-		int isUserEdit=adminDAO.getUserEdit(form_id);
-	
 		mav.addObject("form_id",form_id);
 		mav.addObject("category_list",jArray3);
-		mav.addObject("isUserEdit", isUserEdit);
 		
 		mav.setViewName("adminFormUpdate");
 		return mav;
@@ -526,7 +523,7 @@ public class AdminController {
 				form.setUrl(url);
 				int isAvailable = 0; //TODO
 				form.setIsAvailable(isAvailable);
-				int isUserEdit = Integer.parseInt(request.getParameter("isUserEdit")); //TODO
+				int isUserEdit = 0;
 				form.setIsUserEdit(isUserEdit);
 				int plusPoint = Integer.parseInt(request.getParameter("plusPoint"));
 				form.setPlusPoint(plusPoint);
@@ -544,7 +541,9 @@ public class AdminController {
 			String[] field_id=request.getParameterValues("fieldId");
 			//Field
 			int f_cnt = Integer.parseInt(request.getParameter("count"));
-			int fieldCount = Integer.parseInt(request.getParameter("fieldCount")+Integer.toString(form_id));
+			String fieldC=request.getParameter("fieldCount"+Integer.toString(form_id));
+			System.out.println("fieldC:"+fieldC);
+			int fieldCount = Integer.parseInt(fieldC);
 			for(int i=1; i<=fieldCount; i++) {
 				if(Integer.parseInt(isModified[i-1])==1) {
 					Field field = new Field();
@@ -893,7 +892,7 @@ public class AdminController {
 	}
 	
 	//admin mypage의 결과 버튼 누를때
-	@RequestMapping(value = "/resultForm" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	@RequestMapping(value = "/resultForm/{link}" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView resultFormOnly(HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
@@ -910,22 +909,22 @@ public class AdminController {
 		ObjectMapper mapper2=new ObjectMapper();
 		String jArray2=mapper2.writeValueAsString(stateList);
 		
-		int isUserEdit=adminDAO.getUserEdit(form_id);
+		int isAvailable=adminDAO.getAvailable(form_id);
 		
 		mav.addObject("form_id",form_id);
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
-		mav.addObject("isUserEdit",isUserEdit);
+		mav.addObject("isAvailable",isAvailable);
 				
 		mav.setViewName("adminFormCheck");
 		return mav;
 	}
 	
-	@RequestMapping(value= "/form/update/changeUserEdit", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
-	public void changeUserEdit(HttpServletRequest request, HttpSession session) throws Exception {
+	@RequestMapping(value= "/form/update/changeAvailable", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	public void changeAvailable(HttpServletRequest request, HttpSession session) throws Exception {
 			
 		int form_id=Integer.parseInt(request.getParameter("form_id"));
-		int isUserEdit=Integer.parseInt(request.getParameter("isUserEdit"));
-		adminDAO.changeUserEdit(form_id,isUserEdit);
+		int isAvailable=Integer.parseInt(request.getParameter("isAvailable"));
+		adminDAO.changeAvailable(form_id,isAvailable);
 	}
 }

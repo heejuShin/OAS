@@ -135,14 +135,14 @@ public class AdminDAO {
 		sqlSession.delete(namespace + ".deleteForm",formID);
 	}
 	
-	public int getUserEdit(int form_id) throws Exception{
-		return sqlSession.selectOne(namespace+ ".getUserEdit", form_id);
+	public int getAvailable(int form_id) throws Exception{
+		return sqlSession.selectOne(namespace+ ".getAvailable", form_id);
 	}
 	
-	public void changeUserEdit(int form_id,int isUserEdit)throws Exception{
+	public void changeAvailable(int form_id,int isAvailable)throws Exception{
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("form_id", form_id);
-		map.put("isUserEdit", isUserEdit);
-		sqlSession.update(namespace+ ".changeUserEdit", map);
+		map.put("isAvailable", isAvailable);
+		sqlSession.update(namespace+ ".changeAvailable", map);
 	}
 }

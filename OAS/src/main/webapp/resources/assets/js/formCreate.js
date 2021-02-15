@@ -237,6 +237,9 @@ $( document ).ready(function() {
 	  $("#field_add").find(".field_type").attr("name", "f_type"+count);
 	  $("#field_add").find(".count").attr("name", "count"+count);
 	  $("#field_add").find(".index").attr("value", count);
+	  
+	  $("#field_add").find(".isFieldOri").attr("name", "isFieldOri"+count);
+	  
 	  $("#count").val(count);
 	  $("#list").append($("#field_add").html());
 
@@ -270,6 +273,7 @@ $( document ).ready(function() {
 			  $("#radio_add").find(".radio_real").attr("name", idx+"content"+String(r_cnt));
 			  $("#radio_add").find(".radio_real").attr("value",inputs[i]);
 			  $("#radio_add").find("label").html(inputs[i]);
+			  $("#radio_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(r_cnt));
 			  $(this).siblings(".list_radio").append($("#radio_add").html());
 			  
 		}
@@ -287,6 +291,7 @@ $( document ).ready(function() {
 	  var idx = $(this).parent().siblings(".index").val();
 	  $("#chxbox_add").find(".checkbox_real").attr("name", idx+"content"+String(c_cnt));
 	  $("#chxbox_add").find(".checkbox_real").attr("value",$(this).siblings("input").val());
+	  $("#chxbox_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(c_cnt));
 	  $("#chxbox_add").find("label").html($(this).siblings("input").val());
 	  $(this).siblings(".list_chxbox").append($("#chxbox_add").html());
 	  $(this).siblings("input").val("");

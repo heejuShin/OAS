@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=16">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=11">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -24,6 +24,32 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css">
 	
+	<!-- checkbox CSS -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+	<!-- resizable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
+</head>
+
+<body>
+
+	 <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+  
+	<jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
+
+    <!--body-->
+    
 	<!-- Form JS -->
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
@@ -36,24 +62,22 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-		<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    
+    <!-- resizable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
 	<!-- 카테고리 관련 CDN -->
 	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<!-- select2 javascript cdn -->
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
-	
-	<!-- resizable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	
-</head>
 
-<body>
-
-	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+	<!-- momment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
 	
     <div class="container-contact100">
     
@@ -64,15 +88,14 @@
 						Form Update
 					</span>
 					
-			<div class="form edit title">
+		
 	          <div class="wrap-input100 bg1 rs1-wrap-input100">
 								
 			 	<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
 					<option value="" selected="" disabled="">카테고리 선택</option>
 						<input name="categoryNum" value="3" type="hidden">
 				</select>
-	<!-- 		<span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 250px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-category_select-container"><span class="select2-selection__rendered" id="select2-category_select-container" title="카테고리 선택">카테고리 선택</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span></span><br>
-	 -->	
+	
 	 		</div>
 	
 	
@@ -101,7 +124,7 @@
                 <input type="hidden" id="count" name="count" value="0"/>
           	    <input type="hidden" class="fieldCount" name="fieldCount?" value="0"/>
 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
-			</div>
+		
               
             <div class="wrap-input100  bg1" >
 				<p class="label-input100" style="margin-bottom:5px">상태 선택<span class="essential"> * </span></p>
@@ -116,10 +139,6 @@
 			          <option selected="selected" value="예약">예약</option>    
 			      </select>
 			      
-			      <div>
-			      	<label>응답받기</label>
-			      	<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
-			      </div>
 			</div>
 			
 			<input type="hidden" id="state_selected" name="state"/>
@@ -159,10 +178,7 @@
       </div>
 	</div>
         <div id="preview_modal">
-	        <button class="contact100-form-btn" type="button" id="confirm">
-				<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
-			</button>
-	        <a class="modal_close_btn"><button type="button">취소</button></a>
+	       
     	</div>
 
       <div class="add" id="field_add">
@@ -175,6 +191,8 @@
           <input type="hidden" class="count" id="count?" name="count?" value="0"/>
           <input type="hidden" class="isModified" name="isModified" value="0"/>
           <input type="hidden" class="itemCount" name="itemCount?" value="0"/>
+          
+          <input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
           
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
@@ -204,7 +222,9 @@
     <div class="add" id="radio_add">
       <div>
       	<input class="radio_itemId" type="hidden" name="?itemId?" value=""/>
-        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input>
+        <button type="button" class="remove_item">X</button>
+        <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
@@ -212,7 +232,9 @@
     <div class="add" id="chxbox_add">
       <div>
       	<input class="checkbox_itemId" type="hidden" name="?itemId?" value=""/>
-        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item">X</button>
+        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input>
+        <button type="button" class="remove_item">X</button>
+        <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
       </div>
     </div>
@@ -229,8 +251,6 @@
 	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 
   </body>
-  <script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?adf"></script>
-  <script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js"></script>
   
   <script>
   $( document ).ready(function() {
@@ -238,43 +258,6 @@
 	    var s = value.toString();
 	    $("#state_selected").val(s); 
 
-	    var isUserEdit=${isUserEdit};
-        var form_id=${form_id};
-        if(isUserEdit==0){
-      		$("#isUserEditCheck").attr("checked",true);
-    		$("#isUserEditCheck").attr("value","0");
-    	}
-          else{
-        	$("#isUserEditCheck").attr("checked",false);
-      		$("#isUserEditCheck").attr("value","1");
-        }
-
-        $("#isUserEditCheck").change(function(){
-            console.log("userEditCheck!!");
-            if($("#isUserEditCheck").is(":checked")){
-                $("#isUserEdit").attr("value","0");
-            }else{
-                $("#isUserEdit").attr("value","1");
-            }
-
-            var isUserEdit= $("#isUserEdit").val();
-
-            $.ajax({ //해당 폼의 userEdit 바꾸기
-	  			url : '<%=request.getContextPath()%>/admin/form/update/changeUserEdit',
-	  			data:{"form_id":form_id,"isUserEdit":isUserEdit},
-    	  		type:'POST',
-              traditional : true,
-	  			success: function(){
-	  				console.log("isUserEdit Change"); 	
-	  					  		
-	  			},
-			  	error:function(request, status, error){
-		
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		
-				}
-	  	  	});
-        });
 	});
 
 	

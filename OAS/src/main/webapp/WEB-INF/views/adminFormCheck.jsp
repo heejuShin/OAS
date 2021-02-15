@@ -161,8 +161,8 @@ table caption {
 	        
 	        <div>
 				<label>응답받기</label>
-				<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
-				<input type="hidden" id="isUserEdit" name="isUserEdit" value="">
+				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
+				<input type="hidden" id="isAvailable" name="isAvailable" value="">
 			</div>
 		</div>
 
@@ -212,15 +212,15 @@ table caption {
                   $(document).ready(function () {
                       var submitterList=${submitterList};
                       var stateList=${stateList};
-                      var isUserEdit=${isUserEdit};
+                      var isAvailable=${isAvailable};
                       var form_id=${form_id};
-                      if(isUserEdit==0){
-                  		$("#isUserEditCheck").attr("checked",true);
-                		$("#isUserEditCheck").attr("value","0");
+                      if(isAvailable==0){
+                  		$("#isAvailableCheck").attr("checked",true);
+                		$("#isAvailableCheck").attr("value","0");
                 	  }
                       else{
-                    	$("#isUserEditCheck").attr("checked",false);
-                  		$("#isUserEditCheck").attr("value","1");
+                    	$("#isAvailableCheck").attr("checked",false);
+                  		$("#isAvailableCheck").attr("value","1");
                       }
                           
                       for(var x=0; x < stateList.length; x++){
@@ -283,21 +283,21 @@ table caption {
 		              		    }
 				        	}
 	                	}
-                      $("#isUserEditCheck").change(function(){
-                          console.log("userEditCheck!!");
-                          if($("#isUserEditCheck").is(":checked")){
-                              $("#isUserEdit").attr("value","0");
+                      $("#isAvailableCheck").change(function(){
+                          console.log("userAvailableCheck!!");
+                          if($("#isAvailableCheck").is(":checked")){
+                              $("#isAvailable").attr("value","0");
                           }else{
-                              $("#isUserEdit").attr("value","1");
+                              $("#isAvailable").attr("value","1");
                           }
-                          var isUserEdit= $("#isUserEdit").val();
+                          var isAvailable= $("#isAvailable").val();
                           $.ajax({ //해당 폼의 userEdit 바꾸기
-              	  			url : '<%=request.getContextPath()%>/admin/form/update/changeUserEdit',
-              	  			data:{"form_id":form_id,"isUserEdit":isUserEdit},
+              	  			url : '<%=request.getContextPath()%>/admin/form/update/changeAvailable',
+              	  			data:{"form_id":form_id,"isAvailable":isAvailable},
 	              	  		type:'POST',
 	                        traditional : true,
               	  			success: function(){
-              	  				console.log("isUserEdit Change"); 	
+              	  				console.log("isAvailable Change"); 	
               	  					  		 
               	  			},
               			  	error:function(request, status, error){
