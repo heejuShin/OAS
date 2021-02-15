@@ -901,6 +901,7 @@ public class AdminController {
 		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
 		int form_id = Integer.parseInt(request.getParameter("select_formID"));
 		String form_title = request.getParameter("select_formTitle");
+		String link = adminDAO.getLink(form_id);
 		List<Result> submitterList= adminDAO.submitterList(form_id);
 		
 		ObjectMapper mapper=new ObjectMapper();
@@ -913,6 +914,7 @@ public class AdminController {
 		int isAvailable=adminDAO.getAvailable(form_id);
 		
 		mav.addObject("form_id",form_id);
+		mav.addObject("link", link);
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);

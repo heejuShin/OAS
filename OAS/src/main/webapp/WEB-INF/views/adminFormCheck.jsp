@@ -307,7 +307,7 @@
                       });
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
-                    	  var link = "2021mac";
+                    	  var link = "${link}";
 			  var id = $(this).siblings(".result_id").val();
                     	  $("#yourModal").load("../form/result/"+link+"/"+id);
                     	} );
