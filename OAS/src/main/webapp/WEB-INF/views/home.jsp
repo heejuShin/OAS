@@ -340,18 +340,19 @@
             <div class="products">
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
-            <div class="filters">
+          <div class="col-md-12" style="margin-bottom: 20px;">
+            <div class="filters" style="margin-bottom:20px;">
               <ul class="ul_filters">
                   <li class="active" data-filter="*">All Products</li>
-              </ul>
-              <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" style="float:right;">
-                    
-                    <input type="hidden" name="searchType" value="all">
-                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                 </form>
-              
+              </ul>            
+            </div>
+            <div style="padding-bottom:5px;">
+	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" style="float:right;">
+	                    
+	                    <input type="hidden" name="searchType" value="all">
+	                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	            </form>
             </div>
           </div>
           <div id="contentsDiv" class="col-md-12">
