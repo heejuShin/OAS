@@ -315,7 +315,6 @@
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "${link}";
 			  			  var id = $(this).siblings(".result_id").val();
-			  			  alert(id);
                     	  $("#yourModal").load("../form/result/"+link+"/"+id);
                     	 
                     	} );
