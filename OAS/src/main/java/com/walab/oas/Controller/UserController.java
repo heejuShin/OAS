@@ -108,8 +108,12 @@ public class UserController {
 		int form_id=(Integer)redirectMap.get("form_id");
 		int result_id= (Integer)redirectMap.get("result_id");
 		
-		
+		ModelAndView mav = new ModelAndView();
 		Form form_info = userDao.forminfo(form_id);
+		
+		if(form_info.getIsAvailable()==1) {
+			System.out.println("유저 update");
+		}
 		Result result_info = userDao.resultinfo(result_id);
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
 		System.out.println("result_info:"+result_id);
@@ -151,7 +155,6 @@ public class UserController {
 		        e.printStackTrace();
 		    }
 		
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("form_info", jArray1);
 		mav.addObject("field_list", jArray2);
 		mav.setViewName("userFormView");

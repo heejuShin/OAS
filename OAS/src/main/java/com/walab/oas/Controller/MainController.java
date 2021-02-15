@@ -18,9 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.walab.oas.Board.BoardDAO;
 import com.walab.oas.Board.BoardService;
-import com.walab.oas.Board.BoardServiceImpl;
 import com.walab.oas.Board.BoardVO;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
@@ -42,6 +40,8 @@ public class MainController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
 	private AdminDAO adminDAO;
 	
 	@RequestMapping(value="/oauth/error")
@@ -117,14 +117,16 @@ public class MainController {
 	@RequestMapping("/viewForm/{link}") // GET 방식으로 페이지 호출
 	public ModelAndView viewForm(@PathVariable String link, HttpSession session, RedirectAttributes redirectAttr) throws Exception {
 		
+		ModelAndView mav = new ModelAndView();
 		
 		int user_id=0;
 		if(session.getAttribute("id")!=null) {
+			System.out.println("before");
 			user_id=(Integer) session.getAttribute("id");
+			System.out.println(link);
 		}
 		
-		ModelAndView mav = new ModelAndView();
-		int form_ID=adminDAO.getFormId(link); 
+		int form_ID=adminDAO.getFormId("2021mac"); 
 		int result_id=adminDAO.getResultId(form_ID,user_id);
 		
 		redirectAttr.addFlashAttribute("form_id",form_ID);
@@ -146,8 +148,17 @@ public class MainController {
 			if(session.getAttribute("id")!=null) {
 				user_id=(Integer) session.getAttribute("id");
 			}
+			else {
+				mav.setViewName("redirect:/redirectUrl");
+				return mav;	
+			}
 			
 			int form_ID=adminDAO.getFormId(link); 
+			
+			if(adminDAO.getResultId(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
+				mav.setViewName("redirect:/viewForm/"+link); //신청한거 확인하는 페이지로 가기
+				return mav;	
+			}
 			
 			List<Form> form_info = mainDao.forminfo(form_ID);
 			List<Field> field_list = mainDao.fieldList(form_ID);

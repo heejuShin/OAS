@@ -56,11 +56,11 @@ public class AdminDAO {
 		return sqlSession.insert(namespace+ ".itemCreate", item);
 	}
 	
-	public int getFormId(String url) {
-		return sqlSession.selectOne(namespace +".getFormId", url);
+	public int getFormId(String link) throws Exception{
+		return sqlSession.selectOne(namespace +".getFormId", link);
 	}
 	
-	public int getFieldId(String key) {
+	public int getFieldId(String key) throws Exception{
 		return sqlSession.selectOne(namespace +".getFieldId", key);
 	}
 	

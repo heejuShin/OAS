@@ -269,8 +269,8 @@
    		VALUES (#{field_id},#{content},#{isDefault});
    	</insert>
    	
-   	<select id="getFormId" resultType="int">
-		select id from Form where url = #{url};
+   	<select id="getFormId" parameterType="String" resultType="int">
+		select id from Form where `url` = #{link};
 	</select>
 	
 	 <select id="getFieldId" resultType="int">
@@ -424,7 +424,7 @@
 	</select>
 	
 	<select id="getResultId" resultType="int">
-		select id from Result where form_id = #{form_id} AND user_id=${user_id};
+		select ifnull(id,0)as id from Result where form_id = #{form_id} AND user_id=${user_id};
 	</select>
 </mapper>
 
