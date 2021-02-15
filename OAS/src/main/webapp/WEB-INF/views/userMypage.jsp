@@ -33,10 +33,9 @@
      <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=3">
        
      
-     
      <style>
      @media (min-width: 1200px){
-		.container {
+		.userMypage_main .container {
 		    max-width: 100% !important;
 		}
      }
@@ -58,7 +57,7 @@
      </div>
 
     
-    <section id="demo">
+    <section id="demo" class="userMypage_main">
        
       <div class="container">
 
