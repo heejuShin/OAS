@@ -265,7 +265,7 @@
 	              		  	var selectInput= $("<select name='state'></select>"); 
 	              		    $($($("#tbodies").children()[i]).children()[7]).append(selectInput);
 	              		    
-	              		    var td9 = $("<td><button onclick=\"document.getElementById('yourModal').style.display='block'\" class=\"modal_open viewFormB\" data-toggle=\"modal\" data-target=\"#yourModal\">개별 보기</button></td>"); 
+	              		    var td9 = $("<td><input type='hidden' class='result_id' value='"+submitterList[i].id+"'/><button onclick=\"document.getElementById('yourModal').style.display='block'\" class=\"modal_open viewFormB\" data-toggle=\"modal\" data-target=\"#yourModal\">개별 보기</button></td>"); 
 	              		  	$($("#tbodies").children()[i]).append(td9);
 	              		    
 	              		    //option
@@ -309,7 +309,7 @@
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "2021mac";
 			  var id = $(this).siblings(".result_id").val();
-                    	  $("#yourModal").load("./form/result/"+link+"/"+id);
+                    	  $("#yourModal").load("../form/result/"+link+"/"+id);
                     	} );
                       $( '.modal_close' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
