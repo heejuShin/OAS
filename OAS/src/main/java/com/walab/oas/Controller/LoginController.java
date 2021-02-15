@@ -27,8 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.walab.oas.DAO.UserDAO;
@@ -69,20 +71,22 @@ public class LoginController {
    
    /**
     * Authentication Code를 전달 받는 엔드포인트
-    * @throws Exception 
+ * @throws IOException 
+ * @throws JsonMappingException 
+ * @throws JsonParseException 
     **/
    @GetMapping("google/auth")
    @ModelAttribute("ses")
-   public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode)
-         throws Exception {
+   public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode) throws JsonParseException, JsonMappingException, IOException
+         {
       
 	   String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
 	   
       HttpSession session = request.getSession();
       System.out.println("Session is "+ session);
       
-      //HTTP Request를 위한 RestTemplate
       RestTemplate restTemplate = new RestTemplate();
+
 
       //Google OAuth Access Token 요청을 위한 파라미터 세팅
       GoogleOAuthRequest googleOAuthRequestParam = new GoogleOAuthRequest(clientId,clientSecret,authCode,rootPath+"/login/google/auth","authorization_code");
@@ -94,12 +98,14 @@ public class LoginController {
       mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
       mapper.setSerializationInclusion(Include.NON_NULL);
 
+      
       //AccessToken 발급 요청
       ResponseEntity<String> resultEntity = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, googleOAuthRequestParam, String.class);
-
+ 
       //Token Request
       GoogleOAuthResponse result = mapper.readValue(resultEntity.getBody(), new TypeReference<GoogleOAuthResponse>() {
       });
+      
 
       //ID Token만 추출 (사용자의 정보는  jwt로 인코딩 되어있다)
       String jwtToken = result.getIdToken();
@@ -110,6 +116,12 @@ public class LoginController {
       
       Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
       
+      if(!userInfo.get("email").contains("handong.edu")) {
+    	  
+    	  mav.setViewName("loginError");
+    	  return mav;
+      }
+    	  
       
       User user = new User();
       user.setEmail(userInfo.get("email"));
@@ -183,7 +195,6 @@ public class LoginController {
      public ModelAndView googleUrl(HttpServletRequest request) throws Exception {
       ModelAndView mav = new ModelAndView();
       String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
-	  System.out.println("현재 프로젝트의 경로 : "+rootPath );
       
       String redirectUrl = "redirect:https://accounts.google.com/o/oauth2/v2/auth?"
             + "client_id=561186600567-ghv5joqq35ar98gvkp6vqa5pltvop4ie.apps.googleusercontent.com"

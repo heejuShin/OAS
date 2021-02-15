@@ -12,7 +12,7 @@
 <title>Edit Form</title>
 <link rel="stylesheet" href="${path}/resources/css/editform_style.css">
 </head>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js">$('#edit').attr('readonly', true);</script>﻿
+
 <body>
 
 

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
-import com.walab.oas.DTO.Form_ver2;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
@@ -32,7 +31,7 @@ public class MainDAO{
 //		return sqlSession.selectList(namespace + ".form_list",cri);
 //	}
 	
-	public List<Form_ver2> formList(SearchCriteria cri) {
+	public List<Form> formList(SearchCriteria cri) {
 		return sqlSession.selectList(namespace + ".form_list",cri);
 	}
 	
@@ -48,7 +47,9 @@ public class MainDAO{
 		return sqlSession.selectList(namespace + ".fieldInfo", formID);
 	}
 	
-	
+	public List<State> stateList(int formID) {
+		return sqlSession.selectList(namespace + ".stateListbyId", formID);
+	}	
 	
 	
 }

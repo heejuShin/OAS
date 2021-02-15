@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-<title>Test Form</title>
+<title>Form Preview</title>
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -34,6 +34,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
 	<!-- select CSS & JS-->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,17 +46,19 @@
 		
 		var formInfo = ${form_info};
 		var fieldInfo = ${field_list};
-		
-		console.log("step1");
+		var optionList = ${optionList};
+		console.log(formInfo);
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
 		
 		$('#form_title').text(formInfo[0].form_name);
+		
 		$('.form_explanation').text(formInfo[0].form_detail);
-		$('#startDate').text(formInfo[0].form_startDate);
-		$('#endDate').text(formInfo[0].form_endDate);
+		$('#preview_startDate').text(formInfo[0].form_startDate);
+		$('#preview_endDate').text(formInfo[0].form_endDate);
 
 		console.log("step2");
+		var idx=0;
 
 		//field 만들기 
 		for(var i = 0 ; i < fieldInfo.length; i++){
@@ -73,28 +76,7 @@
 				console.log("step3.5");
 				//아래의 항목의 경우 별도의 옵션 필요
 				if(fieldInfo[i].field_type == 'select' || fieldInfo[i].field_type == 'radio' || fieldInfo[i].field_type == 'checkbox'){
-					console.log("step4");
-					var optionlist;
-					var fieldID = fieldInfo[i].field_id;
-
-					//field별 옵션 호출 
-					 $.ajax({
-						url:'<%=request.getContextPath()%>/getItem',
-						type:'POST',
-						data: {fieldID : fieldInfo[i].field_id} ,
-						dataType : 'json',
-						async: false,
-						success:function(data){
-							optionlist = data;
-						},
-						error:function(jqXHR, textStatus, errorThrown){
-							alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-						}
-
-						}); //옵션 부르기 끝
-						
-					//console.log(" 옵션 확인 ");
-					//console.log(optionlist);
+					console.log("optionList="+optionList);
 
 					 if(fieldInfo[i].field_type == 'select'){
 						 console.log("step5");
@@ -104,41 +86,43 @@
  							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(selectTag);
 					 }
 
-					 for(var idx=0; idx < optionlist.length; idx++){
-						 console.log("step6");
+					 for(var j=0; j < fieldInfo[i].item_count; j++){
 						 
+						 console.log("step6");
+						 console.log(optionList[idx].content);
 								 $("#field_"+ fieldInfo[i].field_id).children(".inputDiv").addClass("marginTop")
 							if(fieldInfo[i].field_type == 'select'){
 							   
-									var optionTag = $("<option value='"+optionlist[idx].content+"'>"+optionlist[idx].content+"</option>");
+									var optionTag = $("<option value='"+optionList[idx].content+"'>"+optionList[idx].content+"</option>");
 								
-									if(optionlist[idx].isDefault == 1)
+									if(optionList[idx].isDefault == 1)
 										optionTag.attr("selected",""); //default값 지정 
 									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").children('select').append(optionTag);
 						  
 							 }else if(fieldInfo[i].field_type == 'radio'){
 								  
-									var values = optionlist[idx].content;
+									var values = optionList[idx].content;
 									var labelNum = fieldInfo[i].field_id +"-"+ idx;
 									
 									var listTag = $("<div class='contact100-form-radio'><input id='"+labelNum+"' class='input-radio100' type='"+fieldInfo[i].field_type+"' name='radio_"+fieldInfo[i].field_id+"' value='"+values+"'><label class='label-radio100' for='"+labelNum+"'> "+values+" </label></div>");
 
-									if(optionlist[idx].isDefault == 1)
+									if(optionList[idx].isDefault == 1)
 											$(listTag.children('input')).attr("checked", "checked");
 
 									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
 									
 							  }else if(fieldInfo[i].field_type == 'checkbox'){
 								  
-										  var values = optionlist[idx].content;
+										  var values = optionList[idx].content;
 									var listTag = $("<label class='checkbox-wrap'> "+values+"<input type='"+fieldInfo[i].field_type+"' name='content' value='"+values+"'><span class='checkmark'></span></label>");
 
-									if(optionlist[idx].isDefault == 1)
+									if(optionList[idx].isDefault == 1)
 											$(listTag.children('input')).attr("checked", "checked");
 
 									$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
 									
 							  }
+							idx++;
 					   }//option만큼 반복 
 							
 					 
@@ -238,47 +222,109 @@
 				
 			});//submitB 함수 끝
 
+			 $('#confirm').on('click', function() {
+					console.log("confirm click");
+					$("#modal_message").html("설문지 작성이 완료되었습니다.");
+					var name = $("#formName").val();
+					if(name=="") {
+						name= "<span style=\"color:red\">내용없음</span>";
+						
+						$("#modal_message").html("설문지 작성이 미완료되었습니다.");
+					}
+				    $("#confirm_title").html(name);
+				    var select_category = $("#category_select option:selected").html();
+					if ($("#category_select option:selected").val()=="") {
+						select_category = "<span style=\"color:red\">내용없음</span>";
+						$("#modal_message").html("설문지 작성이 미완료되었습니다.");
+						
+					}
+				    $("#confirm_category").html(select_category);
+				    $("#confirm_start").html($("#startDate").val()+ " " + $("#startTime").val());
+				    $("#confirm_end").html($("#endDate").val()+ " " + $("#endTime").val());
+				    // 모달창 띄우기
+				    modal('confirm_modal');
+				});
+
 
 	}); //document ready
+	function modal(id) {
+	    var zIndex = 9999;
+	    var modal = $('#' + id);
+
+		$("#preview_modal").css("display","none");
+	    // 모달 div 뒤에 희끄무레한 레이어
+	    var bg = $('<div>')
+	        .css({
+	            position: 'fixed',
+	            zIndex: zIndex,
+	            left: '0px',
+	            top: '0px',
+	            width: '100%',
+	            height: '100%',
+	            overflow: 'auto',
+	            // 레이어 색갈은 여기서 바꾸면 됨
+	            backgroundColor: 'rgba(0,0,0,0.4)'
+	        })
+	        .appendTo('body');
+	
+	    modal
+	        .css({
+	            position: 'fixed',
+	            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+	
+	            // 시꺼먼 레이어 보다 한칸 위에 보이기
+	            zIndex: zIndex + 1,
+	
+	            // div center 정렬
+	            top: '50%',
+	            left: '50%',
+	            transform: 'translate(-50%, -50%)',
+	            msTransform: 'translate(-50%, -50%)',
+	            webkitTransform: 'translate(-50%, -50%)'
+	        })
+	        .show()
+	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+	        .find('.modal_close_btn')
+	        .on('click', function() {
+	        	
+	            bg.remove();
+	            modal.hide();
+	        });
+	}
 	</script>
 </head>
 <body>
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-			<form class="contact100-form" action="../submit" id="userForm" method="POST">
+			
 				<input type="hidden" name="form_index" value="${form_ID}" >
 				<span class="contact100-form-title" id="form_title"> </span>
 
 				<div class="wrap-input100 bg0">
 					<p class="label-input100 form_explanation" ></p>
-					<p class="label-input100 form_date">real 신청기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>
+					<p class="label-input100 form_date">신청기간 : 
+						<span id="preview_startDate"></span> ~ <span id="preview_endDate"></span>
+					</p>
 				</div>
 				
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
 				</div>
 
-				
-			</form>
-			
 				<!-- input type : submit -->
-				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn" id="submitB">
-						<span>Submit<i class="fa fa-long-arrow-right m-l-7"
-							aria-hidden="true"></i></span>
+				<div id="submitDiv" class="container-contact100-form-btn form edit button">
+					<button class="contact100-form-btn" type="button" id="confirm">
+						<span>확인<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
 					</button>
+					
+					<a class='modal_close_btn'>
+						<button type='button'>취소</button>
+					</a>
 				</div>
 			
 		</div>
 	</div>
 </body>
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-</script>
 	
 </html>
