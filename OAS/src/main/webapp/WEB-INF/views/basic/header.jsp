@@ -94,7 +94,7 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto navbar_right">
               <li class="nav-item active">
-                <a class="nav-link"  href="<%=request.getContextPath()%>">Home
+                <a class="nav-link"  href="<%=request.getContextPath()%>/">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li>
