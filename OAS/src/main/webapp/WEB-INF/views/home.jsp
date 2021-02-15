@@ -347,7 +347,7 @@
               </ul>            
             </div>
             <div style="padding-bottom:5px;">
-	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" style="float:right;">
+	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="POST" style="float:right;">
 	                    
 	                    <input type="hidden" name="searchType" value="all">
 	                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
