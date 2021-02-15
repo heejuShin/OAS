@@ -5,59 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-    <!-- 해린 css -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=1">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-	<style>
-		.tableDiv{
-    display: block;
-    margin-left: 12%;
-    margin-right: 10%;
-    width: 75%;
-}
-#controlDiv{
-    display: block;
-    width: 75%;
-    margin: 2% 10% 2% 12%;
     
-    padding: 1% 32% ;
-}
-/* table css */
-h2 {
-    text-align: center;
-    padding: 20px 0;
-}
-  
-.table-bordered {
-    border: 1px solid #ddd !important;
-}
-  
-table caption {
-    padding: .5em 0;
-}
-  
-@media screen and (max-width: 767px) {
-    table caption {
-      display: none;
-    }
-}
-  
-.p {
-    text-align: center;
-    padding-top: 140px;
-    font-size: 14px;
-}
-		
-	</style>
+    
+
 	
 	 <script type="text/javascript">
-      
-      
       $(document).ready(function () {
         //함수1. 체크박스 전체 선택 / 해제 함수
         $("#allCheck").click(function () {
@@ -136,7 +94,6 @@ table caption {
  
         });*/
       });
-  
     </script>
  </head>
 <body>
@@ -144,7 +101,6 @@ table caption {
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
     <!-- main -->
     <main>
-
       <!-- list start -->
       <div >
         <div>
@@ -164,21 +120,31 @@ table caption {
 				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
 				<input type="hidden" id="isAvailable" name="isAvailable" value="">
 			</div>
-		</div>
 
-        <!-- <div class="container">
-          <div class="row">
-            <div class="col-xs-12"> -->
+		<div id="headTitle">
+			<h2>[${form_title}] 응답 관리</h2>
+		</div>
+		<!-- result control  -->
+		
+      <!-- table -->
               <div class="table-responsive tableDiv" data-pattern="priority-columns">
               
                 <table id="checklist" summary="This table shows how to create responsive tables using RWD-Table-Patterns' functionality" class="table table-bordered table-hover">
-                  <caption class="text-center"> a responsive table based on RWD-Table-Patterns' <a href="http://gergeo.se/RWD-Table-Patterns/" target="_blank"> solution</a>:</caption>
-                  
-                  <!-- column name list -->
+<!--                   <caption class="text-center"> a responsive table based on RWD-Table-Patterns' <a href="http://gergeo.se/RWD-Table-Patterns/" target="_blank"> solution</a>:</caption>
+ -->                  
+
                   <thead> 
+                  <!-- result stop control -->
+                  	<tr><th colspan="9">
+	                  			<div id="stopControlDiv">
+	                  				<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
+									<label id="stopMsg">응답 중단하기</label>
+									<input type="hidden" id="isUserEdit" name="isUserEdit" value="">
+								</div>
+					</th></tr>
+					<!-- column  list -->
                     <tr>
                       <th><input type="checkbox" id="allCheck" /></th>
-                      <th data-priority="0">보기</th>
                       <th data-priority="1">NO</th>
                       <th data-priority="2">이름</th>
                       <th data-priority="3">전공</th>
@@ -186,40 +152,68 @@ table caption {
                       <th data-priority="5">이메일</th>
                       <th data-priority="6">제출일</th>
                       <th data-priority="7">상태</th>
+                      <th data-priority="8">응답지</th>
                     </tr>
                   </thead> 
-
-                  <!-- data list -->
-
-                  <!-- Submit check box's value && select option's value -->
-
-                  <!-- Value RULE -->
-                  <!-- checkbox:value = T:result(id) -->
-                  <!-- select:option:value == T:state(id) -->
-                  <!-- [selected] select:option:value == T:result(state_id) -->
-
-                  <!-- Name RULE -->
-                  <!-- All checkbox name same, All select name same -->
                   
-                  <tbody id="tbodies">
-                  <!-- js로 제출자 list 넣기 -->
-                    
-                  </tbody>
-                  <!-- data list End-->
-                  
-                  <script>
+                  <!-- column content -->
+                  <tbody id="tbodies"><!-- js로 제출자 list 넣기 --></tbody>
+                 
+
+                  <tfoot><tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr></tfoot>
+                </table>
+              
+              </div><!--end of .table-responsive-->
+              
+               <div>
+               		<!-- state control  -->
+               		<div id="select_control">
+			        <div id="controlDiv">
+			          <select id ="allState" name="stateName">
+			          	<!-- js로 option list 넣기 -->
+			          </select>
+			          <button id="stateB" name='stateB'>적용</button>
+			        </div>
+			        </div>
+			        
+	        		
+			</div>
+              
+              <!-- form view modal -->
+            <div id="yourModal" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
+			<div class="w3-modal-content w3-card-4 ">
+				<div class="w3-container">
+				</div>
+			</div>
+			</div>
+			
+			<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px;"> <div class="modal-dialog"> <div class="modal-content"> </div> </div> </div>
+			<!-- form view modal end-->
+
+
+<!--         <p class="p">Demo by George Martsoukos. <a href="http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions" target="_blank">See article</a>.</p>
+ -->   
+       
+    </main><!-- main End -->
+	
+	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
+
+</body>
+<script>
                	  //표 동적 생성하는 부분
                   $(document).ready(function () {
                       var submitterList=${submitterList};
                       var stateList=${stateList};
                       var isAvailable=${isAvailable};
                       var form_id=${form_id};
+                      
                       if(isAvailable==0){
-                  		$("#isAvailableCheck").attr("checked",true);
+                  		$("#isAvailableCheck").attr("checked",false);
                 		$("#isAvailableCheck").attr("value","0");
                 	  }
                       else{
-                    	$("#isAvailableCheck").attr("checked",false);
+
+                    	$("#isAvailableCheck").attr("checked",true);
                   		$("#isAvailableCheck").attr("value","1");
                       }
                           
@@ -245,8 +239,7 @@ table caption {
 	              		    var td1 = $("<td><input type='checkbox' name='result' value='"+submitterList[i].id+"'/></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td1);
 	              		    
-	              		  	var td9 = $("<td><a class=\"modal_open\" id=\"button\" style=\"background:black; width: 100%; color: white; margin-radius: 10px;\" data-toggle=\"modal\" data-target=\"#id01\" role=\"button\"> <i class=\"material-icons\">보기</i></a></td>"); 
-	              		  	$($("#tbodies").children()[i]).append(td9);
+	              		  	
 	  
 	              		    var td2 = $("<td>"+(i+1)+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td2);
@@ -264,12 +257,16 @@ table caption {
 	              			
 	              		  	var td7 = $("<td>"+submitterList[i].regDate+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td7);
+	              		    
 	              		  	var td8 = $("<td></td>"); 
 	              		    $($("#tbodies").children()[i]).append(td8);
-	     
+
 	              		    //select
 	              		  	var selectInput= $("<select name='state'></select>"); 
-	              		    $($($("#tbodies").children()[i]).children()[8]).append(selectInput);
+	              		    $($($("#tbodies").children()[i]).children()[7]).append(selectInput);
+	              		    
+	              		    var td9 = $("<td><button onclick=\"document.getElementById('yourModal').style.display='block'\" class=\"modal_open viewFormB\" data-toggle=\"modal\" data-target=\"#yourModal\">개별 보기</button></td>"); 
+	              		  	$($("#tbodies").children()[i]).append(td9);
 	              		    
 	              		    //option
 	              		    for(var j=0; j<stateList.length; j++){
@@ -283,12 +280,13 @@ table caption {
 		              		    }
 				        	}
 	                	}
+
                       $("#isAvailableCheck").change(function(){
                           console.log("userAvailableCheck!!");
                           if($("#isAvailableCheck").is(":checked")){
-                              $("#isAvailable").attr("value","0");
-                          }else{
                               $("#isAvailable").attr("value","1");
+                          }else{
+                              $("#isAvailable").attr("value","0");
                           }
                           var isAvailable= $("#isAvailable").val();
                           $.ajax({ //해당 폼의 userEdit 바꾸기
@@ -310,69 +308,22 @@ table caption {
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "2021mac";
-                    	  $("#id01").load("./form/result/"+link);
+			  var id = $(this).siblings(".result_id").val();
+                    	  $("#yourModal").load("./form/result/"+link+"/"+id);
                     	} );
+                      $( '.modal_close' ).click( function() {
+                    	  //var link =  $(this).siblings(".link").html();
+                    	  console.log("close");
+                    	  var link = "2021mac";
+                    	  $("#yourModal").css("display", "none");
+                    	} );
+			  
+		      
+		      $(".w3-button").on('click', "#yourModal", function(){
+                    	  $("#yourModal").modal("hide");
+                    	  alert("버튼 확인 ");
+                      });
 
                   });
                   </script>
-                  
-                  <tfoot>
-			        <tr>
-			            <th colspan="8"><button name='stateSubmitB'>확인</button></th>
-			        </tr>
-			    </tfoot>
-
-                </table>
-              
-              </div>
-              <!--end of .table-responsive-->
-            
-            <div id="id01" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px">
-			<div class="w3-modal-content w3-card-4 ">
-				<span onclick="document.getElementById('id01').style.display='none'"
-					class="w3-button w3-display-topright">&times;</span>
-				<div class="w3-container">
-				</div>
-			</div>
-			</div>
-			
-			<div id="modal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px;"> <div class="modal-dialog"> <div class="modal-content"> </div> </div> </div>
-			
-
-              
-              
-             <div style="text-align:center;">
-			<a id="login" style="background:black; color: white; margin-radius: 10px; width: 200px;" data-toggle="modal" data-target="#id01" role="button"> <i class="material-icons">lock</i></a>
-			</div>
-
-
-        <p class="p">Demo by George Martsoukos. <a href="http://www.sitepoint.com/responsive-data-tables-comprehensive-list-solutions" target="_blank">See article</a>.</p>
-      </div>
-      
-      
-      <!-- list End -->
-
-    
-      
-    </main>
-    <!-- main End -->
-	
-	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="<%=request.getContextPath()%>/resources/vendor/jquery/jquery.min.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-    <!-- Additional Scripts -->
-    <script src="<%=request.getContextPath()%>/resources/assets/js/custom.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/owl.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/slick.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/isotope.js"></script>
-    <script src="<%=request.getContextPath()%>/resources/assets/js/accordions.js"></script>
-
-
-	
-
-</body>
 </html>

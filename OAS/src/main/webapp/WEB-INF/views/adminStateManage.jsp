@@ -13,9 +13,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	
     <style>
-	.button_div{
-		width: 80%;
-	}
 	button{
 		border: 1px solid;
 		width: 100px !important;
@@ -24,6 +21,9 @@
 		border-radius: 4px !important;
 		font-size: 15px !important;
 		margin-right: 5px !important;
+	}
+	.selectState, .button_div{
+		text-align: center;
 	}
 	</style>
 	</head>
@@ -56,22 +56,20 @@
 	
 	<!-- main -->
     <main>
+    <div id="headTitle"><h2>상태 관리</h2></div>
+    
 	<form action = "./state/save" method="post">
-         <div id="headTitle"><h2>상태 관리</h2></div>
-			<div class="wrap-input100  bg1" style="font-size: 15px;">
-				<select class="form-control" id="state" style="width: 80%; border:none;" id="state" multiple="multiple"> 
-			      </select>
-			      
-			      <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
+         
+			<div class="wrap-input100  bg1 selectState" style="font-size: 15px;">
+				<select class="form-control" id="state" style="width: 80%; border:none;" id="state" multiple="multiple"></select>
+			    <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
 			</div>
 			<input type="hidden" id="state_selected" name="state" style="width: 1000px;"/>
 			
 			
 		<div class="button_div">
             <button style="border-color: #28a745; color: #28a745" type="submit">저장</button>
-            <button style="border-color: red; color: red;" name="deleteB" onclick="location.href='./state'">초기화</button>
-            <button style="border-color: black; color: black;" name="manageB" onclick="location.href='./'">마이페이지</button>
-        
+            <button type="button" style="border-color: black; color: black;" name="deleteB" onclick="location.href='./state'">초기화</button>
         </div>  
 	</form>
 		

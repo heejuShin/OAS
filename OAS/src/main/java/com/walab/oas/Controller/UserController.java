@@ -90,32 +90,24 @@ public class UserController {
 	    }
 	    
 	    
-	 // 다음 컨트롤러로 전송  
-	 redirectAttr.addFlashAttribute("form_id",form_id);
-	 redirectAttr.addFlashAttribute("result_id",result_id);
+		 // 다음 컨트롤러로 전송  
+		 redirectAttr.addFlashAttribute("form_id",form_id);
+		 redirectAttr.addFlashAttribute("result_id",result_id);
+		    
 	    
-	    
-		
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName("home");
 	 	System.out.println("<submitForm> controller end");
 		return new ModelAndView("redirect:/userFormView");
 	}
 	
 	//form view
-	@RequestMapping(value = "/userFormView" ,method = {RequestMethod.GET,RequestMethod.POST}) // GET 방식으로 페이지 호출
+	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
 	public ModelAndView viewUserForm (HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<viewUserForm> controller");
 		
-		int form_id=1;
-		int result_id=34;
-		
 		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
-		if(redirectMap != null) {
-			form_id=(Integer)redirectMap.get("form_id");
-			result_id= (Integer)redirectMap.get("result_id");
-			
-		}
+		int form_id=(Integer)redirectMap.get("form_id");
+		int result_id= (Integer)redirectMap.get("result_id");
+		
 		
 		Form form_info = userDao.forminfo(form_id);
 		Result result_info = userDao.resultinfo(result_id);

@@ -123,7 +123,7 @@ public class MyPageController {
 				adminDAO.createState(state);
 			}
 			ra.addFlashAttribute("msg", "변경 되었습니다.");
-	        ra.addFlashAttribute("url","oas/admin/mypage/state");
+	        ra.addFlashAttribute("url","./admin/mypage/state");
 	        
 			return mav;
 		}

@@ -35,7 +35,7 @@
     <!-- 필터링 -->
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     
-  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=1">
+  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=2">
     
    
   </head>
@@ -121,8 +121,6 @@
           </nav>
 		   <!--End_Filter and Search part-->  
 	
-         
-		  <button name="manageB" onclick="location.href='<%=request.getContextPath()%>/admin/mypage/state'">상태 관리</button>
 		  
       </div> <!-- end container -->
   </section> <!-- end section -->
@@ -199,7 +197,9 @@
 	                    				var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 
 										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+
+										var form=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='' name='select_formTitle' value='"+adminList[i].formName+"'/></form>");
+
 										$($(".tbodies").children()[i]).append(form);
 										
 										var resultCount;
@@ -220,7 +220,7 @@
 										});
 
 										if(resultCount==0){
-											var plus_a=$("<a href='#' id='deleteForm_"+adminList[i].id+"' class='filled-button' onClick = 'deleteForm(this);'>삭제</a>");
+											var plus_a=$("<button id='deleteForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'deleteForm(this);'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>");
 											$($(".tbodies").children()[i]).find("#resultForm_"+adminList[i].id).parent().append(plus_a);
 											var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 											$($(".tbodies").children()[i]).append(form2);
@@ -241,7 +241,9 @@
 										$($(".tbodies").children()[i]).append(a);
 										var form=$("<form id='updateForm' action='<%=request.getContextPath()%>/admin/form/view/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
-										var form2=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+
+										var form2=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='' name='select_formTitle' value='"+adminList[i].formName+"'/></form>");
+
 										$($(".tbodies").children()[i]).append(form2);
 
 

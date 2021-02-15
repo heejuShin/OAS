@@ -35,81 +35,11 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<style>
-	
-	.questionP{
-		background-color: white;
-	    border-radius: 20px;
-	    padding: 7px 10px;
-	    border: 1px solid #aeacac;
-	}
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=1">
 
-	.answerP{
-		padding: 0 10px;
-		color: black;
-    	font-size: 14px;
-	}
-	
-	.submit_dates{
-		font-size: 13px;
-	    text-align: center;
-	    color: #01016c;
-    	margin-top: 2%;
-	}
-	
-	</style>
-	<script>
-	$(document).ready(function () {
-		var formInfo = ${form_info};
-		var fieldInfo = ${field_list};
-
-		console.log("step1");
-		console.log("title : " + formInfo[0].form_name);
-		
-		$('#form_title').text(formInfo[0].form_name);
-		$('.form_explanation').text(formInfo[0].form_detail);
-		$('#startDate').text(formInfo[0].form_startDate);
-		$('#endDate').text(formInfo[0].form_endDate);
-		$('#submitDate').text(formInfo[0].form_submitDate);
-		$('#editDate').text(formInfo[0].form_editDate);
-
-		console.log("step2");
-
-		for(var i = 0 ; i < fieldInfo.length; i++){
-
-			var divTitle = $('<div id="result_'+i+'" class="wrap-input100 bg1"></div>');
-			$("#fieldInputs").append(divTitle);
-
-			var questionBox;
-
-			if(fieldInfo[i].field_star == 1)
-				questionBox = $('<p class="label-input100 nameMargin questionP">질문. '+fieldInfo[i].field_name+'<span class="redCSS">*</span></p>');
-			else
-				questionBox = $('<p class="label-input100 nameMargin questionP">질문. '+fieldInfo[i].field_name+'</p>');
-
-			$("#fieldInputs").children("#result_"+i).append(questionBox);
-
-			if(fieldInfo[i].field_content == "")
-				var answerBox = $('<p class="label-input100 nameMargin answerP">응답 없음</p>')
-			else{
-				var result_content = fieldInfo[i].field_content;
-
-				if(fieldInfo[i].field_type == "checkbox" && result_content.indexOf("$") != -1 ){ //checkbox type이고 답이 복수 일 때
-					result_content = result_content.slice(0,-1); //마지막 $ 삭제
-					result_content = result_content.split("$").join(" / "); // $를 /로 대체
-				}
-				
-				var answerBox = $('<p class="label-input100 nameMargin answerP">답변 : '+result_content+'</p>')
-			}
-			
-			$("#fieldInputs").children("#result_"+i).append(answerBox);	
-			}
-
-	}); //document ready
-	</script>
-	
 </head>
 <body>
+
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
@@ -124,19 +54,81 @@
 				
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
+						
 				</div>
-
-				
 			</form>
 			
-				<!-- input type : submit -->
+				<!-- home button -->
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn" id="submitB">
-						<span>확인</span>
+					<button class="contact100-form-btn" id="submitB" onclick="location.href='<%=request.getContextPath()%>'">
+						<span>메인 페이지로</span>
 					</button>
 				</div>
 			
 		</div>
 	</div>
+	
 </body>
+
+<script>
+	$(document).ready(function () {
+
+			
+		
+		var formInfo = ${form_info};
+		var fieldInfo = ${field_list};
+
+		console.log("step1");
+		console.log("title : " + formInfo[0].form_name);
+		
+		$('#form_title').text(formInfo[0].form_name);
+		$('.form_explanation').text(formInfo[0].form_detail);
+		$('#startDate').text(formInfo[0].form_startDate);
+		$('#endDate').text(formInfo[0].form_endDate);
+		$('#submitDate').text(formInfo[0].form_submitDate);
+		if(formInfo[0].form_editDate != "2000-01-01 00:00:00"){
+			$('#editDate').text(formInfo[0].form_editDate);
+		}else{
+			$('#editDate').text(formInfo[0].form_submitDate);
+		}
+		
+/* 		$('#editDate').text(formInfo[0].form_editDate);
+ */
+		console.log("step2");
+
+		for(var i = 0 ; i < fieldInfo.length; i++){
+
+			var divTitle = $('<div id="result_'+i+'" class="wrap-input100 bg1"></div>');
+			$("#fieldInputs").append(divTitle);
+
+			var questionBox;
+
+			if(fieldInfo[i].field_star == 1)
+				questionBox = $('<p class="label-input100 nameMargin questionP">Q. '+fieldInfo[i].field_name+'<span class="redCSS">*</span></p>');
+			else
+				questionBox = $('<p class="label-input100 nameMargin questionP">Q. '+fieldInfo[i].field_name+'</p>');
+
+			$("#fieldInputs").children("#result_"+i).append(questionBox);
+
+			if(fieldInfo[i].field_content == "")
+				var answerBox = $('<p class="label-input100 nameMargin answerP">응답 없음</p>')
+			else{
+				var result_content = fieldInfo[i].field_content;
+
+				if(fieldInfo[i].field_type == "checkbox" && result_content.indexOf("$") != -1 ){ //checkbox type이고 답이 복수 일 때
+					result_content = result_content.slice(0,-1); //마지막 $ 삭제
+					result_content = result_content.split("$").join(" / "); // $를 /로 대체
+				}
+
+				if(fieldInfo[i].field_type == "file")
+					var answerBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_content+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+				
+				var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>')
+			}
+			
+			$("#fieldInputs").children("#result_"+i).append(answerBox);	
+			}
+
+	}); //document ready
+	</script>
 </html>

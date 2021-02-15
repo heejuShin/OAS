@@ -667,7 +667,7 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) View
-	@RequestMapping(value = "/form/result/{link}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
+	@RequestMapping(value = "/form/result/{link}/{id}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
 	  public ModelAndView readForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
@@ -900,6 +900,7 @@ public class AdminController {
 			   
 		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
 		int form_id = Integer.parseInt(request.getParameter("select_formID"));
+		String form_title = request.getParameter("select_formTitle");
 		List<Result> submitterList= adminDAO.submitterList(form_id);
 		
 		ObjectMapper mapper=new ObjectMapper();
@@ -915,6 +916,7 @@ public class AdminController {
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);
+		mav.addObject("form_title",form_title);
 				
 		mav.setViewName("adminFormCheck");
 		return mav;
