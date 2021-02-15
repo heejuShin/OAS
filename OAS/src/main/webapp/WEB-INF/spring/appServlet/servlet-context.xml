@@ -34,11 +34,20 @@
     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
     
    <beans:bean id="authinterceptor" class="com.walab.oas.Intercept.AuthIntercept" />
+   <beans:bean id="logininterceptor" class="com.walab.oas.Intercept.LoginIntercept" />
    
    <interceptors>
       <interceptor>
          <mapping path="/admin/**" />
          <beans:ref bean="authinterceptor"/>
+      </interceptor>
+      
+      <interceptor>
+         <mapping path="/**" />
+         <exclude-mapping path="/"/>
+         <exclude-mapping path="/login/logout"/>
+         <exclude-mapping path="/login/redirectUrl"/>
+         <beans:ref bean="logininterceptor"/>
       </interceptor>
    </interceptors>
 	
