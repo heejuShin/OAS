@@ -125,8 +125,6 @@ $('#state').on('select2:unselect', function(e) {
      var value = $(this).val();
      var s = value.toString();
      $("#state_selected").val(s); 
-    
-    //console.log(document.getElementById('state_selected').value);
       });
       
   $("#state").select2({
