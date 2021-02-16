@@ -287,7 +287,7 @@
    INNER JOIN
    (select field_id, content from ResultContent 
    INNER JOIN Result ON (ResultContent.result_id=Result.id)
-   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{link};
+   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{form_id};
    </select>
    
    	
