@@ -1,3 +1,7 @@
+body{
+	min-width:600px;
+}
+
 #form_div {
 	width: 100%;
 	margin-top: 10px;
@@ -104,30 +108,8 @@ button .submit {
 	margin-top: 10px;
 }
 
-.wrap-contact100 #menu-bar {
-	position: relative;
-	width: 50px;
-	height: 100px;
-	border-radius: 10px;
-	left: calc(100% + 25px);
-	/* right: calc( 50% - 350px - 50px - 35px); */
-	margin-right: 0px;
-	top: 240px;
-	text-align: center;
-	font-size: 50px;
-	background: #efefef;
-	border: 1px solid #ccc;
-	line-height: 1.42857143;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-}
 
-#add_p {
-	font-size: 50px;
-	font-weight: normal;
-	margin-top: 37px;
-}
+
 
 label.item {
 	margin: 0px 15px;
@@ -146,7 +128,7 @@ label.item {
 /* submit 모달 */
 #confirm_modal {
 	display: none;
-	width: 600px;
+	width: 620px;
 	padding: 30px 60px;
 	background-color: #fefefe;
 	border: 1px solid #888;
@@ -190,11 +172,6 @@ button {
 	vertical-align: middle;
 }
 
-#add_p {
-	font-size: 50px;
-	font-weight: normal;
-	margin-top: 37px;
-}
 
 .select2-container {
 	font-size: 14px;
@@ -209,6 +186,34 @@ button {
 }
 
 /*  ---------------------------HR------------------------------*/
+
+/* + 버튼 */
+
+.wrap-contact100 #menu-bar {
+	position: relative;
+	width: 50px;
+	height: 100px;
+	border-radius: 10px;
+	left: calc(100% + 25px);
+	margin-right: 0px;
+	top: 240px;
+	text-align: center;
+	font-size: 50px;
+	background: #efefef;
+	border: 1px solid #ccc;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+#menu-bar #add_p {
+	position: relative;
+	top:50%;
+	line-height: 0 !important;
+	font-size: 50px;
+	font-weight: normal;
+	/* margin-top: 37px; */
+}
 .input1002 {
 	display: block;
 	width: 100%;
@@ -293,7 +298,7 @@ button {
 	background-color: #f4f1f1;
 	border-radius: 10px;
 	height: 30px;
-	width: 270px;
+	width: 250px;
 }
 
 #red_ck_link {
