@@ -33,6 +33,9 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	@Autowired
+	BoardDAO dao = new BoardDAO();
+	
     @RequestMapping(value = "/list", method = RequestMethod.GET)    
     public String list(Model model){    
         model.addAttribute("list", boardService.getBoardList());
@@ -106,64 +109,64 @@ public class BoardController {
         return "editform";   
     }
     
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)    
-    public String viewPost(@PathVariable("id") int id, Model model){
-    	BoardVO boardVO = boardService.getBoard(id);
-    	model.addAttribute("u", boardVO);
-        return "view";   
-    }
-    
-//    @RequestMapping(value = "/view/id={id}", method = RequestMethod.GET)    
-//    public ModelAndView viewPost(@PathVariable("id") int id, Model model) throws Exception{
-////    	BoardVO boardVO = boardService.getBoard(id);
-////    	model.addAttribute("u", boardVO);
-////        return "view";
-//    	BoardVO vo = boardService.getBoard(id);
-//		ModelAndView mav = new ModelAndView();
-//		
-//        BoardDAO dao = new BoardDAO();
-//		List<BoardVO> read_list = dao.getBoardList();
-//		
-//		//파일 
-//		FileVO file = new FileVO();
-//		boardService.fileInsertService(file);
-//		
-//		JSONArray readContent = new JSONArray();
-//		try {
-//		    	for (int i = 0; i < read_list.size() ; i++) {   
-//			    		JSONObject ob =new JSONObject();
-//			        
-////			        ob.put("id", read_list.get(i).getId());
-////			        ob.put("form_id", read_list.get(i).getForm_id());
-////			        ob.put("Category", read_list.get(i).getCategory());
-////			        ob.put("fieldName", read_list.get(i).getFieldName());
-////			        ob.put("fileName", read_list.get(i).getFileName());
-////			        ob.put("isEssential", read_list.get(i).getIsEssential());
-////			        ob.put("index", read_list.get(i).getIndex());
-////			        ob.put("regDate", read_list.get(i).getRegDate());
-////			        ob.put("key", read_list.get(i).getKey());
-////			        ob.put("field_id", read_list.get(i).getField_id());
-////			        ob.put("content", read_list.get(i).getContent());
-//			    		
-//			    	ob.put("Category", read_list.get(i).getCategory());
-//			    	ob.put("Title", read_list.get(i).getTitle());	
-//			    	ob.put("Wrter", read_list.get(i).getWriter());
-//			    	ob.put("Content", read_list.get(i).getContent());
-//			    	//파일 
-//			    	//ob.put("File", read_list.get(i).fileInsertService(file));    
-//			        readContent.put(ob);      
-//		    }
-//		    	System.out.println("+++++++++++++++++++++");
-//		        System.out.println(readContent.toString());
-//		    }catch(JSONException e){
-//		        e.printStackTrace();
-//		    }
-//		
-//		mav.addObject("read_list",readContent);
-//
-//		mav.setViewName("view");
-//		return mav;
+//    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)    
+//    public String viewPost(@PathVariable("id") int id, Model model){
+//    	BoardVO boardVO = boardService.getBoard(id);
+//    	model.addAttribute("u", boardVO);
+//        return "view";   
 //    }
+    
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)    
+    public ModelAndView viewPost(@PathVariable("id") int id, Model model) throws Exception{
+//    	BoardVO boardVO = boardService.getBoard(id);
+//    	model.addAttribute("u", boardVO);
+//        return "view";
+    	BoardVO vo = boardService.getBoard(id);
+		ModelAndView mav = new ModelAndView();
+		
+//      BoardDAO dao = new BoardDAO();
+		List<BoardVO> read_list = dao.getBoardList();
+		
+		//파일 
+		FileVO file = new FileVO();
+		boardService.fileInsertService(file);
+		
+		JSONArray readContent = new JSONArray();
+		try {
+		    	for (int i = 0; i < read_list.size() ; i++) {   
+			    		JSONObject ob =new JSONObject();
+			        
+//			        ob.put("id", read_list.get(i).getId());
+//			        ob.put("form_id", read_list.get(i).getForm_id());
+//			        ob.put("Category", read_list.get(i).getCategory());
+//			        ob.put("fieldName", read_list.get(i).getFieldName());
+//			        ob.put("fileName", read_list.get(i).getFileName());
+//			        ob.put("isEssential", read_list.get(i).getIsEssential());
+//			        ob.put("index", read_list.get(i).getIndex());
+//			        ob.put("regDate", read_list.get(i).getRegDate());
+//			        ob.put("key", read_list.get(i).getKey());
+//			        ob.put("field_id", read_list.get(i).getField_id());
+//			        ob.put("content", read_list.get(i).getContent());
+			    		
+			    	ob.put("Category", read_list.get(i).getCategory());
+			    	ob.put("Title", read_list.get(i).getTitle());	
+			    	ob.put("Wrter", read_list.get(i).getWriter());
+			    	ob.put("Content", read_list.get(i).getContent());
+			    	//파일 
+			    	//ob.put("File", read_list.get(i).fileInsertService(file));    
+			        readContent.put(ob);      
+		    }
+		    	System.out.println("+++++++++++++++++++++");
+		        System.out.println(readContent.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
+		
+		mav.addObject("read_list",readContent);
+
+		mav.setViewName("view");
+		return mav;
+    }
     
     @RequestMapping(value = "/editok", method = RequestMethod.POST)    
     public String editPostOk(BoardVO vo){
