@@ -282,12 +282,12 @@
 	</select>
 	
 	<!-- 개별보기 내용 -->
-	<select id='getReadList' resultType="com.walab.oas.DTO.ReadResult">
-	SELECT * from Field 
+	<select id='getReadList' parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+	SELECT A.id as id,fieldType,content from Field 
 	INNER JOIN
-	(select field_id, content from ResultContent 
+	(select ResultContent.id,field_id, content from ResultContent 
 	INNER JOIN Result ON (ResultContent.result_id=Result.id)
-	where ResultContent.result_id=39) A ON (Field.id=A.field_id) where Field.form_id=1;
+	where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id)
 	</select>
 	
 	<!-- 개별보기에 카테고리 가져오기  -->
@@ -424,7 +424,16 @@
 	</select>
 	
 	<select id="getResultId" resultType="int">
-		select ifnull(id,0)as id from Result where form_id = #{form_id} AND user_id=${user_id};
+		select id from Result where form_id = #{form_id} AND user_id=#{user_id};
 	</select>
+	
+	<select id="getResultIdCount" resultType="int">
+		select count(*) from Result where form_id = #{form_id} AND user_id=#{user_id};
+	</select>
+	
+	<!-- userForm update -->
+	<update id="updateContent" >
+		UPDATE ResultContent SET content = #{content} WHERE id = #{id};
+	</update>
 </mapper>
 

@@ -1,6 +1,8 @@
 package com.walab.oas.DAO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +64,11 @@ public class UserDAO {
 		return sqlSession.selectList(namespace + ".getContent",result_id);
 	}
 
+	public void updateContent (int id, String content) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("content", content);
+		System.out.println(map);
+		sqlSession.update(namespace + ".updateContent", map);
+	}
 }

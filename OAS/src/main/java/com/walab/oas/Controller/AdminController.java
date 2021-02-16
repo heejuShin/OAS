@@ -401,79 +401,6 @@ public class AdminController {
 			
 		return formDetailItem;
 	}	
-	
-	@RequestMapping(value="/form/view/preview",method=RequestMethod.POST)
-	@ResponseBody 
-	public ModelAndView previewFormUpdate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-
-		ModelAndView mav = new ModelAndView();
-		System.out.println("preview!!");
-		String form_name  = request.getParameter("form_name");
-	    String form_detail  = request.getParameter("form_detail");
-	    String form_startDate  = request.getParameter("form_startDate");
-	    String form_endDate  = request.getParameter("form_endDate");
-	    
-	    JSONArray jArray = new JSONArray();
-	    JSONObject ob2 =new JSONObject();
-	    ob2.put("form_name", form_name);
-	    ob2.put("form_detail", form_detail);
-	    ob2.put("form_startDate", form_startDate);
-	    ob2.put("form_endDate", form_endDate);
-	    jArray.put(ob2);
-	    mav.addObject("form_info", jArray);
-	    
-	    int f_cnt=Integer.parseInt(request.getParameter("f_cnt"));
-	    String []field_id = request.getParameterValues("field_id");
-	    String []field_name = request.getParameterValues("field_name");
-	    String []field_type = request.getParameterValues("field_type");
-	    String []field_star = request.getParameterValues("field_star");
-	    String []item_count = request.getParameterValues("item_count");
-	    
-	    
-	    String []content = request.getParameterValues("content");
-	    String []isDefault = request.getParameterValues("isDefault");
-	    
-		
-		JSONArray jArray2 = new JSONArray();
-		JSONArray jArray3 = new JSONArray();
-	    try {
-	    	int idx=0;
-	    	
-	    	for (int i = 1; i <= f_cnt ; i++) {   
-		    	JSONObject ob =new JSONObject();
-		    	
-		        ob.put("field_id", field_id[i]);
-		        ob.put("field_name", field_name[i]);
-		        ob.put("field_type", field_type[i]);
-		        ob.put("field_star", field_star[i]);
-		        ob.put("item_count", Integer.parseInt(item_count[i]));
-		        
-		        if("radio".equals(field_type[i])||"checkbox".equals(field_type[i])||"select".equals(field_type[i])) {
-		        	for (int j = 1; j <= Integer.parseInt(item_count[i]) ; j++) {
-		        		idx++;
-		        		JSONObject ob3 =new JSONObject();
-			        	ob3.put("content", content[idx]);
-			        	ob3.put("isDefault", isDefault[idx]);
-			        	jArray3.put(ob3);
-		        	}
-		        }
-		         
-		        jArray2.put(ob);
-		        
-		    }
-	    }catch(JSONException e){
-	        e.printStackTrace();
-	    }
-	    
-	    System.out.println(jArray3);
-	    
-	    mav.addObject("optionList", jArray3);
-		mav.addObject("field_list", jArray2);
-		mav.addObject("form_info", jArray);
-		mav.setViewName("userFormPreview");
-		
-		return mav;
-	}
 
 	
 	//신청폼 update
@@ -668,15 +595,23 @@ public class AdminController {
 	
 	//신청폼 (Admin) View
 	@RequestMapping(value = "/form/result/{link}/{id}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
-	  public ModelAndView readForm(@PathVariable String link, HttpServletRequest request) throws Exception {
+	  public ModelAndView readForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		List<ReadResult> read_list=adminDAO.getReadList();
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		
+		int form_ID=adminDAO.getFormId(link); 
+		int result_id=adminDAO.getResultId(form_ID,user_id);
+		
+		List<ReadResult> read_list=adminDAO.getReadList(result_id);
 		List<Category> category_name = adminDAO.getCategoryName();
 		List<Result> date_list = adminDAO.getDate();
 		
 		//String form_id  = request.getParameter("select_formID");
-		int form_ID=adminDAO.getFormId(link); 
+		
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);

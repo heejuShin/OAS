@@ -121,12 +121,10 @@ public class MainController {
 		
 		int user_id=0;
 		if(session.getAttribute("id")!=null) {
-			System.out.println("before");
 			user_id=(Integer) session.getAttribute("id");
-			System.out.println(link);
 		}
 		
-		int form_ID=adminDAO.getFormId("2021mac"); 
+		int form_ID=adminDAO.getFormId(link); 
 		int result_id=adminDAO.getResultId(form_ID,user_id);
 		
 		redirectAttr.addFlashAttribute("form_id",form_ID);
@@ -155,7 +153,7 @@ public class MainController {
 			
 			int form_ID=adminDAO.getFormId(link); 
 			
-			if(adminDAO.getResultId(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
+			if(adminDAO.getResultIdCount(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
 				mav.setViewName("redirect:/viewForm/"+link); //신청한거 확인하는 페이지로 가기
 				return mav;	
 			}

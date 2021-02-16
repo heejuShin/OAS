@@ -101,8 +101,8 @@ public class AdminDAO {
 		sqlSession.update(namespace + ".modifyItem",item);
 	}
 
-	public List<ReadResult> getReadList(){	
-		return sqlSession.selectList(namespace+".getReadList");		
+	public List<ReadResult> getReadList(int result_id){	
+		return sqlSession.selectList(namespace+".getReadList",result_id);		
 	}
 	
 	public List<Category> getCategoryName(){		
@@ -157,6 +157,14 @@ public class AdminDAO {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("form_id", form_id);
 		map.put("user_id", user_id);
+		System.out.println(map);
 		return sqlSession.selectOne(namespace +".getResultId", map);
+	}
+	public int getResultIdCount(int form_id,int user_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("user_id", user_id);
+		System.out.println(map);
+		return sqlSession.selectOne(namespace +".getResultIdCount", map);
 	}
 }
