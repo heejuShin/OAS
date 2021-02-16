@@ -613,7 +613,7 @@ public class AdminController {
 		//String form_id  = request.getParameter("select_formID");
 		
 		HashMap<String, Integer> result_form_id = new HashMap<String, Integer>();
-		result_form_id.put("link", form_ID);
+		result_form_id.put("form_id", form_ID);
 		result_form_id.put("result_id", id);
 		List<ReadResult> read_list=adminDAO.getReadList(result_form_id);
 		List<Category> category_name = adminDAO.getCategoryName(form_ID);

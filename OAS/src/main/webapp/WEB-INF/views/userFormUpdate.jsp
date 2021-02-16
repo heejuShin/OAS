@@ -197,6 +197,80 @@
 		$(".inputDiv").on('change', "input[type=file]", function(){
 			$(this).parent().siblings(".isModified").val("1");
 		});
+
+
+
+		 $("#submitB").on('click', function () {
+				console.log("저장 ");
+				var is_empty = 0; // 필수 조건 충족 여부 확인 
+
+				//필수 필드 검사 
+				$('.checkDiv').each(function(){
+
+					if ( $(this).children().is('input, textarea') && $(this).children().val().length < 1 ) {
+						is_empty = 1;
+						if($(this).siblings('.redMsg').length < 1) {
+							var msg = $("<p class='redCSS redMsg' >필수값입니다.</p>");
+							$(this).after(msg);
+						}
+			        }else if($(this).children('label').children().is(':checkbox') && $(this).children('label').children().is(':checked') < 1){
+			        		is_empty = 1;
+						if($(this).siblings('.redMsg').length < 1) {
+							var msg = $("<p class='redCSS redMsg' >필수값입니다.</p>");
+							$(this).after(msg);
+						}
+				   }else if($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked')< 1 ){
+		        		is_empty = 1;
+					if($(this).siblings('.redMsg').length < 1) {
+						var msg = $("<p class='redCSS redMsg' >필수값입니다.</p>");
+						$(this).after(msg);
+					}
+			   }else{$(this).siblings('.redMsg').remove();}
+					
+				});//필수 필드 검사 끝
+
+				//필수값이 모두 입력 되었을 때 form submit 처리 
+				if(is_empty == 0) {
+					
+					$(".inputDiv").each(function (){
+						//radio,checkbox 가 필수가 아닐때 hidden input(관련 field_id) 지움
+						if ($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked') < 1 ) {
+							$(this).append('<input type="hidden" name="content" value="">');
+				        }else if($(this).children('label').children().is(':checkbox') && $(this).children('label').children().is(':checked') < 1) {
+				        	$(this).children('label').children('input:checkbox').attr("name", "removeI");
+				        	$(this).append('<input type="hidden" name="content" value="">');
+				        }else if($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked') == 1 ) {
+				        	$(this).children('div').children('input:radio').each(function (){
+					        	if($(this).is(':checked')){
+						        	var newInput = $('<textarea name="content" style="display:none;">'+$(this).val()+'</textarea>');
+						        	$(this).append(newInput);
+						        	}
+						        
+				        	});
+					        }
+
+				        
+
+						//checkbox value $로 엮기
+						if($(this).children('label').children("input:checkbox[name=content]:checked").length > 0){
+							//checkbox value 문자열 생성 
+							var newContent = "";
+							$(this).children('label').children("input:checkbox[name=content]:checked").each(function(){
+								newContent += $(this).val() ;
+								newContent += "$";
+							});
+
+							$(this).children('label').children("input:checkbox").attr("name", "");
+							var newTag = $("<textarea name='content' style='display: none;'>"+newContent+"</textarea>");
+							$(this).append(newTag);
+						}
+					}); // checkbox 또는 radio 검사 
+
+		        	$("#userForm").submit(); //제출 
+			}//필수값이 모두 입력 되었을 때 끝 
+				
+			
+		});//submitB 함수 끝
 		
 	}); //document ready
 	</script>
@@ -204,7 +278,7 @@
 <body>
 <div class="container-contact100">
 	<div class="wrap-contact100">
-		<form action="userForm/update" class="contact100-form" method="post">
+		<form action="userForm/update" id="userForm" class="contact100-form" method="post">
 			<span class="contact100-form-title" id="form_title"></span>
 
 				<div class="wrap-input100 bg0">
@@ -221,7 +295,7 @@
 				</div>
 
 				<div id="submitDiv" class="container-contact100-form-btn form edit button"><!--UPDATE시 사용 예정 -->
-		            <button class="contact100-form-btn edit" type="submit">
+		            <button class="contact100-form-btn edit" id="submitB" type="button">
 						<span>수정<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
 					</button>
 					<button class="contact100-form-btn cancle" type="button" id="cancle">
