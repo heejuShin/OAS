@@ -13,9 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
     #yourModal{
-    	height: 1000px !important;
+    	height: 600px !important;
     	overflow: scroll !important;
-	margin-top:235px !important;
+		margin-top: 180px !important;
     }
     </style>
     
