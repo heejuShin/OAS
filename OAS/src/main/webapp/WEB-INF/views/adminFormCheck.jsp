@@ -13,8 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
     #yourModal{
-    	height: 600px !important;
+    	height: 1000px !important;
     	overflow: scroll !important;
+	margin-top:235px !important;
     }
     </style>
     
@@ -309,7 +310,7 @@
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "${link}";
-			  			  var id = $(this).siblings(".result_id").val();
+			  var id = $(this).siblings(".result_id").val();
                     	  $("#yourModal").load("../form/result/"+link+"/"+id);
                     	 
                     	} );
