@@ -101,20 +101,24 @@ public class AdminDAO {
 		sqlSession.update(namespace + ".modifyItem",item);
 	}
 
-	public List<ReadResult> getReadList(int result_id){	
-		return sqlSession.selectList(namespace+".getReadList",result_id);		
+// 	public List<ReadResult> getReadList(int result_id){	
+// 		return sqlSession.selectList(namespace+".getReadList",result_id);		
+// 	}
+	
+	public List<ReadResult> getReadList(HashMap<String ,Integer > result_form_id){
+		return sqlSession.selectList(namespace+".getReadList",result_form_id);	
 	}
 	
-	public List<Category> getCategoryName(){		
-		return sqlSession.selectList(namespace+".getCategoryName");		
+	public List<Category> getCategoryName(int form_id){		
+		return sqlSession.selectList(namespace+".getCategoryName", form_id);		
 	}
 	
 	public String getCategoryName_one(int id){	
 		return sqlSession.selectOne(namespace+".getCategoryName_one", id);		
 	}
 	
-	public List<Result> getDate(){		
-		return sqlSession.selectList(namespace+".getDate");		
+	public List<Result> getDate(int result_id){		
+		return sqlSession.selectList(namespace+".getDate", result_id);		
 	}
 	
 	public int IsCategoryDeleted(int form_id) {
