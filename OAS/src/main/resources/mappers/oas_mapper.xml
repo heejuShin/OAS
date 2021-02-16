@@ -282,19 +282,19 @@
 	</select>
 	
 	<!-- 개별보기 내용 -->
-	<select id='getReadList' parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
-	SELECT A.id as id,fieldType,content from Field 
+	<select id='getReadList' parameterType="HashMap" resultType="com.walab.oas.DTO.ReadResult">
+	SELECT * from Field 
 	INNER JOIN
-	(select ResultContent.id,field_id, content from ResultContent 
+	(select field_id, content from ResultContent 
 	INNER JOIN Result ON (ResultContent.result_id=Result.id)
-	where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id)
+	where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{link};
 	</select>
 	
 	<!-- 개별보기에 카테고리 가져오기  -->
-	<select id="getCategoryName" resultType="com.walab.oas.DTO.Category">
+	<select id="getCategoryName" parameterType="int" resultType="com.walab.oas.DTO.Category">
 	Select categoryName from Category 
 	inner join Form on Category.id = Form.category_id 
-	where Form.id =1;
+	where Form.id =#{form_id};
 	</select><!-- Form.id =#{formid받아오기 }; -->
 	
 	<select id="getCategoryName_one" parameterType="int" resultType="String">
@@ -308,13 +308,13 @@
 	</select>
 	
 	<!-- 개별보기에 제출&수정 날짜 가져오기  -->
-	<select id='getDate' resultType="com.walab.oas.DTO.Result">
-	SELECT * FROM Result where Result.id=39;
+	<select id='getDate' parameterType="int" resultType="com.walab.oas.DTO.Result">
+	SELECT * FROM Result where Result.id=#{result_id};
 	</select><!-- where Result.id=#{해당 응답지 id} -->
 	
-	<select id="IsCategoryDeleted" resultType="int">
+	<select id="IsCategoryDeleted" parameterType="int" resultType="int">
 	SELECT COUNT(*) FROM Category where Category.id IN
-	(SELECT category_id from Form where Form.id = 1);
+	(SELECT category_id from Form where Form.id = #{form_id});
 	</select>
 	
     <!-- 카테고리 더하기 -->
