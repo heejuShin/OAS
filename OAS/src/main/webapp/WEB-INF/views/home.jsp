@@ -156,7 +156,7 @@
          </div>
         <div class="board_section">
            <div class="title">
-              <h2><a href='<%=request.getContextPath()%>/board/list'><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
            </div>
                 <div class="tablelist">
                    <table class="table table-hover">
