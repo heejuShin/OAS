@@ -159,7 +159,7 @@
 							
 					  }
 					//console.log(" 옵션 확인 ");
-					console.log(optionlist.length);
+					//console.log(optionlist.length);
 					console.log(optionlist);
 							
 				}else if(fieldInfo[i].field_type == 'textarea'){//타입이 textarea일 때 
