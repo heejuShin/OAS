@@ -248,6 +248,7 @@ header .navbar {
 }
 .navbar .navbar-brand h2 {
 	color: #fff;
+	padding-top: 6.5px;
 	text-transform: uppercase;
 	font-size: 24px;
 	font-weight: 700;
@@ -272,7 +273,8 @@ header .navbar {
 .navbar .navbar-nav a.nav-link {
 	text-transform: capitalize;
 	font-size: 15px;
-	font-weight: 500;
+	font-weight: 700;
+	font-family: 'Poppins', sans-serif !important;
 	letter-spacing: 0.5px;
 	color: #fff;
 	transition: all 0.5s;

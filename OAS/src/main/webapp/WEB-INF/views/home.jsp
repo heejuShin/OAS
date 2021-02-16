@@ -21,162 +21,13 @@
    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/home.css?ver=2">
 
 
  <style>
-   
-   /* 전체   */
-      html, body{height:auto}
-      
-      main {
-         margin: 2% 15%;
-         height:100%;
-      }
-      
-      /* board1 */
-      
-      .board1 {
-         height: 300px;
-         padding: 0 2%;
-      }
-      
-      .board_image{
-      display:block;
-         width: 25%;
-         height: 100%;
-      }
-      
-      .board_image, .board_section{
-         float:left;
-      }
-      
-      .board2{
-         clear:both;
-         height:auto;
-      }
-      
-      .board_section{
-         display: block;  
-         width: 73%; 
-         
-         margin-left:2%;
-         
-      }
-      .title {
-         margin-left:35%;
-      }
-      
 
-      .title h1{
-         font-size: 350%;
-         font-family: inherit;
-         font-style: normal;
-         font-weight:700;
-      }
-      
-       .swLink{
-         font-size: 50%;
-         text-decoration: underline;
-       text-underline-position: under;
-      } 
-      
-      .board_image img{
-           width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      
-      .title img {
-        width: 8%;
-        height: 8%;
-        object-fit: contain;
-        margin-right:1.5%;
-        margin-top: -1%;
-      }
-            
-      
-      /* 공지 테이블  */
-      .tablelist{
-         margin-top: 4%;
-         width: 100%;
-      }
-      
-      .tablelist th{
-         text-align: center;
-      }
-      
-      #headTable {
-         background-color: rgb(223, 223, 223);
-      }
-      td{
-      text-align: center;}
-      
-      
-      
-      /* 검색 필터  */
-      
-       .products .filters{
-          width:100%;
-         padding-bottom: 2%;
-         margin-bottom: 1%;
-         
-      }
-  
-      
-      .ul_filters{
-        padding: 2% 0;
-        width:100%;
-      }
-      
-      .form_inline{
-         width:100%;
-      }
-      
-     
-      
-      #searchB{
-         border: 1px solid #28a745;
-      }
-      
-      /*--------------------*/
-      
-      .discription{
-      	overflow: hidden;
-      	background-color:#f7f7f7;
-      }
-      
-      .down-content p{
-     
-      height:120px;
-      border: #f7f7f7 1px solid;
-      border-radius:10px;
-      padding: 2px 4px;
-      color: black;
-    font-family: NanumGothic;
-    font-weight: 600;
-      
-      }
-      
-      .formLink{
-      	display:bolck;
-      	text-align:center;
-      	margin-bottom:10px;
-      }
-      
-      .formDate{
-      	margin-bottom:2%;
-      }
-      
-      .product-item .down-content h4{
-      margin-top: 40px;
-	text-align:center;
-      }
-      
-      .a.filled-button{
-      font-weight: 600;
-      padding: 10px;
-      }
-     
+
       
  </style>
  
@@ -319,7 +170,7 @@
                     <c:forEach items="${list}" var="BoardVO" end="4">
                             <tr>
                             	<td>${BoardVO.title}</td>
-      							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
+      							<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
                             </tr>
                     </c:forEach>
                     </tbody>  
@@ -346,9 +197,9 @@
                   <li class="active" data-filter="*">All Products</li>
               </ul>            
             </div>
+
             <div style="padding-bottom:5px;">
 	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="POST" style="float:right;">
-	                    
 	                    <input type="hidden" name="searchType" value="all">
 	                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -357,9 +208,7 @@
           </div>
           <div id="contentsDiv" class="col-md-12">
             <div class="filters-content">
-                <div class="row grid">
-                   
-
+                <div class="row grid leftDiv">
                 </div>
             </div>
           </div>

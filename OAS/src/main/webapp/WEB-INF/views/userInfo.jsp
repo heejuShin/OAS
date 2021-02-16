@@ -7,12 +7,18 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
+	body{
+	font-family: NanumGothic !important; 
+	}
       .w3-section{
           display:grid;
             justify-content: stretch;
             grid-template-columns: repeat(2, 1fr);
             grid-column-gap: 10px;
         }
+         .info_select {
+     	height:40px;
+     }
         .w3-black{
           padding:7px 15px;
             margin: 0 0 20px 0;
@@ -20,6 +26,14 @@
           position: relative;
           left: 45%;
         }
+        
+        #infoeditB{
+        border-radius: 10px;
+    	padding: 5px 15px;
+    }
+    
+    form input,select,button{
+    font-weight:600;}
     </style>
     
 </head>
@@ -59,7 +73,7 @@
               
               <div>
 			  <label>학부</label>
-				<select id="department"  class="w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)">
+				<select id="department"  class="info_select w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)">
                   <option value="전산전자공학부" selected>전산전자공학부</option>
                   <option value="기계제어공학부">기계제어공학부</option>
                   <option value="글로벌리더십학부">글로벌리더십학부</option>
@@ -78,14 +92,14 @@
                 
                 <div>
               <label>전공</label>
-              <select id="major" class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" name="major">
+              <select id="major" class="info_select w3-input w3-border w3-margin-bottom w3-light-grey" type="input" name="major">
 				<option>전공</option>
 			  </select>
               </div>
               
               <div>
               <label>학년</label>
-              <select id="grade" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="grade" onchange="semesterChange(this)">
+              <select id="grade" class="info_select w3-input w3-border w3-margin-bottom w3-light-grey" name="grade" onchange="semesterChange(this)">
 	            <option value="1" selected>1학년</option>
 	            <option value="2">2학년</option>
 	            <option value="3">3학년</option>
@@ -95,7 +109,7 @@
               
               <div>
               <label>학기</label>
-              <select id="semester" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="semester">
+              <select id="semester" class="info_select w3-input w3-border w3-margin-bottom w3-light-grey" name="semester">
             	<option value="1" selected>학기</option>
             
               </select>
@@ -103,7 +117,7 @@
               
               
             </div>
-            <button class="w3-button w3-black" type="submit">수정</button>
+            <button id="infoeditB" class="w3-button w3-black" type="submit">수정</button>
           </form>
     
         </div>

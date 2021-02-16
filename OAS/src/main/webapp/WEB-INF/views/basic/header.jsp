@@ -22,7 +22,7 @@
 	
 	<!-- Additional CSS Files -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css?ver=1">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/adding.css">
 	
@@ -47,6 +47,8 @@
 	.banner{ padding-top:0px;} 
     /* templatemo-sixteen.css 219 수정필요 */
 	header .navbar {padding: 10px 0px;}
+	
+	
 	
 	 .siteName h2 {
 		margin-top: 0px;
@@ -94,7 +96,7 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto navbar_right">
               <li class="nav-item active">
-                <a class="nav-link"  href="<%=request.getContextPath()%>">Home
+                <a class="nav-link"  href="<%=request.getContextPath()%>/">Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li>

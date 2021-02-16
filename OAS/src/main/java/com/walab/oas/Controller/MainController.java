@@ -146,10 +146,6 @@ public class MainController {
 			if(session.getAttribute("id")!=null) {
 				user_id=(Integer) session.getAttribute("id");
 			}
-			else {
-				mav.setViewName("redirect:/redirectUrl");
-				return mav;	
-			}
 			
 			int form_ID=adminDAO.getFormId(link); 
 			
