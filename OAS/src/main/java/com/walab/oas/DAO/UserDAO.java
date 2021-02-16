@@ -71,4 +71,8 @@ public class UserDAO {
 		System.out.println(map);
 		sqlSession.update(namespace + ".updateContent", map);
 	}
+	
+	public List<ReadResult> getReadResultContent(int result_id){
+		return sqlSession.selectList(namespace+".getReadResultContent",result_id);	
+	}
 }
