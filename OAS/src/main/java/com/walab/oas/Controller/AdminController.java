@@ -594,24 +594,30 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) View
-	@RequestMapping(value = "/form/result/{link}/{id}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
-	  public ModelAndView readForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/form/result/{link}/{id}")
+	  public ModelAndView readForm(@PathVariable String link, @PathVariable int id, HttpSession session, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		int user_id=0;
-		if(session.getAttribute("id")!=null) {
-			user_id=(Integer) session.getAttribute("id");
-		}
+// 		int user_id=0;
+// 		if(session.getAttribute("id")!=null) {
+// 			user_id=(Integer) session.getAttribute("id");
+// 		}
 		
 		int form_ID=adminDAO.getFormId(link); 
-		int result_id=adminDAO.getResultId(form_ID,user_id);
+// 		int result_id=adminDAO.getResultId(form_ID,user_id);
 		
-		List<ReadResult> read_list=adminDAO.getReadList(result_id);
-		List<Category> category_name = adminDAO.getCategoryName();
-		List<Result> date_list = adminDAO.getDate();
+// 		List<ReadResult> read_list=adminDAO.getReadList(result_id);
+// 		List<Category> category_name = adminDAO.getCategoryName();
+// 		List<Result> date_list = adminDAO.getDate();
 		
 		//String form_id  = request.getParameter("select_formID");
 		
+		HashMap<String, Integer> result_form_id = new HashMap<String, Integer>();
+		result_form_id.put("link", form_ID);
+		result_form_id.put("result_id", id);
+		List<ReadResult> read_list=adminDAO.getReadList(result_form_id);
+		List<Category> category_name = adminDAO.getCategoryName(form_ID);
+		List<Result> date_list = adminDAO.getDate(id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
