@@ -37,6 +37,13 @@
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 
   <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=2">
+  <style>
+     @media (min-width: 1200px){
+		.adminMypage_main .container {
+		    max-width: 100% !important;
+		}
+     }
+     </style>
 
 
   </head>
@@ -51,7 +58,7 @@
 		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
-    <section id="demo">
+    <section id="demo" class="adminMypage_main">
     <div class="container">
 
           <div class="table-responsive" data-pattern="priority-columns">
@@ -113,7 +120,7 @@
 		  <!--Start_Filter and Search part-->
           <nav class="filter_search" >
 
-            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
 	  			<input type="hidden" id="searchType" name="searchType" value="all">
 	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
