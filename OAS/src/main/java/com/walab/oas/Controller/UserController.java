@@ -186,6 +186,10 @@ public class UserController {
 			
 		ModelAndView mav = new ModelAndView();
 		Form form_info = userDao.forminfo(form_id);
+		
+		HashMap<String, Integer> result_form_id = new HashMap<String, Integer>();
+		result_form_id.put("form_id", form_id);
+		result_form_id.put("result_id", result_id);
 			
 		Result result_info = userDao.resultinfo(result_id);
 		List<Field> field_list = mainDao.fieldList(form_id);
@@ -211,7 +215,8 @@ public class UserController {
 		ObjectMapper mapper2=new ObjectMapper();
 		String jArray2=mapper2.writeValueAsString(field_list);
 		
-		List<ReadResult> read_list=adminDao.getReadList(result_id);
+		//List<ReadResult> read_list=adminDao.getReadList(result_id);
+		List<ReadResult> read_list=adminDao.getReadList(result_form_id);
 		
 		ObjectMapper mapper=new ObjectMapper();
 		String jArray3=mapper.writeValueAsString(read_list);
