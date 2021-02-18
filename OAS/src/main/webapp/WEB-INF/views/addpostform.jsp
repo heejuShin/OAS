@@ -58,8 +58,10 @@
 	<input type="file" name="files"/></td>
 </tr>
 </table>
+<input type="submit" value="Add Post"/>
 </form>
 </div>
+
 <button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='list'">목록보기 </button>
 
 </main>

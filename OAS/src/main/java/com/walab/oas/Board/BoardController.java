@@ -163,6 +163,7 @@ public class BoardController {
 		    }
 		
 		mav.addObject("read_list",readContent);
+    	model.addAttribute("u", vo);
 
 		mav.setViewName("view");
 		return mav;
