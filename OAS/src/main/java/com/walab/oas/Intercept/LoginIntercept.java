@@ -23,12 +23,12 @@ public class LoginIntercept extends HandlerInterceptorAdapter{
               return true;
           } else {
               ModelAndView modelAndView = new ModelAndView("redirect:/");
-              modelAndView.addObject("msgCode", "else 세션이 만료되어 로그아웃 되었습니다. 다시 로그인 해주세요.");
+              modelAndView.setViewName("error/loginError");
               throw new ModelAndViewDefiningException(modelAndView);
           }
       } catch (Exception e) {
           ModelAndView modelAndView = new ModelAndView("redirect:/");
-          modelAndView.addObject("msgCode", "세션이 만료되어 로그아웃 되었습니다. 다시 로그인 해주세요.");
+          modelAndView.setViewName("error/loginError");
           throw new ModelAndViewDefiningException(modelAndView);
       }
    }
