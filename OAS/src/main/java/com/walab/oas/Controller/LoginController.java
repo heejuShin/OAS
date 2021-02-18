@@ -58,7 +58,7 @@ public class LoginController {
    
    @GetMapping("/logout")
    @ResponseBody
-   @ModelAttribute("ses")
+   //@ModelAttribute("ses")
    public ModelAndView logout(HttpSession session, SessionStatus sessionStatus) throws JsonProcessingException {
       System.out.println("Im logout");
       sessionStatus.setComplete();
@@ -76,7 +76,7 @@ public class LoginController {
  * @throws JsonParseException 
     **/
    @GetMapping("google/auth")
-   @ModelAttribute("ses")
+   //@ModelAttribute("ses")
    public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode) throws JsonParseException, JsonMappingException, IOException
          {
       
@@ -175,7 +175,7 @@ public class LoginController {
     **/
    @GetMapping("google/revoke/token")
    @ResponseBody
-   @ModelAttribute("ses")
+   //@ModelAttribute("ses")
    public Map<String, String> revokeToken(@RequestParam(value = "token") String token) throws JsonProcessingException {
 
       Map<String, String> result = new HashMap<String,String>();
@@ -207,7 +207,7 @@ public class LoginController {
       return mav;
    }
    
-   @ModelAttribute("ses")
+   //@ModelAttribute("ses")
    @RequestMapping(value = "/google/regist" ,method = RequestMethod.POST)
      public ModelAndView registUser(HttpSession session,User user) throws Exception {
       ModelAndView mav = new ModelAndView();
@@ -217,12 +217,15 @@ public class LoginController {
       session.setAttribute("id", user.getId());
       session.setAttribute("name", user.getUserName());
       session.setAttribute("email", user.getEmail());
-      session.setAttribute("admin", user.getAdmin());
+      session.setAttribute("admin", 2);
       session.setAttribute("studentId", user.getStudentId());
       session.setAttribute("grade", user.getGrade());
       session.setAttribute("department", user.getDepartment());
-      session.setAttribute("admin", user.getAdmin());
+      System.out.println("lc admin check : "+ user.getAdmin());
       mav.setViewName("redirect:/");
       return mav;
    }
 }
+
+
+
