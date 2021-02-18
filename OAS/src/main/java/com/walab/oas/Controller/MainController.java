@@ -139,7 +139,7 @@ public class MainController {
 		@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
 		public ModelAndView goToForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
 			System.out.println("<goToForm> controller");
-
+			
 			ModelAndView mav = new ModelAndView();
 			
 			int user_id=0;
