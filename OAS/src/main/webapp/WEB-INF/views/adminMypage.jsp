@@ -86,6 +86,8 @@
                       </th>
                       <th data-priority="5">폼 관리</th>
                       <th data-priority="1">폼 신청</th>
+                      <th data-priority="1">신청자 수 </th>
+                      
                       </tr>
                   </thead>
 
@@ -242,6 +244,19 @@
 			                    	
 	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td7);
+
+	                    		    //신청자 수 표시 
+	                    		    /* var td8 = $("<td>신청자 수 </td>");
+	                    		    $($(".tbodies").children()[i]).append(td8) */;
+	                    		    //var td8 = $("<td>"+adminList[i].resultCount+"</td>"); //formName 대신 submitNum 넣기 
+	                    		    //var td8 = $("<td>"+resultCount[i].count(adminList[i].id)+"</td>"); //formName 대신 submitNum 넣기 
+	                    		    var td8 = resultCount; //formName 대신 submitNum 넣기 
+	                    		    
+	                    		    $($(".tbodies").children()[i]).append(td8);
+	                    		    
+	                    		    
+
+
 	                    		    var form3=$("<form id='form' action='../form/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
 	                    		    $($(".tbodies").children()[i]).append(form3);
 	                    		    var form4=$("<form id='viewForm' action='../viewForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
