@@ -13,9 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
     #yourModal{
-    	height: 1000px !important;
+    	height: 600px !important;
     	overflow: scroll !important;
-	margin-top:235px !important;
+		margin-top: 180px !important;
     }
     </style>
     
@@ -107,24 +107,11 @@
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
     <!-- main -->
     <main>
-      <!-- list start -->
-      <div >
-        <div>
-          <h2>Check</h2>
-        </div>
-        
-        <div>
-	        <div id="controlDiv">
-	          <select id ="allState" name="stateName">
-	          	<!-- js로 option list 넣기 -->
-	          </select>
-	          <button name='stateB'>적용</button>
-	        </div>
-	        
-		<div id="headTitle">
+    
+    	<div id="headTitle">
 			<h2>[${form_title}] 응답 관리</h2>
 		</div>
-		<!-- result control  -->
+        
 		
       <!-- table -->
               <div class="table-responsive tableDiv" data-pattern="priority-columns">
@@ -174,9 +161,7 @@
 			          </select>
 			          <button id="stateB" name='stateB'>적용</button>
 			        </div>
-			        </div>
-			        
-	        		
+			      </div>
 			</div>
               
               <!-- form view modal -->
