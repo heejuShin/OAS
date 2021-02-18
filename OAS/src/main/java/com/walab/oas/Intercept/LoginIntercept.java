@@ -16,7 +16,7 @@ public class LoginIntercept extends HandlerInterceptorAdapter{
    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
       HttpSession session = request.getSession();
-      System.out.println("Session start? "+session);
+      //System.out.println("Session start? "+session);
       
       try {
           if (session != null && session.getAttribute("admin") != null) {
@@ -24,13 +24,11 @@ public class LoginIntercept extends HandlerInterceptorAdapter{
           } else {
               ModelAndView modelAndView = new ModelAndView("redirect:/");
               modelAndView.addObject("msgCode", "else 세션이 만료되어 로그아웃 되었습니다. 다시 로그인 해주세요.");
-              modelAndView.addObject("returnUrl", "/board/list");
               throw new ModelAndViewDefiningException(modelAndView);
           }
       } catch (Exception e) {
           ModelAndView modelAndView = new ModelAndView("redirect:/");
           modelAndView.addObject("msgCode", "세션이 만료되어 로그아웃 되었습니다. 다시 로그인 해주세요.");
-          modelAndView.addObject("returnUrl", "/board/list");
           throw new ModelAndViewDefiningException(modelAndView);
       }
    }
