@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2">
 	
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -251,23 +251,29 @@
 
 				<div class="wrap-input100 bg0">
 					<p class="label-input100 form_explanation" ></p>
-					<p class="label-input100 form_date">real 신청기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>
+					<p class="label-input100 form_date">신청기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>
 				</div>
 				
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
 				</div>
-
 				
-			</form>
-			
+				<div class="wrap-input100 button rs1-wrap-input100 formbts">
+					<button class="contact100-form-btn" type="button" id="mypageB" onclick="location.href='<%=request.getContextPath()%>/'" >
+						<span>설문 작성 취소</span>
+					</button>
+				</div>
 				<!-- input type : submit -->
-				<div class="container-contact100-form-btn">
+				<div class="wrap-input100 button rs1-wrap-input100 formbts">
 					<button class="contact100-form-btn" id="submitB">
 						<span>Submit<i class="fa fa-long-arrow-right m-l-7"
 							aria-hidden="true"></i></span>
 					</button>
 				</div>
+
+				
+			</form>
+			
 			
 		</div>
 	</div>
