@@ -105,14 +105,38 @@
 
 
                             $(document).ready( function() {   
-
+                            	var qsRegex;
                                var $grid = $('.grid').isotope({
                                  itemSelector: '.grid-item',
                                  percentPosition: true,
                                   masonry: {
                                     columnWidth: ".grid-item"
+                                  },
+                                  filter: function() {
+                                	return qsRegex ? $(this).text().match( qsRegex ) : true;
                                   }
                                });
+
+                            // use value of search field to filter
+                               var $quicksearch = $('.keyword').keyup( debounce( function() {
+                                 qsRegex = new RegExp( $quicksearch.val(), 'gi' );
+                                 $grid.isotope();
+                               }, 200 ) );
+
+                            // debounce so filtering doesn't happen every millisecond
+                               function debounce( fn, threshold ) {
+                                 var timeout;
+                                 threshold = threshold || 100;
+                                 return function debounced() {
+                                   clearTimeout( timeout );
+                                   var args = arguments;
+                                   var _this = this;
+                                   function delayed() {
+                                     fn.apply( _this, args );
+                                   }
+                                   timeout = setTimeout( delayed, threshold );
+                                 };
+                               }
 
 
                                // filter items on button click
@@ -123,21 +147,6 @@
                                  $(this).addClass('active');
                                });
 
-
-                            	var $table = $('.grid').isotope({
-                            		itemSelector: '.grid-item',
-                              	  	percentPosition: true,
-                      	          getSortData: {
-                      	              status : '[data-status]', 
-                      	           }
-                      	        });
-                      	        
-                            	$('.filter-status').on('change', function() {
-                            
-                              	  var filterValue = $(this).find(':selected').attr('data-filter');
-                              	  console.log(filterValue);
-                              	  $table.isotope({ filter: filterValue });
-                              	});
 
                             });
                             </script>
@@ -199,11 +208,10 @@
             </div>
 
             <div style="padding-bottom:5px;">
-	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="POST" style="float:right;">
-	                    <input type="hidden" name="searchType" value="all">
-	                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
-	                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-	            </form>
+	            <div class="form-inline"  style="float:right;">
+	                    <input type="text" class="form-control mr-sm-2 keyword" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	                    
+	            </div>
             </div>
           </div>
           <div id="contentsDiv" class="col-md-12">

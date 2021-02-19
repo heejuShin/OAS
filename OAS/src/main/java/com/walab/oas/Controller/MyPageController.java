@@ -74,6 +74,7 @@ public class MyPageController {
 				pageMaker.setCri(cri);
 				pageMaker.setTotalCount(count);
 				
+				
 				mav.addObject("categoryList", category_list);
 				mav.addObject("adminList", jArray);
 				mav.addObject("count", count);
@@ -159,11 +160,11 @@ public class MyPageController {
 			pageMaker.setTotalCount(count1);
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(userList);
-			System.out.println(jArray);
+			
 			mav.addObject("userList", jArray);
 			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);
-			
+			mav.addObject("searchOption", cri.getSearchType());
 			mav.addObject("keyword", cri.getKeyword());
 			
 			return mav;

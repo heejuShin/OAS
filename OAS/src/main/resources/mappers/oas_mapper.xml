@@ -183,12 +183,18 @@
    
    
    <!-- 해당 폼 제출자 정보 리스트 -->
-   <select id="submitterList" parameterType="int" resultType="com.walab.oas.DTO.Result">
-         <![CDATA[
-         SELECT Result.id as id, User.id as user_id, userName,department,studentId,email,Result.regDate as regDate,Result.editDate as editDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id};
+   <select id="submitterList" resultType="com.walab.oas.DTO.Result">
+         
+         SELECT Result.id as id, User.id as user_id, userName,department,studentId,email,Result.regDate as regDate,Result.editDate as editDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id} LIMIT #{pageStart}, #{perPageNum};
 
-      ]]> 
       <!-- SELECT Result.id as id,userName,department,studentId,email,Result.regDate as regDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id}; -->
+   </select>
+   
+   <!-- 해당 폼 제출자 수 -->
+   <select id="countSubmitter" resultType="int">
+      SELECT count(*) From Result where form_id=#{form_id}
+      <!-- <include refid="search" /> -->
+
    </select>
    
    <!-- 해당 폼 상태 리스트 -->
@@ -287,7 +293,7 @@
    INNER JOIN
    (select field_id, content from ResultContent 
    INNER JOIN Result ON (ResultContent.result_id=Result.id)
-   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{link};
+   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{form_id};
    </select>
    
    	

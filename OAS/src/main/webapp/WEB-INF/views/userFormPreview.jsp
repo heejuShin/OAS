@@ -34,7 +34,6 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
 	<!-- select CSS & JS-->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -224,6 +223,8 @@
 
 			 $('#confirm').on('click', function() {
 					console.log("confirm click");
+					
+					
 					$("#modal_message").html("설문지 작성이 완료되었습니다.");
 					var name = $("#formName").val();
 					if(name=="") {
@@ -250,8 +251,7 @@
 	function modal(id) {
 	    var zIndex = 9999;
 	    var modal = $('#' + id);
-
-		$("#preview_modal").css("display","none");
+		
 	    // 모달 div 뒤에 희끄무레한 레이어
 	    var bg = $('<div>')
 	        .css({
@@ -286,7 +286,6 @@
 	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
 	        .find('.modal_close_btn')
 	        .on('click', function() {
-	        	
 	            bg.remove();
 	            modal.hide();
 	        });

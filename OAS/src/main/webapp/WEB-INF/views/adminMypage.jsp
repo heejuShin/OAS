@@ -78,7 +78,7 @@
 
                       <th data-priority="3">
                         <select class="filters filter-status" id="status" data-filter-group='status'>
-                              <option data-filter='' value="*" selected>상태</option>
+                              <option data-filter='' value="*">상태</option>
                               <option data-filter='.예약' value="예약">예약</option>
                               <option data-filter='.신청중' value="신청중">신청중</option>
                               <option data-filter='.신청마감' value="신청마감">신청마감</option>
@@ -114,14 +114,14 @@
 			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&raquo;</a>
 			    </li>
 			    </c:if>
-		  </ul>
+		  	   </ul>
 		  </div>
 
 		  <!--Start_Filter and Search part-->
           <nav class="filter_search" >
-
-            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="POST" >
 	  			<input type="hidden" id="searchType" name="searchType" value="all">
+	  			<input type="hidden" id="searchOption" name="searchOption" value="${searchOption}">
 	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
 	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
   			</form>
@@ -145,6 +145,21 @@
 									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='"+categoryList[i].categoryName+"'>"+categoryList[i].categoryName+"</option>");
 									$(".filter-category").append(option);
 								}
+
+								//select option selected 설정
+                                var searchOption=$("#searchOption").val();
+                                var keyword=$("#keyword").val();
+
+                                console.log(searchOption);
+                                console.log(keyword);
+                                if(searchOption=="status"){
+                                	$('.filter-status option[value='+keyword+']').prop('selected', 'selected').change();
+                                	$("#keyword").val("");
+                                }
+                                if(searchOption=="categoryName"){
+                                	$('.filter-category option[value='+keyword+']').prop('selected', 'selected').change();
+                                	$("#keyword").val("");
+                                }
                                 
 	                            var adminList=${adminList};
 	                            for(var i=0; i < adminList.length; i++){
@@ -269,7 +284,9 @@
                                 	$(obj).parent().siblings("#viewForm").submit();
                             }
                             function deleteForm(obj){
-                            	$(obj).parent().siblings("#deleteForm").submit();
+                            	if (confirm("해당폼을 정말 삭제하시겠습니까?") == true)
+                            		$(obj).parent().siblings("#deleteForm").submit();
+                        		
                             }
                             function resultForm(obj){
                             	$(obj).parent().siblings("#resultForm").submit();
@@ -281,6 +298,11 @@
                           	        console.log($(this).val());
   									$("#searchType").val($(this).attr("id"));
   									$("#keyword").val($(this).val());
+  									if($(this).val()=="*"){
+  										$("#searchType").val("");
+  	  									$("#keyword").val("");
+  	  								}
+  	  									
   									$(".form-inline").submit();
                       	        });
                             });
