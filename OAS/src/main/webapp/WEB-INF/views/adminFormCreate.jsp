@@ -304,10 +304,6 @@ $(".form-control").select2({
 	tags : true
 });
 
-$('#link').bind("keyup", function(){
-    $(this).val($(this).val().toLowerCase());
-});
-
 
 /** TODO
 * 그래도 어느 정도의 CSS

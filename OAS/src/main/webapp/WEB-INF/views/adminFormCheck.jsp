@@ -109,7 +109,9 @@
     <main>
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리</h2>
+			<h2>[${form_title}] 응답 관리</h2> <form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
+    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+</form>
 		</div>
         
 		

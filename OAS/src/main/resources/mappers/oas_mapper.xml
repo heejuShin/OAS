@@ -232,6 +232,12 @@
      ]]>
    </select>
    
+    <select id="getResultCnt" resultType="Integer">
+     <![CDATA[
+         SELECT count(*) FROM Result WHERE form_id =#{form_id} and user_id = #{user_id};
+     ]]>
+   </select>
+   
    <!-- result  id 생성  -->
    <insert id="createResultID" parameterType="com.walab.oas.DTO.Result">
        INSERT INTO Result (form_id,user_id,state_id) VALUE (#{form_id}, #{user_id}, #{state_id});
