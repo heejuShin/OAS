@@ -92,18 +92,13 @@
     <!-- main -->
     <main>
       <!-- list start -->
-	        <div id="controlDiv">
-	          <select id ="allState" name="stateName">
-	          	<!-- js로 option list 넣기 -->
-	          </select>
-	          <button name='stateB'>적용</button>
-	        </div>
-	        
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> <form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
-</form></h2>
+			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
+			<form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
+    			<input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+			</form>
+			
 			
 		</div>
         
@@ -143,7 +138,16 @@
                  
 
                   <tfoot>
-                  <tr id="moreContent">  
+                  
+                  	<tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr>
+                  </tfoot>
+                </table>
+              
+              </div><!--end of .table-responsive-->
+              
+               <div>
+               
+               <div id="moreContent">  
                   	<ul class="pagination">
 					    <c:if test="${pageMaker.prev}">
 					    <li>
@@ -161,15 +165,7 @@
 					    </li>
 					    </c:if>
 		  	   		  </ul>
-		  	   		</tr>
-                  
-                  	<tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr>
-                  </tfoot>
-                </table>
-              
-              </div><!--end of .table-responsive-->
-              
-               <div>
+		  	   	</div>
                		<!-- state control  -->
                	<div id="select_control">
 			        <div id="controlDiv">
@@ -180,8 +176,7 @@
 			        </div>
 
 			    </div>
-			        
-	        		
+	        
 			</div>
               
               <!-- form view modal -->
@@ -352,6 +347,6 @@
                 	    	$("#show").remove();
                 	    }
                 	    
-                	});
+                });
                   </script>
 </html>

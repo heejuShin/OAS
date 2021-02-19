@@ -130,23 +130,6 @@
 		  	   </ul>
 		  </div>
 
-<<<<<<< HEAD
-		  <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
-            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="POST" >
-	  			<input type="hidden" id="searchType" name="searchType" value="all">
-	  			<input type="hidden" id="searchOption" name="searchOption" value="${searchOption}">
-	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
-  			</form>
-
-          </nav>
-		   <!--End_Filter and Search part-->  
-=======
-		  
->>>>>>> branch 'master' of https://github.com/heejuShin/OAS.git
-
-
       </div> <!-- end container -->
   </section> <!-- end section -->
   </main>

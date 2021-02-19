@@ -314,15 +314,6 @@ $(document).click(function(e) {
 		$("#bg").remove();
     }
     
-}); https://github.com/heejuShin/OAS.git
-
-/** TODO
-* 그래도 어느 정도의 CSS
-* 상태 선택
-* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
-* '기타' 추가 기능
-* 복사 기능
-**/
-
+});
 </script>
 </html>
