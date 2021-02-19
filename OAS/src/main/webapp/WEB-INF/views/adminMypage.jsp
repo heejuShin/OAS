@@ -242,6 +242,7 @@
 			                    	
 	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td7);
+	                    		    
 	                    		    var form3=$("<form id='form' action='../form/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
 	                    		    $($(".tbodies").children()[i]).append(form3);
 	                    		    var form4=$("<form id='viewForm' action='../viewForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
