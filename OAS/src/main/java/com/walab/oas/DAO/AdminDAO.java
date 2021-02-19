@@ -14,6 +14,7 @@ import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
+import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.ReadResult;
@@ -26,9 +27,21 @@ public class AdminDAO {
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
 	
-    
-	public List<Result> submitterList(int form_id) {
-		return sqlSession.selectList(namespace + ".submitterList",form_id);
+	public List<Result> submitterList(int form_id, int pageStart, int perPageNum) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageStart", pageStart);
+		map.put("perPageNum", perPageNum);
+		map.put("form_id", form_id);
+		System.out.println(map);
+		return sqlSession.selectList(namespace + ".submitterList",map);
+	}
+	
+	public int countSubmitter(String searchType, String keyword,int form_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		map.put("form_id", form_id);
+		return sqlSession.selectOne("countSubmitter", map);
 	}
 	
 	public List<State> stateList(int form_id) {
@@ -40,7 +53,6 @@ public class AdminDAO {
 	}
 	
 	public int createForm(Form form) throws Exception{
-		
 		return sqlSession.insert(namespace + ".formCreate", form);
 	}
 	public void createState(State state) throws Exception{
@@ -58,11 +70,11 @@ public class AdminDAO {
 		return sqlSession.insert(namespace+ ".itemCreate", item);
 	}
 	
-	public int getFormId(String url) {
-		return sqlSession.selectOne(namespace +".getFormId", url);
+	public int getFormId(String link) throws Exception{
+		return sqlSession.selectOne(namespace +".getFormId", link);
 	}
 	
-	public int getFieldId(String key) {
+	public int getFieldId(String key) throws Exception{
 		return sqlSession.selectOne(namespace +".getFieldId", key);
 	}
 	
@@ -103,20 +115,24 @@ public class AdminDAO {
 		sqlSession.update(namespace + ".modifyItem",item);
 	}
 
-	public List<ReadResult> getReadList(){	
-		return sqlSession.selectList(namespace+".getReadList");		
+// 	public List<ReadResult> getReadList(int result_id){	
+// 		return sqlSession.selectList(namespace+".getReadList",result_id);		
+// 	}
+	
+	public List<ReadResult> getReadList(HashMap<String ,Integer > result_form_id){
+		return sqlSession.selectList(namespace+".getReadList",result_form_id);	
 	}
 	
-	public List<Category> getCategoryName(){		
-		return sqlSession.selectList(namespace+".getCategoryName");		
+	public List<Category> getCategoryName(int form_id){		
+		return sqlSession.selectList(namespace+".getCategoryName", form_id);		
 	}
 	
 	public String getCategoryName_one(int id){	
 		return sqlSession.selectOne(namespace+".getCategoryName_one", id);		
 	}
 	
-	public List<Result> getDate(){		
-		return sqlSession.selectList(namespace+".getDate");		
+	public List<Result> getDate(int result_id){		
+		return sqlSession.selectList(namespace+".getDate", result_id);		
 	}
 	
 	public int IsCategoryDeleted(int form_id) {
@@ -155,38 +171,25 @@ public class AdminDAO {
 		sqlSession.update(namespace+ ".changeAvailable", map);
 	}
 	
-    // 게시글 첨부파일 추가
-    public void addAttach(String fullName) throws Exception {
-        sqlSession.insert(namespace + ".addAttach", fullName);
-    }
-
-    // 게시글 첨부파일 조회
-    public List<String> getAttach(Integer bno) throws Exception {
-        return sqlSession.selectList(namespace + ".getAttach", bno);
-    }
-
-    // 게시글 첨부파일 수정
-    public void replaceAttach(String fullName, Integer bno) throws Exception {
-
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("fullName", fullName);
-        paramMap.put("bno", bno);
-
-        sqlSession.insert(namespace + ".replaceAttach", paramMap);
-    }
-
-    // 특정 게시글 첨부파일 일괄 삭제
-    public void deleteAllAttach(Integer bno) throws Exception {
-        sqlSession.delete(namespace + ".deleteAllAttach", bno);
-    }
-
-    // 게시글 첨부파일 삭제
-    public void deleteAttach(String fullName) throws Exception {
-        sqlSession.delete(namespace + ".deleteAttach", fullName);
-    }
-
-    // 특정 게시글의 첨부파일 갯수 갱신
-    public void updateAttachCnt(Integer bno) throws Exception {
-        sqlSession.update(namespace + ".updateAttachCnt", bno);
-    }
+	public int getResultId(int form_id,int user_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("user_id", user_id);
+		System.out.println(map);
+		return sqlSession.selectOne(namespace +".getResultId", map);
+	}
+	public int getResultIdCount(int form_id,int user_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("user_id", user_id);
+		System.out.println(map);
+		return sqlSession.selectOne(namespace +".getResultIdCount", map);
+	}
+	
+	public int getResultCnt(int form_id, int user_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("user_id", user_id);
+		return sqlSession.selectOne(namespace + ".getResultCnt", map);
+	}
 }

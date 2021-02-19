@@ -40,9 +40,11 @@ import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
+import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.Item;
+import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.ReadResult;
 
 @RestController
@@ -208,7 +210,7 @@ public class AdminController {
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
 				form.setUrl(url);
-				int isAvailable = 0; //TODO
+				int isAvailable = 1; //TODO
 				form.setIsAvailable(isAvailable);
 				int isUserEdit = 0; //TODO
 				form.setIsUserEdit(isUserEdit);
@@ -401,79 +403,6 @@ public class AdminController {
 			
 		return formDetailItem;
 	}	
-	
-	@RequestMapping(value="/form/view/preview",method=RequestMethod.POST)
-	@ResponseBody 
-	public ModelAndView previewFormUpdate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-
-		ModelAndView mav = new ModelAndView();
-		System.out.println("preview!!");
-		String form_name  = request.getParameter("form_name");
-	    String form_detail  = request.getParameter("form_detail");
-	    String form_startDate  = request.getParameter("form_startDate");
-	    String form_endDate  = request.getParameter("form_endDate");
-	    
-	    JSONArray jArray = new JSONArray();
-	    JSONObject ob2 =new JSONObject();
-	    ob2.put("form_name", form_name);
-	    ob2.put("form_detail", form_detail);
-	    ob2.put("form_startDate", form_startDate);
-	    ob2.put("form_endDate", form_endDate);
-	    jArray.put(ob2);
-	    mav.addObject("form_info", jArray);
-	    
-	    int f_cnt=Integer.parseInt(request.getParameter("f_cnt"));
-	    String []field_id = request.getParameterValues("field_id");
-	    String []field_name = request.getParameterValues("field_name");
-	    String []field_type = request.getParameterValues("field_type");
-	    String []field_star = request.getParameterValues("field_star");
-	    String []item_count = request.getParameterValues("item_count");
-	    
-	    
-	    String []content = request.getParameterValues("content");
-	    String []isDefault = request.getParameterValues("isDefault");
-	    
-		
-		JSONArray jArray2 = new JSONArray();
-		JSONArray jArray3 = new JSONArray();
-	    try {
-	    	int idx=0;
-	    	
-	    	for (int i = 1; i <= f_cnt ; i++) {   
-		    	JSONObject ob =new JSONObject();
-		    	
-		        ob.put("field_id", field_id[i]);
-		        ob.put("field_name", field_name[i]);
-		        ob.put("field_type", field_type[i]);
-		        ob.put("field_star", field_star[i]);
-		        ob.put("item_count", Integer.parseInt(item_count[i]));
-		        
-		        if("radio".equals(field_type[i])||"checkbox".equals(field_type[i])||"select".equals(field_type[i])) {
-		        	for (int j = 1; j <= Integer.parseInt(item_count[i]) ; j++) {
-		        		idx++;
-		        		JSONObject ob3 =new JSONObject();
-			        	ob3.put("content", content[idx]);
-			        	ob3.put("isDefault", isDefault[idx]);
-			        	jArray3.put(ob3);
-		        	}
-		        }
-		         
-		        jArray2.put(ob);
-		        
-		    }
-	    }catch(JSONException e){
-	        e.printStackTrace();
-	    }
-	    
-	    System.out.println(jArray3);
-	    
-	    mav.addObject("optionList", jArray3);
-		mav.addObject("field_list", jArray2);
-		mav.addObject("form_info", jArray);
-		mav.setViewName("userFormPreview");
-		
-		return mav;
-	}
 
 	
 	//신청폼 update
@@ -667,16 +596,30 @@ public class AdminController {
 	}
 	
 	//신청폼 (Admin) View
-	@RequestMapping(value = "/form/result/{link}/{id}")//현재는 페이지를 보려면 /{link}가 없어야 합니다 
-	  public ModelAndView readForm(@PathVariable String link, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/form/result/{link}/{id}")
+	  public ModelAndView readForm(@PathVariable String link, @PathVariable int id, HttpSession session, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
-		List<ReadResult> read_list=adminDAO.getReadList();
-		List<Category> category_name = adminDAO.getCategoryName();
-		List<Result> date_list = adminDAO.getDate();
+// 		int user_id=0;
+// 		if(session.getAttribute("id")!=null) {
+// 			user_id=(Integer) session.getAttribute("id");
+// 		}
+		
+		int form_ID=adminDAO.getFormId(link); 
+// 		int result_id=adminDAO.getResultId(form_ID,user_id);
+		
+// 		List<ReadResult> read_list=adminDAO.getReadList(result_id);
+// 		List<Category> category_name = adminDAO.getCategoryName();
+// 		List<Result> date_list = adminDAO.getDate();
 		
 		//String form_id  = request.getParameter("select_formID");
-		int form_ID=adminDAO.getFormId(link); 
+		
+		HashMap<String, Integer> result_form_id = new HashMap<String, Integer>();
+		result_form_id.put("form_id", form_ID);
+		result_form_id.put("result_id", id);
+		List<ReadResult> read_list=adminDAO.getReadList(result_form_id);
+		List<Category> category_name = adminDAO.getCategoryName(form_ID);
+		List<Result> date_list = adminDAO.getDate(id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -805,12 +748,12 @@ public class AdminController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/form/downloadExcelFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/resultForm/downloadExcelFile", method = RequestMethod.POST)
 	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//쿼리 작업
 		//String form_id  = request.getParameter("select_formID");
-		int form_ID = 1;//Integer.parseInt(form_id);
+		int form_ID = Integer.parseInt(request.getParameter("formID"));//Integer.parseInt(form_id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -892,8 +835,8 @@ public class AdminController {
 	}
 	
 	//admin mypage의 결과 버튼 누를때
-	@RequestMapping(value = "/resultForm/{link}" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-	public ModelAndView resultFormOnly(@PathVariable String link, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/resultForm/{link}")
+	public ModelAndView resultFormOnly(@PathVariable String link, SearchCriteria cri, HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
@@ -904,8 +847,10 @@ public class AdminController {
 		String form_title = adminDAO.getFormName(form_id);
 		//String form_title = request.getParameter("select_formTitle");
 		String url = adminDAO.getLink(form_id);
-		List<Result> submitterList= adminDAO.submitterList(form_id);
 		
+		cri.setForm_id(form_id);
+		List<Result> submitterList= adminDAO.submitterList(form_id,cri.getPageStart(),cri.getPerPageNum());
+		System.out.println(submitterList);
 		ObjectMapper mapper=new ObjectMapper();
 		String jArray=mapper.writeValueAsString(submitterList);
 			
@@ -915,12 +860,20 @@ public class AdminController {
 		
 		int isAvailable=adminDAO.getAvailable(form_id);
 		
+		//paging
+		int count=adminDAO.countSubmitter(cri.getSearchType(), cri.getKeyword(),form_id);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		
 		mav.addObject("form_id",form_id);
 		mav.addObject("link", url);
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);
 		mav.addObject("form_title",form_title);
+		mav.addObject("page",cri.getPage());
+		mav.addObject("pageMaker", pageMaker);
 				
 		mav.setViewName("adminFormCheck");
 		return mav;
@@ -933,11 +886,4 @@ public class AdminController {
 		int isAvailable=Integer.parseInt(request.getParameter("isAvailable"));
 		adminDAO.changeAvailable(form_id,isAvailable);
 	}
-	
-    // 게시글 첨부파일 조회
-    @RequestMapping("/getAttach/{bno}")
-    @ResponseBody
-    public List<String> getAttach(@PathVariable("bno") Integer bno) throws Exception {
-        return adminDAO.getAttach(bno);
-    }
 }

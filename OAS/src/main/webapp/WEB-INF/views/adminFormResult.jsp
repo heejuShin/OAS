@@ -35,46 +35,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=2">
 
-<style>
-		.under_tab {
-			list-style: none;
-			margin: 0;
-			padding: 0;
-			overflow: hidden;
-		}
-		/* Float the list items side by side */
-		.under_tab li {
-			float: left;
-		}
-		/* Style the links inside the list items */
-		.under_tab li a{
-			display: inline-block;
-			color: black;
-			text-align: center;
-			text-decoration: none;
-			padding: 18px 45px;
-			font-size: 17px;
-			transition:0.3s;
-		}
-		
-		
-		/* Style the tab content */
-		.under_tabcontent {
-			display: none;
-            width: 100%;
-			padding: 6px 12px;
-		}
-		ul.under_tab li.under_current{
-			border-radius: 6px 6px 0px 0px;
-			background-color: white;
-			color: #222;
-		}
-		.under_tabcontent.under_current {
-			display: block;
-		}
-</style>
 <script>
 	function replaceAll(str, searchStr, replaceStr) {
 	  return str.split(searchStr).join(replaceStr);
@@ -110,10 +72,10 @@
 			console.log("step3");
 				//form 제출시 확인 필요한 필드 클래스 명으로 지정 
 				if(fieldInfo[i].field_star == 1){
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'><b>"+fieldInfo[i].field_name+"</b><span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'>Q. "+fieldInfo[i].field_name+"<span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
  						$("#fieldInputs").append(divTitle);
  				}else{
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'><b>"+fieldInfo[i].field_name+"</b></p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
+						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'>Q. "+fieldInfo[i].field_name+"</p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
 						$("#fieldInputs").append(divTitle);
 					} 
 				console.log("step3.5");
@@ -128,7 +90,7 @@
 						 var selectID = "select" + fieldInfo[i].field_id;
 						 $("#field_"+ fieldInfo[i].field_id).children('p').attr("for",selectID);
 						 if(resultContent[i].content != ""){
- 						  	var selectTag = $("<p id='"+selectID+"' class='label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
+ 						  	var selectTag = $("<p id='"+selectID+"' class='label-input100 nameMargin answerP' name='content'>A. "+resultContent[i].content+"</p>");
 						 }else{
 							 var selectTag = $("<p id='"+selectID+"' class='label-input100 nameMargin answerP' name='content'>선택하지 않음 </p>");
 						 }
@@ -138,7 +100,7 @@
 							var rC_list =replaceAll(resultContent[i].content,"$","/");
 							console.log("step5");
 							if(resultContent[i].content != ""){
-								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>"+rC_list+"</p>");
+								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>A. "+rC_list+"</p>");
 								
 					  		}else{
 					  			var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>선택하지 않음 </p>");
@@ -153,18 +115,18 @@
 							if(resultContent[i].content == ""){
 								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>선택 안함 </p>");
 							}else{
-								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
+								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>A. "+resultContent[i].content+"</p>");
 							}
 							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(listTag);
 							
 					  }
 					//console.log(" 옵션 확인 ");
-					console.log(optionlist.length);
+					//console.log(optionlist.length);
 					console.log(optionlist);
 							
 				}else if(fieldInfo[i].field_type == 'textarea'){//타입이 textarea일 때 
 					if(resultContent[i].content != "")
-						var textTag = $("<p class='label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
+						var textTag = $("<p class='label-input100 nameMargin answerP' name='content'>A. "+resultContent[i].content+"</p>");
 					else
 						var textTag = $("<p class='label-input100 nameMargin answerP' name='content'>응답 내역 없음 </p>");
 						//alert(resultContent[i].content);
@@ -172,7 +134,7 @@
 				}else{
 						if(fieldInfo[i].field_type == 'text'){//타입이 text일 때 
 							if(resultContent[i].content != ""){
-								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
+								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>A. "+resultContent[i].content+"</p>");
 							}
 							else{
 								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>응답 내역 없음 </p>");
@@ -191,12 +153,12 @@
 						}
 						else{//type이 date일때
 							if(resultContent[i].content != ""){
-								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>"+resultContent[i].content+"</p>");
+								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>A. "+resultContent[i].content+"</p>");
 							}
 							else{
 								var inputTag = $("<p class= 'label-input100 nameMargin answerP' name='content'>응답 내역 없음 </p>");
 							}
-							inputTag.addClass("bottomLine");
+						
 						}
 						
 						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(inputTag);
@@ -220,7 +182,6 @@ $(function() {
 <body>
 <div class="container-contact100">
 		<div class="wrap-contact100">
-			<button type="button" class="btn btn-default" data-dismiss="modal" style="position: absolute; top:30px; right: 60px; background: #ddd;">Close</button>
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
 				<span class="contact100-form-title" id="form_title"></span>
 
@@ -234,46 +195,22 @@ $(function() {
 				
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
-						
 				</div>
-			</form>
-			
-				<!-- home button -->
-				<!--
-				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn modal_close" >
+				<div id="submitDiv" class="container-contact100-form-btn form edit button">
+					<button class="contact100-form-btn" type="button" data-dismiss="modal"  id="closeModal">
 						<span>닫기</span>
 					</button>
+
 				</div>
-				-->
+				
+			</form>
+			
+				
 			
 		</div>
 	</div>
 
-				<!-- <span onclick="document.getElementById('id01').style.display='none'"
-					class="w3-button w3-display-topright">&times;</span>
-				<div id="under_tab2" class="under_tabcontent under_current" style="border:1px solid red">
-					<form id='userForm'>
-						<div id="form_div">
-							<div class="form view title" style="overflow:scroll;">
-								<h5 id='category_name' style="float: right"></h5>
-								<h2 id="form_title" style="margin-top: 0px"></h2>
-								<h5 id="form_date"
-									style="background: white; padding: 5px 0px; width: 70%; border-radius: 2px; padding-left: 5px;">
-									<span id="startDate"></span>~<span id="endDate"></span>
-								</h5>
-								<p id="form_explation"></p>
-								<p id="regDate"></p>
-								<p id="editDate"></p>
-							</div>
-							<div class="form view field" style="height: 650px;overflow:scroll;">
-								<div id="fieldInputs" class="contact100-form">
-									field insert 구역
-								</div>
-							</div>
-						</div>
-					</form>
-				</div> -->
+				
 				
 				
 </body>

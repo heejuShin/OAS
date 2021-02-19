@@ -35,7 +35,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=2">
 
 </head>
 <body>
@@ -43,6 +43,8 @@
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
+				<span>신청이 완료된 폼입니다.</span>
+				
 				<span class="contact100-form-title" id="form_title"></span>
 
 				<div class="wrap-input100 bg0">

@@ -3,7 +3,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script language = "javascript">
 
-alert("에러에러!!");
+alert("로그인을 해주세요!");
 document.location.href = "<%=request.getContextPath()%>/";
 
 </script>

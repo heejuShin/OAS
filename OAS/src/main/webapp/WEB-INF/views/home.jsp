@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.walab.oas.Board.BoardDAO,com.walab.oas.Board.BoardVO,java.util.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- jsp directives, tag library 사용됨. -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,162 +21,13 @@
    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/home.css?ver=2">
 
 
  <style>
-   
-   /* 전체   */
-      html, body{height:auto}
-      
-      main {
-         margin: 2% 15%;
-         height:100%;
-      }
-      
-      /* board1 */
-      
-      .board1 {
-         height: 300px;
-         padding: 0 2%;
-      }
-      
-      .board_image{
-      display:block;
-         width: 25%;
-         height: 100%;
-      }
-      
-      .board_image, .board_section{
-         float:left;
-      }
-      
-      .board2{
-         clear:both;
-         height:auto;
-      }
-      
-      .board_section{
-         display: block;  
-         width: 73%; 
-         
-         margin-left:2%;
-         
-      }
-      .title {
-         margin-left:35%;
-      }
-      
 
-      .title h1{
-         font-size: 350%;
-         font-family: inherit;
-         font-style: normal;
-         font-weight:700;
-      }
-      
-       .swLink{
-         font-size: 50%;
-         text-decoration: underline;
-       text-underline-position: under;
-      } 
-      
-      .board_image img{
-           width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      
-      .title img {
-        width: 8%;
-        height: 8%;
-        object-fit: contain;
-        margin-right:1.5%;
-        margin-top: -1%;
-      }
-            
-      
-      /* 공지 테이블  */
-      .tablelist{
-         margin-top: 4%;
-         width: 100%;
-      }
-      
-      .tablelist th{
-         text-align: center;
-      }
-      
-      #headTable {
-         background-color: rgb(223, 223, 223);
-      }
-      td{
-      text-align: center;}
-      
-      
-      
-      /* 검색 필터  */
-      
-       .products .filters{
-          width:100%;
-         padding-bottom: 2%;
-         margin-bottom: 1%;
-         
-      }
-  
-      
-      .ul_filters{
-        padding: 2% 0;
-        width:100%;
-      }
-      
-      .form_inline{
-         width:100%;
-      }
-      
-     
-      
-      #searchB{
-         border: 1px solid #28a745;
-      }
-      
-      /*--------------------*/
-      
-      .discription{
-      	overflow: hidden;
-      	background-color:#f7f7f7;
-      }
-      
-      .down-content p{
-     
-      height:120px;
-      border: #f7f7f7 1px solid;
-      border-radius:10px;
-      padding: 2px 4px;
-      color: black;
-    font-family: NanumGothic;
-    font-weight: 600;
-      
-      }
-      
-      .formLink{
-      	display:bolck;
-      	text-align:center;
-      	margin-bottom:10px;
-      }
-      
-      .formDate{
-      	margin-bottom:2%;
-      }
-      
-      .product-item .down-content h4{
-      margin-top: 40px;
-	text-align:center;
-      }
-      
-      .a.filled-button{
-      font-weight: 600;
-      padding: 10px;
-      }
-     
+
       
  </style>
  
@@ -219,36 +77,66 @@
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
 								 
                                  if(form_list[i].state_id==0){
-                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm("+form_list[i].id+");'>신청하기</a></div>");
+                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm(this);'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'openForm("+form_list[i].id+");'>신청완료</a></div>");
+ 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'openForm(this);'>신청완료</a></div>");
+
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 
- 								var form=$("<form id='myform_"+form_list[i].id+"' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								var form=$("<form id='myform' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form);
-                           
+ 								var form2=$("<form id='viewForm' action='viewForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								$($($(".grid").children()[i]).children()[0]).append(form2);
                             }
 
                             });
 
-                     		function openForm(form_id){
+                     		function openForm(obj){
                          		console.log("openForm");
-                               $("#myform_"+form_id).submit();
+                         		var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
+                         		if(state_ID==0)
+                           			$(obj).parent().siblings("#myform").submit();
+                                else
+                                	$(obj).parent().siblings("#viewForm").submit();
                             }
 
 
                             $(document).ready( function() {   
-
+                            	var qsRegex;
                                var $grid = $('.grid').isotope({
                                  itemSelector: '.grid-item',
                                  percentPosition: true,
                                   masonry: {
                                     columnWidth: ".grid-item"
+                                  },
+                                  filter: function() {
+                                	return qsRegex ? $(this).text().match( qsRegex ) : true;
                                   }
                                });
+
+                            // use value of search field to filter
+                               var $quicksearch = $('.keyword').keyup( debounce( function() {
+                                 qsRegex = new RegExp( $quicksearch.val(), 'gi' );
+                                 $grid.isotope();
+                               }, 200 ) );
+
+                            // debounce so filtering doesn't happen every millisecond
+                               function debounce( fn, threshold ) {
+                                 var timeout;
+                                 threshold = threshold || 100;
+                                 return function debounced() {
+                                   clearTimeout( timeout );
+                                   var args = arguments;
+                                   var _this = this;
+                                   function delayed() {
+                                     fn.apply( _this, args );
+                                   }
+                                   timeout = setTimeout( delayed, threshold );
+                                 };
+                               }
 
 
                                // filter items on button click
@@ -259,21 +147,6 @@
                                  $(this).addClass('active');
                                });
 
-
-                            	var $table = $('.grid').isotope({
-                            		itemSelector: '.grid-item',
-                              	  	percentPosition: true,
-                      	          getSortData: {
-                      	              status : '[data-status]', 
-                      	           }
-                      	        });
-                      	        
-                            	$('.filter-status').on('change', function() {
-                            
-                              	  var filterValue = $(this).find(':selected').attr('data-filter');
-                              	  console.log(filterValue);
-                              	  $table.isotope({ filter: filterValue });
-                              	});
 
                             });
                             </script>
@@ -292,15 +165,25 @@
          </div>
         <div class="board_section">
            <div class="title">
-              <h2><a href="https://hisnet.handong.edu"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지 </span></a></h2>
+              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
            </div>
                 <div class="tablelist">
-                   <table class="table table-hover">  
-                    <tr><td>2021-1학기 맥북 신청 일정 </td><td>2021-02-09</td></tr>  
-                    <tr><td>2021 하계 SW 캠프 일정 공지 </td><td>2021-02-06</td></tr>  
-                    <tr><td>2021 1학기 마일리지 신청 </td><td>2021-02-06</td></tr>  
-                    <tr><td>2021 여름방학 소프트웨어 봉사단 모집 </td><td>2021-02-05</td></tr>
-                    <tr><td>2021 2학기 공학 프로젝트 기획 신청  </td><td>2021-02-04</td></tr>    
+                   <table class="table table-hover">
+                   	<!-- <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>등록일자 </th>
+                            </tr>
+                    </thead> -->
+                    <tbody>
+                    <c:forEach items="${list}" var="BoardVO" end="4">
+                            <tr>
+                            	<td>${BoardVO.title}</td>
+      							<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
+                            </tr>
+                    </c:forEach>
+                    </tbody>  
+ 
                </table>  
                 </div>
       </div>
@@ -314,24 +197,23 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div class="filters">
+            <div class="filters" style="padding-bottom:40px; margin-bottom:30px;">
               <ul class="ul_filters">
                   <li class="active" data-filter="*">All Products</li>
-              </ul>
-              <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="GET" style="float:right;">
-                    
-                    <input type="hidden" name="searchType" value="all">
-                    <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                 </form>
-              
+
+              </ul>            
+            </div>
+
+            <div style="padding-bottom:5px;">
+	            <div class="form-inline"  style="float:right;">
+	                    <input type="text" class="form-control mr-sm-2 keyword" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
+	                    
+	            </div>
             </div>
           </div>
           <div id="contentsDiv" class="col-md-12">
             <div class="filters-content">
-                <div class="row grid">
-                   
-
+                <div class="row grid leftDiv">
                 </div>
             </div>
           </div>

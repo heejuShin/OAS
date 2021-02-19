@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Create Form</title>
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=13">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=19">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -28,15 +28,10 @@
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+		
 	
 </head>
-<style>
-    .fileDrop {
-        width: 100%;
-        height: 200px;
-        border: 2px dotted #0b58a2;
-    }
-</style>
+
   <body>
 
     <!-- ***** Preloader Start ***** -->
@@ -66,7 +61,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=13"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -80,9 +75,7 @@
 
 	<!-- momment -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	
-    <!-- 첨부파일  -->	
-	
+    
     <div class="container-contact100">
     
 		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
@@ -91,6 +84,8 @@
 					<span class="contact100-form-title">
 						설문 만들기
 					</span>
+					
+      
 
           
           <div class="wrap-input100 bg1 rs1-wrap-input100">
@@ -126,27 +121,7 @@
   
 			    </select>
 			</div>
-<%--첨부파일 영역 추가--%>
-                        <div class="form-group">
-                            <div class="fileDrop">
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
-                            </div>
-                        </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer">
-                        <div>
-                            <hr>
-                        </div>
-                        <ul class="mailbox-attachments clearfix uploadedList"></ul>
-                    </div>
-                    <!-- /.box-footer -->
 
- <%--첨부파일 영역 추가--%>
-                
 			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
@@ -159,20 +134,28 @@
 			
 			</div> 
 			
-			
+			<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts">
+					<button class="contact100-form-btn" type="button" id="mypageB" onclick="location.href='<%=request.getContextPath()%>/admin/mypage'" >
+						<span>설문 만들기 취소</span>
+					</button>
+				</div>
 			<!-- input type : submit -->
-				<div id="submitDiv" class="container-contact100-form-btn form edit button">
+				<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts">
 					<button class="contact100-form-btn" type="button" id="preview">
 						<span>확인</span>
 					</button>
-
 				</div>
+				
 			
 
           <div class="form edit button" style="display: none;"><!--UPDATE시 사용 예정 -->
             <button type="button" class="edit">수정</button>
             <button type="button" class="cancle">취소</button>
           </div>
+         
+        <script>
+        	const randomString = Math.random().toString(36).slice(2);
+        </script>
 
         <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
@@ -180,7 +163,9 @@
 	        <span class="modal_title">제목 : </span><span id="confirm_title" class="modal_content"></span><br>
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
-	        <span class="modal_title">링크 : </span><input id="link" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+<!-- 	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+ -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" onfocus="this.value= randomString;" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+	        
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
 	        </p>
@@ -259,46 +244,8 @@
 
   </body>
 
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
     
-<%--Handlebars JS--%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-<%--파일업로드 JS--%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resources/assets/js/upload.js"></script>
-
-<%--첨부파일 하나의 영역--%>
-<%--이미지--%>
-<script id="templatePhotoAttach" type="text/x-handlebars-template">
-    <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
-        <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages"><i class="fa fa-camera"></i> {{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
-        </div>
-    </li>
-</script>
-<%--일반 파일--%>
-<script id="templateFileAttach" type="text/x-handlebars-template">
-    <li>
-        <span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
-        <div class="mailbox-attachment-info">
-            <a href="{{getLink}}" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{fileName}}</a>
-            <a href="{{fullName}}" class="btn btn-default btn-xs pull-right delBtn"><i class="fa fa-fw fa-remove"></i></a>
-        </div>
-    </li>
-</script>
 <script>
 
 	var state_list = ${state_list};
@@ -356,74 +303,26 @@ $(".form-control").select2({
 	tags : true
 });
 
-//첨부파일 제이쿼리 
-$(document).ready(function () {
-        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
-        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
-        // 전체 페이지 파일 끌어 놓기 기본 이벤트 방지 : 지정된 영역외에 파일 드래그 드랍시 페이지 이동방지
-        $(".content-wrapper").on("dragenter dragover drop", function (event) {
-            event.preventDefault();
-        });
-        // 파일 끌어 놓기 기본 이벤트 방지
-        $(".fileDrop").on("dragenter dragover", function (event) {
-            event.preventDefault();
-        });
-        // 파일 드랍 이벤트 : 파일 전송 처리
-        $(".fileDrop").on("drop", function (event) {
-            event.preventDefault();
-            var files = event.originalEvent.dataTransfer.files;
-            var file = files[0];
-            var formData = new FormData();
-            formData.append("file", file);
-            $.ajax({
-                url: "/fileupload/uploadAjax",
-                data: formData,
-                dataType: "text",
-                processData: false,
-                contentType: false,
-                type: "POST",
-                success: function (data) {
-                    // 파일정보 가공
-                    var fileInfo = getFileInfo(data);
-                    // 이미지 파일일 경우
-                    if (fileInfo.fullName.substr(12, 2) == "s_") {
-                        var html = templatePhotoAttach(fileInfo);
-                    // 이미지 파일이 아닐 경우
-                    } else {
-                        html = templateFileAttach(fileInfo);
-                    }
-                    $(".uploadedList").append(html);
-                }
-            });
-        });
-        // 글 저장 버튼 클릭 이벤트 : 파일명 DB 저장 처리
-        $("#cseeForm").submit(function (event) {
-            event.preventDefault();
-            var that = $(this);
-            var str = "";
-            $(".uploadedList .delBtn").each(function (index) {
-                str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>"
-            });
-            that.append(str);
-            that.get(0).submit();
-        });
-        // 파일 삭제 버튼 클릭 이벤트 : 파일삭제, 파일명 DB 삭제 처리
-        $(document).on("click", ".delBtn", function (event) {
-            event.preventDefault();
-            var that = $(this);
-            $.ajax({
-                url: "/fileupload/deleteFile",
-                type: "post",
-                data: {fileName:$(this).attr("href")},
-                dataType: "text",
-                success: function (result) {
-                    if (result == "DELETED") {
-                        alert("삭제되었습니다.");
-                        that.parents("li").remove();
-                    }
-                }
-            });
-        });
-    });
+
+$('#link').bind("keyup", function(){
+    $(this).val($(this).val().toLowerCase());
+});
+
+$(document).click(function(e) {
+    if (!$(e.target).closest('#preview_modal').length) {
+    	$("#preview_modal").css({ display : "none"});
+		$("#bg").remove();
+    }
+    
+}); https://github.com/heejuShin/OAS.git
+
+/** TODO
+* 그래도 어느 정도의 CSS
+* 상태 선택
+* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
+* '기타' 추가 기능
+* 복사 기능
+**/
+
 </script>
 </html>
