@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 public class BoardVO {
-	private int seq;
+	public int seq;
 	private String category;
 	private String title;
 	private String writer;
@@ -71,7 +71,7 @@ public class BoardVO {
 	}
 	public int getBno() {
 		// TODO Auto-generated method stub
-		return 0;
+		return seq;
 	}
 
 

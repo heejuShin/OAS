@@ -45,8 +45,7 @@
       <interceptor>
          <mapping path="/**" />
          <exclude-mapping path="/"/>
-         <exclude-mapping path="/login/logout"/>
-         <exclude-mapping path="/login/redirectUrl"/>
+         <exclude-mapping path="/login/**"/>
          <beans:ref bean="logininterceptor"/>
       </interceptor>
    </interceptors>

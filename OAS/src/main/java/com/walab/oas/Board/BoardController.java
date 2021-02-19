@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -27,7 +28,7 @@ import com.walab.oas.DTO.ReadResult;
 
 
 @Controller
-@RequestMapping(value="/board")
+@RequestMapping(value="/")
 public class BoardController {
 	
 	@Autowired
@@ -36,18 +37,18 @@ public class BoardController {
 	@Autowired
 	BoardDAO dao = new BoardDAO();
 	
-    @RequestMapping(value = "/list", method = RequestMethod.GET)    
+    @RequestMapping(value = "board/list", method = RequestMethod.GET)    
     public String list(Model model){    
         model.addAttribute("list", boardService.getBoardList());
         return "list";   
     } 
     
-    @RequestMapping(value = "/add", method = RequestMethod.GET)    
+    @RequestMapping(value = "/admin/board/add", method = RequestMethod.GET)    
     public String addPost(){  
         return "addpostform";   
     }
     
-    @RequestMapping(value = "/addok", method = RequestMethod.POST)    
+    @RequestMapping(value = "/admin/board/addok", method = RequestMethod.POST)    
     public String addPostOk(BoardVO vo, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception{     
        
        BoardVO board = new BoardVO();
@@ -82,8 +83,9 @@ public class BoardController {
        files.transferTo(destinationFile); 
        
        //boardService.insertBoard(vo);
-       
-       file.setBno(board.getBno());
+      	System.out.println("seq는:  "+ vo.getSeq());
+
+       file.setBno(vo.getSeq());
        file.setFileName(destinationFileName);
        file.setFileOriName(fileName);
        file.setFileUrl(fileUrl);
@@ -102,7 +104,7 @@ public class BoardController {
     
 
     
-    @RequestMapping(value = "/editform/{id}", method = RequestMethod.GET)    
+    @RequestMapping(value = "/admin/board/editform/{id}", method = RequestMethod.GET)    
     public String editPost(@PathVariable("id") int id, Model model){
     	BoardVO boardVO = boardService.getBoard(id);
     	model.addAttribute("u", boardVO);
@@ -116,7 +118,7 @@ public class BoardController {
 //        return "view";   
 //    }
     
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)    
+    @RequestMapping(value = "/admin/board/view/{id}", method = RequestMethod.GET)    
     public ModelAndView viewPost(@PathVariable("id") int id, Model model) throws Exception{
 //    	BoardVO boardVO = boardService.getBoard(id);
 //    	model.addAttribute("u", boardVO);
@@ -165,11 +167,64 @@ public class BoardController {
 		mav.addObject("read_list",readContent);
     	model.addAttribute("u", vo);
 
-		mav.setViewName("view");
+		mav.setViewName("adminView");
 		return mav;
     }
     
-    @RequestMapping(value = "/editok", method = RequestMethod.POST)    
+    @RequestMapping(value = "/board/view/{id}", method = RequestMethod.GET)    
+    public ModelAndView userviewPost(@PathVariable("id") int id, Model model) throws Exception{
+//    	BoardVO boardVO = boardService.getBoard(id);
+//    	model.addAttribute("u", boardVO);
+//        return "view";
+    	BoardVO vo = boardService.getBoard(id);
+		ModelAndView mav = new ModelAndView();
+		
+//      BoardDAO dao = new BoardDAO();
+		List<BoardVO> read_list = dao.getBoardList();
+		
+		//파일 
+		FileVO file = new FileVO();
+		boardService.fileInsertService(file);
+		
+		JSONArray readContent = new JSONArray();
+		try {
+		    	for (int i = 0; i < read_list.size() ; i++) {   
+			    		JSONObject ob =new JSONObject();
+			        
+//			        ob.put("id", read_list.get(i).getId());
+//			        ob.put("form_id", read_list.get(i).getForm_id());
+//			        ob.put("Category", read_list.get(i).getCategory());
+//			        ob.put("fieldName", read_list.get(i).getFieldName());
+//			        ob.put("fileName", read_list.get(i).getFileName());
+//			        ob.put("isEssential", read_list.get(i).getIsEssential());
+//			        ob.put("index", read_list.get(i).getIndex());
+//			        ob.put("regDate", read_list.get(i).getRegDate());
+//			        ob.put("key", read_list.get(i).getKey());
+//			        ob.put("field_id", read_list.get(i).getField_id());
+//			        ob.put("content", read_list.get(i).getContent());
+			    		
+			    	ob.put("Category", read_list.get(i).getCategory());
+			    	ob.put("Title", read_list.get(i).getTitle());	
+			    	ob.put("Wrter", read_list.get(i).getWriter());
+			    	ob.put("Content", read_list.get(i).getContent());
+			    	//파일 
+			    	//ob.put("File", read_list.get(i).fileInsertService(file));    
+			        readContent.put(ob);      
+		    }
+		    	System.out.println("+++++++++++++++++++++");
+		        System.out.println(readContent.toString());
+		    }catch(JSONException e){
+		        e.printStackTrace();
+		    }
+		
+		mav.addObject("read_list",readContent);
+    	model.addAttribute("u", vo);
+
+		mav.setViewName("userView");
+		return mav;
+    }
+    
+    @RequestMapping(value = "/admin/board/editok", method = RequestMethod.POST)    
     public String editPostOk(BoardVO vo){
     	if(boardService.updateBoard(vo) == 0)
     		System.out.println("데이터 수정 실패 ");
@@ -178,7 +233,7 @@ public class BoardController {
     	return "redirect:list";
     }
     
-    @RequestMapping(value = "/deleteok/{id}", method = RequestMethod.GET)    
+    @RequestMapping(value = "/admin/board/deleteok/{id}", method = RequestMethod.GET)    
     public String deletePostOk(@PathVariable("id") int id){    
         if(boardService.deleteBoard(id) == 0) {
         	System.out.println("데이터 삭제 실패 ");

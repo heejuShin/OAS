@@ -2,7 +2,7 @@
 
 main {
 	margin: 5%;
-	font-family: NanumGothic;
+	font-family: NanumGothic !important;
 }
 
 
@@ -44,6 +44,11 @@ thead {
 .tableDiv {
 	clear: both;
 	margin-top: 2%;
+}
+.selectAdmin{
+	width: 100px;
+	font-weight: 700;
+    color: black !important;
 }
 
 .askDelete {

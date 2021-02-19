@@ -32,6 +32,7 @@ public class AuthIntercept extends HandlerInterceptorAdapter{
       //System.out.println("error admin int "+ type(session.getAttribute("admin")));
       
 	      int ad = Integer.parseInt( session.getAttribute("admin").toString());
+	      System.out.println("auth posthandle come " + ad);
 	      if(ad == 2) {
 	         mav.setViewName("AccessDenied");
 	      }

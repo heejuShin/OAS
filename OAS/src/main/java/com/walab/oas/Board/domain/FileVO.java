@@ -1,11 +1,18 @@
 package com.walab.oas.Board.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.walab.oas.Board.BoardVO;
+
 public class FileVO {
 	private int fno;
     private int bno;
     private String fileName;     //저장할 파일
     private String fileOriName;  //실제 파일
     private String fileUrl;
+    
+    @Autowired
+    BoardVO vo = new BoardVO();
  
     
     public int getFno() {
@@ -17,11 +24,11 @@ public class FileVO {
     }
  
     public int getBno() {
-        return bno;
+        return vo.getSeq();
     }
  
     public void setBno(int bno) {
-        this.bno = bno;
+        this.bno = bno; //next: bno
     }
  
     public String getFileName() {
