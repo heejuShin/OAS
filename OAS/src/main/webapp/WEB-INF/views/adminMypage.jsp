@@ -60,7 +60,17 @@
 
     <section id="demo" class="adminMypage_main">
     <div class="container">
+		  <!--Start_Filter and Search part-->
+          <nav class="filter_search" style="float:right;">
 
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
+	  			<input type="hidden" id="searchType" name="searchType" value="all">
+	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
+	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
+  			</form>
+
+          </nav>
+		  <!--End_Filter and Search part-->  
           <div class="table-responsive" data-pattern="priority-columns">
               <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
                   <thead>
@@ -99,6 +109,7 @@
 
 
           </div> 
+          
           <div id="moreContent">  
 	          <ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
@@ -119,17 +130,7 @@
 		  </ul>
 		  </div>
 
-		  <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
-
-            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			<input type="hidden" id="searchType" name="searchType" value="all">
-	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
-  			</form>
-
-          </nav>
-		   <!--End_Filter and Search part-->  
+		  
 
 
       </div> <!-- end container -->
@@ -244,7 +245,6 @@
 			                    	
 	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td7);
-
 	                    		    //신청자 수 표시 
 	                    		    /* var td8 = $("<td>신청자 수 </td>");
 	                    		    $($(".tbodies").children()[i]).append(td8) */;
@@ -255,8 +255,6 @@
 	                    		    $($(".tbodies").children()[i]).append(td8);
 	                    		    
 	                    		    
-
-
 	                    		    var form3=$("<form id='form' action='../form/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");
 	                    		    $($(".tbodies").children()[i]).append(form3);
 	                    		    var form4=$("<form id='viewForm' action='../viewForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");

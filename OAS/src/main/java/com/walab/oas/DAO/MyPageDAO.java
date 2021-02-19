@@ -59,8 +59,15 @@ public class MyPageDAO {
 	}
 	
 	//user info 가져오기 
-	public List<User> getUserInfo() throws Exception{
-		return sqlSession.selectList(namespace + ".getUserInfo");
+	public List<User> getUserInfo(SearchCriteria searchCRI) throws Exception{
+		return sqlSession.selectList(namespace + ".getUserInfo",searchCRI);
+	}
+	
+	public int countUserInfo(String searchType, String keyword) throws Exception{
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("searchType", searchType);
+		map.put("keyword", keyword);
+		return sqlSession.selectOne(namespace + ".countUserInfo",map);
 	}
 	
 	//user admin update 

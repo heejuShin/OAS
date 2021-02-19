@@ -72,7 +72,7 @@
               </div>
               
               <div>
-			  <label>학부</label>
+			  <label>학부</label> <span style="font-size: 6px"><img id="settingsIcon" alt="profileImg" style= "width: 15px; height: 15px;" src="<%=request.getContextPath()%>/resources/img/settings.png"></span>
 				<select id="department"  class="info_select w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)">
                   <option value="전산전자공학부" selected>전산전자공학부</option>
                   <option value="기계제어공학부">기계제어공학부</option>

@@ -137,8 +137,7 @@ public class MainController {
 
 	//home 페이지에서 폼을 눌렀을 때, 신청안한 것
 		@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
-		public ModelAndView goToForm(@PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
-			System.out.println("<goToForm> controller");
+		public ModelAndView goToForm(RedirectAttributes redirectAttr, @PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
 			
 			ModelAndView mav = new ModelAndView();
 			
@@ -148,6 +147,14 @@ public class MainController {
 			}
 			
 			int form_ID=adminDAO.getFormId(link); 
+			int count = adminDAO.getResultCnt(form_ID, user_id);
+			if(count!=0) {
+				int result_id = adminDAO.getResultId(form_ID, user_id);
+				redirectAttr.addFlashAttribute("form_id",form_ID);
+				redirectAttr.addFlashAttribute("result_id",result_id);
+				mav.setViewName("redirect:/userFormUpdate");
+				return mav;
+			}
 			
 			if(adminDAO.getResultIdCount(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
 				mav.setViewName("redirect:/viewForm/"+link); //신청한거 확인하는 페이지로 가기
@@ -200,8 +207,6 @@ public class MainController {
 			mav.addObject("field_list", jArray2);
 			mav.setViewName("userFormWrite");
 			
-
-			System.out.println("<goToForm> controller end");
 			return mav;
 		}
 	

@@ -18,6 +18,13 @@ main {
 	padding-bottom: 20px;
 }
 
+#listLink{
+	margin-left: 2px;
+    font-size: 13px;
+}
+#listLink a{
+	color: #ff5d51 !important;
+}
 /* result stop control */
 
 #stopMsg {
