@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=1">
+	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=2">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -17,9 +17,9 @@
     
     <style>
     #yourModal{
-    	height: 1000px !important;
+    	height: 600px !important;
     	overflow: scroll !important;
-	margin-top:235px !important;
+		margin-top: 180px !important;
     }
     </style>
     
@@ -99,10 +99,14 @@
 	          <button name='stateB'>적용</button>
 	        </div>
 	        
-		<div id="headTitle">
-			<h2>[${form_title}] 응답 관리</h2>
+    
+    	<div id="headTitle">
+			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> <form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
+    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+</form></h2>
+			
 		</div>
-		<!-- result control  -->
+        
 		
       <!-- table -->
               <div class="table-responsive tableDiv" data-pattern="priority-columns">
@@ -174,6 +178,7 @@
 			          </select>
 			          <button id="stateB" name='stateB'>적용</button>
 			        </div>
+
 			    </div>
 			        
 	        		

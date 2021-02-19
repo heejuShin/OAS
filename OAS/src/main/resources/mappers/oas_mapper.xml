@@ -238,6 +238,12 @@
      ]]>
    </select>
    
+    <select id="getResultCnt" resultType="Integer">
+     <![CDATA[
+         SELECT count(*) FROM Result WHERE form_id =#{form_id} and user_id = #{user_id};
+     ]]>
+   </select>
+   
    <!-- result  id 생성  -->
    <insert id="createResultID" parameterType="com.walab.oas.DTO.Result">
        INSERT INTO Result (form_id,user_id,state_id) VALUE (#{form_id}, #{user_id}, #{state_id});
@@ -349,12 +355,39 @@
        SELECT content from ResultContent where result_id = #{id};
    </select>
 
-   <!-- User 정보 가져오기  -->
+   <!-- User 정보 가져오기 (한페이지용 데이터 들고 오기)  (페이징 + 검색 추가)-->
     <select id="getUserInfo"  resultType="com.walab.oas.DTO.User">
-     <![CDATA[
-         SELECT * FROM User WHERE isDelete =0 and id<>0;
-     ]]>
+    <![CDATA[
+         SELECT * FROM User WHERE isDelete =0 
+         AND id<>0   ]]>
+         <include refid="search_userManage"/> 
+         LIMIT #{pageStart}, #{perPageNum};
    </select> 
+   
+    <!-- 검색 대한 게시글 수 (admin)-->
+   <select id="countUserInfo" resultType="int">
+      <![CDATA[
+         SELECT count(*) FROM User WHERE isDelete =0 
+         AND id<>0   ]]>
+         <include refid="search_userManage"/> 
+
+   </select>
+   
+    <!-- MyBatis 동적 sql -->
+   <sql id="search_userManage">
+      <choose>
+         <when test="searchType == 'all'">
+            AND (userName LIKE CONCAT('%', #{keyword}, '%')
+            OR studentId LIKE CONCAT('%', #{keyword}, '%'))
+         </when>
+         <when test="searchType == 'department'">
+            AND department = #{keyword}
+         </when>
+         <when test="searchType == 'admin'">
+        		AND admin = #{keyword}
+         </when>
+      </choose>
+   </sql>
    
    <!-- User admin update  -->
     <update id="updateLevel"  parameterType ="com.walab.oas.DTO.User">

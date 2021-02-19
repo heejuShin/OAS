@@ -165,7 +165,7 @@
          </div>
         <div class="board_section">
            <div class="title">
-              <h2><a href='<%=request.getContextPath()%>/board/list'><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
            </div>
                 <div class="tablelist">
                    <table class="table table-hover">
@@ -183,10 +183,6 @@
                             </tr>
                     </c:forEach>
                     </tbody>  
-                    <%-- <tr><td>2021-1학기 맥북 신청 일정 </td><td>2021-02-09</td></tr>    
-                    <tr><td>2021 1학기 마일리지 신청 </td><td>2021-02-06</td></tr>  
-                    <tr><td>2021 여름방학 소프트웨어 봉사단 모집 </td><td>2021-02-05</td></tr>
-                    <tr><td>2021 2학기 공학 프로젝트 기획 신청  </td><td>2021-02-04</td></tr> --%>
  
                </table>  
                 </div>
@@ -200,10 +196,11 @@
             <div class="products">
       <div class="container">
         <div class="row">
-          <div class="col-md-12" style="margin-bottom: 20px;">
-            <div class="filters" style="margin-bottom:20px;">
+          <div class="col-md-12">
+            <div class="filters" style="padding-bottom:40px; margin-bottom:30px;">
               <ul class="ul_filters">
                   <li class="active" data-filter="*">All Products</li>
+
               </ul>            
             </div>
 

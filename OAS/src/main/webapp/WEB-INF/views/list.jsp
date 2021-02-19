@@ -12,27 +12,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>free board</title>
+<title>전산전자공학부 공지사항 </title>
+
+<!-- css -->
+<!-- Responsive Tables -->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
+<!--  button css-->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/buttonstyle.css?v=2">
+
+<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=2">
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.css?v=5.3.2">
+<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=2">
+
 <style>
-#list {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-#list td, #list th {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align:center;
-}
-#list tr:nth-child(even){background-color: #f2f2f2;}
-#list tr:hover {background-color: #ddd;}
-#list th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: center;
-  background-color: #d1454a;
-  color: white;
-}
+	.table tbodies {width:60%;}
+	.table thead {background-color: #d69fa9;}
+	.alink {color: #d69fa9;}
+	.titlelink {color: black;}
+	#stateB {
+		background-color: #d69fa9;
+		border: #d69fa9;
+		float:right;
+	}
 </style>
 <script>
 	function delete_ok(id){
@@ -44,37 +46,92 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/basic/header.jsp" />
-<!-- <h1>자유게시판</h1> -->
-<table id="list" width="90%">
+
+<main>
+<div id="headTitle"><h2>전산전자공학부 공지 </h2></div>
+
+<div class="board_section">
+<button name='stateB' id="stateB" onclick="location.href='add'">게시글 작성 </button>
+
+<div class="table-responsive" data-pattern="priority-columns">
+<table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
+<thead>
 <tr>
-	<th>Id</th>
-	<th>Category</th>
-	<th>Title</th>
-	<th>Writer</th>
-	<th>Content</th>
-	<th>Regdate</th>
-	<th>View</th>
-	<th>Edit</th>
-	<th>Delete</th>
+	<th>NO</th>
+	<th>카테고리 </th>
+	<th>제목 </th>
+	<th>등록자  </th>
+	<!-- <th>내용 </th> -->
+	<th>등록 일자 </th>
+	<c:if test="${session.admin == 1}"><th>게시글 관리 </th></c:if>
+	
 </tr>
+</thead>
+<tbody class="tbodies">
 <c:forEach items="${list}" var="u">
 	<tr>
 		<td>${u.getSeq()}</td>
 		<td>${u.getCategory()}</td>
-		<td>${u.getTitle()}</td>
+		<td><a href="view/${u.getSeq()}" class="titlelink">${u.getTitle()}</a></td>
 		<td>${u.getWriter()}</td>
-		<td>${u.getContent()}</td>
-		<td>${u.getRegdate()}</td>
-		<td><a href="view/${u.getSeq()}">View</a></td> <!-- here -->
-		<td><a href="editform/${u.getSeq()}">Edit</a></td>
-		<td><a href="javascript:delete_ok('${u.getSeq()}')">Delete</a></td>
+<%-- 		<td>${u.getContent()}</td>
+ --%>		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
+		<td>
+		
+		<!-- HttpSession session = request.getSession(); -->
+
+ 		<c:if test="${session.admin == 1}">
+ 		<!-- System.out.println(session.admin); -->
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.getSeq()}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
+ 		</c:if>
+		</td>
+		
 	</tr>
 </c:forEach>
+</tbody>
 </table>
+</div> 
 
-<br/><a href="add">Add New Post</a>
+</div>
+
+<div id="moreContent">  
+	          <ul class="pagination">
+			    <c:if test="${pageMaker.prev}">
+			    <li>
+			        <a href='<%=request.getContextPath()%>/board/list?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&laquo;</a>
+			    </li>
+			    </c:if>
+			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			    <li>
+			        <a href='<%=request.getContextPath()%>/board/list?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    </li>
+			    </c:forEach>
+			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+			    <li>
+			        <a href='<%=request.getContextPath()%>/board/list?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&raquo;</a>
+			    </li>
+			    </c:if>
+		  </ul>
+		  </div>
+</main>
+
 <footer>
       <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 </footer>
+
+<script>
+$(document).ready( function() {   
+    // select change,
+    $('.filters').on( 'change', function() {
+        console.log($(this).attr("id"));
+        console.log($(this).val());
+		$("#searchType").val($(this).attr("id"));
+		$("#keyword").val($(this).val());
+		$(".form-inline").submit();
+    });
+
+});
+</script>
 </body>
 </html>

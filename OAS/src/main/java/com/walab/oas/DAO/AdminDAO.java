@@ -185,4 +185,11 @@ public class AdminDAO {
 		System.out.println(map);
 		return sqlSession.selectOne(namespace +".getResultIdCount", map);
 	}
+	
+	public int getResultCnt(int form_id, int user_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("user_id", user_id);
+		return sqlSession.selectOne(namespace + ".getResultCnt", map);
+	}
 }

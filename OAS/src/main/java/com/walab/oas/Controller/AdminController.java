@@ -748,12 +748,12 @@ public class AdminController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/form/downloadExcelFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/resultForm/downloadExcelFile", method = RequestMethod.POST)
 	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//쿼리 작업
 		//String form_id  = request.getParameter("select_formID");
-		int form_ID = 1;//Integer.parseInt(form_id);
+		int form_ID = Integer.parseInt(request.getParameter("formID"));//Integer.parseInt(form_id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
