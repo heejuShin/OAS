@@ -60,7 +60,17 @@
 
     <section id="demo" class="adminMypage_main">
     <div class="container">
+		  <!--Start_Filter and Search part-->
+          <nav class="filter_search" style="float:right;">
 
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
+	  			<input type="hidden" id="searchType" name="searchType" value="all">
+	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
+	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
+  			</form>
+
+          </nav>
+		  <!--End_Filter and Search part-->  
           <div class="table-responsive" data-pattern="priority-columns">
               <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
                   <thead>
@@ -119,17 +129,7 @@
 		  </ul>
 		  </div>
 
-		  <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
-
-            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/admin/mypage" method="GET" >
-	  			<input type="hidden" id="searchType" name="searchType" value="all">
-	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
-  			</form>
-
-          </nav>
-		   <!--End_Filter and Search part-->  
+		  
 
 
       </div> <!-- end container -->
