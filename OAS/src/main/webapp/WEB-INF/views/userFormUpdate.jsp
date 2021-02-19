@@ -16,8 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=2">
 	
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -293,14 +293,17 @@
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
 				</div>
-
-				<div id="submitDiv" class="container-contact100-form-btn form edit button"><!--UPDATE시 사용 예정 -->
-		            <button class="contact100-form-btn edit" id="submitB" type="button">
-						<span>수정<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
-					</button>
-					<button class="contact100-form-btn cancle" type="button" id="cancle">
-						<span>취소<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+				
+				<div id="" class="wrap-input100 button rs1-wrap-input100 formbts"><!--UPDATE시 사용 예정 -->
+					<button class="contact100-form-btn" type="button" id="cancle" onclick="location.href='<%=request.getContextPath()%>/mypage'">
+						<span>취소</span>
 					</button>	
+		          </div>
+
+				<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts"><!--UPDATE시 사용 예정 -->
+		            <button class="contact100-form-btn edit" id="submitB" type="button">
+						<span>수정</span>
+					</button>
 		          </div>
 
 			</form>
