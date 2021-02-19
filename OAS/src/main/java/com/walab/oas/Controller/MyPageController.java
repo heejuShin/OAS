@@ -60,19 +60,25 @@ public class MyPageController {
 			else {
 				mav = new ModelAndView("adminMypage");
 				
-				List<Category> categoryt=mainDao.categoryList();
-				ObjectMapper category_mapper=new ObjectMapper();
-				String category_list=category_mapper.writeValueAsString(categoryt);
+				List<Category> categoryt = mainDao.categoryList(); //카테고리 들고옴
+				System.out.println("1 : " + categoryt);
+				ObjectMapper category_mapper = new ObjectMapper();
+				System.out.println("2 : " + category_mapper);
+				String category_list= category_mapper.writeValueAsString(categoryt); //JSON타입으로 변경
+				System.out.println("3 : " + category_list);
 				
-				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져온다
-				int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword());
 				
+				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져옴 
+				System.out.println("count : " + adminList.size());
+				int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()); //총 데이터 개수
+				System.out.println("count2 : " + count);
 				ObjectMapper mapper=new ObjectMapper();
 				String jArray=mapper.writeValueAsString(adminList);
 				PageMaker pageMaker = new PageMaker();
 				System.out.println(cri);
 				pageMaker.setCri(cri);
 				pageMaker.setTotalCount(count);
+				System.out.println("pageMaker : " + pageMaker.toString());
 				
 				mav.addObject("categoryList", category_list);
 				mav.addObject("adminList", jArray);
@@ -162,7 +168,7 @@ public class MyPageController {
 			System.out.println(jArray);
 			mav.addObject("userList", jArray);
 			mav.addObject("cri", cri);
-			mav.addObject("pageMaker", pageMaker);
+			mav.addObject("pageMaker", pageMaker.toString());
 			
 			mav.addObject("keyword", cri.getKeyword());
 			
@@ -198,34 +204,52 @@ public class MyPageController {
 
 		//유저 관리 페이지
 		@RequestMapping(value = "/admin/manage") 
-		public ModelAndView managePage (HttpSession session, HttpServletRequest request) throws Exception {
+		public ModelAndView managePage (HttpSession session, HttpServletRequest request, SearchCriteria searchCRI) throws Exception {
 			System.out.println("<managePage> controller");
 			
-			List<User> userData = mypageDao.getUserInfo();
-			JSONArray jArray = new JSONArray();
-			 try {
-		        	for (int i = 0; i < userData.size() ; i++) {   
-		        		JSONObject ob =new JSONObject();
-		        		ob.put("id", userData.get(i).getId());
-				        ob.put("userName", userData.get(i).getUserName());
-				        ob.put("userNumber",userData.get(i).getPhoneNum());
-				        ob.put("userEmail", userData.get(i).getEmail());
-				        ob.put("studentID", userData.get(i).getStudentId());
-			            ob.put("studentMajor", userData.get(i).getMajor());
-			            ob.put("userLevel", userData.get(i).getAdmin());
+			System.out.println("first : "+searchCRI.toString());
 
-			            jArray.put(ob);
-			        }
-		        	System.out.println(jArray);
-		
-		        }catch(JSONException e){
-		        	e.printStackTrace();
-		        }
 			
+			if(searchCRI.getKeyword() == "")
+				searchCRI.setSearchType(null);
+			
+			System.out.println("second : "+searchCRI.toString());
+			
+			List<User> userData = mypageDao.getUserInfo(searchCRI);
+			int count = mypageDao.countUserInfo(searchCRI.getSearchType(), searchCRI.getKeyword());
+			System.out.println("count : " + count);
+			
+			ObjectMapper mapper=new ObjectMapper();
+			String jArray=mapper.writeValueAsString(userData);
+			
+			
+			PageMaker pageMaker = new PageMaker();
+			System.out.println(searchCRI);
+			pageMaker.setCri(searchCRI);
+			pageMaker.setTotalCount(count);
+			System.out.println("pageMaker : " + pageMaker);
+			int pageNum = searchCRI.getPage(); //현재 페이지 number
+			int perPageNum = searchCRI.getPerPageNum(); //현재 페이지 number
+			
+		
+			
+			String searchOptionView = mapper.writeValueAsString(searchCRI.getSearchType());
+			String keywordView = mapper.writeValueAsString(searchCRI.getKeyword());
+			
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("adminUserManage");
 			mav.addObject("userData", jArray);
+			mav.addObject("count", count);
+			mav.addObject("searchOption", searchCRI.getSearchType());
+			mav.addObject("keyword", searchCRI.getKeyword());
+			mav.addObject("searchOptionView", searchOptionView);
+			mav.addObject("keywordView", keywordView);
+			mav.addObject("pageMaker", pageMaker);
+			mav.addObject("pageN", pageNum);
+			mav.addObject("perPageN", perPageNum);
 			System.out.println("<managePage> controller Finish!");
+			
 			return mav;
 		}
 				
