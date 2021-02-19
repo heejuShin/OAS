@@ -168,7 +168,7 @@ public class MyPageController {
 			System.out.println(jArray);
 			mav.addObject("userList", jArray);
 			mav.addObject("cri", cri);
-			mav.addObject("pageMaker", pageMaker.toString());
+			mav.addObject("pageMaker", pageMaker);
 			
 			mav.addObject("keyword", cri.getKeyword());
 			
