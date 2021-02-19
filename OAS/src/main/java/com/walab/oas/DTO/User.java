@@ -24,15 +24,8 @@ public class User {
 		return "User [id=" + id + ", userName=" + userName + ", admin=" + admin + ", email=" + email + ", studentId="
 				+ studentId + ", phoneNum=" + phoneNum + ", department=" + department + ", major=" + major + ", grade="
 				+ grade + ", semester=" + semester + ", point=" + point + ", isDelete=" + isDelete + ", regDate="
-
-				+ regDate + ", deleteDate=" + deleteDate + ", getId()=" + getId() + ", getUserName()=" + getUserName()
-				+ ", getAdmin()=" + getAdmin() + ", getEmail()=" + getEmail() + ", getStudentId()=" + getStudentId()
-				+ ", getDepartment()=" + getDepartment() + ", getMajor()=" + getMajor() + ", getGrade()=" + getGrade()
-				+ ", getSemester()=" + getSemester() + ", getPoint()=" + getPoint() + ", getIsDelete()=" + getIsDelete()
-				+ ", getRegDate()=" + getRegDate() + ", getDeleteDate()=" + getDeleteDate() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ regDate + ", deleteDate=" + deleteDate + "]";
 	}
-		
 	
 	public int getId() {
 		return id;
