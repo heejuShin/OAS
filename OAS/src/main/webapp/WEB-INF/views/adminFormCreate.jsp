@@ -194,7 +194,11 @@
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
-					
+					        <input type="file" name="file" />
+					        <input type="text" name="src" />
+					        <input type="submit" value="전송" />
+
+
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>
 						  <option value="text">단답형</option>
