@@ -33,6 +33,7 @@
 	#stateB {
 		background-color: #d69fa9;
 		border: #d69fa9;
+		float:right;
 	}
 </style>
 <script>
@@ -50,6 +51,8 @@
 <div id="headTitle"><h2>전산전자공학부 공지 </h2></div>
 
 <div class="board_section">
+<button name='stateB' id="stateB" onclick="location.href='add'">게시글 작성 </button>
+
 <div class="table-responsive" data-pattern="priority-columns">
 <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
 <thead>
@@ -60,7 +63,8 @@
 	<th>등록자  </th>
 	<!-- <th>내용 </th> -->
 	<th>등록 일자 </th>
-	<th>게시글 관리 </th>
+	<c:if test="${session.admin == 1}"><th>게시글 관리 </th></c:if>
+	
 </tr>
 </thead>
 <tbody class="tbodies">
@@ -73,8 +77,14 @@
 <%-- 		<td>${u.getContent()}</td>
  --%>		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
 		<td>
+		
+		<!-- HttpSession session = request.getSession(); -->
+
+ 		<c:if test="${session.admin == 1}">
+ 		<!-- System.out.println(session.admin); -->
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.getSeq()}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
+ 		</c:if>
 		</td>
 		
 	</tr>
@@ -82,7 +92,6 @@
 </tbody>
 </table>
 </div> 
-<button name='stateB' id="stateB" onclick="location.href='add'">게시글 작성 </button>
 
 </div>
 

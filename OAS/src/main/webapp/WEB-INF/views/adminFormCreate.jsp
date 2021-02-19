@@ -28,6 +28,7 @@
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+		
 	
 </head>
 
@@ -147,6 +148,10 @@
             <button type="button" class="edit">수정</button>
             <button type="button" class="cancle">취소</button>
           </div>
+         
+        <script>
+        	const randomString = Math.random().toString(36).slice(2);
+        </script>
 
         <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
@@ -154,7 +159,9 @@
 	        <span class="modal_title">제목 : </span><span id="confirm_title" class="modal_content"></span><br>
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
-	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+<!-- 	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+ -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" onfocus="this.value= randomString;" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+	        
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
 	        </p>
