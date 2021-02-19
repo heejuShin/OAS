@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Create Form</title>
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=18">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=19">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -133,14 +133,18 @@
 			
 			</div> 
 			
-			
+			<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts">
+					<button class="contact100-form-btn" type="button" id="mypageB" onclick="location.href='<%=request.getContextPath()%>/admin/mypage'" >
+						<span>설문 만들기 취소</span>
+					</button>
+				</div>
 			<!-- input type : submit -->
-				<div id="submitDiv" class="container-contact100-form-btn form edit button">
+				<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts">
 					<button class="contact100-form-btn" type="button" id="preview">
 						<span>확인</span>
 					</button>
-
 				</div>
+				
 			
 
           <div class="form edit button" style="display: none;"><!--UPDATE시 사용 예정 -->
@@ -233,19 +237,7 @@
 
   </body>
 
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
     
 <script>
 
