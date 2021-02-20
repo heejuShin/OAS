@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=12">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=5">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -66,7 +66,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
 	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=2"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=4"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -198,7 +198,7 @@
           <input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
           
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
-		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
+		  <input class="field_title input1002 bg1 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected disabled>질문유형</option>
@@ -218,7 +218,13 @@
 						<label for="필수질문">필수</label>
 						</div>
 	
-						<div class="content" style="clear: both;"></div>
+						<div class="content"></div>
+						
+						<div style="margin-top: 10px;">
+							<label  class="addFieldFileLabel">첨부 파일 추가 : </label>
+							<input class="addFieldFile"  type="file">
+						</div>
+						<div style="clear: both;"></div>
         </div>
       </div>
 
@@ -226,7 +232,7 @@
       <div>
       	<input class="radio_itemId" type="hidden" name="?itemId?" value=""/>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input>
-        <button type="button" class="remove_item">X</button>
+        <button type="button" class="remove_item optionCancleB">X</button>
         <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
       </div>
@@ -236,7 +242,7 @@
       <div>
       	<input class="checkbox_itemId" type="hidden" name="?itemId?" value=""/>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input>
-        <button type="button" class="remove_item">X</button>
+        <button type="button" class="remove_item optionCancleB">X</button>
         <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
       </div>
