@@ -148,6 +148,25 @@ public class MainController {
 			
 			int form_ID=adminDAO.getFormId(link); 
 			int count = adminDAO.getResultCnt(form_ID, user_id);
+			
+			List<Form> form_info = mainDao.forminfo(form_ID);
+			List<Field> field_list = mainDao.fieldList(form_ID);
+			
+			//시작 날짜 전인지
+			//if(true) {
+			//	mav.setViewName("UserForm_before");
+			//	return mav;
+			//}
+			//if(form_info.get(0).getIsAvailable()==0) {
+			//	mav.setViewName("userForm_before");
+			//	return mav;
+			//}
+			
+			//시작 날짜 이훈지
+			
+			//admin이 막았는지
+			
+			//user가 작성한 적이 있는지
 			if(count!=0) {
 				int result_id = adminDAO.getResultId(form_ID, user_id);
 				redirectAttr.addFlashAttribute("form_id",form_ID);
@@ -156,14 +175,11 @@ public class MainController {
 				return mav;
 			}
 			
-			if(adminDAO.getResultIdCount(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
-				mav.setViewName("redirect:/viewForm/"+link); //신청한거 확인하는 페이지로 가기
-				return mav;	
-			}
+			//if(adminDAO.getResultIdCount(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
+			//	mav.setViewName("redirect:/viewForm/"+link); //신청한거 확인하는 페이지로 가기
+			//	return mav;	
+			//}
 			
-			List<Form> form_info = mainDao.forminfo(form_ID);
-			List<Field> field_list = mainDao.fieldList(form_ID);
-			System.out.println(field_list.toString());
 				
 			//form info json 처리 
 			JSONArray jArray1 = new JSONArray();
