@@ -77,11 +77,11 @@
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
 								 
                                  if(form_list[i].state_id==0){
-                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm(this);'>신청하기</a></div>");
+                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; cursor:pointer;' onClick = 'openForm(this);'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
  								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'openForm(this);'>신청완료</a></div>");
+ 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); cursor:pointer;' onClick = 'openForm(this);'>신청완료</a></div>");
 
  		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
