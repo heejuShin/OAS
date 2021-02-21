@@ -79,7 +79,7 @@
     <div class="container-contact100">
     
 		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
-		<div id="menu-bar"><p id="add_p">+</p></div>
+		<div id="menu-bar" style="cursor: pointer;"><p id="add_p">+</p></div>
 				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
 					<span class="contact100-form-title">
 						설문 만들기
