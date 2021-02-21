@@ -188,6 +188,10 @@
        delete from Form where id=#{formID};
    </delete>
    
+   <!-- 선택한 내 Form 데이터 삭제하기 -->
+   <delete id="deleteMyForm" parameterType="int">
+       delete from Result where id=#{myFormID};
+   </delete>
    
    <!-- 해당 폼 제출자 정보 리스트 -->
    <select id="submitterList" resultType="com.walab.oas.DTO.Result">

@@ -51,5 +51,8 @@ public class MainDAO{
 		return sqlSession.selectList(namespace + ".stateListbyId", formID);
 	}	
 	
+	public void delMyForm(int myFormID) {
+		sqlSession.delete(namespace + ".deleteMyForm", myFormID);
+	}
 	
 }

@@ -134,6 +134,27 @@ public class MainController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("/delMyForm/{link}") // GET 방식으로 페이지 호출
+	public ModelAndView delMyForm(@PathVariable String link, HttpSession session, RedirectAttributes redirectAttr) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		int form_ID=adminDAO.getFormId(link); 
+		
+		System.out.println("del = "+form_ID);
+		int result_id=adminDAO.getResultId(form_ID,user_id);
+		System.out.println("del = "+result_id);
+		mainDao.delMyForm(result_id);
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
+	}
 
 	//home 페이지에서 폼을 눌렀을 때, 신청안한 것
 		@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
