@@ -55,7 +55,7 @@
   <main>
 
   	<div id="headTitle">
-		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" style="cursor:pointer;" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
     <section id="demo" class="adminMypage_main">
