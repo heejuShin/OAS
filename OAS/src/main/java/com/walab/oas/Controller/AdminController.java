@@ -14,6 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +27,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -175,7 +178,7 @@ public class AdminController {
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
 		@ModelAttribute("ses")
-		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session, MultipartHttpServletRequest mtfRequest) throws Exception {
 
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 
@@ -229,7 +232,6 @@ public class AdminController {
 				
 				State state= new State();
 				String statename = request.getParameter("state");
-				//System.out.println(statename);
 				String[] statenames = statename.split(",");
 				for (int i = 0; i < statenames.length; i++) {
 					state.setStateName(statenames[i]);
@@ -254,8 +256,32 @@ public class AdminController {
 						field.setFieldName(title); 
 						String fieldType = request.getParameter("f_type"+Integer.toString(i));
 						field.setFieldType(fieldType);
-						String fileName; // 이거 어떻게 할지 고민
-						//field.setFileName(fileName);
+						
+				        String src = mtfRequest.getParameter("src");
+				        System.out.println("src value : " + src);
+				        MultipartFile mf = mtfRequest.getFile("file");
+
+				        String path = "src/main/webapp/resources/file";
+
+				        String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+				        long fileSize = mf.getSize(); // 파일 사이즈
+
+				        System.out.println("originFileName : " + originFileName);
+				        System.out.println("fileSize : " + fileSize);
+
+				        String safeFile = path + System.currentTimeMillis() + originFileName;
+
+				        try {
+				            mf.transferTo(new File(safeFile));
+				        } catch (IllegalStateException e) {
+				            e.printStackTrace();
+				        } catch (IOException e) {
+				            e.printStackTrace();
+				        }
+
+
+						String fileName = originFileName;
+						field.setFileName(fileName);
 						int isEssential = Integer.parseInt(request.getParameter("isEssential"+Integer.toString(i)));
 						field.setIsEssential(isEssential);
 						int index;
