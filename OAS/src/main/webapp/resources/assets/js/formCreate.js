@@ -266,7 +266,7 @@ $( document ).ready(function() {
 		inputs = inputs.split(",");
 		
 		for(var i = 0 ; i < inputs.length; i++){
-			//if(inputs[i]=="") continue;
+			if(inputs[i]=="") continue;
 			var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
 			  $(this).parent().siblings(".count").val(r_cnt);
 			  
