@@ -45,6 +45,15 @@
 </script>
 </head>
 <body>
+<%
+	String id = "";
+	id = String.valueOf(session.getAttribute("admin"));
+	System.out.println("session id=" + id);
+	int nid = Integer.parseInt(id);
+	System.out.println("session nid=" + nid);
+
+%>
+	
 <jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
 <main>
@@ -61,12 +70,11 @@
 	<th>카테고리 </th>
 	<th>제목 </th>
 	<th>등록자  </th>
-	<!-- <th>내용 </th> -->
 	<th>등록 일자 </th>
-	<c:if test="${session.admin == 1}"><th>게시글 관리 </th></c:if>
-	
+	<c:if test="${nid eq 1}"><th>게시글 관리 </th></c:if>	
 </tr>
 </thead>
+
 <tbody class="tbodies">
 <c:forEach items="${list}" var="u">
 	<tr>
@@ -74,15 +82,11 @@
 		<td>${u.getCategory()}</td>
 		<td><a href="view/${u.getSeq()}" class="titlelink">${u.getTitle()}</a></td>
 		<td>${u.getWriter()}</td>
-<%-- 		<td>${u.getContent()}</td>
- --%>		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
+		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
 		<td>
 		
-		<!-- HttpSession session = request.getSession(); -->
-
- 		<c:if test="${session.admin == 1}">
- 		<!-- System.out.println(session.admin); -->
-			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
+ 		<c:if test="${nid eq 1}">
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../admin/board/list/editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.getSeq()}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
  		</c:if>
 		</td>
