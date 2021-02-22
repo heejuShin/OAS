@@ -55,7 +55,7 @@
   <main>
 
   	<div id="headTitle">
-		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" style="cursor:pointer;" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
     <section id="demo" class="adminMypage_main">
@@ -88,7 +88,7 @@
 
                       <th data-priority="3">
                         <select class="filters filter-status" id="status" data-filter-group='status'>
-                              <option data-filter='' value="*" selected>상태</option>
+                              <option data-filter='' value="*">상태</option>
                               <option data-filter='.예약' value="예약">예약</option>
                               <option data-filter='.신청중' value="신청중">신청중</option>
                               <option data-filter='.신청마감' value="신청마감">신청마감</option>
@@ -127,11 +127,8 @@
 			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&raquo;</a>
 			    </li>
 			    </c:if>
-		  </ul>
+		  	   </ul>
 		  </div>
-
-		  
-
 
       </div> <!-- end container -->
   </section> <!-- end section -->
@@ -148,8 +145,24 @@
 									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='"+categoryList[i].categoryName+"'>"+categoryList[i].categoryName+"</option>");
 									$(".filter-category").append(option);
 								}
+
+								//select option selected 설정
+                                var searchOption=$("#searchOption").val();
+                                var keyword=$("#keyword").val();
+
+                                console.log(searchOption);
+                                console.log(keyword);
+                                if(searchOption=="status"){
+                                	$('.filter-status option[value='+keyword+']').prop('selected', 'selected').change();
+                                	$("#keyword").val("");
+                                }
+                                if(searchOption=="categoryName"){
+                                	$('.filter-category option[value='+keyword+']').prop('selected', 'selected').change();
+                                	$("#keyword").val("");
+                                }
                                 
 	                            var adminList=${adminList};
+				    var adminListWithState = ${adminListWithState};
 	                            for(var i=0; i < adminList.length; i++){
 	                                
 	                    		    /*설문지 별 tr 만듦*/
@@ -264,6 +277,15 @@
 	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td7);
 
+	                    			if(adminListWithState[i].state_id==0){
+	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>신청하기</button</td>");
+	                                  		$($(".tbodies").children()[i]).append(td7);
+	                               		}
+	                                	//신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
+	                                 	else{
+	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+adminListWithState[i].stateName+"</button</td>");
+	                                 		$($(".tbodies").children()[i]).append(td7);
+	                               		}
 	                    		    //신청자 수 표시 
 	                    		    var td8 = resultCount+"명 "; 
 	                    		    $($(".tbodies").children()[i]).append(td8);
@@ -296,7 +318,9 @@
                                 	$(obj).parent().siblings("#viewForm").submit();
                             }
                             function deleteForm(obj){
-                            	$(obj).parent().siblings("#deleteForm").submit();
+                            	if (confirm("해당폼을 정말 삭제하시겠습니까?") == true)
+                            		$(obj).parent().siblings("#deleteForm").submit();
+                        		
                             }
                             function resultForm(obj){
                             	$(obj).parent().siblings("#resultForm").submit();
@@ -308,6 +332,11 @@
                           	        console.log($(this).val());
   									$("#searchType").val($(this).attr("id"));
   									$("#keyword").val($(this).val());
+  									if($(this).val()=="*"){
+  										$("#searchType").val("");
+  	  									$("#keyword").val("");
+  	  								}
+  	  									
   									$(".form-inline").submit();
                       	        });
                             });
