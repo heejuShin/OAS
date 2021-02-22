@@ -60,7 +60,25 @@
     <section id="demo" class="userMypage_main">
        
       <div class="container">
-
+		  <!--Start_Filter and Search part-->
+          <nav class="filter_search" style="float:right;">
+            
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="POST" >
+			    <input type="hidden" id="searchType" name="searchType" value="all">
+	  			<input type="hidden" id="searchOption" name="searchOption" value="${searchOption}">
+	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
+	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
+              <select name="filterType" class="filterType">
+                 <option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
+                 <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
+                 <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청중</option>
+                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청마감</option>
+              </select>
+           </form>
+            
+          </nav>
+          
+          <!--End_Filter and Search part-->
           <div class="table-responsive" data-pattern="priority-columns">
               <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
                   <thead>
@@ -110,25 +128,7 @@
         </ul>
         </div>
         
-        <!--Start_Filter and Search part-->
-          <nav class="filter_search" >
-            
-            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="POST" >
-			    <input type="hidden" id="searchType" name="searchType" value="all">
-	  			<input type="hidden" id="searchOption" name="searchOption" value="${searchOption}">
-	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
-              <select name="filterType" class="filterType">
-                 <option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
-                 <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
-                 <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청중</option>
-                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청마감</option>
-              </select>
-           </form>
-            
-          </nav>
-          
-          <!--End_Filter and Search part-->
+        
         
       </div> <!-- end container -->
   </section> <!-- end section -->
@@ -194,7 +194,7 @@
          console.log("date:"+new Date());
            //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
            if(new Date()>new Date(userList[i].endDate)){
-              var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button></td>");
+              var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
             $($(".tbodies").children()[i]).append(a);
            }   
            else{
@@ -205,7 +205,7 @@
             }
              //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
               else{
-                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
+                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
 
@@ -214,7 +214,8 @@
          $($(".tbodies").children()[i]).append(form);
          var form2=$("<form id='viewForm' action='viewForm/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
           $($(".tbodies").children()[i]).append(form2);
-           
+          var form3=$("<form id='delForm' action='delMyFormU/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
+          $($(".tbodies").children()[i]).append(form3);
 
          
       }
@@ -229,7 +230,13 @@
         else
            $(obj).parent().siblings("#viewForm").submit();
     }
-
+    function delSubmitForm(obj){
+ 		console.log("deleteMyForm");
+ 		if(confirm("정말로 삭제하시겠습니까?")){
+     		var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
+       		$(obj).parent().siblings("#delForm").submit();
+ 		}
+    }
     $(document).ready( function() {   
            // bind filter on select change,
            $('.filter-category').on( 'change', function() {

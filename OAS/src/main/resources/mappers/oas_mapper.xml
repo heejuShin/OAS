@@ -128,6 +128,13 @@
          LIMIT #{pageStart}, #{perPageNum};
    </select>
    
+   <select id="adminListWithState" parameterType="int" resultType="com.walab.oas.DTO.Form">
+   SELECT c.id,c.category_id,c.categoryName, c.state_id, c.stateName, c.formName,url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,c.regDate,u.userName,isAvailable
+         FROM (SELECT R.*, categoryName FROM (SELECT Form.*, ifnull(state_id,0)as state_id, SR.stateName as stateName from Form LEFT OUTER JOIN (SELECT Result.*, State.stateName as stateName from Result LEFT OUTER JOIN State on Result.state_id = State.id where Result.user_id = #{user_id}) as SR on Form.id = SR.Form_id) as R LEFT OUTER JOIN Category ON R.category_id=Category.id) as c
+         INNER join User as u
+         ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now());
+   </select>
+   
    <!-- 검색 대한 게시글 수 (admin)-->
    <select id="countArticle" resultType="int">
       SELECT count(*)
@@ -181,6 +188,10 @@
        delete from Form where id=#{formID};
    </delete>
    
+   <!-- 선택한 내 Form 데이터 삭제하기 -->
+   <delete id="deleteMyForm" parameterType="int">
+       delete from Result where id=#{myFormID};
+   </delete>
    
    <!-- 해당 폼 제출자 정보 리스트 -->
    <select id="submitterList" resultType="com.walab.oas.DTO.Result">

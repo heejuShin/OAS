@@ -33,6 +33,10 @@ public class MyPageDAO {
 		return sqlSession.selectList("adminlist", cri);
 	}
 	
+	public List<Form> adminListWithState(int user_id){ //admin의 폼리스트 가져오기 with state through user_id
+		return sqlSession.selectList("adminListWithState", user_id);
+	}
+	
 	public int countArticle(String searchType, String keyword) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchType", searchType);

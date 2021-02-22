@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -243,6 +244,27 @@ public class UserController {
 		}//반복문 끝 (ResultContent 수정)
 		
 		mav.setViewName("redirect:/mypage");
+		return mav;
+	}
+	
+	@RequestMapping("/delMyFormU/{link}") // GET 방식으로 페이지 호출
+	public ModelAndView delMyForm(@PathVariable String link, HttpServletRequest request, HttpSession session) throws Exception {
+		
+ModelAndView mav = new ModelAndView();
+		
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		int form_ID=adminDao.getFormId(link); 
+		
+		System.out.println("Udel = "+form_ID);
+		int result_id=adminDao.getResultId(form_ID,user_id);
+		System.out.println("Udel = "+result_id);
+		mainDao.delMyForm(result_id);
+		
+		mav.setViewName("redirect:/mypage");
+		
 		return mav;
 	}
 

@@ -162,6 +162,7 @@
                                 }
                                 
 	                            var adminList=${adminList};
+				    var adminListWithState = ${adminListWithState};
 	                            for(var i=0; i < adminList.length; i++){
 	                                
 	                    		    /*설문지 별 tr 만듦*/
@@ -255,8 +256,15 @@
 										$(".form-item"+i).attr('data-status','신청중');
 			                    	}
 			                    	
-	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td7);
+	                    			if(adminListWithState[i].state_id==0){
+	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>신청하기</button</td>");
+	                                  		$($(".tbodies").children()[i]).append(td7);
+	                               		}
+	                                	//신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
+	                                 	else{
+	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+adminListWithState[i].stateName+"</button</td>");
+	                                 		$($(".tbodies").children()[i]).append(td7);
+	                               		}
 	                    		    //신청자 수 표시 
 	                    		    /* var td8 = $("<td>신청자 수 </td>");
 	                    		    $($(".tbodies").children()[i]).append(td8) */;

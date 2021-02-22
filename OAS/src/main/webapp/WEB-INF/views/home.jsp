@@ -80,16 +80,18 @@
                                 	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; cursor:pointer;' onClick = 'openForm(this);'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
- 								 else{
- 									var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); cursor:pointer;' onClick = 'openForm(this);'>신청완료</a></div>");
+                                 else{
+                                     var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");
+                                            $($($(".grid").children()[i]).children()[0]).append(a);
+                                   }
 
- 		                            $($($(".grid").children()[i]).children()[0]).append(a);
- 								 }
  								 
  								var form=$("<form id='myform' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form);
  								var form2=$("<form id='viewForm' action='viewForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form2);
+ 								var form3=$("<form id='delMyForm' action='delMyForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								$($($(".grid").children()[i]).children()[0]).append(form3);
                             }
 
                             });
@@ -103,7 +105,14 @@
                                 	$(obj).parent().siblings("#viewForm").submit();
                             }
 
-
+                     		function delSubmitForm(obj){
+                         		console.log("deleteMyForm");
+                         		if(confirm("정말로 삭제하시겠습니까?")){
+	                         		var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
+	                           		$(obj).parent().siblings("#delMyForm").submit();
+                         		}
+                            }
+                     		
                             $(document).ready( function() {   
                             	var qsRegex;
                                var $grid = $('.grid').isotope({
@@ -197,19 +206,17 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div class="filters" style="padding-bottom:40px; margin-bottom:30px;">
+            <div class="filters" style="padding-bottom:45px; margin-bottom:30px;">
               <ul class="ul_filters">
                   <li class="active" data-filter="*">All Products</li>
 
-              </ul>            
-            </div>
-
-            <div style="padding-bottom:5px;">
-	            <div class="form-inline"  style="float:right;">
+              </ul>     
+              <div class="form-inline"  style="float:right;">
 	                    <input type="text" class="form-control mr-sm-2 keyword" name="keyword" value="${keyword}" placeholder="검색" aria-label="검색">
 	                    
-	            </div>
+	            </div>       
             </div>
+
           </div>
           <div id="contentsDiv" class="col-md-12">
             <div class="filters-content">
