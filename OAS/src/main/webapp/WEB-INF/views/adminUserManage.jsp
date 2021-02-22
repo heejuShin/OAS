@@ -14,6 +14,19 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
+    <style>
+    #excelForm{
+    	display: inline-block;
+    	float: right;
+    	font-size: 20px;
+    }
+    #excelDown{
+    	margin-top: 15px;
+    	border: 0px;
+    	border-radius: 5px;
+    	background: #d1d1d1;
+    }
+    </style>
 </head>
 <body>
 
@@ -22,7 +35,9 @@
 	<!-- main -->
     <main>
 
-         <div id="headTitle"><h2>회원 관리</h2></div>
+         <div id="headTitle"><h2>회원 관리 <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./manage/downloadExcelFile">
+				    			  <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+							      </form></h2></div>
          
          <!--Start_Filter and Search part-->
           <nav class="filter_search" >

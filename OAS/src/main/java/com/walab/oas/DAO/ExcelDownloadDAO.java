@@ -98,5 +98,46 @@ public class ExcelDownloadDAO {
 		
 		return workbook;
 	}
+	
+	public SXSSFWorkbook makeWorkbookUser(HttpServletResponse response, ArrayList<ArrayList<String>> user_list) {
+		
+		SXSSFWorkbook workbook = new SXSSFWorkbook();
+		SXSSFSheet sheet = workbook.createSheet("설문지 제목");
+		
+        sheet.setColumnWidth(0, 10*256);
+        sheet.setColumnWidth(1, 18*256);
+        sheet.setColumnWidth(2, 22*256);
+        sheet.setColumnWidth(3, 10*256);
+        sheet.setColumnWidth(4, 15*256);
+        sheet.setColumnWidth(5, 10*256);
+	    
+		for(int i=0; i<user_list.size(); i++){
+			Row ur = sheet.createRow(i);
+			for(int j=0; j<user_list.get(i).size(); j++) {
+	    		Cell uc = ur.createCell(j);
+				uc.setCellValue(user_list.get(i).get(j));
+	    	}			
+		}
+		
+        response.setContentType("ms-vnd/excel");
+        SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd");
+        Date time = new Date();
+        String nametime = format.format(time);
+        
+        try {
+			response.setHeader("Content-Disposition", "attachment;filename="+new String("회원 정보".getBytes("utf-8"),"8859_1")+"_"+nametime.substring(2)+".xls");
+		} catch (UnsupportedEncodingException e1) {
+			response.setHeader("Content-Disposition", "attachment;filename=formResult.xls");
+		}
+        try {
+			workbook.write(response.getOutputStream());
+	        workbook.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return workbook;
+	}
 
 }
