@@ -289,6 +289,14 @@
 	$(".form-control").select2({
 		tags : true
 	});
+
+	$(document).click(function(e) {
+	    if (!$(e.target).closest('#preview_modal').length) {
+	    	$("#preview_modal").css({ display : "none"});
+			$("#bg").remove();
+	    }
+	    
+	});
 	/** TODO
 	* 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
 	* 그래도 어느 정도의 CSS

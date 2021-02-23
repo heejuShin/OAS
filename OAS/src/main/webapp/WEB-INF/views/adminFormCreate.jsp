@@ -303,6 +303,13 @@ $(".form-control").select2({
 	tags : true
 });
 
+$(document).click(function(e) {
+    if (!$(e.target).closest('#preview_modal').length) {
+    	$("#preview_modal").css({ display : "none"});
+		$("#bg").remove();
+    }
+    
+});
 
 /** TODO
 * 그래도 어느 정도의 CSS

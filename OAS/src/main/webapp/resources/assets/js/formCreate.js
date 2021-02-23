@@ -76,6 +76,7 @@ $( document ).ready(function() {
 	    modal('confirm_modal');
 	});
 	
+	
 	$('#preview').on('click', function() {
 		console.log("preview test");
 		
@@ -138,6 +139,7 @@ $( document ).ready(function() {
 		   	data: sendData,
 		  	success:function(result){
 		    	$("#preview_modal").html(result);
+		    	console.log("modal preview");
 		     	modal('preview_modal');
 		   	},
 		   	error:function(request,status,error){
@@ -155,6 +157,7 @@ $( document ).ready(function() {
 	
 	    // 모달 div 뒤에 희끄무레한 레이어
 	    var bg = $('<div>')
+	    	.attr('id','bg')
 	        .css({
 	            position: 'fixed',
 	            zIndex: zIndex,

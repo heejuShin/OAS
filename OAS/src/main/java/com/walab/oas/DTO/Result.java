@@ -18,14 +18,16 @@ public class Result {
 	private String studentId;
 	private String email;
 	
-	private String link;
+	private String stateName;
 	
+	private String link;
 
 	@Override
 	public String toString() {
 		return "Result [id=" + id + ", form_id=" + form_id + ", user_id=" + user_id + ", state_id=" + state_id
 				+ ", regDate=" + regDate + ", editDate=" + editDate + ", isDelete=" + isDelete + ", userName="
-				+ userName + ", department=" + department + ", studentId=" + studentId + ", email=" + email + "]";
+				+ userName + ", department=" + department + ", studentId=" + studentId + ", email=" + email
+				+ ", stateName=" + stateName + ", link=" + link + "]";
 	}
 
 	public int getId() {
@@ -145,5 +147,12 @@ public class Result {
 	public void setLink(String link) {
 		this.link = link;
 	}
-	
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
 }

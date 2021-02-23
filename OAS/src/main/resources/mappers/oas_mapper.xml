@@ -191,11 +191,7 @@
    
    <!-- 해당 폼 제출자 정보 리스트 -->
    <select id="submitterList" parameterType="int" resultType="com.walab.oas.DTO.Result">
-         <![CDATA[
-         SELECT Result.id as id, User.id as user_id, userName,department,studentId,email,Result.regDate as regDate,Result.editDate as editDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id};
-
-      ]]> 
-      <!-- SELECT Result.id as id,userName,department,studentId,email,Result.regDate as regDate, state_id FROM Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id}; -->
+   		SELECT Result.id as id, User.id as user_id, userName,department,studentId,email,Result.regDate as regDate,Result.editDate as editDate, state_id,stateName FROM (Select Result.*,stateName From Result INNER JOIN State ON Result.state_id=State.id)as Result INNER JOIN User on Result.user_id=User.id where form_id=#{form_id};
    </select>
    
    <!-- 해당 폼 상태 리스트 -->

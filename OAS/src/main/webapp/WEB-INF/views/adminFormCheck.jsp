@@ -11,6 +11,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
     <style>
     #yourModal{
     	height: 600px !important;
@@ -64,6 +66,7 @@
 		         result_states.push(eachState);
            });
            var sendData = {"resultIDarray": result_ids, "stateArray" : result_states};
+           console.log(sendData);
           //컨트롤러로 정보 전송(ajax) result_id로 state_name update
            $.ajax({
                url: "<%=request.getContextPath()%>/admin/form/update/check",
@@ -109,10 +112,10 @@
     <main>
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> <form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
+			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
+			<form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
     <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
-</form></h2>
-			
+</form>
 		</div>
         
 		
@@ -245,7 +248,7 @@
 	              		  	var td6 = $("<td>"+submitterList[i].email+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td6);
 	              			
-	              		  	var td7 = $("<td>"+submitterList[i].regDate+"</td>"); 
+	              		  var td7 = $("<td>"+moment(submitterList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td7);
 	              		    
 	              		  	var td8 = $("<td></td>"); 
@@ -260,7 +263,7 @@
 	              		    
 	              		    //option
 	              		    for(var j=0; j<stateList.length; j++){
-		              		    if(stateList[j].stateName=="대기중"){
+		              		    if(stateList[j].stateName==submitterList[i].stateName){
 		              		    	var optionName= $("<option value='"+stateList[j].id+"' selected>"+stateList[j].stateName+"</option>"); 
 			              		    $($($($("#tbodies").children()[i]).children()[7]).children()[0]).append(optionName);
 			              		}
@@ -307,8 +310,15 @@
 
                       });
 			  
-		      
-
                   });
+
+                  $(document).click(function(e) {
+              	    if (!$(e.target).closest('#yourModal').length) {
+              	    	$("#yourModal").empty();
+              	    	$("#yourModal").css({ display : "none"});
+              	    	$(".modal-backdrop").remove();
+              	    }
+              	    
+              	});
                   </script>
 </html>
