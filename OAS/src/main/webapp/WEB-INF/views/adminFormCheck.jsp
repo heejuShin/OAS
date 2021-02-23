@@ -19,6 +19,15 @@
     	overflow: scroll !important;
 		margin-top: 180px !important;
     }
+    #excelForm{
+    	display: inline-block;
+    	float: right;
+    }
+    #excelDown{
+    	border: 0px;
+    	border-radius: 10px;
+    	background: #d1d1d1;
+    }
     </style>
     
 
@@ -112,9 +121,9 @@
     <main>
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
+			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span>
 			<form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/></h2>
 </form>
 		</div>
         
