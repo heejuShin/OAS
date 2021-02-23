@@ -22,7 +22,9 @@
 	<!-- main -->
     <main>
 
-         <div id="headTitle"><h2>회원 관리</h2></div>
+         <div id="headTitle"><h2>회원 관리 <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./manage/downloadExcelFile">
+				    			  <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+							      </form></h2></div>
          
          <!--Start_Filter and Search part-->
           <nav class="filter_search" >
