@@ -45,11 +45,11 @@
 </script>
 </head>
 <body>
-<%
+<%-- <%
 	String id = "";
 	id = String.valueOf(session.getAttribute("admin"));
 	System.out.println("session id=" + id);
-%>
+%> --%>
 	
 <jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
@@ -68,7 +68,7 @@
 	<th>제목 </th>
 	<th>등록자  </th>
 	<th>등록 일자 </th>
-	<th><c:if test="${id ne '2'}">test</c:if></th>
+	<c:set var="admin" value="${admin}" /><c:if test="${admin ne '2'}"><th>게시글 관리 </th></c:if>
 </tr>
 
 </thead>
@@ -81,10 +81,13 @@
 		<td><a href="view/${u.getSeq()}" class="titlelink">${u.getTitle()}</a></td>
 		<td>${u.getWriter()}</td>
 		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
-		<td><c:if test="${id ne '2'}">
+		<c:set var="admin" value="${admin}" />
+		<c:if test="${admin ne '2'}">
+		<td>
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../oas/admin/board/editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.getSeq()}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
- 		</c:if></td>
+ 		</td>
+ 		</c:if>
 	</tr>
 </c:forEach>
 </tbody>
