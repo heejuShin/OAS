@@ -101,7 +101,7 @@ public class UserController {
 		 // 다음 컨트롤러로 전송  
 		 redirectAttr.addFlashAttribute("form_id",form_id);
 		 redirectAttr.addFlashAttribute("result_id",result_id);
-		    
+		 redirectAttr.addFlashAttribute("isCreate",1);
 	    
 	 	System.out.println("<submitForm> controller end");
 		return new ModelAndView("redirect:/userFormView");
@@ -115,11 +115,12 @@ public class UserController {
 		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 		int form_id=(Integer)redirectMap.get("form_id");
 		int result_id= (Integer)redirectMap.get("result_id");
+		int isCreate= (Integer)redirectMap.get("isCreate");
 		
 		ModelAndView mav = new ModelAndView();
 		Form form_info = userDao.forminfo(form_id);
 		
-		if(form_info.getIsAvailable()==1) {
+		if(form_info.getIsAvailable()==1&&isCreate==0) {
 			redirectAttr.addFlashAttribute("form_id",form_id);
 			redirectAttr.addFlashAttribute("result_id",result_id);
 			mav.setViewName("redirect:/userFormUpdate");

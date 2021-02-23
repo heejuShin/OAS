@@ -132,7 +132,7 @@ $( document ).ready(function() {
 	    console.log(sendData);
 	    
 	    $.ajax({
-			url: "preview",
+			url: "create/preview",
 		 	type:'POST',
 		   	traditional : true,
 		   	data: sendData,

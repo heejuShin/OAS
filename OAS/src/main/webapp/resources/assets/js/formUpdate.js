@@ -335,6 +335,7 @@ $( document ).ready(function() {
 
 });
 
+
 //모달창
 	function modal(id) {
 	    var zIndex = 9999;

@@ -52,6 +52,12 @@ public class MyPageController {
 		public ModelAndView adminPageList(HttpServletRequest request, SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
 
+			mav = new ModelAndView("adminMypage");
+			int user_id=0;
+			if(session.getAttribute("id")!=null) {
+				user_id=(Integer) session.getAttribute("id");
+			}
+			
 			if(session.getAttribute("admin")==null) {
 				mav = new ModelAndView("LoginNeed");
 				return mav;
@@ -72,10 +78,12 @@ public class MyPageController {
 				
 				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져옴 
 				System.out.println("count : " + adminList.size());
+				List<Form> adminListWithState = mypageDao.adminListWithState(user_id);
 				int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()); //총 데이터 개수
 				System.out.println("count2 : " + count);
 				ObjectMapper mapper=new ObjectMapper();
 				String jArray=mapper.writeValueAsString(adminList);
+				String jArray2=mapper.writeValueAsString(adminListWithState);
 				PageMaker pageMaker = new PageMaker();
 				System.out.println(cri);
 				pageMaker.setCri(cri);
@@ -84,6 +92,7 @@ public class MyPageController {
 				
 				mav.addObject("categoryList", category_list);
 				mav.addObject("adminList", jArray);
+				mav.addObject("adminListWithState", jArray2);
 				mav.addObject("count", count);
 				mav.addObject("searchOption", cri.getSearchType());
 				mav.addObject("keyword", cri.getKeyword());
