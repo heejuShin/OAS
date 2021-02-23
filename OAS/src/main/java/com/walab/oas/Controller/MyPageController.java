@@ -171,8 +171,35 @@ public class MyPageController {
 			List<Department> department = mypageDao.departmentList();
 			List<Major> major = mypageDao.majorList();
 			
-			mav.addObject("department", department);
-			mav.addObject("major", major);
+			JSONArray department_list = new JSONArray();
+			JSONArray major_list = new JSONArray();
+			
+			try{
+				for (int i = 0; i < department.size() ; i++) {   
+		    		JSONObject ob2 =new JSONObject();
+		    		ob2.put("id", department.get(i).getId());
+			        ob2.put("name", department.get(i).getName());
+		            department_list.put(ob2);
+				}
+			}catch(JSONException e){
+		    	e.printStackTrace();
+		    }
+			try{
+				for (int i = 0; i < major.size() ; i++) {   
+		    		JSONObject ob2 =new JSONObject();
+		    		ob2.put("id", major.get(i).getId());
+			        ob2.put("name", major.get(i).getName());
+			        ob2.put("department_id", major.get(i).getDepartment_id());
+			        ob2.put("department_name", major.get(i).getDepartment_name());
+			        System.out.println("->"+major.get(i).getDepartment_name());
+			        System.out.println(ob2);
+		            major_list.put(ob2);
+				}
+			}catch(JSONException e){
+		    	e.printStackTrace();
+		    }
+			mav.addObject("department", department_list);
+			mav.addObject("major", major_list);
 			mav.addObject("userList", jArray);
 			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);

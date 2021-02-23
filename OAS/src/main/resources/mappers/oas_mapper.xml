@@ -485,7 +485,7 @@
    </select>
    
       <select id="majorList" resultType="com.walab.oas.DTO.Major">
-      SELECT Major.*, Department.name as dep_name from Major 
+      SELECT Major.*, Department.name as department_name from Major 
 		INNER JOIN Department ON Major.department_id = Department.id;
    </select>
    

@@ -150,12 +150,7 @@
          var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
          $(".filter-category").append(option);
       }
-      
-      //var department = ${department};
-      //for(var i =0; i<department.length; i++){
-    	  //var selectOption = $("<option value='"+department[i].name+"'>"+department[i].name"</option>");
-    	  //$("#department").append(selectOption);
-      //}
+
       
       var userList=${userList};
          for(var i=0; i < userList.length; i++){
@@ -256,7 +251,8 @@
            $('.filterType').on( 'change', function() {
               $(".form-inline").submit();
            });
-
+           
+           
       });
 </script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>
