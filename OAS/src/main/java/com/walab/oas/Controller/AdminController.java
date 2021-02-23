@@ -98,7 +98,7 @@ public class AdminController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/form/preview",method=RequestMethod.POST)
+	@RequestMapping(value= {"/form/create/preview", "/form/view/create/preview"},method=RequestMethod.POST)
 	@ResponseBody 
 	public ModelAndView previewFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 
@@ -304,13 +304,13 @@ public class AdminController {
 //	}
 //	
 	
-	//신청폼 (Admin) Result Update page
+	//신청폼 (Admin) Update page 업데이트 페이지 보여주기
 	@RequestMapping(value = "/form/view/{link}")
 	public ModelAndView resultForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
-	   
+	   System.out.println("link:"+link);
 		int form_id=adminDAO.getFormId(link); 
 		
 		
@@ -336,33 +336,6 @@ public class AdminController {
 		return mav;
 	}
 	
-	//신청폼 update 기능
-	/*
-	@RequestMapping(value = "/form/update/{link}")
-	public ModelAndView formUpdate(HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		
-		List<Category> category_list = mainDao.categoryList();
-		JSONArray jArray = new JSONArray();
-		try{
-			for (int i = 0; i < category_list.size() ; i++) {   
-	    		JSONObject ob2 =new JSONObject();
-	    		ob2.put("id", category_list.get(i).getId());
-		        ob2.put("categoryName", category_list.get(i).getCategoryName());
-		        System.out.println(ob2);
-	            jArray.put(ob2);
-			}
-			
-		}catch(JSONException e){
-	    	e.printStackTrace();
-	    }
-		
-		mav.addObject("category_list",jArray);
-		
-		mav.setViewName("adminFormView");
-		return mav;
-			
-	}*/
 	
 	//신청폼 수정 페이지에서 form 정보 가져오기
 	@RequestMapping(value= "/form/view/info", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)

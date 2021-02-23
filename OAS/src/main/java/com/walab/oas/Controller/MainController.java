@@ -129,6 +129,7 @@ public class MainController {
 		
 		redirectAttr.addFlashAttribute("form_id",form_ID);
 		redirectAttr.addFlashAttribute("result_id",result_id);
+		redirectAttr.addFlashAttribute("isCreate",0);
 
 		mav.setViewName("redirect:/userFormView");
 		
