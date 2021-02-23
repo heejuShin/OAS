@@ -69,6 +69,8 @@ public class UserController {
 		if(session.getAttribute("id")!=null) {
 			user_id=(Integer) session.getAttribute("id");
 		}
+		
+		System.out.println("form id:"+form_id);
 
 	    int state_id  = userDao.getState(form_id);
 	    
@@ -243,7 +245,7 @@ public class UserController {
 			}
 		}//반복문 끝 (ResultContent 수정)
 		
-		mav.setViewName("redirect:/mypage");
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 

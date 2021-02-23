@@ -163,13 +163,16 @@ public class MyPageController {
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(count1);
+			
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(userList);
-			System.out.println(jArray);
 			mav.addObject("userList", jArray);
+			
+			ObjectMapper cri_mapper=new ObjectMapper();
+			String cri_list=cri_mapper.writeValueAsString(cri);
+			mav.addObject("cri_list",cri_list);
 			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);
-			
 			mav.addObject("keyword", cri.getKeyword());
 			
 			return mav;

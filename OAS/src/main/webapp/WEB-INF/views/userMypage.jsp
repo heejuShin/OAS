@@ -151,6 +151,9 @@
          $(".filter-category").append(option);
       }
 
+      var criInfo=${cri_list};
+      	$('.filterType option[value='+criInfo.filterType+']').prop('selected', 'selected').change();
+      	
       
       var userList=${userList};
          for(var i=0; i < userList.length; i++){

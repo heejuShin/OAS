@@ -162,7 +162,7 @@
                                 }
                                 
 	                            var adminList=${adminList};
-				    var adminListWithState = ${adminListWithState};
+				    			var adminListWithState = ${adminListWithState};
 	                            for(var i=0; i < adminList.length; i++){
 	                                
 	                    		    /*설문지 별 tr 만듦*/

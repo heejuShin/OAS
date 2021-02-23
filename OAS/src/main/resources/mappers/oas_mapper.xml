@@ -227,9 +227,7 @@
    
    <!-- default 상태 ID 가져오기  -->
     <select id="getStateID" parameterType="int" resultType="Integer">
-     <![CDATA[
          SELECT id FROM State WHERE form_id =#{formID} and isDefault = 1;
-     ]]>
    </select>
    
     <select id="getResultCnt" resultType="Integer">
