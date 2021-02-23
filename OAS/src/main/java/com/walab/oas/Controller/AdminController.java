@@ -221,6 +221,7 @@ public class AdminController {
 				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
 				form.setEnd(end);
 				
+			    System.out.println(form);
 				adminDAO.createForm(form);
 				int form_id=adminDAO.getFormId(url); 
 				//state

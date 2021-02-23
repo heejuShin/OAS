@@ -260,18 +260,18 @@
     
     
     <!-- Form 관련 쿼리 정리 -->
-      <insert id="formCreate" parameterType="Form">
+      <insert id="formCreate" parameterType="com.walab.oas.DTO.Form">
          INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
          VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
       </insert>
       
-      <insert id="fieldCreate" parameterType ="Field">
+      <insert id="fieldCreate" parameterType ="com.walab.oas.DTO.Field">
       INSERT INTO `Field` (`form_id`,`fieldType`,`fieldName`,`fileName`,`isEssential`,`key`) 
       VALUES (#{form_id},#{fieldType},#{fieldName},NULL,#{isEssential},#{key});
       
       </insert>
       
-      <insert id="itemCreate" parameterType = "Item">
+      <insert id="itemCreate" parameterType = "com.walab.oas.DTO.Item">
          INSERT INTO `Item`(`field_id`,`content`,`isDefault`) 
          VALUES (#{field_id},#{content},#{isDefault});
       </insert>
@@ -480,5 +480,19 @@
    <update id="updateContent" >
       UPDATE ResultContent SET content = #{content} WHERE id = #{id};
    </update>
+   
+   <select id="departmentList" resultType="com.walab.oas.DTO.Department">
+      SELECT * from Department;
+   </select>
+   
+      <select id="majorList" resultType="com.walab.oas.DTO.Major">
+      SELECT Major.*, Department.name as department_name from Major 
+		INNER JOIN Department ON Major.department_id = Department.id;
+   </select>
+   <!-- 선택한 내 Form 데이터 삭제하기 -->
+   <delete id="deleteMyForm" parameterType="int">
+       delete from Result where id=#{myFormID};
+   </delete>
+   
 
 </mapper>

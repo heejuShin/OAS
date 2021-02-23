@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.walab.oas.DTO.Criteria;
+import com.walab.oas.DTO.Department;
 import com.walab.oas.DTO.Form;
+import com.walab.oas.DTO.Major;
 import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.User;
 
@@ -119,5 +121,13 @@ public class MyPageDAO {
 	public void deleteUser(int userID) {
 		// TODO Auto-generated method stub
 		sqlSession.update("userDelete", userID);
+	}
+	
+	public List<Department> departmentList(){
+		return sqlSession.selectList("departmentList");
+	}
+	
+	public List<Major> majorList(){
+		return sqlSession.selectList("majorList");
 	}
 }

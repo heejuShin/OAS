@@ -40,19 +40,16 @@
 	function delete_ok(id){
 		var a = confirm("정말로 삭제하겠습니까?");
 		//if(a) location.href='deletepost.jsp?id=' + id;
-		if(a) location.href='deleteok/' + id;
+		if(a) location.href='../board/deleteok/' + id;
 	}
 </script>
 </head>
 <body>
-<%
+<%-- <%
 	String id = "";
 	id = String.valueOf(session.getAttribute("admin"));
 	System.out.println("session id=" + id);
-	int nid = Integer.parseInt(id);
-	System.out.println("session nid=" + nid);
-
-%>
+%> --%>
 	
 <jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
@@ -60,7 +57,7 @@
 <div id="headTitle"><h2>전산전자공학부 공지 </h2></div>
 
 <div class="board_section">
-<button name='stateB' id="stateB" onclick="location.href='add'">게시글 작성 </button>
+<button name='stateB' id="stateB" onclick="location.href='../../oas/admin/board/add'">게시글 작성 </button>
 
 <div class="table-responsive" data-pattern="priority-columns">
 <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
@@ -71,8 +68,9 @@
 	<th>제목 </th>
 	<th>등록자  </th>
 	<th>등록 일자 </th>
-	<c:if test="${nid eq 1}"><th>게시글 관리 </th></c:if>	
+	<c:set var="admin" value="${admin}" /><c:if test="${admin ne '2'}"><th>게시글 관리 </th></c:if>
 </tr>
+
 </thead>
 
 <tbody class="tbodies">
@@ -83,14 +81,13 @@
 		<td><a href="view/${u.getSeq()}" class="titlelink">${u.getTitle()}</a></td>
 		<td>${u.getWriter()}</td>
 		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
+		<c:set var="admin" value="${admin}" />
+		<c:if test="${admin ne '2'}">
 		<td>
-		
- 		<c:if test="${nid eq 1}">
-			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../admin/board/list/editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../oas/admin/board/editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.getSeq()}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
+ 		</td>
  		</c:if>
-		</td>
-		
 	</tr>
 </c:forEach>
 </tbody>

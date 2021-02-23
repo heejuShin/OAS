@@ -272,7 +272,7 @@ header .navbar {
 }
 .navbar .navbar-nav a.nav-link {
 	text-transform: capitalize;
-	font-size: 15px;
+	font-size: 14px;
 	font-weight: 700;
 	font-family: 'Poppins', sans-serif !important;
 	letter-spacing: 0.5px;

@@ -1,5 +1,5 @@
 package com.walab.oas.Controller;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +56,28 @@ public class UserController {
 		return item_list;
 	}
 
+	
+	@RequestMapping("/delMyFormU/{link}") // GET 방식으로 페이지 호출
+	public ModelAndView delMyForm(@PathVariable String link, HttpServletRequest request, HttpSession session) throws Exception {
+
+ModelAndView mav = new ModelAndView();
+
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		int form_ID=adminDao.getFormId(link); 
+
+		System.out.println("Udel = "+form_ID);
+		int result_id=adminDao.getResultId(form_ID,user_id);
+		System.out.println("Udel = "+result_id);
+		mainDao.delMyForm(result_id);
+
+		mav.setViewName("redirect:/mypage");
+
+		return mav;
+	}
+	
 	//form 제출하기 
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
