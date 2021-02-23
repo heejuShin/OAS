@@ -236,7 +236,7 @@ public class AdminController {
 				String[] statenames = statename.split(",");
 				for (int i = 0; i < statenames.length; i++) {
 					state.setStateName(statenames[i]);
-					if(statenames[i]=="대기중")
+					if(statenames[i].equals("대기중"))
 						state.setIsDefualt(1);
 					else state.setIsDefualt(0);
 					state.setForm_id(form_id);
