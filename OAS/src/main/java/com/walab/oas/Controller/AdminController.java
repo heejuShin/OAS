@@ -40,11 +40,9 @@ import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
-import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.Item;
-import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.ReadResult;
 
 @RestController
@@ -808,8 +806,8 @@ public class AdminController {
 	}
 	
 	//admin mypage의 결과 버튼 누를때
-	@RequestMapping(value = "/resultForm/{link}")
-	public ModelAndView resultFormOnly(@PathVariable String link, SearchCriteria cri, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/resultForm/{link}" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	public ModelAndView resultFormOnly(@PathVariable String link, HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
@@ -820,10 +818,8 @@ public class AdminController {
 		String form_title = adminDAO.getFormName(form_id);
 		//String form_title = request.getParameter("select_formTitle");
 		String url = adminDAO.getLink(form_id);
+		List<Result> submitterList= adminDAO.submitterList(form_id);
 		
-		cri.setForm_id(form_id);
-		List<Result> submitterList= adminDAO.submitterList(form_id,cri.getPageStart(),cri.getPerPageNum());
-		System.out.println(submitterList);
 		ObjectMapper mapper=new ObjectMapper();
 		String jArray=mapper.writeValueAsString(submitterList);
 			
@@ -833,20 +829,12 @@ public class AdminController {
 		
 		int isAvailable=adminDAO.getAvailable(form_id);
 		
-		//paging
-		int count=adminDAO.countSubmitter(cri.getSearchType(), cri.getKeyword(),form_id);
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(count);
-		
 		mav.addObject("form_id",form_id);
 		mav.addObject("link", url);
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);
 		mav.addObject("form_title",form_title);
-		mav.addObject("page",cri.getPage());
-		mav.addObject("pageMaker", pageMaker);
 				
 		mav.setViewName("adminFormCheck");
 		return mav;

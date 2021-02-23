@@ -37,6 +37,44 @@
 	
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=2">
 
+<style>
+		.under_tab {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		/* Float the list items side by side */
+		.under_tab li {
+			float: left;
+		}
+		/* Style the links inside the list items */
+		.under_tab li a{
+			display: inline-block;
+			color: black;
+			text-align: center;
+			text-decoration: none;
+			padding: 18px 45px;
+			font-size: 17px;
+			transition:0.3s;
+		}
+		
+		
+		/* Style the tab content */
+		.under_tabcontent {
+			display: none;
+            width: 100%;
+			padding: 6px 12px;
+		}
+		ul.under_tab li.under_current{
+			border-radius: 6px 6px 0px 0px;
+			background-color: white;
+			color: #222;
+		}
+		.under_tabcontent.under_current {
+			display: block;
+		}
+</style>
 <script>
 	function replaceAll(str, searchStr, replaceStr) {
 	  return str.split(searchStr).join(replaceStr);

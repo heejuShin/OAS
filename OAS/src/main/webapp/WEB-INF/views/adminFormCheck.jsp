@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +11,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    
     <style>
     #yourModal{
     	height: 600px !important;
@@ -82,7 +78,27 @@
                }
        		});
         });
-		
+		/*
+        //함수4. 개별 상태 변경 select
+        $("select[name=state]").on('change',function () {
+          var resultID = $(this).parent().siblings().children("input:checkbox").val();
+          var newState = $(this).val();
+          alert("resultID : " + resultID + ", newState : " + newState);
+          //resultID, newState 위와 동일하게 ajax로 전달
+          //   var sendData = {"resultIDarray": resultID, "newState" : state};
+          //   $.ajax({
+          //           url:"",
+          //           type:'POST',
+          //           data: sendData,
+          //           success:function(data){
+          //               console.log(" 변경할 상태정보 전송 완료!");
+          //           },
+          //           error:function(jqXHR, textStatus, errorThrown){
+          //               alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+          //           }
+          //   });
+ 
+        });*/
       });
     </script>
  </head>
@@ -91,14 +107,11 @@
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
     <!-- main -->
     <main>
-      <!-- list start -->
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
-			<form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-    			<input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
-			</form>
-			
+			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> <form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
+    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+</form></h2>
 			
 		</div>
         
@@ -137,46 +150,21 @@
                   <tbody id="tbodies"><!-- js로 제출자 list 넣기 --></tbody>
                  
 
-                  <tfoot>
-                  
-                  	<tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr>
-                  </tfoot>
+                  <tfoot><tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr></tfoot>
                 </table>
               
               </div><!--end of .table-responsive-->
               
                <div>
-               
-               <div id="moreContent">  
-                  	<ul class="pagination">
-					    <c:if test="${pageMaker.prev}">
-					    <li>
-					        <a href='<%=request.getContextPath()%>/admin/resultForm/${link}?page=${pageMaker.startPage-1}'>&laquo;</a>
-					    </li>
-					    </c:if>
-					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-					    <li>
-					        <a href='<%=request.getContextPath()%>/admin/resultForm/${link}?page=${idx}'>${idx}</a>
-					    </li>
-					    </c:forEach>
-					    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-					    <li>
-					        <a href='<%=request.getContextPath()%>/admin/resultForm/${link}?page=${pageMaker.endPage+1}'>&raquo;</a>
-					    </li>
-					    </c:if>
-		  	   		  </ul>
-		  	   	</div>
                		<!-- state control  -->
-               	<div id="select_control">
+               		<div id="select_control">
 			        <div id="controlDiv">
 			          <select id ="allState" name="stateName">
 			          	<!-- js로 option list 넣기 -->
 			          </select>
 			          <button id="stateB" name='stateB'>적용</button>
 			        </div>
-
-			    </div>
-	        
+			      </div>
 			</div>
               
               <!-- form view modal -->
@@ -208,8 +196,7 @@
                       var stateList=${stateList};
                       var isAvailable=${isAvailable};
                       var form_id=${form_id};
-
-                      //해당폼이 응답을 받는 중인지 체크
+                      
                       if(isAvailable==0){
                   		$("#isAvailableCheck").attr("checked",true);
                 		$("#isAvailableCheck").attr("value","0");
@@ -232,7 +219,6 @@
                       }
                       
                       //제출자 리스트
-                      var idx=((${page}-1)*10)+1
                       for(var i=0; i < submitterList.length; i++){
                     	  console.log("here");
 	              		    /*사람 별 tr 만듦*/
@@ -245,7 +231,7 @@
 	              		    
 	              		  	
 	  
-	              		    var td2 = $("<td>"+(i+idx)+"</td>"); 
+	              		    var td2 = $("<td>"+(i+1)+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td2);
 	
 	              		    var td3 = $("<td>"+submitterList[i].userName+"</td>"); 
@@ -259,7 +245,7 @@
 	              		  	var td6 = $("<td>"+submitterList[i].email+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td6);
 	              			
-	              		  	var td7 = $("<td>"+moment(submitterList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
+	              		  	var td7 = $("<td>"+submitterList[i].regDate+"</td>"); 
 	              		    $($("#tbodies").children()[i]).append(td7);
 	              		    
 	              		  	var td8 = $("<td></td>"); 
@@ -285,51 +271,34 @@
 				        	}
 	                	}
 
-                      var prev_val; 
-                      $("#isAvailableCheck").focus(function(){
-                    	  prev_val = $(this).is(":checked");
-                      }).click(function() {
-                    	  $(this).blur();
-						  var msg;
-						  if(!$("#isAvailableCheck").is(":checked")){
-							  msg="해당 신청폼의 응답을 받으시겠습니까?";
-						  }
-						  else{
-							  msg = "해당 신청폼의 응답받기를 중지하겠습니까?";
-						  }
-
-                          if (confirm(msg) == true){    //확인
-                        	  if(!prev_val){
-                                  $("#isAvailable").attr("value","0");
-                              }else{
-                                  $("#isAvailable").attr("value","1");
-                              }
-                        	  var isAvailable= $("#isAvailable").val();
-                              $.ajax({ //해당 폼의 userEdit 바꾸기
-                  	  			url : '<%=request.getContextPath()%>/admin/form/update/changeAvailable',
-                  	  			data:{"form_id":form_id,"isAvailable":isAvailable},
-    	              	  		type:'POST',
-    	                        traditional : true,
-                  	  			success: function(){
-                  	  				console.log("isAvailable Change: "+$("#isAvailable").val()); 	
-                  	  					  		 
-                  	  			},
-                  			  	error:function(request, status, error){
-                  		
-                  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                  		
-                  				}
-                  	  	  	});
-		 				  }else {   //confirm 취소
-							 $("#isAvailableCheck").attr("checked",false);
-							 return false;
-		 				  }
-                          
+                      $("#isAvailableCheck").change(function(){
+                          console.log("userAvailableCheck!!");
+                          if($("#isAvailableCheck").is(":checked")){
+                              $("#isAvailable").attr("value","0");
+                          }else{
+                              $("#isAvailable").attr("value","1");
+                          }
+                          var isAvailable= $("#isAvailable").val();
+                          $.ajax({ //해당 폼의 userEdit 바꾸기
+              	  			url : '<%=request.getContextPath()%>/admin/form/update/changeAvailable',
+              	  			data:{"form_id":form_id,"isAvailable":isAvailable},
+	              	  		type:'POST',
+	                        traditional : true,
+              	  			success: function(){
+              	  				console.log("isAvailable Change"); 	
+              	  					  		 
+              	  			},
+              			  	error:function(request, status, error){
+              		
+              				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+              		
+              				}
+              	  	  	});
                       });
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "${link}";
-			  			  var id = $(this).siblings(".result_id").val();
+			  var id = $(this).siblings(".result_id").val();
                     	  $("#yourModal").load("../form/result/"+link+"/"+id);
                     	 
                     	} );
@@ -338,15 +307,8 @@
 
                       });
 			  
-                  });
+		      
 
-                  $(document).click(function(e) {
-                	    if (!$(e.target).closest('#yourModal').length) {
-                	    	$("#yourModal").empty();
-                	    	$("#yourModal").css("display","none");
-                	    	$("#show").remove();
-                	    }
-                	    
-                });
+                  });
                   </script>
 </html>

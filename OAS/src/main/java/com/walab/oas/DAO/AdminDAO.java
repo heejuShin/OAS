@@ -14,7 +14,6 @@ import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.Result;
 import com.walab.oas.DTO.Result_Content;
-import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.User;
 import com.walab.oas.DTO.ReadResult;
@@ -27,21 +26,8 @@ public class AdminDAO {
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
 	
-	public List<Result> submitterList(int form_id, int pageStart, int perPageNum) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("pageStart", pageStart);
-		map.put("perPageNum", perPageNum);
-		map.put("form_id", form_id);
-		System.out.println(map);
-		return sqlSession.selectList(namespace + ".submitterList",map);
-	}
-	
-	public int countSubmitter(String searchType, String keyword,int form_id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("searchType", searchType);
-		map.put("keyword", keyword);
-		map.put("form_id", form_id);
-		return sqlSession.selectOne("countSubmitter", map);
+	public List<Result> submitterList(int form_id) {
+		return sqlSession.selectList(namespace + ".submitterList",form_id);
 	}
 	
 	public List<State> stateList(int form_id) {

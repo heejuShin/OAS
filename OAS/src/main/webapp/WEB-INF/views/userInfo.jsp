@@ -225,15 +225,6 @@
 			target.appendChild(opt);
 		}	
 	}
-
-	$(document).ready(function () {
-		$(document).on("click",function (e){
-			if($("#id01").is(e.target)){
-				$("#id01").css({ display : "none"
-								});
-			}
-		});
-	});
 </script>
 
 </body>

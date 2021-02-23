@@ -77,7 +77,7 @@ $( document ).ready(function() {
 	});
 	
 	$('#preview').on('click', function() {
-		console.log("preview click");
+		console.log("preview test");
 		
 		//formName,categoryName, explanation, plusPoint, isAvailable, isUerEdit, minusPoint, startDate, startTime, endDate,endTime
 		var form_name= $("input[name=formName]").val();
@@ -155,7 +155,6 @@ $( document ).ready(function() {
 	
 	    // 모달 div 뒤에 희끄무레한 레이어
 	    var bg = $('<div>')
-	    	.attr('id','bg')
 	        .css({
 	            position: 'fixed',
 	            zIndex: zIndex,
@@ -185,8 +184,8 @@ $( document ).ready(function() {
 	            webkitTransform: 'translate(-50%, -50%)'
 	        })
 	        .show()
-	        
-	        .find('#confirm, .modal_close_btn')
+	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+	        .find('.modal_close_btn')
 	        .on('click', function() {
 	        	
 	            bg.remove();

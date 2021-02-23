@@ -60,8 +60,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=12"></script>
+
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -304,16 +304,13 @@ $(".form-control").select2({
 });
 
 
-$('#link').bind("keyup", function(){
-    $(this).val($(this).val().toLowerCase());
-});
+/** TODO
+* 그래도 어느 정도의 CSS
+* 상태 선택
+* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
+* '기타' 추가 기능
+* 복사 기능
+**/
 
-$(document).click(function(e) {
-    if (!$(e.target).closest('#preview_modal').length) {
-    	$("#preview_modal").css({ display : "none"});
-		$("#bg").remove();
-    }
-    
-});
 </script>
 </html>

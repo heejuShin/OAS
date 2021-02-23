@@ -55,7 +55,7 @@
   <main>
 
   	<div id="headTitle">
-		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" style="cursor:pointer;" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
     <section id="demo" class="adminMypage_main">
@@ -162,6 +162,7 @@
                                 }
                                 
 	                            var adminList=${adminList};
+				    var adminListWithState = ${adminListWithState};
 	                            for(var i=0; i < adminList.length; i++){
 	                                
 	                    		    /*설문지 별 tr 만듦*/
@@ -186,7 +187,24 @@
 	                    		    $($(".tbodies").children()[i]).append(td4);
 	                    		    var td5 = $("<td>"+adminList[i].userName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td5);
+
+	                    		    var resultCount;
+									$.ajax({ //해당 form의 신청자 count가져오기
+										url : "resultCount",
+									  	type : "post",
+									  	data:{"form_id":adminList[i].id},
+									  	dataType : "json",
+									  	async: false,
+									  	success: function(data){
+									  		resultCount = data;
+									  	},
+									  	error:function(request, status, error){
+											alert("code:"+request.status+"\n"+"\n"+"error:"+error);
+										}
+									});	
+									
 									//모집중(수정가능,결과보기), 모집마감(결과보기,신청자가 없으면 삭제 가능), 예약(수정가능,삭제가능)
+									
 									//예약(수정,삭제)
 	                    			if(new Date(adminList[i].startDate) > new Date()){
 	                    				var td6 = $("<td>예약</td>"); 
@@ -216,7 +234,7 @@
 										var form=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='' name='select_formTitle' value='"+adminList[i].formName+"'/></form>");
 										$($(".tbodies").children()[i]).append(form);
 										
-										var resultCount;
+										/* var resultCount;
 										$.ajax({ //해당 form의 신청자 count가져오기
 											url : "resultCount",
 										  	type : "post",
@@ -229,13 +247,14 @@
 										  	error:function(request, status, error){
 												alert("code:"+request.status+"\n"+"\n"+"error:"+error);
 											}
-										});		
+										});	 */	
 										if(resultCount==0){
 											var plus_a=$("<button id='deleteForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'deleteForm(this);'><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>");
 											$($(".tbodies").children()[i]).find("#resultForm_"+adminList[i].id).parent().append(plus_a);
 											var form2=$("<form id='deleteForm' action='deleteForm' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
 											$($(".tbodies").children()[i]).append(form2);
 										}
+										
 										$(".form-item"+i).addClass('신청마감');
 										$(".form-item"+i).attr('data-status','신청마감');
 		                    		}
@@ -257,13 +276,18 @@
 			                    	
 	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td7);
+
+	                    			if(adminListWithState[i].state_id==0){
+	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>신청하기</button</td>");
+	                                  		$($(".tbodies").children()[i]).append(td7);
+	                               		}
+	                                	//신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
+	                                 	else{
+	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+adminListWithState[i].stateName+"</button</td>");
+	                                 		$($(".tbodies").children()[i]).append(td7);
+	                               		}
 	                    		    //신청자 수 표시 
-	                    		    /* var td8 = $("<td>신청자 수 </td>");
-	                    		    $($(".tbodies").children()[i]).append(td8) */;
-	                    		    //var td8 = $("<td>"+adminList[i].resultCount+"</td>"); //formName 대신 submitNum 넣기 
-	                    		    //var td8 = $("<td>"+resultCount[i].count(adminList[i].id)+"</td>"); //formName 대신 submitNum 넣기 
-	                    		    var td8 = resultCount; //formName 대신 submitNum 넣기 
-	                    		    
+	                    		    var td8 = resultCount+"명 "; 
 	                    		    $($(".tbodies").children()[i]).append(td8);
 	                    		    
 	                    		    
