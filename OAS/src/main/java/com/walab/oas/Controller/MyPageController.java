@@ -28,7 +28,9 @@ import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Category;
+import com.walab.oas.DTO.Department;
 import com.walab.oas.DTO.Form;
+import com.walab.oas.DTO.Major;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.State;
@@ -165,7 +167,12 @@ public class MyPageController {
 			pageMaker.setTotalCount(count1);
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(userList);
-			System.out.println(jArray);
+			
+			List<Department> department = mypageDao.departmentList();
+			List<Major> major = mypageDao.majorList();
+			
+			mav.addObject("department", department);
+			mav.addObject("major", major);
 			mav.addObject("userList", jArray);
 			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);

@@ -113,7 +113,7 @@
               </c:if>
                <c:if test="${admin == 0 || admin == 1}">
               <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/admin/manage">유저 관리</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/manage">회원 관리</a>
               </li>
               </c:if>
               <c:if test="${admin == 0 || admin == 1}">

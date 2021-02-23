@@ -161,6 +161,8 @@
         	$('#id01').style.display = "none";
         }
       }
+    
+      
 		function categoryChange(e) {
 			var csee = ["컴퓨터공학전공", "전자공학전공", "컴퓨터공학심화전공", "전자공학심화전공", "IT전공"];
 			var life_science = ["생명과학전공"];

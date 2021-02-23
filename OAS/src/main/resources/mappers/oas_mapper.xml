@@ -479,5 +479,16 @@
    <update id="updateContent" >
       UPDATE ResultContent SET content = #{content} WHERE id = #{id};
    </update>
+   
+   <select id="departmentList" resultType="com.walab.oas.DTO.Department">
+      SELECT * from Department;
+   </select>
+   
+      <select id="majorList" resultType="com.walab.oas.DTO.Major">
+      SELECT Major.*, Department.name as dep_name from Major 
+		INNER JOIN Department ON Major.department_id = Department.id;
+   </select>
+   
+   
 
 </mapper>
