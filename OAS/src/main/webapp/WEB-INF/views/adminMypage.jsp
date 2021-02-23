@@ -274,8 +274,8 @@
 										$(".form-item"+i).attr('data-status','신청중');
 			                    	}
 			                    	
-	                    			var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
-	                    		    $($(".tbodies").children()[i]).append(td7);
+	                    			//var td7 = $("<td><button type='button' class='btn mb-2 mb-md-0 btn-round' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기 </button></td>"); 
+	                    		    //$($(".tbodies").children()[i]).append(td7);
 
 	                    			if(adminListWithState[i].state_id==0){
 	                                    		var td7=$("<td><button id='form_"+adminListWithState[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>신청하기</button</td>");
