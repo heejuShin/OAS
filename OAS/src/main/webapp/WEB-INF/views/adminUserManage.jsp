@@ -13,8 +13,22 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
+  <style>
+    #excelForm{
+    	display: inline-block;
+    	float: right;
+    	font-size: 20px;
+    }
+    #excelDown{
+    	margin-top: 15px;
+    	border: 0px;
+    	border-radius: 5px;
+    	background: #d1d1d1;
+    }
+    </style>    
 </head>
+
 <body>
 
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
