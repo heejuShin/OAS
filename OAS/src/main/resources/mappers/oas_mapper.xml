@@ -495,7 +495,10 @@
       SELECT Major.*, Department.name as department_name from Major 
 		INNER JOIN Department ON Major.department_id = Department.id;
    </select>
-   
+   <!-- 선택한 내 Form 데이터 삭제하기 -->
+   <delete id="deleteMyForm" parameterType="int">
+       delete from Result where id=#{myFormID};
+   </delete>
    
 
 </mapper>

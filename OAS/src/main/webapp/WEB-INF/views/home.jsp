@@ -81,14 +81,16 @@
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
                                  else{
-                                     var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'deleteForm(this);'>신청취소</a></div>");
-                                            $($($(".grid").children()[i]).children()[0]).append(a);
-                                   }
+                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
+                                	 $($($(".grid").children()[i]).children()[0]).append(a);
+                                 }
  								 
  								var form=$("<form id='myform' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form);
  								var form2=$("<form id='viewForm' action='viewForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form2);
+ 								var form3=$("<form id='delMyForm' action='delMyForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								$($($(".grid").children()[i]).children()[0]).append(form3);
                             }
 
                             });
@@ -102,7 +104,14 @@
                                 	$(obj).parent().siblings("#viewForm").submit();
                             }
 
-
+                     		function delSubmitForm(obj){
+                         		console.log("deleteMyForm");
+                         		if(confirm("정말로 삭제하시겠습니까?")){
+	                         		var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
+	                           		$(obj).parent().siblings("#delMyForm").submit();
+                         		}
+                            }
+                     		
                             $(document).ready( function() {   
 
                                var $grid = $('.grid').isotope({
