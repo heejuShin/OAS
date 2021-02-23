@@ -47,7 +47,7 @@
          <exclude-mapping path="/"/>
          <exclude-mapping path="/login/**"/>
 	 <exclude-mapping path="/resources/**"/> 
-	 <!-- plz -->
+	 <!-- plz  -->
          <beans:ref bean="logininterceptor"/>
       </interceptor>
    </interceptors>
