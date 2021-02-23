@@ -99,7 +99,7 @@ public class BoardController {
       else
        	System.out.println("데이터 추가 성공!!!");
         }
-       return "redirect:list";
+       return "redirect:../../board/list";
     }
     
 
@@ -224,7 +224,7 @@ public class BoardController {
 		return mav;
     }
     
-    @RequestMapping(value = "/admin/board/editok", method = RequestMethod.POST)    
+    @RequestMapping(value = "/board/editok", method = RequestMethod.POST)    
     public String editPostOk(BoardVO vo){
     	if(boardService.updateBoard(vo) == 0)
     		System.out.println("데이터 수정 실패 ");
@@ -233,7 +233,7 @@ public class BoardController {
     	return "redirect:list";
     }
     
-    @RequestMapping(value = "/admin/board/deleteok/{id}", method = RequestMethod.GET)    
+    @RequestMapping(value = "/board/deleteok/{id}", method = RequestMethod.GET)    
     public String deletePostOk(@PathVariable("id") int id){    
         if(boardService.deleteBoard(id) == 0) {
         	System.out.println("데이터 삭제 실패 ");
