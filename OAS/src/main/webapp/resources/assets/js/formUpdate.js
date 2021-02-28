@@ -375,6 +375,7 @@ $( document ).ready(function() {
 	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
 	        .find('.modal_close_btn')
 	        .on('click', function() {
+	        	$("#preview_modal").empty();
 	            bg.remove();
 	            modal.hide();
 	        });

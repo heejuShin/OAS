@@ -61,7 +61,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -307,6 +307,7 @@ $(document).click(function(e) {
     if (!$(e.target).closest('#preview_modal').length) {
     	$("#preview_modal").css({ display : "none"});
 		$("#bg").remove();
+		$("#preview_modal").empty();
     }
     
 });
