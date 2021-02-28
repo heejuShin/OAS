@@ -28,6 +28,16 @@
 	.filters:focus {
 		outline: none;
 	}
+    #excelForm{
+    	display: inline-block;
+    	float: right;
+    }
+    #excelDown{
+    	border: 0px;
+    	border-radius: 10px;
+    	background: #d1d1d1;
+    	
+    }
     </style>
     
 
@@ -101,9 +111,7 @@
     
     	<div id="headTitle">
 			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
-			<form style="float: right;" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-    <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
-</form>
+
 		</div>
         
 		
@@ -121,6 +129,10 @@
 	                  				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
 									<label id="stopMsg">응답 중단하기</label>
 									<input type="hidden" id="isAvailable" name="isAvailable" value="">
+									
+								  <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
+				    			  <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+							      </form>
 								</div>
 					</th></tr>
 					<!-- column  list -->

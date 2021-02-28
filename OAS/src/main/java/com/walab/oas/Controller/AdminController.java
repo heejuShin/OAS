@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.ExcelDownloadDAO;
 import com.walab.oas.DAO.MainDAO;
+import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
@@ -55,6 +56,8 @@ public class AdminController {
 	private AdminDAO adminDAO;
 	@Autowired
 	private MainDAO mainDao;
+	@Autowired
+	private MyPageDAO mypageDao;
 	
 	//신청폼 (Admin) Create
 	@RequestMapping(value = "/form/create")
@@ -234,7 +237,7 @@ public class AdminController {
 				String[] statenames = statename.split(",");
 				for (int i = 0; i < statenames.length; i++) {
 					state.setStateName(statenames[i]);
-					if(statenames[i]=="대기중")
+					if(statenames[i].equals("대기중"))
 						state.setIsDefualt(1);
 					else state.setIsDefualt(0);
 					state.setForm_id(form_id);
@@ -782,6 +785,42 @@ public class AdminController {
 		}
 		ExcelDownloadDAO ed = new ExcelDownloadDAO();
 		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
+	}
+	
+	@RequestMapping(value = "/manage/downloadExcelFile", method = RequestMethod.POST)
+	public void excelDownUser(HttpServletRequest request, HttpServletResponse response, SearchCriteria searchCRI) throws Exception {
+		
+		//SearchCriteria searchCRI = null;
+		List<User> user_info = mypageDao.getUserInfo(searchCRI);
+		
+		ArrayList<ArrayList<String>> user_list = new ArrayList<ArrayList<String>>();
+		ArrayList<String> info = new ArrayList<String>();
+		info.add("이름");
+		info.add("전화번호");
+		info.add("이메일");
+		info.add("학번");
+		info.add("학부");
+		info.add("회원등급");
+		user_list.add(info);
+		for(int i=0; i<user_info.size(); i++) {
+			ArrayList<String> user = new ArrayList<String>();
+			user.add(user_info.get(i).getUserName());
+			user.add(user_info.get(i).getPhoneNum());
+			user.add(user_info.get(i).getEmail());
+			user.add(user_info.get(i).getStudentId());
+			user.add(user_info.get(i).getDepartment());
+			if(user_info.get(i).getAdmin()==0) {
+				user.add("관리자");
+			}else if (user_info.get(i).getAdmin()==1) {
+				user.add("선생님");
+			}else {
+				user.add("학생");
+			}
+			user_list.add(user);
+		}
+	
+		ExcelDownloadDAO ed = new ExcelDownloadDAO();
+		SXSSFWorkbook workbook = ed.makeWorkbookUser(response, user_list);
 	}
 	
 	//신청폼 수정 페이지에서 field 가져오기
