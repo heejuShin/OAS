@@ -51,7 +51,7 @@ public class MyPageController {
 		@RequestMapping(value="/admin/mypage")
 		public ModelAndView adminPageList(HttpServletRequest request, SearchCriteria cri, HttpSession session) throws JsonProcessingException {
 			ModelAndView mav = null;
-
+				
 			mav = new ModelAndView("adminMypage");
 			int user_id=0;
 			if(session.getAttribute("id")!=null) {
@@ -67,7 +67,7 @@ public class MyPageController {
 			}
 			else {
 				mav = new ModelAndView("adminMypage");
-				
+				System.out.println("admin idx:"+cri.getPage());
 				List<Category> categoryt = mainDao.categoryList(); //카테고리 들고옴
 				System.out.println("1 : " + categoryt);
 				ObjectMapper category_mapper = new ObjectMapper();

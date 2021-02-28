@@ -63,7 +63,7 @@
 		<!--Start_Filter and Search part-->
           <nav class="filter_search" >
             
-            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="GET" >
+            <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="POST" >
               <input type="hidden" name="searchType" value="all">
               <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
               

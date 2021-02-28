@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,14 @@
     	overflow: scroll !important;
 		margin-top: 180px !important;
     }
+    /* filter - select */
+	.filters {
+		border: none;
+	}
+	
+	.filters:focus {
+		outline: none;
+	}
     </style>
     
 
@@ -81,27 +90,6 @@
                }
        		});
         });
-		/*
-        //함수4. 개별 상태 변경 select
-        $("select[name=state]").on('change',function () {
-          var resultID = $(this).parent().siblings().children("input:checkbox").val();
-          var newState = $(this).val();
-          alert("resultID : " + resultID + ", newState : " + newState);
-          //resultID, newState 위와 동일하게 ajax로 전달
-          //   var sendData = {"resultIDarray": resultID, "newState" : state};
-          //   $.ajax({
-          //           url:"",
-          //           type:'POST',
-          //           data: sendData,
-          //           success:function(data){
-          //               console.log(" 변경할 상태정보 전송 완료!");
-          //           },
-          //           error:function(jqXHR, textStatus, errorThrown){
-          //               alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-          //           }
-          //   });
- 
-        });*/
       });
     </script>
  </head>
@@ -144,7 +132,11 @@
                       <th data-priority="4">학번</th>
                       <th data-priority="5">이메일</th>
                       <th data-priority="6">제출일</th>
-                      <th data-priority="7">상태</th>
+                      <th data-priority="7">
+                      	<select class="filters filter-status" id="status">
+                        	<option data-filter='' value="*">상태</option>
+                        </select>
+                      </th>
                       <th data-priority="8">응답지</th>
                     </tr>
                   </thead> 
@@ -154,7 +146,35 @@
                  
 
                   <tfoot><tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr></tfoot>
+                
                 </table>
+                
+                <div>
+                	
+                  	<ul class="pagination">
+					    <c:if test="${pageMaker.prev}">
+					    <li>
+					        <a href="javascript:paging(${pageMaker.startPage-1});">&laquo;</a>
+					    </li>
+					    </c:if>
+					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+					    <li>
+					        <a href="javascript:paging(${idx});">${idx}</a>
+					    </li>
+					    </c:forEach>
+					    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					    <li>
+					        <a href="javascript:paging(${pageMaker.endPage+1});">&raquo;</a>
+					    </li>
+					    </c:if>
+		  	   		  </ul>
+		  	   		  
+		  	   		  <form id="pagingForm" name="paging" action="<%=request.getContextPath()%>/admin/resultForm/${link}" method="POST">
+						<input type="hidden" name="page" value="${idx}">
+						<input type="hidden" id="searchType" name="searchType" value="?">
+						<input type="hidden" id="keyword" name="keyword" value="${keyword}">
+					  </form>
+                </div>
               
               </div><!--end of .table-responsive-->
               
@@ -219,7 +239,12 @@
 	                    	  var optionName= $("<option value='"+stateList[x].id+"'>"+stateList[x].stateName+"</option>"); 
 	                    	  $("#allState").append(optionName);
                     	  }
+
+                    	  var option=$("<option value='"+stateList[x].stateName+"'>"+stateList[x].stateName+"</option>");
+						  $(".filter-status").append(option);
                       }
+                      var keyword=$("#keyword").val();
+                      $('.filter-status option[value='+keyword+']').prop('selected', 'selected').change();
                       
                       //제출자 리스트
                       for(var i=0; i < submitterList.length; i++){
@@ -309,6 +334,17 @@
                       $("#yourModal").on('click', ".modal_close", function(){
 
                       });
+
+                      $('.filters').on( 'change', function() {
+							$("#keyword").val($(this).val());
+							$("#searchType").val("all");
+							if($(this).val()=="*"){
+									$("#searchType").val("");
+									$("#keyword").val("");
+								}
+									
+							$("#pagingForm").submit();
+            	        });
 			  
                   });
 
@@ -320,5 +356,10 @@
               	    }
               	    
               	});
+
+              	function paging(idx){
+              		$("input[name='page']").val(idx);
+              		$("#pagingForm").submit();
+                }
                   </script>
 </html>

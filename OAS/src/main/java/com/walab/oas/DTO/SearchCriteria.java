@@ -6,6 +6,7 @@ public class SearchCriteria extends Criteria{
 	private String keyword;
 	private String filterType;
 	private int user_id;
+	private int form_id;
 
 	public String getSearchType() {
 		return searchType;
@@ -39,9 +40,18 @@ public class SearchCriteria extends Criteria{
 		this.user_id = user_id;
 	}
 
+	
+	public int getForm_id() {
+		return form_id;
+	}
+
+	public void setForm_id(int form_id) {
+		this.form_id = form_id;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCriteria [searchType=" + searchType + ", keyword=" + keyword + ", filterType=" + filterType
-				+ ", user_id=" + user_id + "]";
+				+ ", user_id=" + user_id + ", form_id=" + form_id + "]";
 	}
 }
