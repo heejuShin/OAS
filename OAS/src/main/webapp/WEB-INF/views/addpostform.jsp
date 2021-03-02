@@ -62,7 +62,7 @@
 </form>
 </div>
 
-<button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='list'">목록보기 </button>
+<button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='../../board/list'">목록보기 </button>
 
 </main>
 

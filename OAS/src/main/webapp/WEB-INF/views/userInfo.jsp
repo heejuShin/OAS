@@ -74,19 +74,6 @@
               <div>
 			  <label>학부</label> <span style="font-size: 6px"><img id="settingsIcon" alt="profileImg" style= "width: 15px; height: 15px;" src="<%=request.getContextPath()%>/resources/img/settings.png"></span>
 				<select id="department"  class="info_select w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)">
-                  <option value="전산전자공학부" selected>전산전자공학부</option>
-                  <option value="기계제어공학부">기계제어공학부</option>
-                  <option value="글로벌리더십학부">글로벌리더십학부</option>
-                  <option value="ICT창업학부">ICT창업학부</option>
-                  <option value="공간환경시스템공학부">공간환경시스템공학부</option>
-                  <option value="경영경제학부">경영경제학부</option>
-                  <option value="국제어문학부">국제어문학부</option>
-                  <option value="커뮤니케이션학부">커뮤니케이션학부</option>
-                  <option value="콘텐츠융합디자인학부">콘텐츠융합디자인학부</option>
-                  <option value="상담심리사회복지학부">상담심리사회복지학부</option>
-                  <option value="법학부">법학부</option>
-                  <option value="생명과학부">생명과학부</option>
-                  <option value="창의융합교육원">창의융합교육원</option>
                 </select>
                 </div>
                 
@@ -138,6 +125,12 @@
 			}
 		
 		});
+		
+        var department = ${department};
+        for (var i = 0; i < department.length; i++) {
+        	var selectOption = $("<option value='"+department[i].name+"' selected>"+department[i].name+"</option>");
+        	$("#department").append(selectOption);
+        }
 
 		$( 'input#userName' ).val( userinfo[0].userName );
 		$( 'input#email' ).val( userinfo[0].email );
@@ -161,7 +154,22 @@
         	$('#id01').style.display = "none";
         }
       }
+    
+      var department = ${department};
+      var major = ${major};
+      for (var i = 0; i < department.length; i++) {
+      	//var selectOption = $("<option value='"+department[i].name+"' selected>"+department[i].name+"</option>");
+      	//$("#department").append(selectOption);
+      }
+      
 		function categoryChange(e) {
+			for(var i = 0; i< department.length; i++){
+				eval("var "+department[i].name +"= new Array();");
+			}
+			for(var i = 0; i<major.length; i++){
+				eval(major[i].department_name+".push('"+major[i].name+"');");
+			}
+			/*
 			var csee = ["컴퓨터공학전공", "전자공학전공", "컴퓨터공학심화전공", "전자공학심화전공", "IT전공"];
 			var life_science = ["생명과학전공"];
 			var isll = ["국제지역학전공", "영어전공"];
@@ -174,9 +182,16 @@
 		    var ccd = ["시각디자인전공", "제품디자인전공"];
 			var cpsw = ["상담심리학전공", "사회복지학전공"];
 		    var geict = ["ICT창업전공", "GE(국제적 기업가정신) 전공", "ICT융합전공"];
-			var scce = ["학생설계융합전공", "글로벌융합전공", "글로벌한국학전공", "수학통계전공"];
+			var scce = ["학생설계융합전공", "글로벌융합전공", "글로벌한국학전공", "수학통계전공"];*/
 			var target = document.getElementById("major");
 		
+			for(var i = 0; i<department.length; i++){
+				if(i==0){
+					eval("if(e.value == '"+department[i].name+"') var d = "+department[i].name+";")
+				}
+				else eval("if(e.value == '"+department[i].name+"') var d = "+department[i].name+";");
+			}
+			/*
 			if(e.value == "전산전자공학부") var d = csee;
 			else if(e.value == "공간환경시스템공학부") var d = sese;
 			else if(e.value == "ICT창업학부") var d = good_c;
@@ -189,7 +204,7 @@
 		    else if(e.value == "법학부") var d = law;
 			else if(e.value == "생명과학부") var d = life_science;
 		    else if(e.value == "기계제어공학부") var d = mce;
-		    else if(e.value == "창의융합교육원") var d = scce;
+		    else if(e.value == "창의융합교육원") var d = scce;*/
 		    
 		
 			target.options.length = 0;
@@ -225,15 +240,6 @@
 			target.appendChild(opt);
 		}	
 	}
-
-	$(document).ready(function () {
-		$(document).on("click",function (e){
-			if($("#id01").is(e.target)){
-				$("#id01").css({ display : "none"
-								});
-			}
-		});
-	});
 </script>
 
 </body>

@@ -30,7 +30,9 @@ public class MainDAO{
 //	public List<Form_ver2> formList(SearchCriteria cri) {
 //		return sqlSession.selectList(namespace + ".form_list",cri);
 //	}
-	
+	public void delMyForm(int myFormID) {
+		sqlSession.delete(namespace + ".deleteMyForm", myFormID);
+	}
 	public List<Form> formList(SearchCriteria cri) {
 		return sqlSession.selectList(namespace + ".form_list",cri);
 	}
@@ -51,8 +53,5 @@ public class MainDAO{
 		return sqlSession.selectList(namespace + ".stateListbyId", formID);
 	}	
 	
-	public void delMyForm(int myFormID) {
-		sqlSession.delete(namespace + ".deleteMyForm", myFormID);
-	}
 	
 }

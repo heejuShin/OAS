@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=5">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=19">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -60,8 +60,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=13"></script>
+
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -79,7 +79,7 @@
     <div class="container-contact100">
     
 		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
-		<div id="menu-bar" style="cursor: pointer;"><p id="add_p">+</p></div>
+		<div id="menu-bar"><p id="add_p">+</p></div>
 				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
 					<span class="contact100-form-title">
 						설문 만들기
@@ -164,7 +164,7 @@
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
 <!-- 	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
- -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" onfocus="this.value= randomString;" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+ -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" name="url" type="text" onfocus="this.value= randomString;" placeholder="사용할 폼 주소 url을 입력해주세요."/>
 	        
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
@@ -193,12 +193,8 @@
 					<input type="hidden" class="index" value="3">
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
-					<input class="field_title input1002 bg1 " name="f_title3" placeholder="질문을 입력해주세요.">
-		<input type="file" name="file" />
-        <input type="text" name="src" />
-        <input type="submit" value="전송" />
-
-
+					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
+					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>
 						  <option value="text">단답형</option>
@@ -211,28 +207,19 @@
 						  <option value="time">시간</option>
 						  <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
 						</select>
-						
-						
 
 						<div style="float: right;">
 						<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
 						<label for="필수질문">필수</label>
 						</div>
 	
-						<div class="content"></div>
-						
-						<div style="margin-top: 10px;">
-							<label  class="addFieldFileLabel">첨부 파일 추가 : </label>
-							<input class="addFieldFile"  type="file">
-						</div>
-						<div style="clear: both;"></div>
-						
+						<div class="content" style="clear: both;"></div>
         </div>
       </div>
 
     <div class="add" id="radio_add">
       <div>
-        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item optionCancleB">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
@@ -240,7 +227,7 @@
 
     <div class="add" id="chxbox_add">
       <div>
-        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item optionCancleB">X</button>
+        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
@@ -316,17 +303,22 @@ $(".form-control").select2({
 	tags : true
 });
 
-
-$('#link').bind("keyup", function(){
-    $(this).val($(this).val().toLowerCase());
-});
-
 $(document).click(function(e) {
     if (!$(e.target).closest('#preview_modal').length) {
     	$("#preview_modal").css({ display : "none"});
 		$("#bg").remove();
+		$("#preview_modal").empty();
     }
     
 });
+
+/** TODO
+* 그래도 어느 정도의 CSS
+* 상태 선택
+* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
+* '기타' 추가 기능
+* 복사 기능
+**/
+
 </script>
 </html>

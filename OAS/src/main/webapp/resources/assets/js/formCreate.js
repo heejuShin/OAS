@@ -76,8 +76,9 @@ $( document ).ready(function() {
 	    modal('confirm_modal');
 	});
 	
+	
 	$('#preview').on('click', function() {
-		console.log("preview click");
+		console.log("preview test");
 		
 		//formName,categoryName, explanation, plusPoint, isAvailable, isUerEdit, minusPoint, startDate, startTime, endDate,endTime
 		var form_name= $("input[name=formName]").val();
@@ -132,12 +133,13 @@ $( document ).ready(function() {
 	    console.log(sendData);
 	    
 	    $.ajax({
-			url: "preview",
+			url: "create/preview",
 		 	type:'POST',
 		   	traditional : true,
 		   	data: sendData,
 		  	success:function(result){
 		    	$("#preview_modal").html(result);
+		    	console.log("modal preview");
 		     	modal('preview_modal');
 		   	},
 		   	error:function(request,status,error){
@@ -185,10 +187,10 @@ $( document ).ready(function() {
 	            webkitTransform: 'translate(-50%, -50%)'
 	        })
 	        .show()
-	        
-	        .find('#confirm, .modal_close_btn')
+	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+	        .find('.modal_close_btn')
 	        .on('click', function() {
-	        	
+	        	$("#preview_modal").empty();
 	            bg.remove();
 	            modal.hide();
 	        });
@@ -266,7 +268,6 @@ $( document ).ready(function() {
 		inputs = inputs.split(",");
 		
 		for(var i = 0 ; i < inputs.length; i++){
-			if(inputs[i]=="") continue;
 			var r_cnt = parseInt($(this).parent().siblings(".count").val())+1;
 			  $(this).parent().siblings(".count").val(r_cnt);
 			  
@@ -288,59 +289,27 @@ $( document ).ready(function() {
 	})
 	//체크박스 아이템 추가
 	$("#list").on('click', ".btn_add_chxbox", function(){
-	
-	  //문자열 처리 (, 기준)
-		var inputs = $(this).siblings('input').val();
-		var lastChar = inputs.charAt(inputs.length-1); 
-
-		if(lastChar == ','){
-			inputs = inputs.slice(0,-1); //마지막 문자 콤마(,) 지움 
-		}
-		
-		inputs = inputs.split(",");
-		
-		for(var i = 0 ; i < inputs.length; i++){
-			if(inputs[i]=="") continue;
-			var c_cnt = parseInt($(this).parent().siblings(".count").val())+1;
-	 		  $(this).parent().siblings(".count").val(c_cnt);
-	  
-	  		  var idx = $(this).parent().siblings(".index").val();
-	  
-			  $("#chxbox_add").find(".checkbox_real").attr("name", idx+"content"+String(c_cnt));
-			  $("#chxbox_add").find(".checkbox_real").attr("value",inputs[i]);
-			  $("#chxbox_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(c_cnt));
-			  $("#chxbox_add").find("label").html(inputs[i]);
-			  $(this).siblings(".list_chxbox").append($("#chxbox_add").html());
-		}
-		$(this).siblings("input").val("");
+	  var c_cnt = parseInt($(this).parent().siblings(".count").val())+1;
+	  $(this).parent().siblings(".count").val(c_cnt);
+	  var idx = $(this).parent().siblings(".index").val();
+	  $("#chxbox_add").find(".checkbox_real").attr("name", idx+"content"+String(c_cnt));
+	  $("#chxbox_add").find(".checkbox_real").attr("value",$(this).siblings("input").val());
+	  $("#chxbox_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(c_cnt));
+	  $("#chxbox_add").find("label").html($(this).siblings("input").val());
+	  $(this).siblings(".list_chxbox").append($("#chxbox_add").html());
+	  $(this).siblings("input").val("");
 	});
 	//드롭다운 아이템 추가
 	$("#list").on('click', ".btn_add_select", function(){
-	
-	  //문자열 처리 (, 기준)
-		var inputs = $(this).siblings('input').val();
-		var lastChar = inputs.charAt(inputs.length-1); 
-
-		if(lastChar == ','){
-			inputs = inputs.slice(0,-1); //마지막 문자 콤마(,) 지움 
-		}
-		
-		inputs = inputs.split(",");
-		
-		for(var i = 0 ; i < inputs.length; i++){
-			if(inputs[i]=="") continue;
-	  		var o_cnt = parseInt($(this).parent().siblings(".count").val())+1;
-	 		 $(this).parent().siblings(".count").val(o_cnt);
-	  
-	  		 var idx = $(this).parent().siblings(".index").val();
-	  
-			  $("#select_value_add").find(".option_real").attr("name", idx+"content"+String(o_cnt));
-			  $("#select_value_add").find(".option_real").attr("value",inputs[i]);
-			  $("#select_add").find("option").attr("value", inputs[i]);
-			  $("#select_add").find("option").html(inputs[i]);
-			  $(this).siblings("select").append($("#select_add").html());
-			  $(this).siblings(".list_select").append($("#select_value_add").html());
-	  }
+	  var o_cnt = parseInt($(this).parent().siblings(".count").val())+1;
+	  $(this).parent().siblings(".count").val(o_cnt);
+	  var idx = $(this).parent().siblings(".index").val();
+	  $("#select_value_add").find(".option_real").attr("name", idx+"content"+String(o_cnt));
+	  $("#select_value_add").find(".option_real").attr("value",$(this).siblings("input").val());
+	  $("#select_add").find("option").attr("value", $(this).siblings("input").val());
+	  $("#select_add").find("option").html($(this).siblings("input").val());
+	  $(this).siblings("select").append($("#select_add").html());
+	  $(this).siblings(".list_select").append($("#select_value_add").html());
 	  $(this).siblings("input").val("");
 	});
 	

@@ -27,13 +27,10 @@ public class AdminDAO {
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
 	
-	public List<Result> submitterList(int form_id, int pageStart, int perPageNum) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("pageStart", pageStart);
-		map.put("perPageNum", perPageNum);
-		map.put("form_id", form_id);
-		System.out.println(map);
-		return sqlSession.selectList(namespace + ".submitterList",map);
+	public List<Result> submitterList(SearchCriteria cri) {
+
+		System.out.println("heckpage: "+cri.getSearchType()+","+cri.getKeyword());
+		return sqlSession.selectList(namespace + ".submitterList",cri);
 	}
 	
 	public int countSubmitter(String searchType, String keyword,int form_id) {

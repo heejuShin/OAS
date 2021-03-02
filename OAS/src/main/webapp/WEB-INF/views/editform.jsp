@@ -15,7 +15,7 @@
 
 
 <h1>Edit Form</h1>
-<form:form commandName="u" action="../editok" method="POST">
+<form:form commandName="u" action="../../../board/editok" method="POST">
 	<form:hidden path="seq"/>
 	<table id="edit">
 	<tr><td class="first">Category:</td><td><form:input path="category" /></td></tr>

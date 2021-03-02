@@ -105,11 +105,7 @@ button .submit {
 }
 
 .content {
-	clear: both;
-    border-bottom: 1px solid #e4e4e4;
 	margin-top: 10px;
-    padding-bottom: 12px;
-    margin-bottom: 15px;
 }
 
 
@@ -191,8 +187,6 @@ button {
 
 /*  ---------------------------HR------------------------------*/
 
-
-
 /* + 버튼 */
 
 .wrap-contact100 #menu-bar {
@@ -222,33 +216,19 @@ button {
 }
 .input1002 {
 	display: block;
-    width: 100%;
-    float: left;
-    font-family: NanumGothic;
-    font-weight: 600;
-    font-size: 18px;
-    border-radius: 12px;
-    margin-top: 10px;
-    border: 1px solid #c9c9c9;
-    /* border-bottom: #333333 1px solid; */
-    color: black;
-    line-height: 1.2;
-    padding-right: 15px;
-    padding-left: 15px;
-    height: 40px;
-    margin-bottom: 15px;
-}
-
-.addFieldFileLabel{
+	width: 100%;
 	float: left;
-    padding: 6px 12px;
-}
-
-.addFieldFile{
-	float: left;
-    border: 1px solid #e2dede;
-    font-weight: 600;
-    border-radius: 10px;
+	background: transparent;
+	font-family: NanumGothic;
+	font-weight: 600;
+	font-size: 18px;
+	border-bottom: #333333 1px solid;
+	color: black;
+	line-height: 1.2;
+	padding-right: 15px;
+	padding-left: 5px;
+	height: 40px;
+	margin-bottom: 10px;
 }
 
 .textareaInput {
@@ -291,20 +271,6 @@ button {
 	font-family: NanumGothic;
 	font-weight: 600;
 	font-size: 20px;
-	color: #fff;
-	line-height: 1.2;
-	margin-left: 5px;
-}
-
-.optionCancleB {
-	padding: 0 20px;
-	width: max-content;
-	height: 20px;
-	background-color: #333333;
-	border-radius: 25px;
-	font-family: NanumGothic;
-	font-weight: 700;
-	font-size: 12px;
 	color: #fff;
 	line-height: 1.2;
 	margin-left: 5px;

@@ -14,8 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.ExcelDownloadDAO;
 import com.walab.oas.DAO.MainDAO;
+import com.walab.oas.DAO.MyPageDAO;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
@@ -58,6 +56,8 @@ public class AdminController {
 	private AdminDAO adminDAO;
 	@Autowired
 	private MainDAO mainDao;
+	@Autowired
+	private MyPageDAO mypageDao;
 	
 	//신청폼 (Admin) Create
 	@RequestMapping(value = "/form/create")
@@ -101,7 +101,7 @@ public class AdminController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/form/preview",method=RequestMethod.POST)
+	@RequestMapping(value= {"/form/create/preview", "/form/view/create/preview"},method=RequestMethod.POST)
 	@ResponseBody 
 	public ModelAndView previewFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 
@@ -178,7 +178,7 @@ public class AdminController {
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
 		@ModelAttribute("ses")
-		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session, MultipartHttpServletRequest mtfRequest) throws Exception {
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 
@@ -226,16 +226,18 @@ public class AdminController {
 				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
 				form.setEnd(end);
 				
+			    System.out.println(form);
 				adminDAO.createForm(form);
 				int form_id=adminDAO.getFormId(url); 
 				//state
 				
 				State state= new State();
 				String statename = request.getParameter("state");
+				//System.out.println(statename);
 				String[] statenames = statename.split(",");
 				for (int i = 0; i < statenames.length; i++) {
 					state.setStateName(statenames[i]);
-					if(statenames[i]=="대기중")
+					if(statenames[i].equals("대기중"))
 						state.setIsDefualt(1);
 					else state.setIsDefualt(0);
 					state.setForm_id(form_id);
@@ -256,32 +258,8 @@ public class AdminController {
 						field.setFieldName(title); 
 						String fieldType = request.getParameter("f_type"+Integer.toString(i));
 						field.setFieldType(fieldType);
-						
-				        String src = mtfRequest.getParameter("src");
-				        System.out.println("src value : " + src);
-				        MultipartFile mf = mtfRequest.getFile("file");
-
-				        String path = "src/main/webapp/resources/file";
-
-				        String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-				        long fileSize = mf.getSize(); // 파일 사이즈
-
-				        System.out.println("originFileName : " + originFileName);
-				        System.out.println("fileSize : " + fileSize);
-
-				        String safeFile = path + System.currentTimeMillis() + originFileName;
-
-				        try {
-				            mf.transferTo(new File(safeFile));
-				        } catch (IllegalStateException e) {
-				            e.printStackTrace();
-				        } catch (IOException e) {
-				            e.printStackTrace();
-				        }
-
-
-						String fileName = originFileName;
-						field.setFileName(fileName);
+						String fileName; // 이거 어떻게 할지 고민
+						//field.setFileName(fileName);
 						int isEssential = Integer.parseInt(request.getParameter("isEssential"+Integer.toString(i)));
 						field.setIsEssential(isEssential);
 						int index;
@@ -330,13 +308,13 @@ public class AdminController {
 //	}
 //	
 	
-	//신청폼 (Admin) Result Update page
+	//신청폼 (Admin) Update page 업데이트 페이지 보여주기
 	@RequestMapping(value = "/form/view/{link}")
 	public ModelAndView resultForm(@PathVariable String link, HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
-	   
+	   System.out.println("link:"+link);
 		int form_id=adminDAO.getFormId(link); 
 		
 		
@@ -362,33 +340,6 @@ public class AdminController {
 		return mav;
 	}
 	
-	//신청폼 update 기능
-	/*
-	@RequestMapping(value = "/form/update/{link}")
-	public ModelAndView formUpdate(HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		
-		List<Category> category_list = mainDao.categoryList();
-		JSONArray jArray = new JSONArray();
-		try{
-			for (int i = 0; i < category_list.size() ; i++) {   
-	    		JSONObject ob2 =new JSONObject();
-	    		ob2.put("id", category_list.get(i).getId());
-		        ob2.put("categoryName", category_list.get(i).getCategoryName());
-		        System.out.println(ob2);
-	            jArray.put(ob2);
-			}
-			
-		}catch(JSONException e){
-	    	e.printStackTrace();
-	    }
-		
-		mav.addObject("category_list",jArray);
-		
-		mav.setViewName("adminFormView");
-		return mav;
-			
-	}*/
 	
 	//신청폼 수정 페이지에서 form 정보 가져오기
 	@RequestMapping(value= "/form/view/info", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
@@ -836,6 +787,42 @@ public class AdminController {
 		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
 	}
 	
+	@RequestMapping(value = "/manage/downloadExcelFile", method = RequestMethod.POST)
+	public void excelDownUser(HttpServletRequest request, HttpServletResponse response, SearchCriteria searchCRI) throws Exception {
+		
+		//SearchCriteria searchCRI = null;
+		List<User> user_info = mypageDao.getUserInfo(searchCRI);
+		
+		ArrayList<ArrayList<String>> user_list = new ArrayList<ArrayList<String>>();
+		ArrayList<String> info = new ArrayList<String>();
+		info.add("이름");
+		info.add("전화번호");
+		info.add("이메일");
+		info.add("학번");
+		info.add("학부");
+		info.add("회원등급");
+		user_list.add(info);
+		for(int i=0; i<user_info.size(); i++) {
+			ArrayList<String> user = new ArrayList<String>();
+			user.add(user_info.get(i).getUserName());
+			user.add(user_info.get(i).getPhoneNum());
+			user.add(user_info.get(i).getEmail());
+			user.add(user_info.get(i).getStudentId());
+			user.add(user_info.get(i).getDepartment());
+			if(user_info.get(i).getAdmin()==0) {
+				user.add("관리자");
+			}else if (user_info.get(i).getAdmin()==1) {
+				user.add("선생님");
+			}else {
+				user.add("학생");
+			}
+			user_list.add(user);
+		}
+	
+		ExcelDownloadDAO ed = new ExcelDownloadDAO();
+		SXSSFWorkbook workbook = ed.makeWorkbookUser(response, user_list);
+	}
+	
 	//신청폼 수정 페이지에서 field 가져오기
 	@RequestMapping(value= "/resultCount", method = RequestMethod.POST) 
 	@ResponseBody
@@ -861,22 +848,25 @@ public class AdminController {
 	}
 	
 	//admin mypage의 결과 버튼 누를때
-	@RequestMapping(value = "/resultForm/{link}")
-	public ModelAndView resultFormOnly(@PathVariable String link, SearchCriteria cri, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/resultForm/{link}" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
+	public ModelAndView resultFormOnly(SearchCriteria cri,@PathVariable String link, HttpServletRequest request) throws Exception {
 		
 		//밑에는 check page 관련 controller입니당.
 		ModelAndView mav = new ModelAndView();
-			   
+		System.out.println("check!!!!!!!!");
 		//int form_id=Integer.parseInt(request.getParameter("select_formID"));
 		//int form_id = Integer.parseInt(request.getParameter("select_formID"));
 		int form_id = adminDAO.getFormId(link);
+		cri.setForm_id(form_id);
 		String form_title = adminDAO.getFormName(form_id);
 		//String form_title = request.getParameter("select_formTitle");
 		String url = adminDAO.getLink(form_id);
+		List<Result> submitterList= adminDAO.submitterList(cri);
+		int count1 = adminDAO.countSubmitter(cri.getSearchType(), cri.getKeyword(),form_id);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count1);
 		
-		cri.setForm_id(form_id);
-		List<Result> submitterList= adminDAO.submitterList(form_id,cri.getPageStart(),cri.getPerPageNum());
-		System.out.println(submitterList);
 		ObjectMapper mapper=new ObjectMapper();
 		String jArray=mapper.writeValueAsString(submitterList);
 			
@@ -886,20 +876,15 @@ public class AdminController {
 		
 		int isAvailable=adminDAO.getAvailable(form_id);
 		
-		//paging
-		int count=adminDAO.countSubmitter(cri.getSearchType(), cri.getKeyword(),form_id);
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(count);
-		
+		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("form_id",form_id);
 		mav.addObject("link", url);
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);
 		mav.addObject("form_title",form_title);
-		mav.addObject("page",cri.getPage());
-		mav.addObject("pageMaker", pageMaker);
+		mav.addObject("idx", cri.getPage());
+		mav.addObject("keyword", cri.getKeyword());
 				
 		mav.setViewName("adminFormCheck");
 		return mav;

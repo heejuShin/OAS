@@ -53,26 +53,26 @@
     <main>
     
     <div id="headTitle">
-             <div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" style="cursor:pointer;" alt="profileImg" onclick="userInfo()" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+             <div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" alt="profileImg" onclick="userInfo()" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
     
     <section id="demo" class="userMypage_main">
        
       <div class="container">
-		  <!--Start_Filter and Search part-->
-          <nav class="filter_search" style="float:right;">
+		<!--Start_Filter and Search part-->
+          <nav class="filter_search" >
             
             <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="POST" >
-			    <input type="hidden" id="searchType" name="searchType" value="all">
-	  			<input type="hidden" id="searchOption" name="searchOption" value="${searchOption}">
-	  			<input type="text" id = "keyword" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
-	  			<button class="btn btn-outline-success my-2 my-sm-0 submitB" type="submit">Search</button>
+              <input type="hidden" name="searchType" value="all">
+              <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
+              
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               <select name="filterType" class="filterType">
                  <option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
                  <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
-                 <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청중</option>
-                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청마감</option>
+                 <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청현황</option>
+                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청결과</option>
               </select>
            </form>
             
@@ -85,7 +85,7 @@
                       <tr>
                           <th data-priority="6"></th>
                           <th data-priority="5">
-                             <select class="filters filter-category" id="categoryName" data-filter-group='category'>
+                             <select class="filters filter-category" data-filter-group='category'>
 
                           <option data-filter='' value="*">카테고리</option>
 
@@ -147,24 +147,13 @@
 
         var categoryList=${categoryList};
       for(var i=0; i < categoryList.length; i++){
-         var option=$("<option data-filter='.category"+categoryList[i].id+"' value='"+categoryList[i].categoryName+"'>"+categoryList[i].categoryName+"</option>");
+         var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
          $(".filter-category").append(option);
       }
 
-    //select option selected 설정
-      var searchOption=$("#searchOption").val();
-      var keyword=$("#keyword").val();
-
-      console.log(searchOption);
-      console.log(keyword);
-      if(searchOption=="status"){
-      	$('.filter-status option[value='+keyword+']').prop('selected', 'selected').change();
-      	$("#keyword").val("");
-      }
-      if(searchOption=="categoryName"){
-      	$('.filter-category option[value='+keyword+']').prop('selected', 'selected').change();
-      	$("#keyword").val("");
-      }
+      var criInfo=${cri_list};
+      	$('.filterType option[value='+criInfo.filterType+']').prop('selected', 'selected').change();
+      	
       
       var userList=${userList};
          for(var i=0; i < userList.length; i++){
@@ -194,7 +183,7 @@
          console.log("date:"+new Date());
            //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
            if(new Date()>new Date(userList[i].endDate)){
-              var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
+               var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
             $($(".tbodies").children()[i]).append(a);
            }   
            else{
@@ -205,7 +194,7 @@
             }
              //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
               else{
-                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
+                  var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
 
@@ -238,24 +227,42 @@
  		}
     }
     $(document).ready( function() {   
+       //테이블 카테고리, 상태 select
+          var $table = $('.tbodies').isotope({
+             itemSelector: '.item-row',
+              layoutMode: 'vertical',
+             getSortData: {
+                 category : '[data-category]',
+              }
+           });
+
+           var filters = {};
            // bind filter on select change,
            $('.filter-category').on( 'change', function() {
-        	    console.log($(this).attr("id"));
-     	        console.log($(this).val());
-					$("#searchType").val($(this).attr("id"));
-					$("#keyword").val($(this).val());
-					if($(this).val()=="*"){
-						$("#searchType").val("");
-						$("#keyword").val("");
-					}
-						
-					$(".form-inline").submit();
+             // get filter value from option value
+             var $this = $(this);
+             var filterGroup = $this.attr('data-filter-group');
+             // set filter for group
+             //filters[filterGroup] = $this.value;
+             filters[filterGroup] = $this.find(':selected').attr('data-filter');
+
+               // combine filters
+             var filterValue = '';
+             for (var prop in filters) {
+               filterValue += filters[prop];
+             }
+             console.log(filterValue);
+             
+             $table.isotope({ 
+               filter : filterValue 
+             });
            });
 
            $('.filterType').on( 'change', function() {
               $(".form-inline").submit();
            });
-
+           
+           
       });
 </script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/rwd-table.js?v=5.3.1"></script>

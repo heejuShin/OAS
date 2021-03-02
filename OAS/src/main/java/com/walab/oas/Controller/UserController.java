@@ -1,5 +1,5 @@
 package com.walab.oas.Controller;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +56,28 @@ public class UserController {
 		return item_list;
 	}
 
+	
+	@RequestMapping("/delMyFormU/{link}") // GET 방식으로 페이지 호출
+	public ModelAndView delMyForm(@PathVariable String link, HttpServletRequest request, HttpSession session) throws Exception {
+
+ModelAndView mav = new ModelAndView();
+
+		int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		int form_ID=adminDao.getFormId(link); 
+
+		System.out.println("Udel = "+form_ID);
+		int result_id=adminDao.getResultId(form_ID,user_id);
+		System.out.println("Udel = "+result_id);
+		mainDao.delMyForm(result_id);
+
+		mav.setViewName("redirect:/mypage");
+
+		return mav;
+	}
+	
 	//form 제출하기 
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
@@ -70,6 +91,8 @@ public class UserController {
 		if(session.getAttribute("id")!=null) {
 			user_id=(Integer) session.getAttribute("id");
 		}
+		
+		System.out.println("form id:"+form_id);
 
 	    int state_id  = userDao.getState(form_id);
 	    
@@ -102,7 +125,7 @@ public class UserController {
 		 // 다음 컨트롤러로 전송  
 		 redirectAttr.addFlashAttribute("form_id",form_id);
 		 redirectAttr.addFlashAttribute("result_id",result_id);
-		    
+		 redirectAttr.addFlashAttribute("isCreate",1);
 	    
 	 	System.out.println("<submitForm> controller end");
 		return new ModelAndView("redirect:/userFormView");
@@ -116,11 +139,12 @@ public class UserController {
 		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 		int form_id=(Integer)redirectMap.get("form_id");
 		int result_id= (Integer)redirectMap.get("result_id");
+		int isCreate= (Integer)redirectMap.get("isCreate");
 		
 		ModelAndView mav = new ModelAndView();
 		Form form_info = userDao.forminfo(form_id);
 		
-		if(form_info.getIsAvailable()==1) {
+		if(form_info.getIsAvailable()==1&&isCreate==0) {
 			redirectAttr.addFlashAttribute("form_id",form_id);
 			redirectAttr.addFlashAttribute("result_id",result_id);
 			mav.setViewName("redirect:/userFormUpdate");
@@ -243,28 +267,7 @@ public class UserController {
 			}
 		}//반복문 끝 (ResultContent 수정)
 		
-		mav.setViewName("redirect:/mypage");
-		return mav;
-	}
-	
-	@RequestMapping("/delMyFormU/{link}") // GET 방식으로 페이지 호출
-	public ModelAndView delMyForm(@PathVariable String link, HttpServletRequest request, HttpSession session) throws Exception {
-		
-ModelAndView mav = new ModelAndView();
-		
-		int user_id=0;
-		if(session.getAttribute("id")!=null) {
-			user_id=(Integer) session.getAttribute("id");
-		}
-		int form_ID=adminDao.getFormId(link); 
-		
-		System.out.println("Udel = "+form_ID);
-		int result_id=adminDao.getResultId(form_ID,user_id);
-		System.out.println("Udel = "+result_id);
-		mainDao.delMyForm(result_id);
-		
-		mav.setViewName("redirect:/mypage");
-		
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 

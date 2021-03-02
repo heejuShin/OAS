@@ -139,7 +139,7 @@ $( document ).ready(function() {
 	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
-	    	content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input class='inputs' placeholder='보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자)' value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"list_select\"></div>";
+	    	content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"list_select\"></div>";
 	  	    $("#field_add").find(".content").html(content);
 	  	  	for(var j=0; j<item_list.length;j++){
 	  	  		var o_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -160,7 +160,7 @@ $( document ).ready(function() {
 	  	  }
 	  	  
 		  else if(formDetail[i].fieldType=="radio"){
-		    content = "<input class='inputs' placeholder='보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자)'  value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
+		    content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_radio\">옵션에 추가</button><div class=\"list_radio\"></div>";
 		    $("#field_add").find(".content").html(content);
 		    for(var j=0; j<item_list.length;j++){
 		    	var r_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -184,7 +184,7 @@ $( document ).ready(function() {
 		  }
 		  
 		  else if(formDetail[i].fieldType=="checkbox"){
-		    content = "<input class='inputs' placeholder='보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자)' value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+		    content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_chxbox\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 		    $("#field_add").find(".content").html(content);
 		  	for(var j=0; j<item_list.length;j++){
 		    	var c_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -207,7 +207,7 @@ $( document ).ready(function() {
 		  
 	  }
 	  else{
-	    content = "<input class='inputs' placeholder='응답자 입력 칸입니다.' type=\""+this.value+"\" disabled/>"; 
+	    content = "<input type=\""+this.value+"\" disabled/>"; 
 	    $("#field_add").find(".content").html(content);
 	  }
 	  
@@ -335,6 +335,7 @@ $( document ).ready(function() {
 
 });
 
+
 //모달창
 	function modal(id) {
 	    var zIndex = 9999;
@@ -374,6 +375,7 @@ $( document ).ready(function() {
 	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
 	        .find('.modal_close_btn')
 	        .on('click', function() {
+	        	$("#preview_modal").empty();
 	            bg.remove();
 	            modal.hide();
 	        });
