@@ -80,7 +80,7 @@
     
 		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
 		<div id="menu-bar"><p id="add_p">+</p></div>
-				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
+				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()" enctype="multipart/form-data">
 					<span class="contact100-form-title">
 						설문 만들기
 					</span>
@@ -194,7 +194,7 @@
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
-					
+
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>
 						  <option value="text">단답형</option>
@@ -207,7 +207,8 @@
 						  <option value="time">시간</option>
 						  <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
 						</select>
-
+					<input type="file" name="uploadFile" id="uploadFile" />
+					<!--  <button class="btn btn-primary">저장</button> -->
 						<div style="float: right;">
 						<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
 						<label for="필수질문">필수</label>
