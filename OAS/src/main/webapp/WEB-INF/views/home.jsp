@@ -106,7 +106,7 @@
 
                      		function delSubmitForm(obj){
                          		console.log("deleteMyForm");
-                         		if(confirm("정말로 삭제하시겠습니까?")){
+                         		if(confirm("신청을 취소하겠습니까?")){
 	                         		var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
 	                           		$(obj).parent().siblings("#delMyForm").submit();
                          		}
