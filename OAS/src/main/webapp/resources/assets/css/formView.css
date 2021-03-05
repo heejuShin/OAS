@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.questionP{
+		width: fit-content;
+	    background-color: inherit;
+	    /* border-radius: 20px; */
+	    border-bottom: 2px solid #aeacac;
+	    padding: 7px 10px 3px;
+	    /* border: 1px solid #aeacac;*/
+	}
+
+	.answerP{
+		padding: 0 10px;
+		color: black;
+    	font-size: 14px;
+	}
+	
+	.submit_dates{
+		font-size: 13px;
+	    text-align: center;
+	    color: #01016c;
+    	margin-top: 2%;
+	}
