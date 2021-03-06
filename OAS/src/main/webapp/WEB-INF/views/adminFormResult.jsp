@@ -138,6 +138,7 @@
 							var rC_list =replaceAll(resultContent[i].content,"$","/");
 							console.log("step5");
 							if(resultContent[i].content != ""){
+								rC_list = rC_list.substr(0, rC_list.length -1);
 								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>A. "+rC_list+"</p>");
 								
 					  		}else{
