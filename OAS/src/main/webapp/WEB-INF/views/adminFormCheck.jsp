@@ -36,7 +36,24 @@
     	border: 0px;
     	border-radius: 10px;
     	background: #d1d1d1;
+    	position: relative;
     	
+    }
+    #excelForm .excel_tooltip{
+    	font-size: 12px;
+    	visibility: hidden;
+    	width: 100px;
+    	background-color: black;
+    	color: #fff;
+    	text-align: center;
+    	border-radius: 6px;
+    	padding: 5px 0;
+    	position: absolute;
+    	z-index: 1;
+ 
+    }
+    #excelForm:hover .excel_tooltip{
+    	visibility: visible;
     }
     </style>
     
@@ -100,6 +117,11 @@
                }
        		});
         });
+		
+		//input 바꿀 곳
+		///희주 id state
+		//검색 버튼 누르는 이벤트
+		//id state의 값을 검색 버튼 div의 html로 변경
       });
     </script>
  </head>
@@ -131,7 +153,10 @@
 									<input type="hidden" id="isAvailable" name="isAvailable" value="">
 									
 								  <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-				    			  <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  <input name="formID" value="${form_id}" type="hidden"/>
+				    			  <input id="state" name="state" value="상태">
+				    			  <input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  	<div class="excel_tooltip">아래 표에서 <br>선택한 상태에<br>해당되는 응답만 <br>다운됩니다.</div>
 							      </form>
 								</div>
 					</th></tr>

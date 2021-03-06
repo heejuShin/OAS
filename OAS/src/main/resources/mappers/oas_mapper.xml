@@ -343,6 +343,11 @@
    Select * from User where id = #{id};
    </select>
    
+   <select id="getStateofUser" resultType ="String">
+   SELECT stateName from Result INNER JOIN State ON Result.state_id = State.id
+	where Result.form_id = #{form_id} and user_id = #{user_id};
+   </select>
+   
    <!-- 개별보기에 제출&수정 날짜 가져오기  -->
    <select id='getDate' parameterType="int" resultType="com.walab.oas.DTO.Result">
    SELECT * FROM Result where Result.id=#{result_id};

@@ -728,9 +728,8 @@ public class AdminController {
 	@RequestMapping(value = "/resultForm/downloadExcelFile", method = RequestMethod.POST)
 	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		//쿼리 작업
-		//String form_id  = request.getParameter("select_formID");
 		int form_ID = Integer.parseInt(request.getParameter("formID"));//Integer.parseInt(form_id);
+		String search_state = request.getParameter("state");
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -759,6 +758,7 @@ public class AdminController {
 		q.add("전공");
 		q.add("학년");
 		q.add("학기");
+		q.add("상태");
 		for (int i = 0; i < field_list.size() ; i++) { 
 			q.add(field_list.get(i).getFieldName());
 		}
@@ -766,22 +766,35 @@ public class AdminController {
 		List<Result> result_info = adminDAO.getExcelResult(form_ID);
 		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
 		for(int i=0; i<result_info.size(); i++) {
-			ArrayList <String> a = new ArrayList<String>();
-			User user = adminDAO.getUserInfobyId(result_info.get(i).getUser_id());
-			a.add(result_info.get(i).getRegDateKor());
-			a.add(result_info.get(i).getEditDateKor());
-			a.add(user.getStudentId());
-			a.add(user.getUserName());
-			a.add(user.getEmail());
-			a.add(user.getDepartment());
-			a.add(user.getMajor());
-			a.add(user.getGrade());
-			a.add(user.getSemester());
-			List<Result_Content> answer_info = adminDAO.getExcelResultContent(result_info.get(i).getId());
-			for(int j=0; j<answer_info.size(); j++) {
-				a.add(answer_info.get(j).getContent());
+			int user_id = result_info.get(i).getUser_id();
+			String user_state = adminDAO.getStateofUser(user_id, form_ID);
+			//전체인 경우
+			boolean check=true;
+			//검색의 경우
+			if(!search_state.equals("상태")) {
+				if(!search_state.equals(user_state)) {
+					check = false;
+				}
 			}
-			ans.add(a);
+			if(check) {
+				ArrayList <String> a = new ArrayList<String>();
+				User user = adminDAO.getUserInfobyId(user_id);
+				a.add(result_info.get(i).getRegDateKor());
+				a.add(result_info.get(i).getEditDateKor());
+				a.add(user.getStudentId());
+				a.add(user.getUserName());
+				a.add(user.getEmail());
+				a.add(user.getDepartment());
+				a.add(user.getMajor());
+				a.add(user.getGrade());
+				a.add(user.getSemester());
+				a.add(user_state);
+				List<Result_Content> answer_info = adminDAO.getExcelResultContent(result_info.get(i).getId());
+				for(int j=0; j<answer_info.size(); j++) {
+					a.add(answer_info.get(j).getContent());
+				}
+				ans.add(a);
+			}
 		}
 		ExcelDownloadDAO ed = new ExcelDownloadDAO();
 		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
