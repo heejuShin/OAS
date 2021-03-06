@@ -55,6 +55,9 @@
     #excelForm:hover .excel_tooltip{
     	visibility: visible;
     }
+    #stopControlDiv{
+    	margin-left: 100px;
+    }
     </style>
     
 

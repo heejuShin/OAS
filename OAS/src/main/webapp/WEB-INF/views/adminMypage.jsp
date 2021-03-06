@@ -119,8 +119,19 @@
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			    <c:set var="page" value="${param.page}"/>
+			    <c:if test="${page eq null}">
+			    	<c:set var="page" value="1"/>
+			    </c:if>
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	<c:choose>
+			    	<c:when test="${page eq idx}">
+			    		<a style="background: #bbb; color: white;"href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	</c:when>
+			    	<c:otherwise>
+			        	<a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	</c:otherwise>
+			    	</c:choose>
 			    </li>
 			    </c:forEach>
 			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
@@ -182,7 +193,7 @@
 	                    		    $($(".tbodies").children()[i]).append(th1);
 	                    		    var td2 = $("<td>"+adminList[i].formName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td2);
-	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(adminList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
+	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(adminList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td3);
 	                    		    var td4 = $("<td>"+moment(adminList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td4);
