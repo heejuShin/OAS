@@ -771,7 +771,7 @@ public class AdminController {
 			//전체인 경우
 			boolean check=true;
 			//검색의 경우
-			if(!search_state.equals("상태")) {
+			if(!search_state.equals("*")) {
 				if(!search_state.equals(user_state)) {
 					check = false;
 				}
@@ -797,7 +797,7 @@ public class AdminController {
 			}
 		}
 		ExcelDownloadDAO ed = new ExcelDownloadDAO();
-		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
+		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans, search_state);
 	}
 	
 	@RequestMapping(value = "/manage/downloadExcelFile", method = RequestMethod.POST)

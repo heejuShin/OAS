@@ -120,7 +120,9 @@
 		
 		//input 바꿀 곳
 		///희주 id state
-		//검색 버튼 누르는 이벤트
+		$("#status").change(function(){
+			$("#state").val($("#status option:selected").val());
+		});
 		//id state의 값을 검색 버튼 div의 html로 변경
       });
     </script>
@@ -154,7 +156,7 @@
 									
 								  <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
 				    			  <input name="formID" value="${form_id}" type="hidden"/>
-				    			  <input id="state" name="state" value="상태">
+				    			  <input type="hidden" id="state" name="state" value="*">
 				    			  <input type="submit" id="excelDown" value="EXCEL 다운"/>
 				    			  	<div class="excel_tooltip">아래 표에서 <br>선택한 상태에<br>해당되는 응답만 <br>다운됩니다.</div>
 							      </form>
