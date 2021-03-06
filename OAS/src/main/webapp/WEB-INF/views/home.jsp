@@ -77,11 +77,11 @@
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
 								 
                                  if(form_list[i].state_id==0){
-                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm(this);'>신청하기</a></div>");
+                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;cursor:pointer;' onClick = 'openForm(this);'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
                                  else{
-                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
+                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;cursor:pointer;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
                                 	 $($($(".grid").children()[i]).children()[0]).append(a);
                                  }
  								 
