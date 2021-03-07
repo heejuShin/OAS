@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=2">
+	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=3">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -15,6 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     
     <style>
+
+
     #yourModal{
     	height: 600px !important;
     	overflow: scroll !important;
@@ -110,8 +112,7 @@
     <main>
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
-
+			<div id="welcomeMsg"><a href="<%=request.getContextPath()%>/admin/mypage"><img id="backImg" src="<%=request.getContextPath()%>/resources/img/back3.png"></a><h2>[${form_title}] 응답 관리 </h2></div>
 		</div>
         
 		

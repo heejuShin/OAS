@@ -220,6 +220,7 @@ $(function() {
 <body>
 <div class="container-contact100">
 		<div class="wrap-contact100">
+			<button type="button" class="btn btn-default" data-dismiss="modal" style="position: absolute; top:30px; right: 60px; background: #ddd;">Close</button>
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
 				<span class="contact100-form-title" id="form_title"></span>
 
