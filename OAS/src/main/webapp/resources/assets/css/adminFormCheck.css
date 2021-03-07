@@ -41,7 +41,7 @@ main {
 	color: #ff564a;
 }
 
-#stopControlDiv #isUserEditCheck {
+#stopControlDiv #isUserEditCheck, #stopControlDiv #isAvailableCheck  {
 	width: 15px;
 	height: 15px;
 	position: relative;
