@@ -140,6 +140,13 @@ public class AdminDAO {
 		return sqlSession.selectOne(namespace+".getUserInfobyId", id);
 	}
 	
+	public String getStateofUser(int user_id, int form_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("user_id", user_id);
+		map.put("form_id", form_id);
+		return sqlSession.selectOne(namespace+".getStateofUser", map);
+	}
+	
 	public List<Result> getExcelResult(int id){
 		return sqlSession.selectList(namespace+".excelResult", id);
 	}

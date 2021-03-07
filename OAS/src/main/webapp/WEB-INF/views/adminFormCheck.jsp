@@ -36,7 +36,27 @@
     	border: 0px;
     	border-radius: 10px;
     	background: #d1d1d1;
+    	position: relative;
     	
+    }
+    #excelForm .excel_tooltip{
+    	font-size: 12px;
+    	visibility: hidden;
+    	width: 100px;
+    	background-color: black;
+    	color: #fff;
+    	text-align: center;
+    	border-radius: 6px;
+    	padding: 5px 0;
+    	position: absolute;
+    	z-index: 1;
+ 
+    }
+    #excelForm:hover .excel_tooltip{
+    	visibility: visible;
+    }
+    #stopControlDiv{
+    	margin-left: 100px;
     }
     </style>
     
@@ -100,6 +120,13 @@
                }
        		});
         });
+		
+		//input 바꿀 곳
+		///희주 id state
+		$("#status").change(function(){
+			$("#state").val($("#status option:selected").val());
+		});
+		//id state의 값을 검색 버튼 div의 html로 변경
       });
     </script>
  </head>
@@ -138,7 +165,10 @@
 									</div>
 									
 								  <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-				    			  <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  <input name="formID" value="${form_id}" type="hidden"/>
+				    			  <input type="hidden" id="state" name="state" value="*">
+				    			  <input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  	<div class="excel_tooltip">아래 표에서 <br>선택한 상태에<br>해당되는 응답만 <br>다운됩니다.</div>
 							      </form>
 								</div>
 					</th></tr>
