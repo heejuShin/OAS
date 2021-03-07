@@ -875,6 +875,7 @@ public class AdminController {
 		String jArray2=mapper2.writeValueAsString(stateList);
 		
 		int isAvailable=adminDAO.getAvailable(form_id);
+		int isUserEdit=adminDAO.getUserEdit(form_id);
 		
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("form_id",form_id);
@@ -882,6 +883,7 @@ public class AdminController {
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);
+		mav.addObject("isUserEdit",isUserEdit);
 		mav.addObject("form_title",form_title);
 		mav.addObject("idx", cri.getPage());
 		mav.addObject("keyword", cri.getKeyword());
@@ -896,5 +898,12 @@ public class AdminController {
 		int form_id=Integer.parseInt(request.getParameter("form_id"));
 		int isAvailable=Integer.parseInt(request.getParameter("isAvailable"));
 		adminDAO.changeAvailable(form_id,isAvailable);
+	}
+	@RequestMapping(value= "/form/update/changeUserEdit", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	public void changeUserEdit(HttpServletRequest request, HttpSession session) throws Exception {
+			
+		int form_id=Integer.parseInt(request.getParameter("form_id"));
+		int isUserEdit=Integer.parseInt(request.getParameter("isUserEdit"));
+		adminDAO.changeUserEdit(form_id,isUserEdit);
 	}
 }

@@ -122,3 +122,8 @@ thead {
 	border: none;
 	padding: 3% 6%;
 }
+
+#msgBox{
+	display: inline-block;
+	margin:0 2%;
+}

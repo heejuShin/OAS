@@ -19,7 +19,7 @@
     </insert>
     
     <select id="form_list" resultType="com.walab.oas.DTO.Form">
-      select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation,url, startDate,endDate, ifnull(state_id,0)as state_id,isAvailable from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate)  )f ON Category.id=f.category_id WHERE isAvailable=1
+      select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation,url, startDate,endDate, ifnull(state_id,0)as state_id,isAvailable,Result_editD as editDate from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id,Result.editDate as Result_editD FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate))f ON Category.id=f.category_id WHERE isAvailable=1
       <include refid="searchMain" />
       ORDER BY state_id IS NULL ASC,id ASC
    </select> 
@@ -253,11 +253,6 @@
          SELECT id FROM State WHERE form_id =#{formID} and isDefault = 1;
    </select>
    
-    <select id="getResultCnt" resultType="Integer">
-     <![CDATA[
-         SELECT count(*) FROM Result WHERE form_id =#{form_id} and user_id = #{user_id};
-     ]]>
-   </select>
    
    <!-- result  id 생성  -->
    <insert id="createResultID" parameterType="com.walab.oas.DTO.Result">
@@ -469,10 +464,17 @@
        select isAvailable from Form where id = #{form_id};
     </select>
     
+    <select id="getUserEdit" resultType="int">
+       select isUserEdit from Form where id = #{form_id};
+    </select>
+    
    <update id="changeAvailable" parameterType="int" >
       UPDATE Form SET isAvailable = ${isAvailable} WHERE id = #{form_id};
    </update>
 
+   <update id="changeUserEdit" parameterType="int" >
+      UPDATE Form SET isUserEdit = ${isUserEdit} WHERE id = #{form_id};
+   </update>
 
    <delete id="deleteDefaultState">
       DELETE FROM State WHERE form_id = 0;

@@ -425,7 +425,7 @@ header .navbar {
 }
 
 .product-item .down-content {
-	padding: 30px;
+	padding: 15px;
 	position: relative;
 }
 
@@ -466,13 +466,19 @@ header .navbar {
 .product-item .down-content span {
 	position: absolute;
 	right: 30px;
-	bottom: 30px;
+	bottom: 10px;
 	font-size: 13px;
 	color: #f33f3f;
 	font-weight: 500;
 }
 
-
+.regDate{
+	position: absolute;
+	bottom: 94px;
+	left:30px;
+	font-size: 10px;
+	font-weight: 400;
+}
 
 
 /* Best Features */
