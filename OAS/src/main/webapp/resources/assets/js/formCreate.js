@@ -78,6 +78,23 @@ $( document ).ready(function() {
 	
 	
 	$('#preview').on('click', function() {
+		var category_name=$("#category_select option:selected").val();
+		var form_name= $("#formName").val();
+		var startDate= $("#startDate").val();
+		var startTime = $("#startTime").val();
+	    	var endDate = $("#endDate").val();
+	    	var endTime = $("#endTime").val();
+		
+		if(category_name == "")
+			alert("카테고리를 선택해주세요 ");
+		else if(form_name == "")
+			alert("제목을 입력해주세요 ");
+		else if(startDate > endDate)
+			alert("마감일자를 다시 설정해주세요 ");
+	    	else if(startDate == endDate && startTime > endTime)
+	    		alert("마감 시간을 다시 설정해주세요 ");
+		else{
+		
 		console.log("preview test");
 		
 		//formName,categoryName, explanation, plusPoint, isAvailable, isUerEdit, minusPoint, startDate, startTime, endDate,endTime
@@ -147,7 +164,7 @@ $( document ).ready(function() {
 		    }
 		});
 		          		
-	    
+	    }//else 구문
 	});
 	
 	
