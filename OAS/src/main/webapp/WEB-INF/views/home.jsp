@@ -83,7 +83,7 @@
                                  else{
                                      var editDate=$("<span class='regDate'>신청일: "+moment(form_list[i].editDate).format('YYYY-MM-DD')+"</span>");
                                      $($($(".grid").children()[i]).children()[0]).append(editDate);
-                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
+                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
 
                                 	 $($($(".grid").children()[i]).children()[0]).append(a);
                                  }
