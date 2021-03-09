@@ -46,9 +46,27 @@
                              
                                var form_list=${form_list};
                                var category_list=${category_list};
+                               console.log(category_list);
+                               var c_list = new Map();
+                               for(var i=0;i<category_list.length;i++){
+                            	   c_list.set(category_list[i].categoryName,0);
+                               }
+                               for (const [key, value] of c_list) {
+                            	    console.log("These are ", key, value);
+                            	}
+                               for(var i=0;i<form_list.length;i++){
+                            		  var a = c_list.get(form_list[i].categoryName);
+                            		  console.log("a is " + a);
+                            		  c_list.set(form_list[i].categoryName,a+1);
+                            	   }
+                               
+                               for (const [key, value] of c_list) {
+                           	    console.log("Those are ", key, value);
+                           	}
                                for(var i=0; i<category_list.length;i++){
-                                  var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
-                                  if(category_list[i].id!=0)
+                            	   console.log("c is" + c_list.get(category_list[i].categoryName));
+               					  var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+                                  if(category_list[i].id!=0 && c_list.get(category_list[i].categoryName) !=0 )
                                   $(".ul_filters").append(filter_li);
                               }
 
