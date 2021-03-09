@@ -121,7 +121,7 @@ public class LoginController {
       
       if(!userInfo.get("email").contains("handong.edu")) {
     	  
-    	  mav.setViewName("loginError");
+    	  mav.setViewName("error/loginError");
     	  return mav;
       }
     	  

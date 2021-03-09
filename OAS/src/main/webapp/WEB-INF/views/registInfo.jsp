@@ -41,7 +41,7 @@
               <input class="w3-input w3-border w3-margin-bottom w3-light-grey" type="text" value="${user.userName}" name="userName" id="userName" readonly></div>
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>학번</label>
-              <input class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" id="studentId" name="studentId" >
+              <input class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" id="studentId" name="studentId" required>
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>이메일</label>
@@ -49,12 +49,12 @@
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>핸드폰 번호</label>
-              <input class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" placeholder="Enter your phone" name="phoneNum" id="phoneNum">
+              <input class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" placeholder="Enter your phone" name="phoneNum" id="phoneNum" required>
               </div>
               
               <div class="col-lg-12 col-md-12 col-sm-12">
 			  <label>학부</label>
-				<select id="department"  class="w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)">
+				<select id="department"  class="w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)" required>
                   
                   <option value="전산전자공학부" selected>전산전자공학부</option>
                   <option value="기계제어공학부">기계제어공학부</option>
@@ -74,7 +74,7 @@
                 
                 <div class="col-lg-12 col-md-12 col-sm-12">
               <label>전공</label>
-              <select id="major" class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" name="major">
+              <select id="major" class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" name="major" required>
 			      <option value="컴퓨터공학전공" selected>컴퓨터공학전공</option>
                   <option value="전자공학전공">전자공학전공</option>
                   <option value="컴퓨터공학심화전공">컴퓨터공학심화전공</option>
@@ -85,7 +85,7 @@
               
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>학년</label>
-              <select id="grade" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="grade" onchange="semesterChange(this)">
+              <select id="grade" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="grade" onchange="semesterChange(this)" required>
 	            <option value="1" selected>1학년</option>
 	            <option value="2">2학년</option>
 	            <option value="3">3학년</option>
@@ -95,7 +95,7 @@
               
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>학기</label>
-              <select id="semester" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="semester">
+              <select id="semester" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="semester" required>
             	<option value="1" selected>1학기</option>
             
               </select>
