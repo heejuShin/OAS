@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
 <head>
 
     <meta charset="utf-8">
@@ -36,13 +38,17 @@
     <!-- 필터링 -->
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 
-  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=2">
+  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=3">
   <style>
      @media (min-width: 1200px){
 		.adminMypage_main .container {
 		    max-width: 100% !important;
 		}
      }
+     
+   
+     
+     
      </style>
 
 
@@ -119,8 +125,19 @@
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			    <c:set var="page" value="${param.page}"/>
+			    <c:if test="${page eq null}">
+			    	<c:set var="page" value="1"/>
+			    </c:if>
 			    <li>
-			        <a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	<c:choose>
+			    	<c:when test="${page eq idx}">
+			    		<a style="background: #bbb; color: white;"href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	</c:when>
+			    	<c:otherwise>
+			        	<a href='<%=request.getContextPath()%>/admin/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	</c:otherwise>
+			    	</c:choose>
 			    </li>
 			    </c:forEach>
 			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
@@ -182,7 +199,7 @@
 	                    		    $($(".tbodies").children()[i]).append(th1);
 	                    		    var td2 = $("<td>"+adminList[i].formName+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td2);
-	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(adminList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
+	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(adminList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td3);
 	                    		    var td4 = $("<td>"+moment(adminList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td4);
@@ -225,9 +242,9 @@
 	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
 	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isAvailable==0){
 	                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isAvailable==0)
-	                    					var td6 = $("<td>신청중지</td>"); 
+	                    					var td6 = $("<td class='blueLetter'>신청중지</td>"); 
 		                    			else
-		                    				var td6 = $("<td>신청마감</td>"); 
+		                    				var td6 = $("<td class='redLetter'>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    			
 	                    				var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
@@ -263,7 +280,7 @@
 		                    		/* 중지할 경우 */
 		                    		//모집중
 		                    		else{
-		                    			var td6 = $("<td>신청중</td>"); 
+		                    			var td6 = $("<td class='greenLetter'>신청중</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
 		                    		    var a=$("<td><button id='form_"+adminList[i].id+"'  type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
 										$($(".tbodies").children()[i]).append(a);
@@ -288,8 +305,8 @@
 	                                 		$($(".tbodies").children()[i]).append(td7);
 	                               		}
 	                    		    //신청자 수 표시 
-	                    		    var td8 = resultCount+"명 "; 
-	                    		    $($(".tbodies").children()[i]).append(td8);
+	                    		    var td8 = $("<td>"+ resultCount+"명 </td>"); 
+	                    		    $($(".tbodies").children()[i]).append(td8); 
 	                    		    
 	                    		    
 	                    		    var form3=$("<form id='form' action='../form/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+adminList[i].state_id+"'/></form>");

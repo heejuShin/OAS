@@ -728,9 +728,8 @@ public class AdminController {
 	@RequestMapping(value = "/resultForm/downloadExcelFile", method = RequestMethod.POST)
 	public void excelDown(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		//쿼리 작업
-		//String form_id  = request.getParameter("select_formID");
 		int form_ID = Integer.parseInt(request.getParameter("formID"));//Integer.parseInt(form_id);
+		String search_state = request.getParameter("state");
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -759,6 +758,7 @@ public class AdminController {
 		q.add("전공");
 		q.add("학년");
 		q.add("학기");
+		q.add("상태");
 		for (int i = 0; i < field_list.size() ; i++) { 
 			q.add(field_list.get(i).getFieldName());
 		}
@@ -766,25 +766,38 @@ public class AdminController {
 		List<Result> result_info = adminDAO.getExcelResult(form_ID);
 		ArrayList<ArrayList<String>> ans = new ArrayList<ArrayList<String>>();
 		for(int i=0; i<result_info.size(); i++) {
-			ArrayList <String> a = new ArrayList<String>();
-			User user = adminDAO.getUserInfobyId(result_info.get(i).getUser_id());
-			a.add(result_info.get(i).getRegDateKor());
-			a.add(result_info.get(i).getEditDateKor());
-			a.add(user.getStudentId());
-			a.add(user.getUserName());
-			a.add(user.getEmail());
-			a.add(user.getDepartment());
-			a.add(user.getMajor());
-			a.add(user.getGrade());
-			a.add(user.getSemester());
-			List<Result_Content> answer_info = adminDAO.getExcelResultContent(result_info.get(i).getId());
-			for(int j=0; j<answer_info.size(); j++) {
-				a.add(answer_info.get(j).getContent());
+			int user_id = result_info.get(i).getUser_id();
+			String user_state = adminDAO.getStateofUser(user_id, form_ID);
+			//전체인 경우
+			boolean check=true;
+			//검색의 경우
+			if(!search_state.equals("*")) {
+				if(!search_state.equals(user_state)) {
+					check = false;
+				}
 			}
-			ans.add(a);
+			if(check) {
+				ArrayList <String> a = new ArrayList<String>();
+				User user = adminDAO.getUserInfobyId(user_id);
+				a.add(result_info.get(i).getRegDateKor());
+				a.add(result_info.get(i).getEditDateKor());
+				a.add(user.getStudentId());
+				a.add(user.getUserName());
+				a.add(user.getEmail());
+				a.add(user.getDepartment());
+				a.add(user.getMajor());
+				a.add(user.getGrade());
+				a.add(user.getSemester());
+				a.add(user_state);
+				List<Result_Content> answer_info = adminDAO.getExcelResultContent(result_info.get(i).getId());
+				for(int j=0; j<answer_info.size(); j++) {
+					a.add(answer_info.get(j).getContent());
+				}
+				ans.add(a);
+			}
 		}
 		ExcelDownloadDAO ed = new ExcelDownloadDAO();
-		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans);
+		SXSSFWorkbook workbook = ed.makeWorkbook(response, formQ, formA, q, ans, search_state);
 	}
 	
 	@RequestMapping(value = "/manage/downloadExcelFile", method = RequestMethod.POST)
@@ -875,6 +888,7 @@ public class AdminController {
 		String jArray2=mapper2.writeValueAsString(stateList);
 		
 		int isAvailable=adminDAO.getAvailable(form_id);
+		int isUserEdit=adminDAO.getUserEdit(form_id);
 		
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("form_id",form_id);
@@ -882,6 +896,7 @@ public class AdminController {
 		mav.addObject("submitterList", jArray);
 		mav.addObject("stateList", jArray2);
 		mav.addObject("isAvailable",isAvailable);
+		mav.addObject("isUserEdit",isUserEdit);
 		mav.addObject("form_title",form_title);
 		mav.addObject("idx", cri.getPage());
 		mav.addObject("keyword", cri.getKeyword());
@@ -896,5 +911,12 @@ public class AdminController {
 		int form_id=Integer.parseInt(request.getParameter("form_id"));
 		int isAvailable=Integer.parseInt(request.getParameter("isAvailable"));
 		adminDAO.changeAvailable(form_id,isAvailable);
+	}
+	@RequestMapping(value= "/form/update/changeUserEdit", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+	public void changeUserEdit(HttpServletRequest request, HttpSession session) throws Exception {
+			
+		int form_id=Integer.parseInt(request.getParameter("form_id"));
+		int isUserEdit=Integer.parseInt(request.getParameter("isUserEdit"));
+		adminDAO.changeUserEdit(form_id,isUserEdit);
 	}
 }

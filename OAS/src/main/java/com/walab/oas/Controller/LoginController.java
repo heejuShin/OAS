@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ public class LoginController {
    
    @Autowired
    private UserDAO userDao; 
+   public String beforeUrl;
 
    final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
    final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
@@ -118,7 +121,7 @@ public class LoginController {
       
       if(!userInfo.get("email").contains("handong.edu")) {
     	  
-    	  mav.setViewName("loginError");
+    	  mav.setViewName("error/loginError");
     	  return mav;
       }
     	  
@@ -146,7 +149,8 @@ public class LoginController {
 	      session.setAttribute("grade", user.getGrade());
 	      session.setAttribute("department", user.getDepartment());
 	      session.setAttribute("admin", user.getAdmin());
-	      mav.setViewName("redirect:/");
+	      
+	      mav.setViewName("redirect:"+beforeUrl); //넘어가는 주소
 	      return mav;
       }
       
@@ -195,6 +199,9 @@ public class LoginController {
      public ModelAndView googleUrl(HttpServletRequest request) throws Exception {
       ModelAndView mav = new ModelAndView();
       String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
+      
+      beforeUrl = request.getHeader("Referer");
+      System.out.println("redirectUrl controller : "+beforeUrl);
       
       String redirectUrl = "redirect:https://accounts.google.com/o/oauth2/v2/auth?"
             + "client_id=561186600567-ghv5joqq35ar98gvkp6vqa5pltvop4ie.apps.googleusercontent.com"

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=2">
+	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=7">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -15,6 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     
     <style>
+
+
     #yourModal{
     	height: 600px !important;
     	overflow: scroll !important;
@@ -36,7 +38,27 @@
     	border: 0px;
     	border-radius: 10px;
     	background: #d1d1d1;
+    	position: relative;
     	
+    }
+    #excelForm .excel_tooltip{
+    	font-size: 12px;
+    	visibility: hidden;
+    	width: 100px;
+    	background-color: black;
+    	color: #fff;
+    	text-align: center;
+    	border-radius: 6px;
+    	padding: 5px 0;
+    	position: absolute;
+    	z-index: 1;
+ 
+    }
+    #excelForm:hover .excel_tooltip{
+    	visibility: visible;
+    }
+    #stopControlDiv{
+    	margin-left: 100px;
     }
     </style>
     
@@ -100,6 +122,13 @@
                }
        		});
         });
+		
+		//input 바꿀 곳
+		///희주 id state
+		$("#status").change(function(){
+			$("#state").val($("#status option:selected").val());
+		});
+		//id state의 값을 검색 버튼 div의 html로 변경
       });
     </script>
  </head>
@@ -110,8 +139,7 @@
     <main>
     
     	<div id="headTitle">
-			<h2>[${form_title}] 응답 관리<span id="listLink"><a href="<%=request.getContextPath()%>/admin/mypage">form 목록보기</a></span> </h2>
-
+			<div id="welcomeMsg"><a href="<%=request.getContextPath()%>/admin/mypage"><img id="backImg" src="<%=request.getContextPath()%>/resources/img/back3.png"></a><h2>[${form_title}] 응답 관리 </h2></div>
 		</div>
         
 		
@@ -126,12 +154,22 @@
                   <!-- result stop control -->
                   	<tr><th colspan="9">
 	                  			<div id="stopControlDiv">
-	                  				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
-									<label id="stopMsg">응답 중단하기</label>
-									<input type="hidden" id="isAvailable" name="isAvailable" value="">
+	                  				<div id="msgBox">
+		                  				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
+										<label id="stopMsg">응답 중단하기</label>
+										<input type="hidden" id="isAvailable" name="isAvailable" value="">
+									</div>
+									<div id="msgBox">
+										<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
+										<label id="stopMsg">응답 수정가능</label>
+										<input type="hidden" id="isUserEdit" name="isUserEdit" value="">
+									</div>
 									
 								  <form id="excelForm" name="excelForm" id="excelForm" method="POST" action="./downloadExcelFile">
-				    			  <input name="formID" value="${form_id}" type="hidden"/><input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  <input name="formID" value="${form_id}" type="hidden"/>
+				    			  <input type="hidden" id="state" name="state" value="*">
+				    			  <input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  	<div class="excel_tooltip">아래 표에서 <br>선택한 상태에<br>해당되는 응답만 <br>다운됩니다.</div>
 							      </form>
 								</div>
 					</th></tr>
@@ -230,17 +268,28 @@
                       var submitterList=${submitterList};
                       var stateList=${stateList};
                       var isAvailable=${isAvailable};
+                      var isUserEdit=${isUserEdit};
                       var form_id=${form_id};
                       
-                      if(isAvailable==0){
-                  		$("#isAvailableCheck").attr("checked",true);
-                		$("#isAvailableCheck").attr("value","0");
+                      if(isUserEdit==0){
+                  		$("#isUserEditCheck").attr("checked",false);
+                		$("#isUserEditCheck").attr("value","0");
                 	  }
                       else{
 
-                    	$("#isAvailableCheck").attr("checked",false);
-                  		$("#isAvailableCheck").attr("value","1");
+                    	$("#isUserEditCheck").attr("checked",true);
+                  		$("#isUserEditCheck").attr("value","1");
                       }
+
+                      if(isAvailable==0){
+                    		$("#isAvailableCheck").attr("checked",true);
+                  		$("#isAvailableCheck").attr("value","0");
+                  	  }
+                        else{
+
+                      	$("#isAvailableCheck").attr("checked",false);
+                    		$("#isAvailableCheck").attr("value","1");
+                        }
                           
                       for(var x=0; x < stateList.length; x++){
                     	  if(stateList[x].stateName=="대기중"){
@@ -256,7 +305,8 @@
 						  $(".filter-status").append(option);
                       }
                       var keyword=$("#keyword").val();
-                      $('.filter-status option[value='+keyword+']').prop('selected', 'selected').change();
+                      if(keyword!="")
+	                      $('.filter-status option[value='+keyword+']').prop('selected', 'selected').change();
                       
                       //제출자 리스트
                       for(var i=0; i < submitterList.length; i++){
@@ -311,34 +361,93 @@
 				        	}
 	                	}
 
-                      $("#isAvailableCheck").change(function(){
-                          console.log("userAvailableCheck!!");
-                          if($("#isAvailableCheck").is(":checked")){
-                              $("#isAvailable").attr("value","0");
-                          }else{
-                              $("#isAvailable").attr("value","1");
-                          }
-                          var isAvailable= $("#isAvailable").val();
-                          $.ajax({ //해당 폼의 userEdit 바꾸기
-              	  			url : '<%=request.getContextPath()%>/admin/form/update/changeAvailable',
-              	  			data:{"form_id":form_id,"isAvailable":isAvailable},
-	              	  		type:'POST',
-	                        traditional : true,
-              	  			success: function(){
-              	  				console.log("isAvailable Change"); 	
-              	  					  		 
-              	  			},
-              			  	error:function(request, status, error){
-              		
-              				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-              		
-              				}
-              	  	  	});
+                      var prev_val; 
+                      /* 응답받기 중단할건지 */
+                      $("#isAvailableCheck").focus(function(){
+                    	  prev_val = $(this).is(":checked");
+                      }).click(function() {
+                    	  $(this).blur();
+						  var msg;
+						  if(!$("#isAvailableCheck").is(":checked")){
+							  msg="해당 신청폼의 응답을 받으시겠습니까?";
+						  }
+						  else{
+							  msg = "해당 신청폼의 응답받기를 중지하겠습니까?";
+						  }
+                          if (confirm(msg) == true){    //확인
+                        	  if(!prev_val){
+                                  $("#isAvailable").attr("value","0");
+                              }else{
+                                  $("#isAvailable").attr("value","1");
+                              }
+                        	  var isAvailable= $("#isAvailable").val();
+                              $.ajax({ //해당 폼의 userEdit 바꾸기
+                  	  			url : '<%=request.getContextPath()%>/admin/form/update/changeAvailable',
+                  	  			data:{"form_id":form_id,"isAvailable":isAvailable},
+    	              	  		type:'POST',
+    	                        traditional : true,
+                  	  			success: function(){
+                  	  				console.log("isAvailable Change: "+$("#isAvailable").val()); 	
+                  	  					  		 
+                  	  			},
+                  			  	error:function(request, status, error){
+                  		
+                  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                  		
+                  				}
+                  	  	  	});
+                          }else {   //confirm 취소
+ 							 $("#isAvailableCheck").attr("checked",false);
+ 							 return false;
+ 		 				  }
                       });
+
+                      /* 응답 수정가능한지 */
+                      $("#isUserEditCheck").focus(function(){
+                    	  prev_val = $(this).is(":checked");
+                      }).click(function() {
+                    	  $(this).blur();
+						  var msg;
+						  if(!$("#isUserEditCheck").is(":checked")){
+							  msg="해당 신청폼의 응답수정을 불가능하게 하시겠습니까?";
+						  }
+						  else{
+							  msg = "해당 신청폼의 응답수정을 가능하게 하시겠습니까?";
+						  }
+                          if (confirm(msg) == true){    //확인
+                        	  if(prev_val){
+                                  $("#isUserEdit").attr("value","0");
+                              }else{
+                                  $("#isUserEdit").attr("value","1");
+                              }
+                        	  var isUserEdit= $("#isUserEdit").val();
+                              $.ajax({ //해당 폼의 userEdit 바꾸기
+                  	  			url : '<%=request.getContextPath()%>/admin/form/update/changeUserEdit',
+                  	  			data:{"form_id":form_id,"isUserEdit":isUserEdit},
+    	              	  		type:'POST',
+    	                        traditional : true,
+                  	  			success: function(){
+                  	  				console.log("isUserEdit Change: "+$("#isUserEdit").val()); 	
+                  	  					  		 
+                  	  			},
+                  			  	error:function(request, status, error){
+                  		
+                  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                  		
+                  				}
+                  	  	  	});
+                          }else {   //confirm 취소
+ 							 $("#isUserEditCheck").attr("checked",false);
+ 							 return false;
+ 		 				  }
+                           
+                       
+                      });
+                      
                       $( '.modal_open' ).click( function() {
                     	  //var link =  $(this).siblings(".link").html();
                     	  var link = "${link}";
-			  var id = $(this).siblings(".result_id").val();
+			  			  var id = $(this).siblings(".result_id").val();
                     	  $("#yourModal").load("../form/result/"+link+"/"+id);
                     	 
                     	} );

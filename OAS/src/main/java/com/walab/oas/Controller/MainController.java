@@ -1,6 +1,9 @@
 package com.walab.oas.Controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -168,15 +171,8 @@ public class MainController {
 				user_id=(Integer) session.getAttribute("id");
 			}
 			
-			int form_ID=adminDAO.getFormId(link); 
-			int count = adminDAO.getResultCnt(form_ID, user_id);
-			if(count!=0) {
-				int result_id = adminDAO.getResultId(form_ID, user_id);
-				redirectAttr.addFlashAttribute("form_id",form_ID);
-				redirectAttr.addFlashAttribute("result_id",result_id);
-				mav.setViewName("redirect:/userFormUpdate");
-				return mav;
-			}
+			int form_ID=adminDAO.getFormId(link);
+			
 			
 			if(adminDAO.getResultIdCount(form_ID,user_id)!=0) { //url로 들어왔는데 이미 신청했던 폼이라는 것이니까
 				mav.setViewName("redirect:/viewForm/"+link); //신청한거 확인하는 페이지로 가기
@@ -184,9 +180,6 @@ public class MainController {
 			}
 			
 			List<Form> form_info = mainDao.forminfo(form_ID);
-			List<Field> field_list = mainDao.fieldList(form_ID);
-			System.out.println(field_list.toString());
-				
 			//form info json 처리 
 			JSONArray jArray1 = new JSONArray();
 			try {
@@ -204,6 +197,23 @@ public class MainController {
 			    }catch(JSONException e){
 			        e.printStackTrace();
 			    }
+			
+			Date endDate=null;
+			Date current=new Date();
+			SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.KOREAN);
+			current = f.parse(fm.format(current));		
+			endDate = f.parse(fm.format(form_info.get(0).getEndDate()));		
+			
+			if(current.compareTo(endDate)>0) {
+				System.out.println("신청마감됨");
+				mav.addObject("form_info", jArray1);
+				mav.setViewName("deadLineForm");
+				return mav;
+			}
+			List<Field> field_list = mainDao.fieldList(form_ID);
+			System.out.println(field_list.toString());
+				
 			
 			//field info json 처리 
 			JSONArray jArray2 = new JSONArray();

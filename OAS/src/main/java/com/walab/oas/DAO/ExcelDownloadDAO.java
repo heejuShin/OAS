@@ -34,7 +34,7 @@ public class ExcelDownloadDAO {
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
 	
-	public SXSSFWorkbook makeWorkbook(HttpServletResponse response, ArrayList<String> fq, ArrayList<String> fa, ArrayList<String> q, ArrayList<ArrayList<String>> a ) {
+	public SXSSFWorkbook makeWorkbook(HttpServletResponse response, ArrayList<String> fq, ArrayList<String> fa, ArrayList<String> q, ArrayList<ArrayList<String>> a, String state ) {
 		SXSSFWorkbook workbook = new SXSSFWorkbook();
 		SXSSFSheet sheet = workbook.createSheet("설문지 제목");
 		
@@ -83,8 +83,14 @@ public class ExcelDownloadDAO {
         Date time = new Date();
         String nametime = format.format(time);
         
+        if(state.equals("*")) {
+        	state = "";
+        }
+        else {
+        	state= "_"+state;
+        }
         try {
-			response.setHeader("Content-Disposition", "attachment;filename="+new String(fa.get(1).getBytes("utf-8"),"8859_1")+"_"+nametime.substring(2)+".xls");
+			response.setHeader("Content-Disposition", "attachment;filename="+new String(fa.get(1).getBytes("utf-8"),"8859_1")+new String(state.getBytes("utf-8"),"8859_1")+"_"+nametime.substring(2)+".xls");
 		} catch (UnsupportedEncodingException e1) {
 			response.setHeader("Content-Disposition", "attachment;filename=formResult.xls");
 		}

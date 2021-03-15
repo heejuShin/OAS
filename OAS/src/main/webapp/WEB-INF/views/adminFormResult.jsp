@@ -35,9 +35,10 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=2">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=3">
 
 <style>
+		
 		.under_tab {
 			list-style: none;
 			margin: 0;
@@ -138,6 +139,7 @@
 							var rC_list =replaceAll(resultContent[i].content,"$","/");
 							console.log("step5");
 							if(resultContent[i].content != ""){
+								rC_list = rC_list.substr(0, rC_list.length -1);
 								var listTag = $("<p class='label-input100 nameMargin answerP' name='content'>A. "+rC_list+"</p>");
 								
 					  		}else{
@@ -220,6 +222,7 @@ $(function() {
 <body>
 <div class="container-contact100">
 		<div class="wrap-contact100">
+			<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal"><img id="closeIcon" src="<%=request.getContextPath()%>/resources/img/close.png"></button>
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
 				<span class="contact100-form-title" id="form_title"></span>
 

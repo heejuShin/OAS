@@ -140,6 +140,13 @@ public class AdminDAO {
 		return sqlSession.selectOne(namespace+".getUserInfobyId", id);
 	}
 	
+	public String getStateofUser(int user_id, int form_id) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("user_id", user_id);
+		map.put("form_id", form_id);
+		return sqlSession.selectOne(namespace+".getStateofUser", map);
+	}
+	
 	public List<Result> getExcelResult(int id){
 		return sqlSession.selectList(namespace+".excelResult", id);
 	}
@@ -161,11 +168,22 @@ public class AdminDAO {
 		return sqlSession.selectOne(namespace+ ".getAvailable", form_id);
 	}
 	
+	public int getUserEdit(int form_id) throws Exception{
+		return sqlSession.selectOne(namespace+ ".getUserEdit", form_id);
+	}
+	
 	public void changeAvailable(int form_id,int isAvailable)throws Exception{
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("form_id", form_id);
 		map.put("isAvailable", isAvailable);
 		sqlSession.update(namespace+ ".changeAvailable", map);
+	}
+	
+	public void changeUserEdit(int form_id,int isUserEdit)throws Exception{
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("form_id", form_id);
+		map.put("isUserEdit", isUserEdit);
+		sqlSession.update(namespace+ ".changeUserEdit", map);
 	}
 	
 	public int getResultId(int form_id,int user_id) {
@@ -181,12 +199,5 @@ public class AdminDAO {
 		map.put("user_id", user_id);
 		System.out.println(map);
 		return sqlSession.selectOne(namespace +".getResultIdCount", map);
-	}
-	
-	public int getResultCnt(int form_id, int user_id) {
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		map.put("form_id", form_id);
-		map.put("user_id", user_id);
-		return sqlSession.selectOne(namespace + ".getResultCnt", map);
 	}
 }

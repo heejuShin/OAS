@@ -117,7 +117,7 @@ tbody {
 	border: 3px solid #ffd500;
 }
 
-;
+
 
 /* content*/
 #moreContent {
@@ -145,3 +145,15 @@ tbody {
 .filterType {
 	margin-left: 10px;
 }
+
+  .greenLetter{
+     	color:green;
+     }
+     
+     .blueLetter{
+     	color: #080165;
+     }
+     
+     .redLetter{
+     	color:red;
+     }

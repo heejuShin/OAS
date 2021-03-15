@@ -46,9 +46,27 @@
                              
                                var form_list=${form_list};
                                var category_list=${category_list};
+                               console.log(category_list);
+                               var c_list = new Map();
+                               for(var i=0;i<category_list.length;i++){
+                            	   c_list.set(category_list[i].categoryName,0);
+                               }
+                               for (const [key, value] of c_list) {
+                            	    console.log("These are ", key, value);
+                            	}
+                               for(var i=0;i<form_list.length;i++){
+                            		  var a = c_list.get(form_list[i].categoryName);
+                            		  console.log("a is " + a);
+                            		  c_list.set(form_list[i].categoryName,a+1);
+                            	   }
+                               
+                               for (const [key, value] of c_list) {
+                           	    console.log("Those are ", key, value);
+                           	}
                                for(var i=0; i<category_list.length;i++){
-                                  var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
-                                  if(category_list[i].id!=0)
+                            	   console.log("c is" + c_list.get(category_list[i].categoryName));
+               					  var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
+                                  if(category_list[i].id!=0 && c_list.get(category_list[i].categoryName) !=0 )
                                   $(".ul_filters").append(filter_li);
                               }
 
@@ -77,11 +95,14 @@
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
 								 
                                  if(form_list[i].state_id==0){
-                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;' onClick = 'openForm(this);'>신청하기</a></div>");
+                                	var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white;cursor:pointer;' onClick = 'openForm(this);'>신청하기</a></div>");
   		                            $($($(".grid").children()[i]).children()[0]).append(a);
  								 }
                                  else{
-                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
+                                     var editDate=$("<span class='regDate'>신청일: "+moment(form_list[i].editDate).format('YYYY-MM-DD')+"</span>");
+                                     $($($(".grid").children()[i]).children()[0]).append(editDate);
+                                	 var a=$("<div class='formLink'><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(53, 96, 177); margin-right:3px;' onClick = 'openForm(this);'>신청완료</a><a id='form_"+form_list[i].id+"' class='filled-button' style='color: white; background-color:rgb(198, 193, 216);' onClick = 'delSubmitForm(this);'>신청취소</a></div>");                                            $($($(".grid").children()[i]).children()[0]).append(a);
+
                                 	 $($($(".grid").children()[i]).children()[0]).append(a);
                                  }
  								 
@@ -217,7 +238,6 @@
         </div>
       </div>
     </div>
-            </div><!-- board2 -->
 
    </main>
    <footer>

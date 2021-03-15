@@ -144,7 +144,7 @@ ModelAndView mav = new ModelAndView();
 		ModelAndView mav = new ModelAndView();
 		Form form_info = userDao.forminfo(form_id);
 		
-		if(form_info.getIsAvailable()==1&&isCreate==0) {
+		if(form_info.getIsUserEdit()==1&&form_info.getIsAvailable()==1&&isCreate==0) {
 			redirectAttr.addFlashAttribute("form_id",form_id);
 			redirectAttr.addFlashAttribute("result_id",result_id);
 			mav.setViewName("redirect:/userFormUpdate");
