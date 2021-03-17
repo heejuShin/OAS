@@ -9,8 +9,6 @@ function isValidForm(){
 }
 
 
-
-
 $( document ).ready(function() {
 	//keydown event 없애기 (enter 눌러도 전송안되게)
 	document.addEventListener('keydown', function(event) {
