@@ -35,9 +35,9 @@
      
      <style>
      @media (min-width: 1200px){
-		.userMypage_main .container {
-		    max-width: 100% !important;
-		}
+      .userMypage_main .container {
+          max-width: 100% !important;
+      }
      }
      </style>
   </head>
@@ -61,7 +61,7 @@
     <section id="demo" class="userMypage_main">
        
       <div class="container">
-		<!--Start_Filter and Search part-->
+      <!--Start_Filter and Search part-->
           <nav class="filter_search" >
             
             <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="POST" >
@@ -94,7 +94,7 @@
                       </th>
                           <th data-priority="1">제목</th>
                           <th data-priority="4">신청 기간</th>
-                          <th data-priority="4">등록 일자</th>
+                          <th data-priority="4">등록 일자/신청 일자</th>
                           <th data-priority="4">등록자</th>
                           <th data-priority="1">상태</th>
                       </tr>
@@ -153,8 +153,8 @@
       }
 
       var criInfo=${cri_list};
-      	$('.filterType option[value='+criInfo.filterType+']').prop('selected', 'selected').change();
-      	
+         $('.filterType option[value='+criInfo.filterType+']').prop('selected', 'selected').change();
+         
       
       var userList=${userList};
          for(var i=0; i < userList.length; i++){
@@ -175,9 +175,25 @@
    
           var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
            $($(".tbodies").children()[i]).append(td3);
-   
-           var td4 = $("<td>"+moment(userList[i].regDate).format('YYYY.MM.DD')+"</td>"); 
-         $($(".tbodies").children()[i]).append(td4);
+           
+           //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
+           if(new Date()>new Date(userList[i].endDate)){
+              var td4 = $("<td>"+moment(userList[i].regDate).format('YYYY.MM.DD')+" / "+moment(userList[i].registDate).format('YYYY.MM.DD')+"</td>"); 
+               $($(".tbodies").children()[i]).append(td4);
+           }   
+           else{
+              //신청하기 (그 폼 신청페이지로 넘어가게)
+              if(userList[i].state_id==0){
+                 var td4 = $("<td>"+moment(userList[i].regDate).format('YYYY.MM.DD')+" / "+" - "+"</td>"); 
+                  $($(".tbodies").children()[i]).append(td4);
+            }
+             //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
+              else{
+                 var td4 = $("<td>"+moment(userList[i].regDate).format('YYYY.MM.DD')+" / "+moment(userList[i].registDate).format('YYYY.MM.DD')+"</td>"); 
+                  $($(".tbodies").children()[i]).append(td4);
+            }
+
+         }
    
          var td5 = $("<td>"+userList[i].userName+"</td>"); 
            $($(".tbodies").children()[i]).append(td5);
@@ -221,11 +237,11 @@
            $(obj).parent().siblings("#viewForm").submit();
     }
     function delSubmitForm(obj){
- 		console.log("deleteMyForm");
- 		if(confirm("정말로 삭제하시겠습니까?")){
-     		var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
-       		$(obj).parent().siblings("#delForm").submit();
- 		}
+       console.log("deleteMyForm");
+       if(confirm("정말로 삭제하시겠습니까?")){
+           var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
+             $(obj).parent().siblings("#delForm").submit();
+       }
     }
     $(document).ready( function() {   
        //테이블 카테고리, 상태 select

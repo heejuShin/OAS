@@ -1,3 +1,4 @@
+
 var dup_check = false;
 function isValidForm(){
     if(!dup_check){
@@ -7,6 +8,8 @@ function isValidForm(){
     }
     else return true;
 }
+
+
 
 
 $( document ).ready(function() {

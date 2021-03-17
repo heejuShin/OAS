@@ -83,8 +83,8 @@ public class LoginController {
    public ModelAndView googleAuth( ModelAndView mav,HttpServletRequest request, @RequestParam(value = "code") String authCode) throws JsonParseException, JsonMappingException, IOException
          {
       
-	   String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
-	   
+      String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
+      
       HttpSession session = request.getSession();
       System.out.println("Session is "+ session);
       
@@ -120,11 +120,11 @@ public class LoginController {
       Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
       
       if(!userInfo.get("email").contains("handong.edu")) {
-    	  
-    	  mav.setViewName("error/loginError");
-    	  return mav;
+         
+         mav.setViewName("error/loginError");
+         return mav;
       }
-    	  
+         
       
       User user = new User();
       user.setEmail(userInfo.get("email"));
@@ -139,19 +139,19 @@ public class LoginController {
           return mav;
       }
       else {
-	      user = userDao.findUser(user.getEmail());
-	      
-	      session.setAttribute("id", user.getId());
-	      session.setAttribute("name", user.getUserName());
-	      session.setAttribute("email", user.getEmail());
-	      session.setAttribute("admin", user.getAdmin());
-	      session.setAttribute("studentId", user.getStudentId());
-	      session.setAttribute("grade", user.getGrade());
-	      session.setAttribute("department", user.getDepartment());
-	      session.setAttribute("admin", user.getAdmin());
-	      
-	      mav.setViewName("redirect:"+beforeUrl); //넘어가는 주소
-	      return mav;
+         user = userDao.findUser(user.getEmail());
+         
+         session.setAttribute("id", user.getId());
+         session.setAttribute("name", user.getUserName());
+         session.setAttribute("email", user.getEmail());
+         session.setAttribute("admin", user.getAdmin());
+         session.setAttribute("studentId", user.getStudentId());
+         session.setAttribute("grade", user.getGrade());
+         session.setAttribute("department", user.getDepartment());
+         session.setAttribute("admin", user.getAdmin());
+         
+         mav.setViewName("redirect:"+beforeUrl); //넘어가는 주소
+         return mav;
       }
       
       /*
@@ -233,6 +233,5 @@ public class LoginController {
       return mav;
    }
 }
-
 
 

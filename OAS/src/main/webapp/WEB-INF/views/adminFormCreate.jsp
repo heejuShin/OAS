@@ -30,6 +30,35 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
 		
 	
+	 <!-- resizable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
+	<!-- Form JS -->
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/popper.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+   
+	<!-- 카테고리 관련 CDN -->
+	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<!-- momment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 </head>
 
   <body>
@@ -49,32 +78,6 @@
 
     <!--body-->
     
-	<!-- Form JS -->
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/popper.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/moment.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    <!-- resizable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	
-	<!-- 카테고리 관련 CDN -->
-	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-	<!-- select2 javascript cdn -->
-	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
-
-	<!-- momment -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     
     <div class="container-contact100">
     
@@ -195,6 +198,11 @@
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
+ 					<div class='uploadDiv'>
+						<input type='file' name='uploadFile' multiple>
+						<button id='uploadBtn'>Upload</button>
+					</div> 
+					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>
 						  <option value="text">단답형</option>
@@ -240,14 +248,60 @@
     <div class="add" id="select_value_add">
     	<input class="option_real" type="hidden" name="?content?" value=""/>
     </div>
-   
-
   </body>
 
     <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
     
-<script>
-
+    <!-- select2 javascript cdn -->
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+    
+<script >
+$(document).ready(function(){
+	
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$"); //파일 확장자 정규식 
+	var maxSize = 5242880; // 5MB
+	
+	function checkExtension(fileName,fileSize){
+		if(fileSize >= maxSize){
+			alert("파일 사이즈 초과");
+			return false;
+		}
+		
+		if(regex.test(fileName)){
+			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			return false;
+		}
+		return true;
+	}
+	
+	$("#uploadBtn").on("click",function(e){
+		var formData = new FormData();
+		
+		var inputFile = $("input[name='uploadFile']");
+		
+		var files = inputFile[0].files;
+		
+		console.log(files);
+		
+		for(var i=0; i<files.length; i++){
+			if(!checkExtension(files[i].name,files[i].size)){
+				return false;
+			}
+			formData.append("uploadFile",files[i]);
+		}
+		
+		$.ajax({
+			url: '/uploadAjax',
+			processData: false,
+			contentType: false,
+			data: formData,
+			type: 'POST',
+			success: function(result){
+				alert("Uploaded");
+			}
+		});
+	});
+});
 	var state_list = ${state_list};
 	for (var i = 0; i < state_list.length; i++) {
 		var selectOption = $("<option id='"+state_list[i].stateName+"' selected=\"selected\" value='"+state_list[i].stateName+"'>"+ state_list[i].stateName+ "</option>");
@@ -311,14 +365,6 @@ $(document).click(function(e) {
     }
     
 });
-
-/** TODO
-* 그래도 어느 정도의 CSS
-* 상태 선택
-* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
-* '기타' 추가 기능
-* 복사 기능
-**/
 
 </script>
 </html>
