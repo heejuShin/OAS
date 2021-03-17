@@ -248,7 +248,7 @@
     
     <div class="add" id="select_value_add">
     	<input class="option_real" type="hidden" name="?content?" value=""/>
-    </div
+    </div>
   </body>
 
     <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
