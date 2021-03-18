@@ -73,7 +73,7 @@
                  <option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
                  <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
                  <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청현황</option>
-                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청결과</option>
+                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청마감</option>
               </select>
            </form>
             
