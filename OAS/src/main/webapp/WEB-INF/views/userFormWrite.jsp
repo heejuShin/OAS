@@ -242,6 +242,9 @@
 	}); //document ready
 	</script>
 </head>
+	
+<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+	
 <body>
 	<div class="container-contact100">
 		<div class="wrap-contact100">
