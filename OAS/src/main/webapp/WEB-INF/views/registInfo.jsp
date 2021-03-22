@@ -30,13 +30,16 @@
     <script>
      $(document).ready(function () {
 		var googleEmail = $("#email").val();
+		var isStudent = 0;
     	console.log("google email : " + googleEmail );
 
     	var googleID = googleEmail.split('@');
     	console.log("google ID : " + googleID[0] );
 
     	if(isNaN(googleID[0]) == false ){
+        	/*ID가 학번일 경우,  */
     		$("#studentId").val(googleID[0]);
+    		isStudent = 1;
         	}
 
    		$("#userJoinFormB").click(function(){
@@ -45,16 +48,20 @@
     		if($("#phoneNum").val() == ""){
     			alert("번호 입력 해주세요:) ");
     			return false;
-        		}
-        		
-	       	  $('select').each(function(){
-	           	 if($(this).val() == ""){
-	               	 alert($(this).siblings('label').text() + " 선택해주세요:) ");
-	               	 isWrong = 1;
-	               	 return false;
-	           	 }
-	       	 });
- 
+ 			}
+
+    		if(isStudent == 1){
+				
+				 $('select').each(function(){
+		           	 if($(this).val() == ""){
+		               	 alert($(this).siblings('label').text() + " 선택해주세요:) ");
+		               	 isWrong = 1;
+		               	 return false;
+		           	 }
+		       	 });
+
+        	}
+
 	       	 if(isWrong == 0){
 	           	 $('#userJoinForm').submit(); 
 	       	 }
