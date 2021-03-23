@@ -146,7 +146,7 @@ public class AdminController {
 		        ob.put("field_type", field_type[i]);
 		        ob.put("field_star", field_star[i]);
 		        ob.put("item_count", Integer.parseInt(item_count[i]));
-		        
+		        System.out.println("item_count:"+Integer.parseInt(item_count[i]));
 		        if("radio".equals(field_type[i])||"checkbox".equals(field_type[i])||"select".equals(field_type[i])) {
 		        	for (int j = 1; j <= Integer.parseInt(item_count[i]) ; j++) {
 		        		idx++;

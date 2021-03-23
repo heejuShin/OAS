@@ -36,6 +36,7 @@
    <beans:bean id="authinterceptor" class="com.walab.oas.Intercept.AuthIntercept" />
    <beans:bean id="logininterceptor" class="com.walab.oas.Intercept.LoginIntercept" />
    
+   
    <interceptors>
       <interceptor>
          <mapping path="/admin/**" />
@@ -52,10 +53,7 @@
          <beans:ref bean="logininterceptor"/>
       </interceptor>
    </interceptors>
-	
+   
 	<context:component-scan base-package="com.walab.oas.*" />
-	
-	
-	
-	
+	<context:property-placeholder location="classpath:config/application.properties"/> 
 </beans:beans>

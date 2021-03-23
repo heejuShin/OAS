@@ -263,6 +263,7 @@ $( document ).ready(function() {
 	  $("#field_add").find(".field_title").attr("name", "f_title"+count);
 	  $("#field_add").find(".field_type").attr("name", "f_type"+count);
 	  $("#field_add").find(".count").attr("name", "count"+count);
+	  $("#field_add").find(".count").attr("value", "0");
 	  $("#field_add").find(".index").attr("value", count);
 	  
 	  $("#field_add").find(".isFieldOri").attr("name", "isFieldOri"+count);
@@ -311,6 +312,13 @@ $( document ).ready(function() {
 	//아이템 삭제
 	$("#list").on('click', ".remove_item", function(){
 	  $(this).parent().remove();
+	  //var name=$(this).siblings(".real").prop('name');
+	  //var fieldID=name.charAt(0);
+	  //console.log(fieldID);
+	  //var count=parseInt($("input[name='count"+fieldID+"']").val())-1;
+	  //$("input[name='count"+fieldID+"']").val(count);
+	  //console.log(count);
+	  
 	})
 	//체크박스 아이템 추가
 	$("#list").on('click', ".btn_add_chxbox", function(){

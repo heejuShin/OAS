@@ -520,6 +520,4 @@
    <delete id="deleteMyForm" parameterType="int">
        delete from Result where id=#{myFormID};
    </delete>
-   
-
 </mapper>
