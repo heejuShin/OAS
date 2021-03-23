@@ -79,13 +79,9 @@
 
 		<!-- MySQL -->
 		<dependency>
-
-			<groupId>mysql</groupId>
-
-			<artifactId>mysql-connector-java</artifactId>
-
-			<version>5.1.46</version>
-
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.11</version>
 		</dependency>
 
 		<!-- MyBatis -->

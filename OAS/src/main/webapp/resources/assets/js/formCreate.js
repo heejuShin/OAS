@@ -55,11 +55,12 @@ $( document ).ready(function() {
 	//모달창
 	
 	$('#confirm').on('click', function() {
+		alert("hello");
 		console.log("confirm click");
 		//var whole_addr = $(location).attr('href');
 	   	//var addr_slice = whole_addr.split('/');
 	   	//var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
-	   	//$("#modal_message").html("설문지 작성이 완료되었습니다.<span id='link_copy'>??</span>");
+	   	//$("#modal_message").html("설문지 작성이 ^_^완료되었습니다.<span id='link_copy'>??</span>");
 	   	//$("#link_copy").html("<input type='hidden' id='url' value="+addr+"/form/"+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a>");
    		
 		var name = $("#formName").val();
