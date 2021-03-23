@@ -46,7 +46,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -81,7 +81,7 @@
     
     <div class="container-contact100">
     
-		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
+		<div class="wrap-contact100" style="padding : 0px 100px 90px 100px">
 		<div id="menu-bar"><p id="add_p">+</p></div>
 				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
 					<span class="contact100-form-title">
@@ -171,6 +171,7 @@
 	        
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
+	        
 	        </p>
 	        <div id="modal_buttons">
 	        	<button type="submit" id="form_submit" class="submit modal_bts">확인</button>

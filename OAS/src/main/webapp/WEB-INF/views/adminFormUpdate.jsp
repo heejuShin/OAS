@@ -82,7 +82,7 @@
 	
     <div class="container-contact100">
     
-		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
+		<div class="wrap-contact100" style="padding : 0px 100px 90px 100px">
 		<div id="menu-bar"><p id="add_p">+</p></div>
 		<form id="cseeForm" action="formUpdate" class="contact100-form" method="post">
 					<span class="contact100-form-title">
