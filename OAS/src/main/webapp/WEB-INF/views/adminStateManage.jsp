@@ -25,10 +25,21 @@
 	.selectState, .button_div{
 		text-align: center;
 	}
+	.select2-selection__rendered{
+	font-weight: 600;
+	}
 	</style>
 	</head>
 <body>
-
+<!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
 
@@ -67,7 +78,7 @@
 			<input type="hidden" id="state_selected" name="state" style="width: 1000px;"/>
 			
 			
-		<div class="button_div">
+		<div class="button_div" style="font-weight: 600;">
             <button style="border-color: #28a745; color: #28a745" type="submit">저장</button>
             <button type="button" style="border-color: black; color: black;" name="deleteB" onclick="location.href='./state'">초기화</button>
         </div>  

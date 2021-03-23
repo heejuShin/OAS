@@ -23,7 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2">
 	
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -46,7 +46,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=8"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -81,7 +81,7 @@
     
     <div class="container-contact100">
     
-		<div class="wrap-contact100" style="padding : 62px 100px 90px 100px">
+		<div class="wrap-contact100" style="padding : 0px 100px 90px 100px">
 		<div id="menu-bar"><p id="add_p">+</p></div>
 				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
 					<span class="contact100-form-title">
@@ -163,7 +163,7 @@
         <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
 	        <p>
-	        <span class="modal_title">제목 : </span><span id="confirm_title" class="modal_content"></span><br>
+	        <span class="modal_title">제목- : </span><span id="confirm_title" class="modal_content"></span><br>
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
 <!-- 	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
@@ -171,6 +171,7 @@
 	        
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
+	        
 	        </p>
 	        <div id="modal_buttons">
 	        	<button type="submit" id="form_submit" class="submit modal_bts">확인</button>
@@ -228,7 +229,7 @@
     <div class="add" id="radio_add">
       <div>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
-        <input class="radio_real" type="hidden" name="?content?" value=""/>
+        <input class="real radio_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
@@ -236,7 +237,7 @@
     <div class="add" id="chxbox_add">
       <div>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
-     	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+     	<input class="real checkbox_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
@@ -246,7 +247,7 @@
     </div>
     
     <div class="add" id="select_value_add">
-    	<input class="option_real" type="hidden" name="?content?" value=""/>
+    	<input class="real option_real" type="hidden" name="?content?" value=""/>
     </div>
   </body>
 

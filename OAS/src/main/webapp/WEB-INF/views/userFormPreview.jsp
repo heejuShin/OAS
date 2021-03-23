@@ -30,7 +30,6 @@
 		//field 만들기 
 		for(var i = 0 ; i < fieldInfo.length; i++){
 			console.log("step3");
-
 				//form 제출시 확인 필요한 필드 클래스 명으로 지정 
 				if(fieldInfo[i].field_star == 1){
 						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin'>"+fieldInfo[i].field_name+" <span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
@@ -54,7 +53,10 @@
 					 }
 
 					 for(var j=0; j < fieldInfo[i].item_count; j++){
-						 
+						 if(optionList[idx].content==""){
+							idx++;
+							continue;
+						 }
 						 console.log("step6");
 						 console.log(optionList[idx].content);
 								 $("#field_"+ fieldInfo[i].field_id).children(".inputDiv").addClass("marginTop")
@@ -166,8 +168,6 @@
 					        	});
 						        }
 
-					        
-
 							//checkbox value $로 엮기
 							if($(this).children('label').children("input:checkbox[name=content]:checked").length > 0){
 								//checkbox value 문자열 생성 
@@ -261,6 +261,15 @@
 	</script>
 </head>
 <body>
+<!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			

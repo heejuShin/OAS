@@ -7,6 +7,9 @@
 <title>Insert title here</title>
   <!-- wschool css -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   
     <style>
       .w3-section{
@@ -22,7 +25,53 @@
           position: relative;
           left: 45%;
         }
+        
     </style>
+    <script>
+     $(document).ready(function () {
+		var googleEmail = $("#email").val();
+		var isStudent = 0;
+    	console.log("google email : " + googleEmail );
+
+    	var googleID = googleEmail.split('@');
+    	console.log("google ID : " + googleID[0] );
+
+    	if(isNaN(googleID[0]) == false ){
+        	/*ID가 학번일 경우,  */
+    		$("#studentId").val(googleID[0]);
+    		isStudent = 1;
+        	}
+
+   		$("#userJoinFormB").click(function(){
+    		var isWrong = 0;
+
+    		if($("#phoneNum").val() == ""){
+    			alert("번호 입력 해주세요:) ");
+    			return false;
+ 			}
+
+    		if(isStudent == 1){
+				
+				 $('select').each(function(){
+		           	 if($(this).val() == ""){
+		               	 alert($(this).siblings('label').text() + " 선택해주세요:) ");
+		               	 isWrong = 1;
+		               	 return false;
+		           	 }
+		       	 });
+
+        	}
+
+	       	 if(isWrong == 0){
+	           	 $('#userJoinForm').submit(); 
+	       	 }
+
+       }); 
+    	
+    }); 
+    
+    </script>
+
 </head>
 <body>
 
@@ -34,7 +83,7 @@
           <span class="w3-quarter" style='font-weight:bold;font-size:27px;'>기본정보</span>
           </div>
           
-          <form class="w3-container" action="regist" method="POST">
+          <form id="userJoinForm" class="w3-container" action="regist" method="POST">
             <div class="w3-section">
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>이름</label>
@@ -54,9 +103,10 @@
               
               <div class="col-lg-12 col-md-12 col-sm-12">
 			  <label>학부</label>
-				<select id="department"  class="w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)" required>
-                  
-                  <option value="전산전자공학부" selected>전산전자공학부</option>
+
+				<select id="department" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="department" onchange="categoryChange(this)">
+                  <option value="" selected>=== 선택 ===</option>
+                  <option value="전산전자공학부" >전산전자공학부</option>
                   <option value="기계제어공학부">기계제어공학부</option>
                   <option value="글로벌리더십학부">글로벌리더십학부</option>
                   <option value="ICT창업학부">ICT창업학부</option>
@@ -74,8 +124,10 @@
                 
                 <div class="col-lg-12 col-md-12 col-sm-12">
               <label>전공</label>
-              <select id="major" class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" name="major" required>
-			      <option value="컴퓨터공학전공" selected>컴퓨터공학전공</option>
+
+              <select id="major" class="w3-input w3-border w3-margin-bottom w3-light-grey" type="input" name="major">
+              		<option value="" selected>=== 선택 ===</option>
+			      <option value="컴퓨터공학전공" >컴퓨터공학전공</option>
                   <option value="전자공학전공">전자공학전공</option>
                   <option value="컴퓨터공학심화전공">컴퓨터공학심화전공</option>
                   <option value="전자공학심화전공">전자공학심화전공</option>
@@ -85,8 +137,10 @@
               
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>학년</label>
-              <select id="grade" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="grade" onchange="semesterChange(this)" required>
-	            <option value="1" selected>1학년</option>
+
+              <select id="grade" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="grade" onchange="semesterChange(this)">
+	            <option value="" selected>=== 선택 ===</option>
+	            <option value="1" >1학년</option>
 	            <option value="2">2학년</option>
 	            <option value="3">3학년</option>
 	            <option value="4">4학년</option>
@@ -95,15 +149,15 @@
               
               <div class="col-lg-12 col-md-12 col-sm-12">
               <label>학기</label>
-              <select id="semester" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="semester" required>
-            	<option value="1" selected>1학기</option>
-            
+
+              <select id="semester" class="w3-input w3-border w3-margin-bottom w3-light-grey" name="semester">
+              <option value="none" selected>=== 선택 ===</option>
               </select>
               </div>
               
               
             </div >
-            <button class="w3-button w3-black" type="submit">확인</button>
+            <button class="w3-button w3-black" id="userJoinFormB" type="button">확인</button>
           </form>
     
         </div>

@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,10 +55,10 @@ public class LoginController {
    final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
    final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
 
-   //@Value("${api.client_id}")
-   String clientId="561186600567-ghv5joqq35ar98gvkp6vqa5pltvop4ie.apps.googleusercontent.com";
-   //@Value("${api.client_secret}")
-   String clientSecret="qRBA7XR_GqET0L-PU1AfQL4u";
+   @Value("${google.api.client_id}")
+   String clientId;
+   @Value("${google.api.client_secret}")
+   String clientSecret;
    
    
    @GetMapping("/logout")
@@ -89,8 +91,8 @@ public class LoginController {
       System.out.println("Session is "+ session);
       
       RestTemplate restTemplate = new RestTemplate();
-
-
+      System.out.println("clientID: "+ clientId);
+      System.out.println("clientSecret: "+ clientSecret);
       //Google OAuth Access Token 요청을 위한 파라미터 세팅
       GoogleOAuthRequest googleOAuthRequestParam = new GoogleOAuthRequest(clientId,clientSecret,authCode,rootPath+"/login/google/auth","authorization_code");
 
@@ -202,15 +204,15 @@ public class LoginController {
       
       beforeUrl = request.getHeader("Referer");
       System.out.println("redirectUrl controller : "+beforeUrl);
-      
-      String redirectUrl = "redirect:https://accounts.google.com/o/oauth2/v2/auth?"
-            + "client_id=561186600567-ghv5joqq35ar98gvkp6vqa5pltvop4ie.apps.googleusercontent.com"
-            + "&redirect_uri="+rootPath+"/login/google/auth"
-            + "&response_type=code"
-            + "&scope=email%20profile%20openid"
-            + "&access_type=offline";
+
+      String redirectUrl = "redirect:https://accounts.google.com/o/oauth2/v2/auth";
       
       mav.setViewName(redirectUrl);
+      mav.addObject("client_id",clientId);
+      mav.addObject("redirect_uri",rootPath+"/login/google/auth");
+      mav.addObject("response_type","code");
+      mav.addObject("scope","email profile openid");
+      mav.addObject("access_type","offline");
       return mav;
    }
    
@@ -219,7 +221,6 @@ public class LoginController {
      public ModelAndView registUser(HttpSession session,User user) throws Exception {
       ModelAndView mav = new ModelAndView();
       
-      int user_id=userDao.joinUser(user);
       System.out.println("user = "+user.getEmail()+" "+user.getGrade());
       session.setAttribute("id", user.getId());
       session.setAttribute("name", user.getUserName());

@@ -55,8 +55,14 @@ $( document ).ready(function() {
 	//모달창
 	
 	$('#confirm').on('click', function() {
+		alert("hello");
 		console.log("confirm click");
-		$("#modal_message").html("설문지 작성이 완료되었습니다.");
+		//var whole_addr = $(location).attr('href');
+	   	//var addr_slice = whole_addr.split('/');
+	   	//var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
+	   	//$("#modal_message").html("설문지 작성이 ^_^완료되었습니다.<span id='link_copy'>??</span>");
+	   	//$("#link_copy").html("<input type='hidden' id='url' value="+addr+"/form/"+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a>");
+   		
 		var name = $("#formName").val();
 		if(name=="") {
 			name= "<span style=\"color:red\">내용없음</span>";
@@ -257,6 +263,7 @@ $( document ).ready(function() {
 	  $("#field_add").find(".field_title").attr("name", "f_title"+count);
 	  $("#field_add").find(".field_type").attr("name", "f_type"+count);
 	  $("#field_add").find(".count").attr("name", "count"+count);
+	  $("#field_add").find(".count").attr("value", "0");
 	  $("#field_add").find(".index").attr("value", count);
 	  
 	  $("#field_add").find(".isFieldOri").attr("name", "isFieldOri"+count);
@@ -305,6 +312,13 @@ $( document ).ready(function() {
 	//아이템 삭제
 	$("#list").on('click', ".remove_item", function(){
 	  $(this).parent().remove();
+	  //var name=$(this).siblings(".real").prop('name');
+	  //var fieldID=name.charAt(0);
+	  //console.log(fieldID);
+	  //var count=parseInt($("input[name='count"+fieldID+"']").val())-1;
+	  //$("input[name='count"+fieldID+"']").val(count);
+	  //console.log(count);
+	  
 	})
 	//체크박스 아이템 추가
 	$("#list").on('click', ".btn_add_chxbox", function(){
