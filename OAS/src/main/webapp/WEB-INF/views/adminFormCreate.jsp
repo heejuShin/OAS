@@ -46,7 +46,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=8"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -228,7 +228,7 @@
     <div class="add" id="radio_add">
       <div>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
-        <input class="radio_real" type="hidden" name="?content?" value=""/>
+        <input class="real radio_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
@@ -236,7 +236,7 @@
     <div class="add" id="chxbox_add">
       <div>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
-     	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+     	<input class="real checkbox_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
@@ -246,7 +246,7 @@
     </div>
     
     <div class="add" id="select_value_add">
-    	<input class="option_real" type="hidden" name="?content?" value=""/>
+    	<input class="real option_real" type="hidden" name="?content?" value=""/>
     </div>
   </body>
 

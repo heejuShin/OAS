@@ -101,6 +101,10 @@ ModelAndView mav = new ModelAndView();
 	    result.setUser_id(user_id);
 	    result.setState_id(state_id);
 	    
+	    if(adminDao.getResultIdCount(form_id,user_id)!=0) {
+	    	return new ModelAndView("redirect:/");
+	    }
+	    
 	    //System.out.println(result);
 	    userDao.setResult(result);
 	    
