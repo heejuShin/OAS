@@ -180,7 +180,7 @@ body {font-family: 'NanumSquare', sans-serif;}
         <div class="jumper">
             <div></div>
             <div></div><br>                      
-            <h3 class="textdiv">Chrome 브라우저 이용을 권장합니다.</h3>           
+            <h3 class="textdiv" >Chrome 브라우저 이용을 권장합니다.</h3>           
         </div>
     </div>  
     <!-- ***** Preloader End ***** -->
