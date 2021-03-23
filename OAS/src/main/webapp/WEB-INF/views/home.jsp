@@ -26,9 +26,10 @@
 
 
  <style>
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
+body {font-family: 'NanumSquare', sans-serif;}
 
-      
  </style>
  
  <script type="text/javascript">

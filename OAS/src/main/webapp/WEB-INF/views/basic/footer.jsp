@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <title>Footer</title>
 <style>
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+	
+ 	footer {font-family: 'NanumSquare', sans-serif;}
 </style>
 </head>
 <body>

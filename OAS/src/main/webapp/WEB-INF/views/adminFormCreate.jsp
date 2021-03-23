@@ -59,8 +59,23 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-</head>
+  
+  <!-- Font -->
+  <style type="text/css">
+  @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+  
+ 	
+ 	@font-face {
+ 		font-family: 'NanumSquare', sans-serif;
+ 		font-style:normal;
+ 		font-weight:normal;
+ 	}
+ 	
+ 	body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+</style>
 
+</head>
   <body>
 
     <!-- ***** Preloader Start ***** -->
@@ -75,6 +90,8 @@
 
   
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
+	
+	
 
     <!--body-->
     
@@ -105,21 +122,42 @@
 			</div>
 			
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
-				<p class="label-input100">신청 시작일</p>
+				<p class="label-input100" style="margin-top: 10px">신청 시작일</p>
 				<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="" required/> <input id="startTime" class="input100" name="startTime" type="time" value="10:00" required/>
 			</div>
 			
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
-				<p class="label-input100">신청 마감일</p>
-				<input class="input100" id="endDate" name="endDate" type="date" value="" required/> <input id="endTime" class="input100" name="endTime" type="time" value="23:00" required/>
+				<p class="label-input100" style="margin-top: 10px">신청 마감일</p>
+				<input class="input100" style="margin-top: 10px" id="endDate" name="endDate" type="date" value="" required/> <input id="endTime" class="input100" name="endTime" type="time" value="23:00" required/>
 			</div>
 			
-			<div class="wrap-input100  bg1" >
-				<textarea class="input100 InputFonts"  name="explanation" placeholder="설문지 설명"></textarea>
-			</div>
 			
-			<div class="wrap-input100  bg1" >
-				<p class="label-input100" style="margin-bottom:5px">상태 선택<span class="essential"> * </span></p>
+			<div class="wrap-input100  bg1">
+				<textarea id="txtArea" class="input100 InputFonts" style="margin-top: 5px; margin-left:-10px;" name="explanation" placeholder="설문지 설명" ></textarea>
+			</div>
+			<!-- <script>
+			$("#txtArea").on("keypress",function(e) {
+			    var key = e.keyCode;
+
+			    // If the user has pressed enter
+			    if (key == 13) {
+			        document.getElementById("txtArea").value =document.getElementById("txtArea").value + "\n";
+			        return false;
+			    }
+			    else {
+			        return true;
+			    }
+			});
+			</script> -->
+			<!-- <script>
+			$(window).keydown(function(event){
+    if((event.which== 13) && ($(event.target)[0]!=$("textarea")[0])) {
+      event.preventDefault();
+      return false;
+    }
+  });</script> -->
+			<div class="wrap-input100  bg1" style="margin-bottom: 40px;">
+				<p class="label-input100" style="margin-bottom:10px; margin-top:5px;">상태 선택<span class="essential"> * </span></p>
 				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px" class="form-state">
   
 			    </select>
@@ -129,7 +167,7 @@
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 
-			<input type="hidden" id="state_selected" name="state" style="width:1000px;"/>
+			<input type="hidden" id="state_selected" name="state" style="width:1000px;" />
 			
               				<input type="hidden" id="count" name="count" value="0"/>
 			
@@ -148,6 +186,7 @@
 						<span>확인</span>
 					</button>
 				</div>
+			
 				
 			
 
@@ -256,7 +295,7 @@
     <!-- select2 javascript cdn -->
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
     
-<script >
+<script>
 $(document).ready(function(){
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$"); //파일 확장자 정규식 
