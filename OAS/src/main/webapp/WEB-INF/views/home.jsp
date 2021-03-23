@@ -176,11 +176,11 @@ body {font-family: 'NanumSquare', sans-serif;}
 </head>
 <body>
    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
+    <div id="preloader">    
         <div class="jumper">
             <div></div>
-            <div></div>
-            <div></div>
+            <div></div><br>                      
+            <h3 class="textdiv">Chrome 브라우저 이용을 권장합니다.</h3>           
         </div>
     </div>  
     <!-- ***** Preloader End ***** -->

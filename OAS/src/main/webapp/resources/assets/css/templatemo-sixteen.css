@@ -146,8 +146,20 @@ a.filled-button:hover {
   display: block;
   position: absolute;
   margin: auto;
-  width: 50px;
+  width: 100px;
   height: 50px;
+}
+
+#preloader .textdiv {
+  left: -110%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: block; 
+  position: relative;
+  margin: auto;
+  width: 300px;
+  height: 200px;
 }
 
 #preloader .jumper > div {
