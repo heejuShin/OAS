@@ -261,15 +261,6 @@
 	</script>
 </head>
 <body>
-<!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			
