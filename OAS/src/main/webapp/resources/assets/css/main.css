@@ -240,7 +240,7 @@ iframe {
 	font-weight: 700;
 	width: 100%;
 	font-family: "Poppins", Arial, sans-serif;
-	font-size: 39px;
+	font-size: 30px;
 	color: #333333;
 	line-height: 1.2;
 	text-align: center;
@@ -277,7 +277,7 @@ iframe {
 	background: transparent;
 	font-family: NanumGothic;
 	font-weight: 600;
-	font-size: 18px;
+	font-size: 15px;
 	color: #555555;
 	line-height: 1.2;
 	padding-right: 15px;
@@ -749,7 +749,7 @@ textarea.input100 {
 		padding: 15px 0px 0 0px;
 	}
 }
-/* ------------------------------------------------ HR */
+/* ------------------------------------------------ HR CSS */
 .fileinput {
 	margin-top: 1%;
 	border-radius: 15px;
@@ -758,7 +758,7 @@ textarea.input100 {
 }
 
 .form_explanation {
-	font-size: 12px;
+	font-size: 13px;
 	text-align: center;
 }
 
@@ -789,15 +789,3 @@ textarea.input100 {
 	margin-top: 5px;
 }
 
-.formbts{
-	border: none !important;
-    padding: 0px !important;
-}
-
-#mypageB,#cancle{
-	background-color: #7b7676;
-}
-
-#mypageB:hover, #cancle:hover {
-	filter: brightness(70%);
-}

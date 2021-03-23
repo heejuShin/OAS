@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=3">
 	
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -242,6 +242,9 @@
 	}); //document ready
 	</script>
 </head>
+	
+<jsp:include page="/WEB-INF/views/basic/header.jsp" />
+	
 <body>
 	<div class="container-contact100">
 		<div class="wrap-contact100">

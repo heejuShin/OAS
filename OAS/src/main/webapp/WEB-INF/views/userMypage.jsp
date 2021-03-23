@@ -73,7 +73,7 @@
                  <option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
                  <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
                  <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청현황</option>
-                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청결과</option>
+                 <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청마감</option>
               </select>
            </form>
             
@@ -110,27 +110,32 @@
              <c:if test="${pageMaker.prev}">
              <li>
                  <a href='<%=request.getContextPath()%>/mypage?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>&laquo;</a>
-
              </li>
              </c:if>
              <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+             <c:set var="page" value="${param.page}"/>
+             <c:if test="${page eq null}">
+			    	<c:set var="page" value="1"/>
+			 </c:if>
              <li>
-
-                 <a href='<%=request.getContextPath()%>/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>${idx}</a>
-
+				<c:choose>
+			   	<c:when test="${page eq idx}">
+			   		<a style="background: #bbb; color: white;"href='<%=request.getContextPath()%>/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			   	</c:when>
+			   	<c:otherwise>
+                 	<a href='<%=request.getContextPath()%>/mypage?page=${idx}&filterType=${cri.filterType}&searchType=${cri.searchType}&keyword=${keyword}'>${idx}</a>
+                </c:otherwise>
+			    </c:choose>
              </li>
              </c:forEach>
              <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
              <li>
-
                  <a href='<%=request.getContextPath()%>/mypage?page=${pageMaker.endPage+1}'>&raquo;</a>
              </li>
              </c:if>
         </ul>
         </div>
-        
-        
-        
+                
       </div> <!-- end container -->
   </section> <!-- end section -->
       
