@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.walab.oas.Board.domain.FileVO;
+import com.walab.oas.DTO.SearchCriteria;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -38,15 +39,21 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> getBoardList() {
+	public List<BoardVO> getBoardList(SearchCriteria cri) {
 		// TODO Auto-generated method stub
-		return boardDAO.getBoardList();
+		return boardDAO.getBoardList(cri);
 	}
 	
 	//BoardService.java
 	@Override
 	public int fileInsertService(FileVO file) throws Exception{
 	    return boardDAO.fileInsert(file);
+	}
+	
+	@Override
+
+	public int countBoard(String searchType, String keyword) throws Exception{
+		return boardDAO.countBoard(searchType,keyword);
 	}
 
 }

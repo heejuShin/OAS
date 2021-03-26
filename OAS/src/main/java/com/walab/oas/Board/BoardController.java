@@ -14,20 +14,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.Board.domain.FileVO;
+import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.ReadResult;
+import com.walab.oas.DTO.SearchCriteria;
 
 
-@Controller
+@RestController
 @RequestMapping(value="/")
 public class BoardController {
 	
@@ -38,21 +42,43 @@ public class BoardController {
 	BoardDAO dao = new BoardDAO();
 	
     @RequestMapping(value = "board/list", method = RequestMethod.GET)    
-    public String list(Model model){    
-        model.addAttribute("list", boardService.getBoardList());
-        return "list";   
+    public ModelAndView list(SearchCriteria cri, HttpSession session) throws Exception{    
+    	ModelAndView mav=new ModelAndView("list");
+    	
+    	int user_id=0;
+		if(session.getAttribute("id")!=null) {
+			user_id=(Integer) session.getAttribute("id");
+		}
+		
+		List<BoardVO> boardList=boardService.getBoardList(cri);
+//		ObjectMapper mapper=new ObjectMapper();
+//		String jArray=mapper.writeValueAsString(boardList);
+
+		int count=boardService.countBoard(cri.getSearchType(),cri.getKeyword());//총 게시판 수
+		
+		PageMaker pageMaker=new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(count);
+		
+		mav.addObject("searchOption", cri.getSearchType());
+		mav.addObject("keyword", cri.getKeyword());
+		mav.addObject("pageMaker", pageMaker);
+        mav.addObject("list", boardList);
+        return mav;   
     } 
     
     @RequestMapping(value = "/admin/board/add", method = RequestMethod.GET)    
-    public String addPost(){  
-        return "addpostform";   
+    public ModelAndView addPost(){  
+    	ModelAndView mav=new ModelAndView("addpostform");
+        return mav;   
     }
     
     @RequestMapping(value = "/admin/board/addok", method = RequestMethod.POST)    
-    public String addPostOk(BoardVO vo, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception{     
+    public ModelAndView addPostOk(BoardVO vo, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception{     
        
+       ModelAndView mav=new ModelAndView("redirect:../../board/list");
+      
        BoardVO board = new BoardVO();
-       
 //       board.setSubject(request.getParameter("subject"));
 //       board.setContent(request.getParameter("content"));
 //       board.setWriter(request.getParameter("writer"));
@@ -83,9 +109,9 @@ public class BoardController {
        files.transferTo(destinationFile); 
        
        //boardService.insertBoard(vo);
-      	System.out.println("seq는:  "+ vo.getSeq());
+//      	System.out.println("seq는:  "+ vo.getSeq());
 
-       file.setBno(vo.getSeq());
+       //file.setBno(vo.getSeq());
        file.setFileName(destinationFileName);
        file.setFileOriName(fileName);
        file.setFileUrl(fileUrl);
@@ -99,16 +125,17 @@ public class BoardController {
       else
        	System.out.println("데이터 추가 성공!!!");
         }
-       return "redirect:../../board/list";
+       return mav;
     }
     
 
     
     @RequestMapping(value = "/admin/board/editform/{id}", method = RequestMethod.GET)    
-    public String editPost(@PathVariable("id") int id, Model model){
+    public ModelAndView editPost(@PathVariable("id") int id){
     	BoardVO boardVO = boardService.getBoard(id);
-    	model.addAttribute("u", boardVO);
-        return "editform";   
+    	ModelAndView mav=new ModelAndView("editform");
+    	mav.addObject("u", boardVO);
+        return mav;   
     }
     
 //    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)    
@@ -119,7 +146,7 @@ public class BoardController {
 //    }
     
     @RequestMapping(value = "/admin/board/view/{id}", method = RequestMethod.GET)    
-    public ModelAndView viewPost(@PathVariable("id") int id, Model model) throws Exception{
+    public ModelAndView viewPost(@PathVariable("id") int id, Model model,SearchCriteria cri) throws Exception{
 //    	BoardVO boardVO = boardService.getBoard(id);
 //    	model.addAttribute("u", boardVO);
 //        return "view";
@@ -127,7 +154,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		
 //      BoardDAO dao = new BoardDAO();
-		List<BoardVO> read_list = dao.getBoardList();
+		List<BoardVO> read_list = dao.getBoardList(cri);
 		
 		//파일 
 		FileVO file = new FileVO();
@@ -172,7 +199,7 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/board/view/{id}", method = RequestMethod.GET)    
-    public ModelAndView userviewPost(@PathVariable("id") int id, Model model) throws Exception{
+    public ModelAndView userviewPost(@PathVariable("id") int id, Model model,SearchCriteria cri) throws Exception{
 //    	BoardVO boardVO = boardService.getBoard(id);
 //    	model.addAttribute("u", boardVO);
 //        return "view";
@@ -180,7 +207,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		
 //      BoardDAO dao = new BoardDAO();
-		List<BoardVO> read_list = dao.getBoardList();
+		List<BoardVO> read_list = dao.getBoardList(cri);
 		
 		//파일 
 		FileVO file = new FileVO();
@@ -225,22 +252,24 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/board/editok", method = RequestMethod.POST)    
-    public String editPostOk(BoardVO vo){
+    public ModelAndView editPostOk(BoardVO vo){
+    	ModelAndView mav=new ModelAndView("redirect:list");
     	if(boardService.updateBoard(vo) == 0)
     		System.out.println("데이터 수정 실패 ");
     	else
     		System.out.println("데이터 수정 성공!!!");
-    	return "redirect:list";
+    	return mav;
     }
     
     @RequestMapping(value = "/board/deleteok/{id}", method = RequestMethod.GET)    
-    public String deletePostOk(@PathVariable("id") int id){    
-        if(boardService.deleteBoard(id) == 0) {
+    public ModelAndView deletePostOk(@PathVariable("id") int id){    
+    	ModelAndView mav=new ModelAndView("redirect:../list");
+    	if(boardService.deleteBoard(id) == 0) {
         	System.out.println("데이터 삭제 실패 ");
         }
        else
         	System.out.println("데이터 삭제 성공!!!"); 
-       return "redirect:../list";
+       return mav;
     }
     
 }

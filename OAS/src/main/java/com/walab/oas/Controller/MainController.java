@@ -58,7 +58,7 @@ public class MainController {
 	@RequestMapping(value = "/") // GET 방식으로 페이지 호출
 	public ModelAndView goMypage(SearchCriteria cri,HttpSession session, BoardVO vo, Model model) throws Exception {
 		
-		model.addAttribute("list", boardService.getBoardList());
+		model.addAttribute("list", boardService.getBoardList(cri));
         
 		ModelAndView mav = new ModelAndView();
 		//로그인 안되어있는데 header가 Load 안된경우
