@@ -402,9 +402,9 @@ $( document ).ready(function() {
 	//체크박스 값 전달
 	$("#list").on('change', ".isEssential_fake", function(){
 		if ($(this).is(":checked")) {
-			$(this).siblings(".isEssential").val("1");
+			$(this).parent().siblings(".isEssential").val("1");
 		} else {
-			$(this).siblings(".isEssential").val("0");
+			$(this).parent().siblings(".isEssential").val("0");
 		}
 	});
 	

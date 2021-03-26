@@ -244,7 +244,12 @@ $( document ).ready(function() {
 	
 	//수정 시, 수정했다고 표시
 	$("#list").on('change', ".isEssential_fake", function(){
-		$(this).siblings(".isModified").val("1");
+		$(this).parent().siblings(".isModified").val("1");
+		if ($(this).is(":checked")) {
+			$(this).parent().siblings(".isEssential").val("1");
+		} else {
+			$(this).parent().siblings(".isEssential").val("0");
+		}
 	});
 	
 	$("#list").on('change', ".isDefault_fake", function(){
