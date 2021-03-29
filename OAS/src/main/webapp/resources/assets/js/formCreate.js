@@ -386,7 +386,6 @@ $( document ).ready(function() {
  			}
  			//드롭다운
  			if(s_o == "select"){ 
- 			alert("드롭다운 안입니다. ");
 	 			for(var i = 0 ; i < inputs.length; i++){
 		 			if(inputs[i]=="") continue;
 		 	  		var o_cnt = parseInt($(this).parent().siblings(".count").val())+1;
