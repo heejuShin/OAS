@@ -6,7 +6,9 @@ https://templatemo.com/tm-546-sixteen-clothing
 
 */
 body {
-  font-family: 'Poppins', sans-serif;
+/*   font-family: 'Poppins', sans-serif;
+ */
+	    font-family: 'NanumSquare', sans-serif;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -126,7 +128,7 @@ a.filled-button:hover {
 
 #preloader {
   overflow: hidden;
-  background: #f33f3f;
+  background: #81b4de;
   left: 0;
   right: 0;
   top: 0;
@@ -144,8 +146,20 @@ a.filled-button:hover {
   display: block;
   position: absolute;
   margin: auto;
-  width: 50px;
+  width: 100px;
   height: 50px;
+}
+
+#preloader .textdiv {
+  left: -110%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: block; 
+  position: relative;
+  margin: auto;
+  width: 300px;
+  height: 200px;
 }
 
 #preloader .jumper > div {
@@ -225,7 +239,7 @@ header .navbar {
 .background-header {
 	top: 0;
 	position: fixed;
-	background-color: #fff!important;
+	background-color: #fff !important;
 	box-shadow: 0px 1px 10px rgba(0,0,0,0.1);
 }
 .background-header .navbar-brand h2 {

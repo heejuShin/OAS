@@ -26,9 +26,10 @@
 
 
  <style>
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
+body {font-family: 'NanumSquare', sans-serif;}
 
-      
  </style>
  
  <script type="text/javascript">
@@ -175,11 +176,11 @@
 </head>
 <body>
    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
+    <div id="preloader">    
         <div class="jumper">
             <div></div>
-            <div></div>
-            <div></div>
+            <div></div><br>                      
+            <h3 class="textdiv" >Chrome 브라우저 이용을 권장합니다.</h3>           
         </div>
     </div>  
     <!-- ***** Preloader End ***** -->

@@ -9,9 +9,25 @@
 
 <!-- css -->
 
+
 <!-- Font Awesome -->
-  <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+ 
+ <style type="text/css">
+  	@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+  
+ 	
+ 	@font-face {
+ 		font-family: 'NanumSquare', sans-serif;
+ 		src:url("https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css") format("truetype");
+ 		font-style:normal;
+ 		font-weight:normal;
+ 	}
+ 	
+ 	body {font-family: 'NanumSquare', sans-serif;}
+  </style>
+
   
 
   <!-- Latest compiled and minified Bootstrap CSS -->
@@ -40,7 +56,9 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/isotope.pkgd.min.js"></script>
 	
 	<style>
- 
+	@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+	
+ 	body {font-family: 'NanumSquare', sans-serif;}
  	/*  Header start*/
  	
 	/* templatemo-sixteen.css 313 수정필요  */

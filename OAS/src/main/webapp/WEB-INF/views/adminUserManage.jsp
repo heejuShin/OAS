@@ -271,11 +271,15 @@
 	        $("button[name='stateB']").click(function () {
 
 	          var level = $("select[name=levelName]").val(); // 적용할 userLevel
+	          var levelName = $("select[name=levelName] option:selected").text(); //적용할 userLevel명 
 	          var user_ids = new Array(); //checkbox의 value를 담는다.
+	          var user_names = new Array(); //변경된 유저의 이름 저장 
 
 	          //체크된 박스의 라인에 존재하는 상태 값 변경
 	          $("input:checkbox[name=result]:checked").each(function() {
 
+	        	  user_names.push($(this).parent().siblings(".userName").text());
+	        	  
 		          //view 처리		          
 	            $(this).parent().siblings().children("select").children('option').each(function(){
 	                if($(this).val() == level){
@@ -287,7 +291,8 @@
 	            var test = $(this).val();
 	            user_ids.push(test);
 	          });
-	          alert("userIDs : " + user_ids + ", newState : " + level); 
+/* 	          alert("userIDs : " + user_ids + ", newState : " + level);
+ */	          alert(user_names + " >> " +levelName+"으로 변경되었습니다.");  
 	          
 	          var sendData = {"userIDs": user_ids, "newState" : level };
 	          //컨트롤러로 정보 전송(ajax) result_id로 state_id update
