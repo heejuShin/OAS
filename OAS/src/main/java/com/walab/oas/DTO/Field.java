@@ -12,14 +12,14 @@ public class Field {
 	private int index;
 	private Date regDate;
 	private String key;
-	
+	private int isDelete;
 	
 
 	@Override
 	public String toString() {
 		return "Field [id=" + id + ", form_id=" + form_id + ", fieldType=" + fieldType + ", fieldName=" + fieldName
 				+ ", fileName=" + fileName + ", isEssential=" + isEssential + ", index=" + index + ", regDate="
-				+ regDate + "]";
+				+ regDate + ", key=" + key + ", isDelete=" + isDelete + "]";
 	}
 
 	public int getId() {
@@ -94,6 +94,14 @@ public class Field {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	public int getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
 	}
 
 	

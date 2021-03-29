@@ -461,6 +461,11 @@ public class AdminController {
 				if(Integer.parseInt(isModified[i-1])==1) {
 					Field field = new Field();
 					String title = request.getParameter("f_title"+Integer.toString(i));
+					int isFieldDel = Integer.parseInt(request.getParameter("isFieldDel"+Integer.toString(i)));
+					if(isFieldDel==1) {
+						adminDAO.deleteField(Integer.parseInt(field_id[i-1]));
+						continue;
+					}
 					if(title != null) {
 						
 						field.setId(Integer.parseInt(field_id[i-1]));
@@ -485,6 +490,13 @@ public class AdminController {
 							for(int j=1; j<=org_cnt; j++) {
 								Item item = new Item();
 								String content = request.getParameter(Integer.toString(i)+"content"+Integer.toString(j));
+								
+								int isItemDel = Integer.parseInt(request.getParameter(Integer.toString(i)+"isItemDel"+Integer.toString(j)));
+								if(isItemDel==1) {
+									adminDAO.deleteItem(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));
+									continue;
+								}
+								
 								if(content != null) {
 									System.out.println(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));
 									item.setId(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));

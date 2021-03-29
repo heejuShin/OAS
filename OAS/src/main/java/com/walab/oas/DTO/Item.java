@@ -10,10 +10,12 @@ public class Item {
 	private String content;
 	private int isDefault;
 	private Date regDate;
+	private int isDelete;
+	
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", field_id=" + field_id + ", content=" + content + ", isDefault=" + isDefault
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", isDelete=" + isDelete + "]";
 	}
 	public int getId() {
 		return id;
@@ -44,6 +46,12 @@ public class Item {
 	}
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+	public int getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(int isDelete) {
+		this.isDelete = isDelete;
 	}
 
 }

@@ -229,10 +229,11 @@
 
       <div class="add" id="field_add">
         <div class="wrap-input100 bg0 form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-          			<button type="button" class="remove minusB">-</button>
+          			<button type="button" class="remove removeCreate minusB">-</button>
 					
 					<input type="hidden" name="isEssential3" class="isEssential" value="0">
 					<input type="hidden" class="index" value="3">
+					<!-- 아이템의 카운트 -->
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
@@ -266,7 +267,7 @@
 
     <div class="add" id="radio_add">
       <div>
-        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item remove_item_Create minusB">X</button>
         <input class="real radio_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
@@ -274,14 +275,20 @@
 
     <div class="add" id="chxbox_add">
       <div>
-        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input><button type="button" class="remove_item minusB">X</button>
+        <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input>
+        <button type="button" class="remove_item remove_item_Create minusB">X</button>
      	<input class="real checkbox_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
     </div>
 
-   <div class="add" id="select_add">
+    <div class="add" id="select_add">
         <option class="option_fake" value=""/>
+    </div>
+    <div class="add" id="selectBox_add">
+    	<div>
+       		<label class="item" for=""></label><button type="button" class="remove_selectOption_Create minusB">X</button>
+    	</div>
     </div>
     
     <div class="add" id="select_value_add">

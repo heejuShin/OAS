@@ -65,8 +65,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=13"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=22"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -186,17 +186,18 @@
 
       <div class="add" id="field_add">
         <div class="wrap-input100 bg0 form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-        	<button type="button" class="remove minusB">-</button>
+        	<button type="button" class="remove removeField minusB">-</button>
 					
           
           <input type="hidden" name="isEssential?" class="isEssential" value="0"/>
           <input type="hidden" class="index" value="0"/>
-          <input type="hidden" class="count" id="count?" name="count?" value="0"/>
+          <input type="hidden" class="count" id="count?" name="count3" value="0">
           <input type="hidden" class="isModified" name="isModified" value="0"/>
           <input type="hidden" class="itemCount" name="itemCount?" value="0"/>
           
           <input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
-          
+          <input type="hidden" class="isFieldDel" name="isFieldDel?" value="0"/>
+         
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
@@ -226,9 +227,10 @@
       <div>
       	<input class="radio_itemId" type="hidden" name="?itemId?" value=""/>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input>
-        <button type="button" class="remove_item">X</button>
+        <button type="button" class="remove_item remove_item_Update">X</button>
         <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
+        <input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
       </div>
     </div>
 
@@ -236,19 +238,26 @@
       <div>
       	<input class="checkbox_itemId" type="hidden" name="?itemId?" value=""/>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input>
-        <button type="button" class="remove_item">X</button>
+        <button type="button" class="remove_item remove_item_Update">X</button>
         <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+     	<input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
       </div>
     </div>
 
    <div class="add" id="select_add">
         <option class="option_fake" value=""/>
     </div>
-    
+    <div class="add" id="selectBox_add">
+    	<div>
+       		<label class="item" for=""></label><button type="button" class="remove_selectOption_Update remove_item">X</button>
+    	</div>
+    </div>
     <div class="add" id="select_value_add">
+    	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
     	<input class="select_itemId" type="hidden" name="?itemId?" value=""/>
     	<input class="option_real" type="hidden" name="?content?" value=""/>
+    	<input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
     </div>
    
 	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
