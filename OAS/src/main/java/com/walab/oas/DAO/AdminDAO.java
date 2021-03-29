@@ -200,4 +200,12 @@ public class AdminDAO {
 		System.out.println(map);
 		return sqlSession.selectOne(namespace +".getResultIdCount", map);
 	}
+	
+	public int deleteField(int field_id) {
+		return sqlSession.update(namespace+".deleteField",field_id);
+	}
+	
+	public int deleteItem(int item_id) {
+		return sqlSession.update(namespace+".deleteItem",item_id);
+	}
 }

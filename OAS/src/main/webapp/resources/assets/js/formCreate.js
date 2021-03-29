@@ -275,7 +275,7 @@ $( document ).ready(function() {
 	
 	
 	//field 삭제
-	$("#list").on('click', ".remove", function(){
+	$("#list").on('click', ".removeCreate", function(){
 	  $(this).parent().remove();
 	})
 	
@@ -310,7 +310,7 @@ $( document ).ready(function() {
 	});
 	
 	//아이템 삭제
-	$("#list").on('click', ".remove_item", function(){
+	$("#list").on('click', ".remove_item_Create", function(){
 	  $(this).parent().remove();
 	  //var name=$(this).siblings(".real").prop('name');
 	  //var fieldID=name.charAt(0);
@@ -321,7 +321,7 @@ $( document ).ready(function() {
 	  
 	});
 	//드롭다운아이템 삭제
-	$("#list").on('click', ".remove_selectOption", function(){
+	$("#list").on('click', ".remove_selectOption_Create", function(){
 	  var option=$(this).siblings("label").text();
 	  $(this).parent().parent().siblings("select").find("option[value='"+option+"']").remove();
 	  $(this).parent().parent().siblings(".list_select").find("input[value='"+option+"']").remove();
