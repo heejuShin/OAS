@@ -65,8 +65,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=13"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=2"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=17"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -245,7 +245,11 @@
    <div class="add" id="select_add">
         <option class="option_fake" value=""/>
     </div>
-    
+    <div class="add" id="selectBox_add">
+    	<div>
+       		<label class="item" for=""></label><button type="button" class="remove_selectOption minusB">X</button>
+    	</div>
+    </div>
     <div class="add" id="select_value_add">
     	<input class="select_itemId" type="hidden" name="?itemId?" value=""/>
     	<input class="option_real" type="hidden" name="?content?" value=""/>

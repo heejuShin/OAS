@@ -139,7 +139,7 @@ $( document ).ready(function() {
 	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
-	    	content = "<select id=\"\" style=\"margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"list_select\"></div>";
+	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"selectOption\"></div><div class=\"list_select\"></div>";
 	  	    $("#field_add").find(".content").html(content);
 	  	  	for(var j=0; j<item_list.length;j++){
 	  	  		var o_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -156,6 +156,9 @@ $( document ).ready(function() {
 			    
 			    $("#field_add").find(".content select").append($("#select_add").html());
 	  			$("#field_add").find(".list_select").append($("#select_value_add").html());
+	  			
+	  			$("#selectBox_add").find("label").html(item_list[j].content);
+ 			  	$("#field_add").find(".selectOption").append($("#selectBox_add").html());
 		    }
 	  	  }
 	  	  

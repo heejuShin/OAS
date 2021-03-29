@@ -46,7 +46,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=9"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=19"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -281,8 +281,13 @@
       </div>
     </div>
 
-   <div class="add" id="select_add">
+    <div class="add" id="select_add">
         <option class="option_fake" value=""/>
+    </div>
+    <div class="add" id="selectBox_add">
+    	<div>
+       		<label class="item" for=""></label><button type="button" class="remove_selectOption minusB">X</button>
+    	</div>
     </div>
     
     <div class="add" id="select_value_add">
