@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=7">
+	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=9">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -87,12 +87,13 @@
 	
 	          //체크된 박스의 라인에 존재하는 상태 값 변경
 	          $("input:checkbox[name=result]:checked").each(function() { 
-	
+	        	 $(this).parent().parent().css("background-color","#FFEAEA");
 	            $(this).parent().siblings().children("select").val(state).prop("selected",true);
 	          });
 	     
 	        //check box 전체 해제
 	        $("input[type=checkbox]").prop("checked",false); 
+	        $("#stateSubmitB").css("display","inline-block");
         });
         
 		//확인 버튼을 눌렀을 때
@@ -129,6 +130,8 @@
 			$("#state").val($("#status option:selected").val());
 		});
 		//id state의 값을 검색 버튼 div의 html로 변경
+
+		
       });
     </script>
  </head>
@@ -203,10 +206,24 @@
                   <tbody id="tbodies"><!-- js로 제출자 list 넣기 --></tbody>
                  
 
-                  <tfoot><tr><th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>확인</button></th></tr></tfoot>
-                
+                  <tfoot><tr>
+                  <th colspan="9"><button id="stateSubmitB" name='stateSubmitB'>상태변경 저장</button>
+                  <div style="float:right" id="stateControll">
+			          <select id ="allState" name="stateName">
+			          	<!-- js로 option list 넣기 -->
+			          </select>
+			          <button id="stateB" name='stateB' >적용</button>
+			          
+			      </div>
+			      
+				</th>
+				
+			      <!-- <p style="float:right">위의 '적용'버튼을 한번에 신청자의 상태 변경이 가능합니다.</p> -->
+                  </tr>
+                 
+                  </tfoot>
+                  
                 </table>
-                
                 <div>
                 	
                   	<ul class="pagination">
@@ -236,17 +253,6 @@
               
               </div><!--end of .table-responsive-->
               
-               <div>
-               		<!-- state control  -->
-               		<div id="select_control">
-			        <div id="controlDiv">
-			          <select id ="allState" name="stateName">
-			          	<!-- js로 option list 넣기 -->
-			          </select>
-			          <button id="stateB" name='stateB'>적용</button>
-			        </div>
-			      </div>
-			</div>
               
               <!-- form view modal -->
             <div id="yourModal" class="w3-modal" style="z-index: 99999; height: 800px; margin-left: 15%; width: 70%; margin-top: 150px; background: white; padding: 0px; top: -15%;">
@@ -474,6 +480,12 @@
 									
 							$("#pagingForm").submit();
             	        });
+
+                    //state 값 변경시 이벤트 발생
+              		$("select[name='state']").change(function() {
+                  		 $(this).parent().parent().css("background-color","#FFEAEA");
+              			 $("#stateSubmitB").css("display","inline-block");
+                   	});
 			  
                   });
 
