@@ -46,10 +46,12 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=9"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=6"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
+    <!-- 아이콘 -->
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<!-- 카테고리 관련 CDN -->
 	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -133,7 +135,7 @@
 			
 			
 			<div class="wrap-input100  bg1">
-				<textarea id="txtArea" class="input100 InputFonts" style="margin-top: 5px; margin-left:-10px;" name="explanation" placeholder="설문지 설명" ></textarea>
+				<textarea id="txtArea" rows="2" cols="20" wrap="hard" class="input100 InputFonts" style="margin-top: 5px; margin-left:-10px;" name="explanation" placeholder="설문지 설명" ></textarea>
 			</div>
 			<!-- <script>
 			$("#txtArea").on("keypress",function(e) {
@@ -195,9 +197,6 @@
             <button type="button" class="cancle">취소</button>
           </div>
          
-        <script>
-        	const randomString = Math.random().toString(36).slice(2);
-        </script>
 
         <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
@@ -206,7 +205,7 @@
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
 <!-- 	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
- -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" name="url" type="text" onfocus="this.value=randomString;" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+ -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" name="url" type="text" placeholder="사용할 폼 주소 url을 입력해주세요."/>
 	        
 	        <button id="red_ck_link" type="button">중복 확인</button>
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
@@ -297,6 +296,9 @@
     
 <script>
 $(document).ready(function(){
+	
+	const randomString = Math.random().toString(36).slice(2);
+	$("#link").val(randomString);
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$"); //파일 확장자 정규식 
 	var maxSize = 5242880; // 5MB

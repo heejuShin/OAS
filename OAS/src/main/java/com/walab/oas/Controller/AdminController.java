@@ -210,6 +210,7 @@ public class AdminController {
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
 				String explanation = request.getParameter("explanation");
+				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
 				form.setUrl(url);
@@ -226,7 +227,13 @@ public class AdminController {
 				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
 				form.setEnd(end);
 				
-			    System.out.println(form);
+				start = start+".0";
+				end = end+".0";
+				java.sql.Timestamp st = java.sql.Timestamp.valueOf(start);
+				java.sql.Timestamp et = java.sql.Timestamp.valueOf(start);
+				form.setStartDate(st);
+				form.setEndDate(et);
+
 				adminDAO.createForm(form);
 				int form_id=adminDAO.getFormId(url); 
 				//state

@@ -13,15 +13,26 @@ function isValidForm(){
 
 
 $( document ).ready(function() {
+	//링크 값 변경 감지
+	$("#link").on("change keyup paste", function(){
+		dup_check = false;
+		$("#link_dup_txt").html("");
+		$("#link").css("background-color","#f4f1f1");
+	});
 	//keydown event 없애기 (enter 눌러도 전송안되게)
-	document.addEventListener('keydown', function(event) {
+	$('input[type="text"]').keydown(function() {
 	  if (event.keyCode === 13) {
 	    event.preventDefault();
 	  };
-	}, true);
+	});
 	//중복 체크 안하면 못 넘어가게
 	//링크 중복 체크 
 	    $("#red_ck_link").click(function(){
+	    	var whole_addr = $(location).attr('href');
+	        var addr_slice = whole_addr.split('/');
+	        var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
+	        
+	        
 	      if($("#link").val()==""){
 	        $("#link").focus();
 	        alert("링크를 입력해주세요.");
@@ -36,7 +47,9 @@ $( document ).ready(function() {
 	          dataType: 'text',
 	          success : function(data){
 	            if(data=="success"){
-	              $("#link_dup_txt").html("<span style='color:green;' class='overlap_msg' >사용가능</span>");
+	              $("#link_dup_txt").html("<span style='color:green;' class='overlap_msg' >사용가능</span><input type='hidden' id='url'/><a href='#'class='urlCopyBtn'><i class='fas fa-link' style='margin-left: 5px'></i></a>");
+	              $("#url").val(addr+"/form/"+$("#link").val());
+	        	  $("#url").html(addr+"/form/"+$("#link").val());
 	              $("#link").css("background-color","#e4eee4");
 	              dup_check=true;
 	            }
@@ -52,16 +65,21 @@ $( document ).ready(function() {
 	        });
 	      }
 	    });
+	    
+	    $("#link_dup_txt").on('click', ".urlCopyBtn", function(){
+     
+        	$(this).siblings("#url").attr("type","text");
+        	$(this).siblings("#url").select();
+			document.execCommand('copy');
+			$(this).siblings("#url").attr("type","hidden");
+			//formUrl.blur();
+			alert("신청폼의 URL이 복사되었습니다");
+        });
 	//모달창
 	
 	$('#confirm').on('click', function() {
 		alert("hello");
 		console.log("confirm click");
-		//var whole_addr = $(location).attr('href');
-	   	//var addr_slice = whole_addr.split('/');
-	   	//var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
-	   	//$("#modal_message").html("설문지 작성이 ^_^완료되었습니다.<span id='link_copy'>??</span>");
-	   	//$("#link_copy").html("<input type='hidden' id='url' value="+addr+"/form/"+adminList[i].url+"/><a href='#' class='urlCopyBtn'><i class='fas fa-link'></i></a>");
    		
 		var name = $("#formName").val();
 		if(name=="") {

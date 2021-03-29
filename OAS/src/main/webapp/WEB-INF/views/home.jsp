@@ -33,6 +33,8 @@ body {font-family: 'NanumSquare', sans-serif;}
  </style>
  
  <script type="text/javascript">
+ 
+ 	
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-19870163-1']);
     _gaq.push(['_trackPageview']);
@@ -45,6 +47,7 @@ body {font-family: 'NanumSquare', sans-serif;}
 
                             $(document).ready(function () {
                              
+                            
                                var form_list=${form_list};
                                var category_list=${category_list};
                                console.log(category_list);
@@ -91,6 +94,8 @@ body {font-family: 'NanumSquare', sans-serif;}
                            
                            var formName =  $("<h6 class='formDate'>"+moment(form_list[i].startDate).format('YYYY-MM-DD')+"~"+moment(form_list[i].endDate).format('YYYY-MM-DD')+"</h6><h4 class='form'>"+form_list[i].formName +"</h4><p class='discription'>"+form_list[i].explanation+"</p>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(formName);
+                                 
+                                 //$t = $(".discription").val().replace();
                            
                                  var category =  $("<span class='category_name'>"+form_list[i].categoryName +"</span>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
