@@ -212,8 +212,8 @@ body {font-family: 'NanumSquare', sans-serif;}
                     <tbody>
                     <c:forEach items="${list}" var="BoardVO" end="4">
                             <tr>
-                            	<td>${BoardVO.title}</td>
-      							<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
+                            	<td><a href="<%=request.getContextPath()%>/board/view/${BoardVO.seq}" class="titlelink">${BoardVO.title}</a></td>
+      				<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
                             </tr>
                     </c:forEach>
                     </tbody>  
