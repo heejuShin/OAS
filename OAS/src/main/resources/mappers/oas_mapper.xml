@@ -520,4 +520,14 @@
    <delete id="deleteMyForm" parameterType="int">
        delete from Result where id=#{myFormID};
    </delete>
+   
+    <!-- field 삭제하기 -->
+   <delete id="deleteField" parameterType="int">
+       update Field SET isDefault=1 where id=#{field_id};
+   </delete>
+   
+    <!-- Item 삭제하기 -->
+   <delete id="deleteItem" parameterType="int">
+       update Item SET isDefault=1 where id=#{item_id};
+   </delete>
 </mapper>

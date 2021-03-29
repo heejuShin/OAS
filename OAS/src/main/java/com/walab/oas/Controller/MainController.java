@@ -161,7 +161,7 @@ public class MainController {
 	}
 	
 	//home 페이지에서 폼을 눌렀을 때, 신청안한 것
-		@RequestMapping("/form/{link}") // GET 방식으로 페이지 호출
+		@RequestMapping("/form/{link}") 
 		public ModelAndView goToForm(RedirectAttributes redirectAttr, @PathVariable String link, HttpSession session, HttpServletRequest request) throws Exception {
 			
 			ModelAndView mav = new ModelAndView();
