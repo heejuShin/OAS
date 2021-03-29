@@ -238,6 +238,19 @@ public class MyPageController {
 			return userinfo;
 		}
 		
+		@RequestMapping(value= "/userInformation2") // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
+		@ResponseBody
+		public List<User> getUserInfo2(HttpSession session, HttpServletRequest request) throws Exception {
+			System.out.println("getUserInfo2 Controller! ");
+			
+			String userID = request.getParameter("id");
+			System.out.println("getUserInfo2 userID : " + userID);
+			List<User> userinfo = mypageDao.getUserInfo2(Integer.parseInt(userID));
+			System.out.println("userinfo: "+userinfo);
+				
+			return userinfo;
+		}
+		
 		@RequestMapping(value = "/info/modify" ,method = RequestMethod.POST)
 		  public ModelAndView modifyInfo(HttpSession session,User user) throws Exception {
 			ModelAndView mav = new ModelAndView();
@@ -246,6 +259,17 @@ public class MyPageController {
 			mypageDao.modifyInfo(user);
 			
 			mav.setViewName("redirect:/mypage");
+			return mav;
+		}
+		
+		@RequestMapping(value = "/admin/info/modify" ,method = RequestMethod.POST)
+		  public ModelAndView adminModifyInfo(HttpSession session,User user) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			
+			
+			mypageDao.modifyInfo(user);
+			
+			mav.setViewName("redirect:/admin/manage");
 			return mav;
 		}
 
@@ -278,13 +302,48 @@ public class MyPageController {
 			int pageNum = searchCRI.getPage(); //현재 페이지 number
 			int perPageNum = searchCRI.getPerPageNum(); //현재 페이지 number
 			
-		
-			
 			String searchOptionView = mapper.writeValueAsString(searchCRI.getSearchType());
 			String keywordView = mapper.writeValueAsString(searchCRI.getKeyword());
 			
+			List<Department> department = mypageDao.departmentList();
+			JSONArray department_list = new JSONArray();
+			
+			try{
+				for (int i = 0; i < department.size() ; i++) {   
+		    		JSONObject ob2 =new JSONObject();
+		    		ob2.put("id", department.get(i).getId());
+			        ob2.put("name", department.get(i).getName());
+		            department_list.put(ob2);
+				}
+			}catch(JSONException e){
+		    	e.printStackTrace();
+		    }
+			
+			List<Major> major = mypageDao.majorList();
+			JSONArray major_list = new JSONArray();
+			
+			try{
+				for (int i = 0; i < major.size() ; i++) {   
+		    		JSONObject ob2 =new JSONObject();
+		    		ob2.put("id", major.get(i).getId());
+			        ob2.put("name", major.get(i).getName());
+			        ob2.put("department_id", major.get(i).getDepartment_id());
+			        ob2.put("department_name", major.get(i).getDepartment_name());
+			        System.out.println("->"+major.get(i).getDepartment_name());
+			        System.out.println(ob2);
+		            major_list.put(ob2);
+				}
+			}catch(JSONException e){
+		    	e.printStackTrace();
+		    }
+
+
+			
 
 			ModelAndView mav = new ModelAndView();
+			mav.addObject("department_list", department_list);
+			mav.addObject("major_list", major_list);
+
 			mav.setViewName("adminUserManage");
 			mav.addObject("userData", jArray);
 			mav.addObject("count", count);

@@ -26,6 +26,14 @@
     	border-radius: 5px;
     	background: #d1d1d1;
     }
+    .InfoEditB{
+        color: white;
+	    background: #ffc107;
+	    border-radius: 5px;
+	    border: none;
+	    padding: 3% 6%;
+	    margin-left: 5%;
+    }
     </style>    
 </head>
 
@@ -77,7 +85,7 @@
 		                      <th data-priority="4">이메일</th>
 		                      <th data-priority="5">학번</th>
 		                      <th data-priority="6">
-		                      <select class="filters filter-status" id="department" data-filter-group='department'>
+		                      <select class="filters filter-status" id="departmentSelect" data-filter-group='departmentSelect'>
                               <option data-filter='' value="">학부</option>
                               <option value="전산전자공학부">전산전자공학부</option>
 			                  <option value="기계제어공학부">기계제어공학부</option>
@@ -104,7 +112,7 @@
                           		</select>
                          
 		                      </th>
-		                      <th data-priority="8">탈퇴 관리</th>
+		                      <th data-priority="8">관리</th>
 		                    </tr>
 		                  </thead> 
 		                  
@@ -169,14 +177,29 @@
 		      		<button id="notDeleteB" class="checkB">아니오</button>
 		      	</div>
 		      </div><!-- modal end  -->
+		      
+		      <!-- modal  -->
+		      <!-- <div id="modal_2"></div>
+		      <div id="editModal" style="display:none">
+
+		      
+		      	<p><span  style="color:red" id="deleteUser"> </span> 님을 탈퇴 처리 하시겠습니까?</p>
+		      	<div id="modal_buttons">
+		      		<button id="deleteB" class="checkB">예</button>
+		      		<button id="notDeleteB" class="checkB">아니오</button>
+		      	</div>
+		      </div> --><!-- modal end  -->
     
     
 		    <!-- deleteForm  -->
 		    <form id="userDeleteForm" method="POST"  action="deleteUser">
 		    		<input type="hidden" value="" name="userID" id="deleteUserID">
 		    </form>
+		    
+		    
 
     </main>
+    <jsp:include page="/WEB-INF/views/userInfo_ver2.jsp" />
 
 
 	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
@@ -203,10 +226,10 @@
 		 else
 			 $("#admin").children("option[value='']").attr("selected","selected");
 	 
- 	if(searchOption == "department" && keyword != "")
-   		$("#department").children("option[value="+keyword+"]").attr("selected","selected");
+ 	if(searchOption == "departmentSelect" && keyword != "")
+   		$("#departmentSelect").children("option[value="+keyword+"]").attr("selected","selected");
 	 else
-		 $("#department").children("option[value='']").attr("selected","selected"); 
+		 $("#departmentSelect").children("option[value='']").attr("selected","selected"); 
 
 		 for(var i = 0; i < UserInfo.length;i++){
 			 var no = ( page * ${perPageN}) + i+1;
@@ -225,7 +248,7 @@
 			 var studentMajor = $('<td>'+UserInfo[i].department+'</td>');
 			 var userLevel = $('<td><select  class="form-control selectAdmin" name="levelName"><option value="2" >학생</option><option value="1">선생님</option><option value="0">관리자</option></select></td>');
 			 /* var userLevel = $('<td><input type="radio"  value="2"> 학생<input type="radio"  value="1"> 선생님<input type="radio"  value="0"> 관리자</td>'); */
-			 var deleteButton = $('<td><button class="askDelete">탈퇴</button><input type="hidden" value="'+UserInfo[i].id+'"></td>');
+			 var deleteButton = $('<td><button class="askDelete">탈퇴</button> <button type="button" name="InfoEditB" class="InfoEditB" onclick="userInfo_2('+UserInfo[i].id+');">수정</button><input type="hidden" value="'+UserInfo[i].id+'"></td>');
 			 
 			 
 			 $('#userlist').append(sectionTag);
@@ -362,13 +385,13 @@
 	        	});
 
 	     // select change,
-  	        $('.filters').on( 'change', function() {
+  	         $('.filters').on( 'change', function() {
       	        console.log($(this).attr("id"));
       	        console.log($(this).val());
 					$("#searchType").val($(this).attr("id"));
 					$("#keyword").val($(this).val());
 					$(".form-inline").submit();
-  	        });
+  	        });  
 
 		 }); // $(document).ready End
 		 
