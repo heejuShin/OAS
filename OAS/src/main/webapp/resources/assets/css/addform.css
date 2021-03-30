@@ -13,7 +13,7 @@
 .font-opensans {
   font-family: "Open Sans", "Arial", "Helvetica Neue", sans-serif;
 } */
-body {font-family: 'NanumSquare', sans-serif;}
+body {font-family: "NanumSquare", sans-serif;}
 
 /* ==========================================================================
    #GRID
@@ -191,9 +191,8 @@ button {
 .page-wrapper {
   min-height: 100vh;
 }
-
 body {
-  font-family: "Open Sans", "Arial", "Helvetica Neue", sans-serif;
+  font-family: 'NanumSquare', sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
@@ -429,7 +428,7 @@ input[type="date" i] {
 
 .table-condensed td, .table-condensed th {
   font-size: 14px;
-  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+  font-family: "NanumSquare","Roboto", "Arial", "Helvetica Neue", sans-serif;
   font-weight: 400;
 }
 
@@ -479,7 +478,7 @@ textarea {
   box-shadow: none;
   width: 100%;
   font-size: 14px;
-  font-family: inherit;
+  font-family: "NanumSquare", sans-serif;
 }
 
 textarea {
