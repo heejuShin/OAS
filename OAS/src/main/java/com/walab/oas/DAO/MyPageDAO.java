@@ -86,6 +86,11 @@ public class MyPageDAO {
 		return sqlSession.selectList("userinfo", email);
 	}
 	
+	//user 정보 가져오기
+		public List<User> getUserInfo2(int id){ //admin의 폼리스트 가져오기
+			return sqlSession.selectList("userinfobyID", id);
+		}
+	
 	//user 정보 수정하기
 	//user 정보 가져오기
 	public void modifyInfo(User user){ //admin의 폼리스트 가져오기

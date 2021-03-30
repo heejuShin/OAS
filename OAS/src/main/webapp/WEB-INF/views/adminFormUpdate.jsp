@@ -115,7 +115,7 @@
 				</div>
 				
 				<div class="wrap-input100  bg1" >
-					<textarea class="input100 InputFonts"  name="explanation" placeholder="설문지 설명"></textarea>
+					<textarea class="input100 InputFonts"  id="explanation" name="explanation" placeholder="설문지 설명"></textarea>
 				</div>
 				<input type="hidden" id="state_selected" name="state"/>
 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->

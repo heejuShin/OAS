@@ -417,6 +417,10 @@
       SELECT id,userName,admin,email,studentId,phoneNum,department,major,grade,semester FROM User WHERE email=#{email};
    </select>
    
+   <select id="userinfobyID" parameterType="int" resultType="com.walab.oas.DTO.User">
+      SELECT id,userName,admin,email,studentId,phoneNum,department,major,grade,semester FROM User WHERE id=#{id};
+   </select>
+   
    <!-- user 정보 수정하기 -->
    <update id="modifyInfo" parameterType="com.walab.oas.DTO.User">
          UPDATE User SET phoneNum =#{phoneNum},department =#{department},major =#{major},grade=#{grade},semester=#{semester} WHERE email = #{email} ;
