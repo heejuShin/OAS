@@ -8,7 +8,7 @@ https://templatemo.com/tm-546-sixteen-clothing
 body {
 /*   font-family: 'Poppins', sans-serif;
  */
-  font-family: 'NanumSquare', sans-serif;
+	    font-family: 'NanumSquare', sans-serif;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -288,9 +288,8 @@ header .navbar {
 	text-transform: capitalize;
 	font-size: 14px;
 	font-weight: 700;
-/* 	font-family: 'Poppins', sans-serif !important;
- */	font-family: 'NanumSquare', sans-serif !important;
- 	letter-spacing: 0.5px;
+	font-family: 'Poppins', sans-serif !important;
+	letter-spacing: 0.5px;
 	color: #fff;
 	transition: all 0.5s;
 	margin-top: 5px;
