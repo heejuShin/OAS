@@ -186,7 +186,7 @@
            var td2 = $("<td>"+userList[i].formName+"</td>"); 
           $($(".tbodies").children()[i]).append(td2);
    
-          var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH')+"</td>"); 
+          var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
            $($(".tbodies").children()[i]).append(td3);
            
            //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)

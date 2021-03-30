@@ -120,7 +120,7 @@ $( document ).ready(function() {
 	  //content
 	  var content;
 	  if(formDetail[i].fieldType=="textarea"){
-	    content = "<textarea disabled></textarea>";
+	    content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    $("#field_add").find(".content").html(content);
 	  }
 	  else if(formDetail[i].fieldType=="select"||formDetail[i].fieldType=="radio"||formDetail[i].fieldType=="checkbox"){
@@ -149,7 +149,7 @@ $( document ).ready(function() {
 	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
-	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input value=\"\"/><button type=\"button\" class=\"btn_add_select\">옵션에 추가</button><div class=\"selectOption\"></div><div class=\"list_select\"></div>";
+	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 항목></p></div><div class=\"list_select\"></div>";
 	  	    $("#field_add").find(".content").html(content);
 	  	  	for(var j=0; j<item_list.length;j++){
 	  	  		var o_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -180,7 +180,7 @@ $( document ).ready(function() {
 	  	  }
 	  	  
 		  else if(formDetail[i].fieldType=="radio"){
-		    content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_radio\">옵션에 추가</button><div class=\"list_radio\"></div>";
+		    content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
 		    $("#field_add").find(".content").html(content);
 		    for(var j=0; j<item_list.length;j++){
 		    	var r_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -206,7 +206,7 @@ $( document ).ready(function() {
 		  }
 		  
 		  else if(formDetail[i].fieldType=="checkbox"){
-		    content = "<input value=\"\"/><button type=\"button\" class=\"btn_add_chxbox\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+		    content = "<input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 		    $("#field_add").find(".content").html(content);
 		  	for(var j=0; j<item_list.length;j++){
 		    	var c_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -231,7 +231,7 @@ $( document ).ready(function() {
 		  
 	  }
 	  else{
-	    content = "<input type=\""+this.value+"\" disabled/>"; 
+	    content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 
 	    $("#field_add").find(".content").html(content);
 	  }
 	  

@@ -30,7 +30,20 @@
 	<!-- resizable -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	
+	<!-- Font -->
+  <style type="text/css">
+  @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+  
+ 	
+ 	@font-face {
+ 		font-family: 'NanumSquare', sans-serif;
+ 		font-style:normal;
+ 		font-weight:normal;
+ 	}
+ 	
+ 	body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+</style>
 </head>
 
 <body>
@@ -66,7 +79,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
 	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=57"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=64"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->

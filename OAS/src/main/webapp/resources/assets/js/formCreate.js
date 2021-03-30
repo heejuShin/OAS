@@ -264,7 +264,7 @@ $( document ).ready(function() {
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
 	    else if(this.value=="select"){
-	      content = "<select id=\"\" style=\"display:inline-block; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\"></div><div class=\"list_select\"></div>";
+	      content = "<select id=\"\" style=\"display:inline-block; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"margin-top:2%;padding:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 항목></p></div><div class=\"list_select\"></div>";
 	    }
 	    else if(this.value=="radio"){
 	      content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";

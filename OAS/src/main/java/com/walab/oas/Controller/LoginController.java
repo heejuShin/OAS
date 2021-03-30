@@ -220,9 +220,9 @@ public class LoginController {
    @RequestMapping(value = "/google/regist" ,method = RequestMethod.POST)
      public ModelAndView registUser(HttpSession session,User user) throws Exception {
       ModelAndView mav = new ModelAndView();
-      
+      int user_id=userDao.joinUser(user);
       System.out.println("user = "+user.getEmail()+" "+user.getGrade());
-      session.setAttribute("id", user.getId());
+      session.setAttribute("id", user_id);
       session.setAttribute("name", user.getUserName());
       session.setAttribute("email", user.getEmail());
       session.setAttribute("admin", 2);

@@ -244,7 +244,7 @@
    <!-- item 정보 가져오기  -->
     <select id="itemInfo" parameterType="int" resultType="com.walab.oas.DTO.Item">
      <![CDATA[
-         SELECT * FROM Item WHERE field_id=#{fieldID};
+         SELECT * FROM Item WHERE field_id=#{fieldID} AND isDelete=0;
      ]]>
    </select>
    
