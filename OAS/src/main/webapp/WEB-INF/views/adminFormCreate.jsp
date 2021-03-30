@@ -65,19 +65,17 @@
   crossorigin="anonymous"></script>
   
   <!-- Font -->
-  <style type="text/css">
-  @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-  
+ 	<style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
  	
- 	@font-face {
- 		font-family: 'NanumSquare', sans-serif;
- 		font-style:normal;
- 		font-weight:normal;
- 	}
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
  	
- 	body, p, #li {font-family: 'NanumSquare', sans-serif;}
- 	
-</style>
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+	</style>
 
 </head>
   <body>
