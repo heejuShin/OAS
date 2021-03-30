@@ -45,11 +45,6 @@
 </script>
 </head>
 <body>
-<%-- <%
-	String id = "";
-	id = String.valueOf(session.getAttribute("admin"));
-	System.out.println("session id=" + id);
-%> --%>
 	
 <jsp:include page="/WEB-INF/views/basic/header.jsp" />
 
@@ -76,16 +71,16 @@
 <tbody class="tbodies">
 <c:forEach items="${list}" var="u">
 	<tr>
-		<td>${u.getSeq()}</td>
-		<td>${u.getCategory()}</td>
-		<td><a href="view/${u.getSeq()}" class="titlelink">${u.getTitle()}</a></td>
-		<td>${u.getWriter()}</td>
-		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.getRegdate()}"/></td>
+		<td>${u.seq}</td> 
+		<td>${u.category}</td>
+		<td><a href="view/${u.seq}" class="titlelink">${u.title}</a></td>
+		<td>${u.writer}</td>
+		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${u.regdate}"/></td>
 		<c:set var="admin" value="${admin}" />
 		<c:if test="${admin ne '2'}">
 		<td>
-			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../oas/admin/board/editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
-			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.getSeq()}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../oas/admin/board/editform/${u.seq}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.seq}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
  		</td>
  		</c:if>
 	</tr>

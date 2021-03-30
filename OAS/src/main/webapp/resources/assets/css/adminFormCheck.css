@@ -116,7 +116,7 @@ thead {
 }
 
 #stateSubmitB {
-	margin-left: 10px;
+	margin-left: 17%;
 	border: #ff554a 4px solid;
 	background: #ff554a;
 	border-radius: 8px;
@@ -134,4 +134,9 @@ thead {
 #msgBox{
 	display: inline-block;
 	margin:0 2%;
+}
+
+#stateSubmitB{
+	
+	display:none;
 }

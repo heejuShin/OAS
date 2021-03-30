@@ -29,7 +29,35 @@
 		seq=#{seq}
 	</select>
 	<select id="getBoardList" resultType="board">
-		select * from BOARD order
-		by seq desc
+		select * from BOARD 
+		WHERE date(regDate) between  date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
+		<include refid="boardSearch" />
+		ORDER BY seq DESC
+		LIMIT #{pageStart}, #{perPageNum};
 	</select>
+	
+	<!-- 검색 대한 게시판 수-->
+   <select id="countBoard" resultType="int">
+      SELECT count(*) FROM BOARD WHERE date(regDate) between  date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
+      <include refid="boardSearch" />
+   </select>
+   <!-- MyBatis 동적 sql -->
+   <sql id="boardSearch">
+      <choose>
+         <when test="searchType == 'all'">
+            AND (writer LIKE CONCAT('%', #{keyword}, '%')
+            OR title LIKE CONCAT('%', #{keyword}, '%')
+            OR category LIKE CONCAT('%', #{keyword}, '%'))
+         </when>
+         <when test="searchType == 'writer'">
+            AND writer LIKE CONCAT('%', #{keyword}, '%')
+         </when>
+         <when test="searchType == 'title'">
+            AND title LIKE CONCAT('%', #{keyword}, '%')
+         </when>
+         <when test="searchType == 'category'">
+            AND category LIKE CONCAT('%', #{keyword}, '%')
+         </when>
+      </choose>
+   </sql>
 </mapper>

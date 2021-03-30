@@ -26,12 +26,15 @@
 
 
  <style>
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
+body {font-family: 'NanumSquare', sans-serif;}
 
-      
  </style>
  
  <script type="text/javascript">
+ 
+ 	
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-19870163-1']);
     _gaq.push(['_trackPageview']);
@@ -44,6 +47,7 @@
 
                             $(document).ready(function () {
                              
+                            
                                var form_list=${form_list};
                                var category_list=${category_list};
                                console.log(category_list);
@@ -90,6 +94,8 @@
                            
                            var formName =  $("<h6 class='formDate'>"+moment(form_list[i].startDate).format('YYYY-MM-DD')+"~"+moment(form_list[i].endDate).format('YYYY-MM-DD')+"</h6><h4 class='form'>"+form_list[i].formName +"</h4><p class='discription'>"+form_list[i].explanation+"</p>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(formName);
+                                 
+                                 //$t = $(".discription").val().replace();
                            
                                  var category =  $("<span class='category_name'>"+form_list[i].categoryName +"</span>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(category);
@@ -175,11 +181,11 @@
 </head>
 <body>
    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
+    <div id="preloader">    
         <div class="jumper">
             <div></div>
-            <div></div>
-            <div></div>
+            <div></div><br>                      
+            <h3 class="textdiv" >Chrome 브라우저 이용을 권장합니다.</h3>           
         </div>
     </div>  
     <!-- ***** Preloader End ***** -->
@@ -206,8 +212,8 @@
                     <tbody>
                     <c:forEach items="${list}" var="BoardVO" end="4">
                             <tr>
-                            	<td>${BoardVO.title}</td>
-      							<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
+                            	<td><a href="<%=request.getContextPath()%>/board/view/${BoardVO.seq}" class="titlelink">${BoardVO.title}</a></td>
+      				<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
                             </tr>
                     </c:forEach>
                     </tbody>  

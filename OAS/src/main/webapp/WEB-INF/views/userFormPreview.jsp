@@ -220,7 +220,7 @@
 
 		$("#preview_modal").css("display","none");
 	    // 모달 div 뒤에 희끄무레한 레이어
-	    var bg = $('<div>')
+	    var bg = $('<div id="bg">')
 	        .css({
 	            position: 'fixed',
 	            zIndex: zIndex,
@@ -261,15 +261,6 @@
 	</script>
 </head>
 <body>
-<!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			

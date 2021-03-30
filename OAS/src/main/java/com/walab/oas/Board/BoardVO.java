@@ -21,6 +21,7 @@ public class BoardVO {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	
 	public int getSeq() {
 		return seq;
 	}

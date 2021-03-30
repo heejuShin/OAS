@@ -2,7 +2,7 @@
 /* ==========================================================================
    #FONT
    ========================================================================== */
-.font-robo {
+/* .font-robo {
   font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
 }
 
@@ -12,7 +12,8 @@
 
 .font-opensans {
   font-family: "Open Sans", "Arial", "Helvetica Neue", sans-serif;
-}
+} */
+body {font-family: 'NanumSquare', sans-serif;}
 
 /* ==========================================================================
    #GRID
@@ -139,6 +140,7 @@ html {
 /**
  * A very simple reset that sits on top of Normalize.css.
  */
+
 body,
 h1, h2, h3, h4, h5, h6,
 blockquote, p, pre,
@@ -147,7 +149,8 @@ figure,
 hr,
 fieldset, legend {
   margin: 0;
-  padding: 0;
+  padding: 0;  
+  
 }
 
 /**

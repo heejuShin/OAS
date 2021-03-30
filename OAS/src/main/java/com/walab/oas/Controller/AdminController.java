@@ -173,6 +173,88 @@ public class AdminController {
 		
 		return mav;
 	}
+	
+	//신청폼 update preview
+	@RequestMapping(value= {"/form/update/preview", "/form/view/update/preview"},method=RequestMethod.POST)
+	@ResponseBody 
+	public ModelAndView previewFormUpdate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		System.out.println("preview!!");
+		String form_name  = request.getParameter("form_name");
+	    String form_detail  = request.getParameter("form_detail");
+	    String form_startDate  = request.getParameter("form_startDate");
+	    String form_endDate  = request.getParameter("form_endDate");
+	    
+	    JSONArray jArray = new JSONArray();
+	    JSONObject ob2 =new JSONObject();
+	    ob2.put("form_name", form_name);
+	    ob2.put("form_detail", form_detail);
+	    ob2.put("form_startDate", form_startDate);
+	    ob2.put("form_endDate", form_endDate);
+	    jArray.put(ob2);
+	    mav.addObject("form_info", jArray);
+	    
+	    int f_cnt=Integer.parseInt(request.getParameter("f_cnt"));
+	    String []field_id = request.getParameterValues("field_id");
+	    String []field_name = request.getParameterValues("field_name");
+	    String []field_type = request.getParameterValues("field_type");
+	    String []field_star = request.getParameterValues("field_star");
+	    String []isFieldDel = request.getParameterValues("isFieldDel");
+	    String []item_count = request.getParameterValues("item_count");
+	    
+	    
+	    String []content = request.getParameterValues("content");
+	    String []isDefault = request.getParameterValues("isDefault");
+	    String []isItemDel = request.getParameterValues("isItemDel");
+	    
+		
+		JSONArray jArray2 = new JSONArray();
+		JSONArray jArray3 = new JSONArray();
+	    try {
+	    	int idx=0;
+	    	
+	    	for (int i = 1; i <= f_cnt ; i++) {   
+		    	JSONObject ob =new JSONObject();
+		    	if(Integer.parseInt(isFieldDel[i])==1)
+		    		continue;
+		        ob.put("field_id", field_id[i]);
+		        ob.put("field_name", field_name[i]);
+		        ob.put("field_type", field_type[i]);
+		        ob.put("field_star", field_star[i]);
+		        int itemCount=Integer.parseInt(item_count[i]);
+		        System.out.println("item_count:"+Integer.parseInt(item_count[i]));
+		        if("radio".equals(field_type[i])||"checkbox".equals(field_type[i])||"select".equals(field_type[i])) {
+		        	for (int j = 1; j <= Integer.parseInt(item_count[i]) ; j++) {
+
+		        		idx++;
+		        		if(Integer.parseInt(isItemDel[idx])==1) {
+		        			itemCount--;
+		        			continue;
+		        		}
+		        		JSONObject ob3 =new JSONObject();
+			        	ob3.put("content", content[idx]);
+			        	ob3.put("isDefault", isDefault[idx]);
+			        	jArray3.put(ob3);
+		        	}
+		        }
+		        ob.put("item_count", itemCount);
+		        jArray2.put(ob);
+		        
+		    }
+	    }catch(JSONException e){
+	        e.printStackTrace();
+	    }
+	    
+	    System.out.println(jArray3);
+	    
+	    mav.addObject("optionList", jArray3);
+		mav.addObject("field_list", jArray2);
+		mav.addObject("form_info", jArray);
+		mav.setViewName("userFormPreview");
+		
+		return mav;
+	}
 
 	//신청폼 create
 		@SuppressWarnings("finally")
@@ -210,6 +292,7 @@ public class AdminController {
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
 				String explanation = request.getParameter("explanation");
+				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
 				form.setUrl(url);
@@ -226,7 +309,13 @@ public class AdminController {
 				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
 				form.setEnd(end);
 				
-			    System.out.println(form);
+				start = start+".0";
+				end = end+".0";
+				java.sql.Timestamp st = java.sql.Timestamp.valueOf(start);
+				java.sql.Timestamp et = java.sql.Timestamp.valueOf(start);
+				form.setStartDate(st);
+				form.setEndDate(et);
+
 				adminDAO.createForm(form);
 				int form_id=adminDAO.getFormId(url); 
 				//state
@@ -438,6 +527,8 @@ public class AdminController {
 				String start = request.getParameter("startDate")+" "+request.getParameter("startTime")+":00";
 				form.setStart(start);
 				String end = request.getParameter("endDate")+" "+request.getParameter("endTime")+":00";
+				System.out.println("end:"+end);
+				System.out.println("endTime:"+request.getParameter("endTime"));
 				form.setEnd(end);
 				
 				adminDAO.modifyForm(form);
@@ -454,6 +545,11 @@ public class AdminController {
 				if(Integer.parseInt(isModified[i-1])==1) {
 					Field field = new Field();
 					String title = request.getParameter("f_title"+Integer.toString(i));
+					int isFieldDel = Integer.parseInt(request.getParameter("isFieldDel"+Integer.toString(i)));
+					if(isFieldDel==1) {
+						adminDAO.deleteField(Integer.parseInt(field_id[i-1]));
+						continue;
+					}
 					if(title != null) {
 						
 						field.setId(Integer.parseInt(field_id[i-1]));
@@ -478,6 +574,15 @@ public class AdminController {
 							for(int j=1; j<=org_cnt; j++) {
 								Item item = new Item();
 								String content = request.getParameter(Integer.toString(i)+"content"+Integer.toString(j));
+								
+								int isItemDel = Integer.parseInt(request.getParameter(Integer.toString(i)+"isItemDel"+Integer.toString(j)));
+								System.out.println("content: "+content);
+								System.out.println("isItemDel: "+isItemDel);
+								if(isItemDel==1) {
+									adminDAO.deleteItem(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));
+									continue;
+								}
+								
 								if(content != null) {
 									System.out.println(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));
 									item.setId(Integer.parseInt(request.getParameter(Integer.toString(i)+"itemId"+Integer.toString(j))));

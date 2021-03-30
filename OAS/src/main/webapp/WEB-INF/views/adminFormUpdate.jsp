@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=12">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=13">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -30,7 +30,20 @@
 	<!-- resizable -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	
+	<!-- Font -->
+  <style type="text/css">
+  @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+  
+ 	
+ 	@font-face {
+ 		font-family: 'NanumSquare', sans-serif;
+ 		font-style:normal;
+ 		font-weight:normal;
+ 	}
+ 	
+ 	body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+</style>
 </head>
 
 <body>
@@ -65,8 +78,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=1"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=12"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=4"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=64"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -106,16 +119,16 @@
 				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
 					<p class="label-input100">신청 시작일</p>
-					<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="2020-09-23" required/> <input id="startTime" class="input100" name="startTime" type="time" value="10:00" required/>
+					<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="" required/> <input id="startTime" class="input100" name="startTime" type="time" value="" required/>
 				</div>
 				
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
 					<p class="label-input100">신청 마감일</p>
-					<input class="input100" id="endDate" name="endDate" type="date" value="2020-09-30" required/> <input id="endTime" class="input100" name="endTime" type="time" value="23:00" required/>
+					<input class="input100" id="endDate" name="endDate" type="date" value="" required/> <input id="endTime" class="input100" name="endTime" type="time" value="" required/>
 				</div>
 				
 				<div class="wrap-input100  bg1" >
-					<textarea class="input100 InputFonts"  name="explanation" placeholder="설문지 설명"></textarea>
+					<textarea class="input100 InputFonts"  id="explanation" name="explanation" placeholder="설문지 설명"></textarea>
 				</div>
 				<input type="hidden" id="state_selected" name="state"/>
 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
@@ -154,7 +167,7 @@
           
         
           <div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts"><!--UPDATE시 사용 예정 -->
-            <button class="contact100-form-btn edit" type="button" id="preview" >
+            <button class="contact100-form-btn edit" type="button" id="updatePreview" >
 				<span>수정</span>
 			</button>
           </div>
@@ -186,17 +199,18 @@
 
       <div class="add" id="field_add">
         <div class="wrap-input100 bg0 form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
-        	<button type="button" class="remove minusB">-</button>
+        	<button type="button" class="remove removeField minusB">-</button>
 					
           
           <input type="hidden" name="isEssential?" class="isEssential" value="0"/>
           <input type="hidden" class="index" value="0"/>
-          <input type="hidden" class="count" id="count?" name="count?" value="0"/>
+          <input type="hidden" class="count" id="count?" name="count3" value="0">
           <input type="hidden" class="isModified" name="isModified" value="0"/>
           <input type="hidden" class="itemCount" name="itemCount?" value="0"/>
           
           <input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
-          
+          <input type="hidden" class="isFieldDel" name="isFieldDel?" value="0"/>
+         
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
@@ -226,9 +240,10 @@
       <div>
       	<input class="radio_itemId" type="hidden" name="?itemId?" value=""/>
         <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input>
-        <button type="button" class="remove_item">X</button>
+        <button type="button" class="remove_item remove_item_Update">X</button>
         <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
         <input class="radio_real" type="hidden" name="?content?" value=""/>
+        <input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
       </div>
     </div>
 
@@ -236,19 +251,26 @@
       <div>
       	<input class="checkbox_itemId" type="hidden" name="?itemId?" value=""/>
         <input class="checkbox_fake" type="checkbox" disabled><label class="item" for=""></label></input>
-        <button type="button" class="remove_item">X</button>
+        <button type="button" class="remove_item remove_item_Update">X</button>
         <input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
      	<input class="checkbox_real" type="hidden" name="?content?" value=""/>
+     	<input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
       </div>
     </div>
 
    <div class="add" id="select_add">
         <option class="option_fake" value=""/>
     </div>
-    
+    <div class="add" id="selectBox_add">
+    	<div>
+       		<label class="item" for=""></label><button type="button" class="remove_selectOption_Update remove_item">X</button>
+    	</div>
+    </div>
     <div class="add" id="select_value_add">
+    	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
     	<input class="select_itemId" type="hidden" name="?itemId?" value=""/>
     	<input class="option_real" type="hidden" name="?content?" value=""/>
+    	<input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
     </div>
    
 	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
