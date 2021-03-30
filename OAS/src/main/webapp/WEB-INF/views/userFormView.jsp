@@ -37,6 +37,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
    
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/formView.css?ver=2">
+	
+	<style type="text/css">
+  	@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+ 	
+ 	*{
+ 		font-family: 'NanumSquare', sans-serif !important;
+ 		font-style:normal;
+ 		font-weight:normal;
+ 	}
+ 	</style>
 
 </head>
 <body>

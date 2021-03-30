@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>응답 관리 </title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminFormCheck.css?ver=9">
 
@@ -15,7 +15,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     
     <style>
-
+	@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css); 	
+ 	
+ 	* {
+ 		font-family: 'NanumSquare', sans-serif !important;
+ 		font-style:normal;
+ 		font-weight:normal;	
+ 	}
 
     #yourModal{
     	height: 600px !important;
