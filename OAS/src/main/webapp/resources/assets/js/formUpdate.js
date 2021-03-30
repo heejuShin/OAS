@@ -1,3 +1,5 @@
+
+
 $( document ).ready(function() {
 
 	var formInfo;
@@ -149,7 +151,7 @@ $( document ).ready(function() {
 	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
-	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 항목></p></div><div class=\"list_select\"></div>";
+	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
 	  	    $("#field_add").find(".content").html(content);
 	  	  	for(var j=0; j<item_list.length;j++){
 	  	  		var o_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -161,9 +163,9 @@ $( document ).ready(function() {
 			    
 			    $("#select_value_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(o_cnt));
 			    $("#select_value_add").find(".isItemOri").attr("value", 1);
-			    $("#select_value_add").find(".isItemOri").attr("id", "optionOri"+String(j));
+			    $("#select_value_add").find(".isItemOri").attr("id", "optionOri"+String(j+1));
 			    $("#select_value_add").find(".isItemDel").attr("name", idx+"isItemDel"+String(o_cnt));
-			    $("#select_value_add").find(".isItemDel").attr("id",  "option"+String(j));
+			    $("#select_value_add").find(".isItemDel").attr("id",  "option"+String(j+1));
 		    	
 		    	$("#select_value_add").find(".option_real").attr("name", idx+"content"+String(o_cnt));
 			    $("#select_value_add").find(".option_real").attr("value",item_list[j].content);
@@ -174,7 +176,7 @@ $( document ).ready(function() {
 	  			$("#field_add").find(".list_select").append($("#select_value_add").html());
 	  			
 	  			$("#selectBox_add").find("label").html(item_list[j].content);
-		    	$("#selectBox_add").find("button").attr("id",String(j));
+		    	$("#selectBox_add").find("button").attr("id",String(j+1));
  			  	$("#field_add").find(".selectOption").append($("#selectBox_add").html());
 		    }
 	  	  }
@@ -306,6 +308,7 @@ $( document ).ready(function() {
 		}
 		//새로 추가했던 field면 그냥 삭제
 		else{
+			$("#count").val($("#count").val()-1);
 			$(this).parent().remove();
 		}
 	});
@@ -315,8 +318,6 @@ $( document ).ready(function() {
 	  //기존의 item이면 안보이게 하고, isDelete = 1 로 바꿈
 		$(this).siblings(".isModified").val("1");
 		if($(this).siblings(".isItemOri").val()=="1"){
-		    //var num=$(this).parent().parent().parent().siblings(".itemCount").val()-1;
-			//$(this).parent().parent().parent().siblings(".itemCount").val(num);
 			$(this).siblings(".isItemDel").val("1");
 			$(this).parent().css("display","none");
 			//field modified check
@@ -324,6 +325,8 @@ $( document ).ready(function() {
 		}
 		//새로 추가했던 item이면 그냥 삭제
 		else{
+			var num=$(this).parent().parent().parent().siblings(".count").val()-1;
+			$(this).parent().parent().parent().siblings(".count").val(num);
 			$(this).parent().remove();
 		}
 	  
@@ -334,6 +337,7 @@ $( document ).ready(function() {
 	  $(this).parent().parent().siblings("select").find("option[value='"+option+"']").remove();
 	
 	  	var xId=$(this).attr("id");
+	  	console.log("xId:"+xId);
 	  	//기존의 item, isDelete = 1 로 바꿈
 		$(this).siblings(".isModified").val("1");
 		if($(this).parent().parent().siblings(".list_select").find("#optionOri"+xId).val()=="1"){
@@ -342,9 +346,14 @@ $( document ).ready(function() {
 			console.log($(this).parent().parent().parent().siblings(".isModified").prop("tagName"));
 			$(this).parent().parent().parent().siblings(".isModified").val("1");
 		}
-		//새로 추가했던 item이면 그냥 삭제
-		else{
+		else{//새로 추가했던 item이면 그냥 삭제
+			var num=$(this).parent().parent().parent().siblings(".count").val()-1;
+			$(this).parent().parent().parent().siblings(".count").val(num);
+			var index=$(this).parent().parent().parent().siblings(".index").val();
+	  		$(this).parent().parent().siblings(".list_select").find("input[id='optionOri"+xId+"']").remove();
 	  		$(this).parent().parent().siblings(".list_select").find("input[value='"+option+"']").remove();
+	  		$(this).parent().parent().siblings(".list_select").find("input[name='"+index+"itemId"+xId+"']").remove();
+	  		$(this).parent().parent().siblings(".list_select").find("input[id='option"+xId+"']").remove();
 		}
 		$(this).parent().remove();
 	});
