@@ -35,6 +35,9 @@
 		border: #d69fa9;
 		float:right;
 	}
+     @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+ 	 * {font-family: 'NanumSquare', sans-serif !important;}   
 </style>
 <script>
 	function delete_ok(id){
@@ -52,7 +55,7 @@
 <div id="headTitle"><h2>전산전자공학부 공지 </h2></div>
 
 <div class="board_section">
-<button name='stateB' id="stateB" onclick="location.href='../../oas/admin/board/add'">게시글 작성 </button>
+<c:set var="admin" value="${admin}"/><c:if test="${admin ne '2'}"><button name='stateB' id="stateB" onclick="location.href='../../oas/admin/board/add'">게시글 작성 </button></c:if>
 
 <div class="table-responsive" data-pattern="priority-columns">
 <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
@@ -99,15 +102,31 @@
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			    <c:set var="page" value="${param.page}"/>
+			    <c:if test="${page eq null}">
+			    	<c:set var="page" value="1"/>
+			    </c:if>
+			    
+			    <!-- Edit here -->
 			    <li>
-			        <a href='<%=request.getContextPath()%>/board/list?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
-			    </li>
+			    	<c:choose>
+			    	<c:when test="${page eq idx}">
+			    		<a style="background: #bbb; color: white;"href='<%=request.getContextPath()%>/board/list?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	</c:when>
+			    	<c:otherwise>
+			        	<a href='<%=request.getContextPath()%>/board/list?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+			    	</c:otherwise>
+			    
+<%-- 			        <a href='<%=request.getContextPath()%>/board/list?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+ --%>			    	
+			    	</c:choose>    
+			    </li>	    
 			    </c:forEach>
 			    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 			    <li>
 			        <a href='<%=request.getContextPath()%>/board/list?page=${pageMaker.endPage+1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&raquo;</a>
 			    </li>
-			    </c:if>
+			    </c:if>    
 		  </ul>
 		  </div>
 </main>
