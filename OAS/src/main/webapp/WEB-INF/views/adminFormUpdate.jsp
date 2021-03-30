@@ -213,7 +213,7 @@
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
-						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
+						<select class="field_type  " name="f_type3" style="clear:both" disabled> <!-- TODO required -->
 						  <option value="" selected disabled>질문유형</option>
 						  <option value="text">단답형</option>
 						  <option value="textarea">장문형</option>
