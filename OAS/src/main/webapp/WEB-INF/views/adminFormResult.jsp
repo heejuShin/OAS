@@ -219,16 +219,7 @@ $(function() {
 });
 </script>
 </head>
-<body>
-<!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
+<body> 
 <div class="container-contact100">
 		<div class="wrap-contact100">
 			<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal"><img id="closeIcon" src="<%=request.getContextPath()%>/resources/img/close.png"></button>
