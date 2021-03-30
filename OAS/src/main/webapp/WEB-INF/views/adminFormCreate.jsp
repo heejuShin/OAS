@@ -46,7 +46,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=19"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=21"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -123,12 +123,12 @@
 			
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
 				<p class="label-input100" style="margin-top: 10px">신청 시작일</p>
-				<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="" required/> <input id="startTime" class="input100" name="startTime" type="time" value="10:00" required/>
+				<input class="input100" style="margin-top: 10px" id="startDate" name="startDate" type="date" value="" required/> <input id="startTime" class="input100" name="startTime" type="time" value="" required/>
 			</div>
 			
 			<div class="wrap-input100  bg1 rs1-wrap-input100" >
 				<p class="label-input100" style="margin-top: 10px">신청 마감일</p>
-				<input class="input100" style="margin-top: 10px" id="endDate" name="endDate" type="date" value="" required/> <input id="endTime" class="input100" name="endTime" type="time" value="23:00" required/>
+				<input class="input100" style="margin-top: 10px" id="endDate" name="endDate" type="date" value="" required/> <input id="endTime" class="input100" name="endTime" type="time" value="" required/>
 			</div>
 			
 			
@@ -362,6 +362,13 @@ $(document).ready(function(){
 	var today=moment(new Date()).format('YYYY-MM-DD');
     $('#startDate').val(today);
     $('#endDate').val(today);
+
+    let todayTime = new Date(); 
+    let hours = todayTime.getHours();
+    let minutes = todayTime.getMinutes();
+    $('#startTime').val(hours+":"+minutes);
+    $('#endTime').val(hours+":"+minutes);
+    
 
    
 $('#state').on('select2:select', function(e) {

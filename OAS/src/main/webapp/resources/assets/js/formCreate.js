@@ -89,9 +89,9 @@ $( document ).ready(function() {
 		var form_name= $("#formName").val();
 		var startDate= $("#startDate").val();
 		var startTime = $("#startTime").val();
-	    	var endDate = $("#endDate").val();
-	    	var endTime = $("#endTime").val();
-		
+	    var endDate = $("#endDate").val();
+	    var endTime = $("#endTime").val();
+		console.log(endTime);
 		if(category_name == "")
 			alert("카테고리를 선택해주세요 ");
 		else if(form_name == "")
@@ -109,8 +109,8 @@ $( document ).ready(function() {
 		//var categoryName= $("input[name=categoryName]").val();
 		var form_detail=$("textarea[name=explanation]").val();
 		
-		var form_startDate=$("input[name=startDate]").val();
-		var form_endDate=$("input[name=endDate]").val();
+		var form_startDate=startDate+" "+startTime;
+		var form_endDate=endDate+" "+endTime;
 		
 		//f_cnt(field count), f_title, f_type, isEssential, 
 		var f_cnt=$("input[name=count]").val();

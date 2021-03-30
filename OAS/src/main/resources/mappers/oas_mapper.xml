@@ -62,7 +62,7 @@
    
    <!-- userMyPage 게시글 -->
    <select id="userlist" resultType="com.walab.oas.DTO.Form">
-    SELECT c.id,c.category_id,c.categoryName, c.formName,url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,c.regDate,u.userName,stateName,ifnull(state_id,0)as state_id
+    SELECT c.id,c.category_id,c.categoryName, c.formName,url, c.startDate as startDate,c.endDate as endDate,c.regDate,u.userName,stateName,ifnull(state_id,0)as state_id
       FROM (SELECT s.*,categoryName FROM 
             (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM 
             (SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM 
@@ -119,7 +119,7 @@
    <!-- 페이징 -->
    <!-- 페이징 적용 게시글 + 검색 -->
    <select id="adminlist" resultType="com.walab.oas.DTO.Form">
-         SELECT c.id,c.category_id,c.categoryName, c.formName,url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,c.regDate,u.userName,isAvailable
+         SELECT c.id,c.category_id,c.categoryName, c.formName,url, c.startDate as startDate,c.endDate as endDate,c.regDate,u.userName,isAvailable
          FROM (SELECT Form.*,categoryName FROM Form LEFT OUTER JOIN Category ON Form.category_id=Category.id) as c
          INNER join User as u
          ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now())
@@ -129,7 +129,7 @@
    </select>
    
    <select id="adminListWithState" parameterType="int" resultType="com.walab.oas.DTO.Form">
-   SELECT c.id,c.category_id,c.categoryName, c.state_id, c.stateName, c.formName,url, date_format(c.startDate, '%Y-%m-%d') as startDate,date_format(c.endDate, '%Y-%m-%d') as endDate,c.regDate,u.userName,isAvailable
+   SELECT c.id,c.category_id,c.categoryName, c.state_id, c.stateName, c.formName,url, c.startDate as startDate,c.endDate as endDate,c.regDate,u.userName,isAvailable
          FROM (SELECT R.*, categoryName FROM (SELECT Form.*, ifnull(state_id,0)as state_id, SR.stateName as stateName from Form LEFT OUTER JOIN (SELECT Result.*, State.stateName as stateName from Result LEFT OUTER JOIN State on Result.state_id = State.id where Result.user_id = #{user_id}) as SR on Form.id = SR.Form_id) as R LEFT OUTER JOIN Category ON R.category_id=Category.id) as c
          INNER join User as u
          ON (c.user_id = u.id) WHERE date(c.regDate) between date(subdate(now(), INTERVAL 365 DAY)) and  date(now());
@@ -430,12 +430,12 @@
    <!-- 해당 폼의 Field-->
    <select id="formDetailField" parameterType="int" resultType="com.walab.oas.DTO.Field">
      <![CDATA[
-         SELECT * FROM Field WHERE form_id=#{form_id};
+         SELECT * FROM Field WHERE form_id=#{form_id} AND isDelete=0;
      ]]>
    </select>
     <select id="formDetailItem" parameterType="int" resultType="com.walab.oas.DTO.Item">
      <![CDATA[
-         SELECT * FROM Item WHERE field_id=#{field_id};
+         SELECT * FROM Item WHERE field_id=#{field_id} AND isDelete=0;
      ]]>
    </select>
    <update id="modifyForm" parameterType="com.walab.oas.DTO.Form">
@@ -523,11 +523,11 @@
    
     <!-- field 삭제하기 -->
    <delete id="deleteField" parameterType="int">
-       update Field SET isDefault=1 where id=#{field_id};
+       update Field SET isDelete=1 where id=#{field_id};
    </delete>
    
     <!-- Item 삭제하기 -->
    <delete id="deleteItem" parameterType="int">
-       update Item SET isDefault=1 where id=#{item_id};
+       update Item SET isDelete=1 where id=#{item_id};
    </delete>
 </mapper>

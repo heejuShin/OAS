@@ -220,7 +220,7 @@
 
 		$("#preview_modal").css("display","none");
 	    // 모달 div 뒤에 희끄무레한 레이어
-	    var bg = $('<div>')
+	    var bg = $('<div id="bg">')
 	        .css({
 	            position: 'fixed',
 	            zIndex: zIndex,

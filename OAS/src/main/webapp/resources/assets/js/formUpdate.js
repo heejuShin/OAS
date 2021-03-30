@@ -34,9 +34,16 @@ $( document ).ready(function() {
 	$("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
 	$(".select2-selection__rendered").html(formInfo.categoryName);
 	
+	let startD=formInfo.startDate;
+	let endD=formInfo.endDate;
 	
-	$("input[name=startDate]").attr("value",moment(formInfo.startDate).format('YYYY-MM-DD'));
-	$("input[name=endDate]").attr("value",moment(formInfo.endDate).format('YYYY-MM-DD'));
+	console.log(moment(startD).format('YYYY-MM-DD HH:mm'));
+
+	$("input[name=startDate]").attr("value",moment(startD).format('YYYY-MM-DD'));
+	$("input[name=endDate]").attr("value",moment(endD).format('YYYY-MM-DD'));
+	$("input[name=startTime]").attr("value",moment(startD).format('HH:mm'));
+	$("input[name=endTime]").attr("value",moment(endD).format('HH:mm'));
+	
 	$("textarea[name=explanation]").html(formInfo.explanation);
 	$("input[name=plusPoint]").attr("value",formInfo.plusPoint);
 	$("input[name=minusPoint]").attr("value",formInfo.minusPoint);
@@ -153,7 +160,10 @@ $( document ).ready(function() {
 			    $("#select_value_add").find(".select_itemId").attr("value",item_list[j].id);
 			    
 			    $("#select_value_add").find(".isItemOri").attr("name", idx+"isItemOri"+String(o_cnt));
+			    $("#select_value_add").find(".isItemOri").attr("value", 1);
+			    $("#select_value_add").find(".isItemOri").attr("id", "optionOri"+String(j));
 			    $("#select_value_add").find(".isItemDel").attr("name", idx+"isItemDel"+String(o_cnt));
+			    $("#select_value_add").find(".isItemDel").attr("id",  "option"+String(j));
 		    	
 		    	$("#select_value_add").find(".option_real").attr("name", idx+"content"+String(o_cnt));
 			    $("#select_value_add").find(".option_real").attr("value",item_list[j].content);
@@ -164,6 +174,7 @@ $( document ).ready(function() {
 	  			$("#field_add").find(".list_select").append($("#select_value_add").html());
 	  			
 	  			$("#selectBox_add").find("label").html(item_list[j].content);
+		    	$("#selectBox_add").find("button").attr("id",String(j));
  			  	$("#field_add").find(".selectOption").append($("#selectBox_add").html());
 		    }
 	  	  }
@@ -308,6 +319,8 @@ $( document ).ready(function() {
 			//$(this).parent().parent().parent().siblings(".itemCount").val(num);
 			$(this).siblings(".isItemDel").val("1");
 			$(this).parent().css("display","none");
+			//field modified check
+			$(this).parent().parent().parent().siblings(".isModified").val("1");
 		}
 		//새로 추가했던 item이면 그냥 삭제
 		else{
@@ -320,13 +333,14 @@ $( document ).ready(function() {
 	  var option=$(this).siblings("label").text();
 	  $(this).parent().parent().siblings("select").find("option[value='"+option+"']").remove();
 	
-	  $(this).parent().remove();
-	  
+	  	var xId=$(this).attr("id");
 	  	//기존의 item, isDelete = 1 로 바꿈
 		$(this).siblings(".isModified").val("1");
-		if($(this).parent().parent().siblings(".list_select").find(".isItemOri").val()=="1"){
-			$(this).parent().parent().siblings(".list_select").find(".isItemDel").val("1");
-			
+		if($(this).parent().parent().siblings(".list_select").find("#optionOri"+xId).val()=="1"){
+			$(this).parent().parent().siblings(".list_select").find("#option"+xId).val("1");
+			//field modified check
+			console.log($(this).parent().parent().parent().siblings(".isModified").prop("tagName"));
+			$(this).parent().parent().parent().siblings(".isModified").val("1");
 		}
 		//새로 추가했던 item이면 그냥 삭제
 		else{
@@ -344,23 +358,30 @@ $( document ).ready(function() {
 	});
 	
 	$("#formName").on("propertychange change keyup paste input", function() {
-	    $(this).siblings("#isHeaderModified").val("1");
+	    $(this).parent().siblings("#isHeaderModified").val("1");
 	});
 	
-	$(".bg1").on('change', "#category_select", function(){
-		$(this).siblings("#isHeaderModified").val("1");
+	$(".bg1").on('change', "select[name='category_id']", function(){
+		$(this).parent().siblings("#isHeaderModified").val("1");
 	});
 	
 	$(".bg1 textarea").on("propertychange change keyup paste input", function() {
-	    $(this).siblings("#isHeaderModified").val("1");
+	    $(this).parent().siblings("#isHeaderModified").val("1");
 	});
 	
 	$(".bg1").on('change', "#startDate", function(){
-		$(this).siblings("#isHeaderModified").val("1");
+		$(this).parent().siblings("#isHeaderModified").val("1");
 	});
 	
 	$(".bg1").on('change', "#endDate", function(){
-		$(this).siblings("#isHeaderModified").val("1");
+		$(this).parent().siblings("#isHeaderModified").val("1");
+	});
+	$(".bg1").on('change', "#startTime", function(){
+		$(this).parent().siblings("#isHeaderModified").val("1");
+	});
+	
+	$(".bg1").on('change', "#endTime", function(){
+		$(this).parent().siblings("#isHeaderModified").val("1");
 	});
 	
 	
@@ -387,9 +408,107 @@ $( document ).ready(function() {
 	});
 	
 	dup_check=true;
+	
+	
+$('#updatePreview').on('click', function() {
+		var category_name=$("#category_select option:selected").val();
+		var form_name= $("#formName").val();
+		var startDate= $("#startDate").val();
+		var startTime = $("#startTime").val();
+	    var endDate = $("#endDate").val();
+	    var endTime = $("#endTime").val();
+		
+		if(category_name == "")
+			alert("카테고리를 선택해주세요 ");
+		else if(form_name == "")
+			alert("제목을 입력해주세요 ");
+		else if(startDate > endDate)
+			alert("마감일자를 다시 설정해주세요 ");
+	    	else if(startDate == endDate && startTime > endTime)
+	    		alert("마감 시간을 다시 설정해주세요 ");
+		else{
+		
+		console.log("preview test");
+		
+		//formName,categoryName, explanation, plusPoint, isAvailable, isUerEdit, minusPoint, startDate, startTime, endDate,endTime
+		var form_name= $("input[name=formName]").val();
+		//var categoryName= $("input[name=categoryName]").val();
+		var form_detail=$("textarea[name=explanation]").val();
+		
+		var form_startDate=startDate+" "+startTime;
+		var form_endDate=endDate+" "+endTime;
+		
+		//f_cnt(field count), f_title, f_type, isEssential, 
+		var f_cnt=$("input[name=count]").val();
+		
+		var field_len=f_cnt+1;
+		var field_id = new Array(field_len);
+		var field_name = new Array(field_len);
+		var field_type= new Array(field_len);
+		var field_star=new Array(field_len);
+		var isFieldDel=new Array(field_len);
+		var item_count=new Array(field_len);
+		
+		
+		var item_len=0;
+		for(var i=1; i<=f_cnt; i++){ 
+			item_len+=$("input[name='count"+i+"']").val();
+		}
+		
+		var content=new Array(item_len);
+		var isDefault=new Array(item_len);
+		var isItemDel=new Array(item_len);
+		
+		var i_cnt;
+		var idx=0;
+		for(var i=1; i<=f_cnt; i++){ 
+			
+			field_id[i]= i;
+			
+			field_name[i]= $("input[name='f_title"+i+"']").val();
+			field_type[i]= $("select[name='f_type"+i+"']").val();
+			field_star[i]= $("input[name='isEssential"+i+"']").val();
+			isFieldDel[i]=$("input[name='isFieldDel"+i+"']").val();
+			i_cnt=$("input[name='count"+i+"']").val();
+			item_count[i]=i_cnt;
+			if(field_type[i]=="select" || field_type[i]=="checkbox" || field_type[i]=="radio"){
+				for(var j=1; j<=i_cnt; j++){ 
+					idx++;
+					
+					content[idx]=$("input[name='"+i+"content"+j+"']").val();
+					isDefault[idx]=0;
+					isItemDel[idx]=$("input[name='"+i+"isItemDel"+j+"']").val();
+				} 
+			}
+		}
+		
+		//i_cnt (item count), content, 
+	    // 모달창 띄우기
+	    
+	    var sendData={"form_name":form_name,"form_detail":form_detail,"form_startDate":form_startDate,"form_endDate":form_endDate,"f_cnt":f_cnt,"field_id":field_id,"field_name":field_name,"field_type":field_type,"field_star":field_star,"isFieldDel":isFieldDel,"item_count":item_count,"content":content,"isDefault":isDefault,"isItemDel":isItemDel};
+	    
+	    console.log(sendData);
+	    
+	    $.ajax({
+			url: "update/preview",
+		 	type:'POST',
+		   	traditional : true,
+		   	data: sendData,
+		  	success:function(result){
+		    	$("#preview_modal").html(result);
+		    	console.log("modal preview");
+		     	modal('preview_modal');
+		   	},
+		   	error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		});
+		          		
+	    }//else 구문
+	});
+	
 
 });
-
 
 //모달창
 	function modal(id) {
@@ -397,7 +516,7 @@ $( document ).ready(function() {
 	    var modal = $('#' + id);
 	
 	    // 모달 div 뒤에 희끄무레한 레이어
-	    var bg = $('<div>')
+	    var bg = $('<div id="bg">')
 	        .css({
 	            position: 'fixed',
 	            zIndex: zIndex,
@@ -415,7 +534,7 @@ $( document ).ready(function() {
 	        .css({
 	            position: 'fixed',
 	            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-	
+				display:'block',
 	            // 시꺼먼 레이어 보다 한칸 위에 보이기
 	            zIndex: zIndex + 1,
 	

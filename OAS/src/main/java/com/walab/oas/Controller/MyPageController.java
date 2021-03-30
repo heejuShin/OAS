@@ -77,7 +77,7 @@ public class MyPageController {
 				
 				
 				List<Form> adminList = mypageDao.adminList(cri); //admin의 폼 데이터 리스트를 가져옴 
-				System.out.println("count : " + adminList.size());
+				System.out.println("count : " + adminList);
 				List<Form> adminListWithState = mypageDao.adminListWithState(user_id);
 				int count=mypageDao.countArticle(cri.getSearchType(), cri.getKeyword()); //총 데이터 개수
 				System.out.println("count2 : " + count);
