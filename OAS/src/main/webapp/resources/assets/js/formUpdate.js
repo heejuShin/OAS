@@ -54,6 +54,7 @@ $( document ).ready(function() {
 	
 	//link 값 입력 (ReadOnly)
 	$("#link").val(formInfo.url);
+	$("#linkOri").val(formInfo.url);
 	$("#link").attr("readonly",true);
 	
 	$.ajax({ //해당 폼의 field 가져오기

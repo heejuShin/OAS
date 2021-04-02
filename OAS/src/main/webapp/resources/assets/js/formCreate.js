@@ -259,6 +259,7 @@ $( document ).ready(function() {
 	//질문 유형 선택
 	$("#list").on('change', ".field_type", function(){
 	    var content;
+	    $(this).siblings(".content").empty();
 	    if(this.value=="textarea"){
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
