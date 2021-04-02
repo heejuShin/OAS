@@ -10,9 +10,8 @@ function isValidForm(){
 }
 
 
-
-
 $( document ).ready(function() {
+
 	//링크 값 변경 감지
 	$("#link").on("change keyup paste", function(){
 		dup_check = false;
@@ -38,10 +37,17 @@ $( document ).ready(function() {
 	        var addr_slice = whole_addr.split('/');
 	        var addr = addr_slice[0]+"/"+addr_slice[1]+"/"+addr_slice[2]+"/"+addr_slice[3];
 	        
-	        
+	        console.log(linkOri);
 	      if($("#link").val()==""){
 	        $("#link").focus();
 	        alert("링크를 입력해주세요.");
+	      }
+	      else if($("#link").val()==$("#linkOri").val()){
+	      		$("#link_dup_txt").html("<span style='color:green;' class='overlap_msg' >사용가능</span><input type='hidden' id='url'/><a href='#'class='urlCopyBtn'><i class='fas fa-link' style='margin-left: 5px'></i></a>");
+	              $("#url").val(addr+"/form/"+$("#link").val());
+	        	  $("#url").html(addr+"/form/"+$("#link").val());
+	              $("#link").css("background-color","#e4eee4");
+	              dup_check=true;
 	      }
 	      else{
 	        $.ajax({
@@ -117,6 +123,7 @@ $( document ).ready(function() {
 	
 	//질문 유형 선택
 	$("#list").on('change', ".field_type", function(){
+		$(this).siblings(".content").empty();
 	    var content;
 	    if(this.value=="textarea"){
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";

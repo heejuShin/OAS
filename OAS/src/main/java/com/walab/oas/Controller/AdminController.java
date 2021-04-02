@@ -381,7 +381,7 @@ public class AdminController {
 		}
 	
 	//링크 중복체크
-	@RequestMapping(value="/form/link_finder",method=RequestMethod.POST)
+	@RequestMapping(value={"/form/link_finder", "/form/view/link_finder"},method=RequestMethod.POST)
 	public String linkDupCheck(@RequestParam("link") String link) throws Exception {
 		if(adminDAO.linkDupCheck(link)==0) return "success";
 		else return "fail";

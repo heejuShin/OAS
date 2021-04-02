@@ -34,7 +34,6 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<!-- select CSS & JS-->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -53,8 +52,8 @@
 		
 		$('#form_title').text(formInfo[0].form_name);
 		$('.form_explanation').text(formInfo[0].form_detail);
-		$('#startDate').text(formInfo[0].form_startDate);
-		$('#endDate').text(formInfo[0].form_endDate);
+		$('#startDate').text(moment(formInfo[0].form_startDate).format('YYYY.MM.DD HH:mm'));
+		$('#endDate').text(moment(formInfo[0].form_endDate).format('YYYY.MM.DD HH:mm'));
 		$('#submitDate').text(formInfo[0].form_submitDate);
 		if(formInfo[0].form_editDate != "2000-01-01 00:00:00"){
 			$('#editDate').text(formInfo[0].form_editDate);
