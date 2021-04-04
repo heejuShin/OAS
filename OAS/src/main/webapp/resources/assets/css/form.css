@@ -380,3 +380,7 @@ button {
 #mypageB:hover, #cancle:hover {
 	filter: brightness(70%);
 }
+
+.removeField {
+    top: 20px;
+}
