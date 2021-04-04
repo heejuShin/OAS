@@ -495,14 +495,14 @@
 			  
                   });
 
-                  $(document).click(function(e) {
+                  /* $(document).click(function(e) {
               	    if (!$(e.target).closest('#yourModal').length) {
               	    	$("#yourModal").empty();
               	    	$("#yourModal").css({ display : "none"});
               	    	$(".modal-backdrop").remove();
               	    }
               	    
-              	});
+              	}); */
 
               	function paging(idx){
               		$("input[name='page']").val(idx);
