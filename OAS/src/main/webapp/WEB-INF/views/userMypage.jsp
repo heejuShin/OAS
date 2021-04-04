@@ -30,7 +30,7 @@
     
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
    
-     <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=3">
+     <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=4">
        
      
      <style>
@@ -185,8 +185,15 @@
       
          var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
          $($(".tbodies").children()[i]).append(th1);
+
+         if(userList[i].formName.length > 35){
+		    	var shortFormName = userList[i].formName.substring(0,34);
+		    	var td2 = $("<td class='formName'>"+shortFormName+" ...<span class='formNameToolTip'>"+userList[i].formName+"</span></td>"); 
+		    }else{
+		    	var td2 = $("<td class='formName'>"+userList[i].formName+"</td>"); 
+ 		    }
    
-           var td2 = $("<td>"+userList[i].formName+"</td>"); 
+           //var td2 = $("<td>"+userList[i].formName+"</td>"); 
           $($(".tbodies").children()[i]).append(td2);
    
           var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
