@@ -25,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.walab.oas.Board.domain.FileVO;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.ReadResult;
 import com.walab.oas.DTO.SearchCriteria;
@@ -82,49 +81,37 @@ public class BoardController {
 //       board.setSubject(request.getParameter("subject"));
 //       board.setContent(request.getParameter("content"));
 //       board.setWriter(request.getParameter("writer"));
-    	FileVO  file  = new FileVO();
     	
     	if(files.isEmpty()){ //업로드할 파일이 없을 시
     		boardService.insertBoard(vo); //게시글 insert
-        }else{
+        }else {
+            String fileName = files.getOriginalFilename(); // 사용자 컴에 저장된 파일명 그대로
+            //확장자
+            String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
+            File destinationFile; // DB에 저장할 파일 고유명
+            String destinationFileName;
+            //절대경로 설정 안해주면 지 맘대로 들어가버려서 절대경로 박아주었습니다.
+            String fileUrl = "/OAS/src/main/webapp/resources/fileupload";
 
+            do { //우선 실행 후
+              //고유명 생성
+              destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + fileNameExtension;
+              destinationFile = new File(fileUrl + destinationFileName); //합쳐주기
+            } while (destinationFile.exists()); 
 
-        String fileName = files.getOriginalFilename(); 
-        String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
+            destinationFile.getParentFile().mkdirs(); //디렉토리
+            files.transferTo(destinationFile);
 
-//       String sourceFileName = files.getOriginalFilename(); 
-//       String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase(); 
-       File destinationFile; 
-       String destinationFileName;
-       String fileUrl = "/Users/sebinlee/git/OAS/OAS/src/main/webapp/WEB-INF/uploadFiles/";
+            boardService.insertBoard(vo);
 
-       do { 
-           destinationFileName = "Uploaded_" + RandomStringUtils.randomAlphanumeric(32) + "." + fileNameExtension; 
-           //destinationFileName = fileName; //+ "." + fileNameExtension; 
-
-           destinationFile = new File(fileUrl + destinationFileName); 
-       } while (destinationFile.exists()); 
-       
-       destinationFile.getParentFile().mkdirs(); 
-       files.transferTo(destinationFile); 
-       
-       //boardService.insertBoard(vo);
-//      	System.out.println("seq는:  "+ vo.getSeq());
-
-       //file.setBno(vo.getSeq());
-       file.setFileName(destinationFileName);
-       file.setFileOriName(fileName);
-       file.setFileUrl(fileUrl);
-       
-       boardService.fileInsertService(file); //file insert //zzim
-       //mBoardService.fileInsertService(file);//Original code
-       
-       if(boardService.insertBoard(vo) == 0) {
-       	System.out.println("데이터 추가 실패 ");
-       }
-      else
-       	System.out.println("데이터 추가 성공!!!");
-        }
+            FileVO file = new FileVO();
+            file.setB_no(vo.getSeq());
+            file.setFilename(destinationFileName);
+            file.setFileoriginname(fileName);
+            file.setFileurl(fileUrl);
+            
+            boardService.fileInsert(file);
+          }
        return mav;
     }
     
@@ -158,7 +145,7 @@ public class BoardController {
 		
 		//파일 
 		FileVO file = new FileVO();
-		boardService.fileInsertService(file);
+		boardService.fileInsert(file);
 		
 		JSONArray readContent = new JSONArray();
 		try {
@@ -211,7 +198,7 @@ public class BoardController {
 		
 		//파일 
 		FileVO file = new FileVO();
-		boardService.fileInsertService(file);
+		boardService.fileInsert(file);
 		
 		JSONArray readContent = new JSONArray();
 		try {

@@ -7,8 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.walab.oas.Board.domain.FileVO;
-import com.walab.oas.DTO.ReadResult;
 import com.walab.oas.DTO.SearchCriteria;
 
 @Repository
@@ -16,32 +14,32 @@ public class BoardDAO {
 	
 	@Autowired
 	SqlSession sqlSession;
+	private static String namespace ="com.walab.oas.mappers.board-mapper";
 	
 	public int insertBoard(BoardVO vo) {
-		return sqlSession.insert("Board.insertBoard", vo);
+		return sqlSession.insert(namespace+".insertBoard", vo);
 	}
 	
 	public int deleteBoard(int seq) {
-		return sqlSession.delete("Board.deleteBoard", seq);
+		return sqlSession.delete(namespace+".deleteBoard", seq);
 	}
 	
 	public int updateBoard(BoardVO vo) {
-		return sqlSession.update("Board.updateBoard", vo);
+		return sqlSession.update(namespace+".updateBoard", vo);
 	}
 	
 	
 	public BoardVO getBoard(int seq) {
-		return sqlSession.selectOne("Board.getBoard", seq);
+		return sqlSession.selectOne(namespace+".getBoard", seq);
 	}
 	
 	public List<BoardVO> getBoardList(SearchCriteria  cri) {
-		return sqlSession.selectList("Board.getBoardList",cri);
+		return sqlSession.selectList(namespace+".getBoardList",cri);
 	}
 	
+	 //파일 업로드 메서드 추가
 	public int fileInsert(FileVO file) {
-		// TODO Auto-generated method stub
-		//return 0;
-		return sqlSession.insert("Board.fileInsert", file);
+		return sqlSession.insert(namespace+".fileInsert", file);
 	}
 
 
@@ -49,6 +47,6 @@ public class BoardDAO {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("searchType",searchType);
 		map.put("keyword", keyword);
-		return sqlSession.selectOne("Board.countBoard",map);
+		return sqlSession.selectOne(namespace+".countBoard",map);
 	}
 }
