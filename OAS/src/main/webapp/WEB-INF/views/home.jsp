@@ -28,7 +28,7 @@
  <style>
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
-body {font-family: 'NanumSquare', sans-serif;}
+body {font-family: 'NanumSquare', sans-serif !important;}
 
  </style>
  
@@ -199,7 +199,9 @@ body {font-family: 'NanumSquare', sans-serif;}
          </div>
         <div class="board_section">
            <div class="title">
+           
               <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+           
            </div>
                 <div class="tablelist">
                    <table class="table table-hover">
@@ -220,8 +222,7 @@ body {font-family: 'NanumSquare', sans-serif;}
  
                </table>  
                 </div>
-      </div>
-        
+      </div>        
     </div>
    
  

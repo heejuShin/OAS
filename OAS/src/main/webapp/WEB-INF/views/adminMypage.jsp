@@ -38,7 +38,7 @@
     <!-- 필터링 -->
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 
-  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=3">
+  <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/mypage.css?ver=7">
   <style>
      @media (min-width: 1200px){
 		.adminMypage_main .container {
@@ -205,7 +205,14 @@
 	
 	                    		    var th1 = $("<th>"+adminList[i].categoryName+"<span class='co-name'></span></th>"); 
 	                    		    $($(".tbodies").children()[i]).append(th1);
-	                    		    var td2 = $("<td>"+adminList[i].formName+"</td>"); 
+	                    		    
+	                    		    if(adminList[i].formName.length > 35){
+	                    		    	var shortFormName = adminList[i].formName.substring(0,34);
+	                    		    	var td2 = $("<td class='formName'>"+shortFormName+" ...<span class='formNameToolTip'>"+adminList[i].formName+"</span></td>"); 
+	                    		    }else{
+	                    		    	var td2 = $("<td class='formName'>"+adminList[i].formName+"</td>"); 
+		                    		    }
+	                    		    
 	                    		    $($(".tbodies").children()[i]).append(td2);
 	                    		    var td3 = $("<td>"+moment(adminList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(adminList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
 	                    		    $($(".tbodies").children()[i]).append(td3);

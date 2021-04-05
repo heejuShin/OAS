@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=19">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=2">
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -65,19 +65,17 @@
   crossorigin="anonymous"></script>
   
   <!-- Font -->
-  <style type="text/css">
-  @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
-  
+ 	<style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
  	
- 	@font-face {
- 		font-family: 'NanumSquare', sans-serif;
- 		font-style:normal;
- 		font-weight:normal;
- 	}
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
  	
- 	body, p, #li {font-family: 'NanumSquare', sans-serif;}
- 	
-</style>
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+	</style>
 
 </head>
   <body>

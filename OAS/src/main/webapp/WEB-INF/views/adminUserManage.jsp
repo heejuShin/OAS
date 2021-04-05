@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 관리</title>
 
 	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=4">
 	
@@ -34,6 +34,9 @@
 	    padding: 3% 6%;
 	    margin-left: 5%;
     }
+    * {
+ 		font-family: 'NanumSquare', sans-serif !important;	
+ 	}
     </style>    
 </head>
 
@@ -124,21 +127,22 @@
               <div id="moreContent">  
 	          <ul class="pagination">
 			    <c:if test="${pageMaker.prev}">
-			    <c:set var="page" value="${param.page}"/>
-			    <c:if test="${page eq null}">
-			    	<c:set var="page" value="1"/>
-			    </c:if>
 			    <li>
 			        <a href='<%=request.getContextPath()%>/admin/manage?page=${pageMaker.startPage-1}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>&laquo;</a>
 			    </li>
 			    </c:if>
 			    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			    <c:set var="page" value="${param.page}"/>
+			    <c:if test="${page eq null}">
+			    	<c:set var="page" value="1"/>
+			    </c:if>
+			    
 			    <li>
 				    <c:choose>
-				    	<c:when test="${page eq idx}">
-			        	<a style="background: #bbb; color: white;" href='<%=request.getContextPath()%>/admin/manage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
+				    <c:when test="${page eq idx}">				    	
+			        	<a style="background: #bbb; color: white;"href='<%=request.getContextPath()%>/admin/manage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
 			    	</c:when>
-			    	<c:otherwise>
+			    	<c:otherwise>			    	
 			    		<a href='<%=request.getContextPath()%>/admin/manage?page=${idx}&filterType=${cri.filterType}&searchType=${searchOption}&keyword=${keyword}'>${idx}</a>
 			    	</c:otherwise>
 			    	</c:choose>

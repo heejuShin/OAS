@@ -123,7 +123,7 @@ public class LoginController {
       
       if(!userInfo.get("email").contains("handong.edu")) {
          
-         mav.setViewName("error/loginError");
+         mav.setViewName("error/initLogin");
          return mav;
       }
          

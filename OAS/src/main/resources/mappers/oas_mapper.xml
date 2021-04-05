@@ -237,7 +237,7 @@
    <!-- field 정보 가져오기  -->
     <select id="fieldInfo" parameterType="int" resultType="com.walab.oas.DTO.Field">
      <![CDATA[
-         SELECT * FROM Field WHERE form_id =#{formID};
+         SELECT * FROM Field WHERE form_id =#{formID} AND isDelete=0;
      ]]>
    </select> 
    

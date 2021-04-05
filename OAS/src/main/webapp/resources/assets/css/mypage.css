@@ -1,8 +1,12 @@
 @charset "UTF-8";
 
+@import
+	url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css)
+	;
+
 main {
 	margin: 5%;
-	font-family: NanumGothic;
+	font-family: 'NanumSquare', sans-serif !important;
 }
 
 /* page title */
@@ -37,7 +41,7 @@ main {
 	clear: both;
 	margin-right: auto;
 	margin-left: auto;
-	font-family: NanumGothic;
+	font-family: 'NanumSquare', sans-serif !important;
 	font-size: 15px;
 	font-weight: 600;
 	margin-bottom: 3%;
@@ -117,8 +121,6 @@ tbody {
 	border: 3px solid #ffd500;
 }
 
-
-
 /* content*/
 #moreContent {
 	margin-right: auto;
@@ -127,7 +129,7 @@ tbody {
 
 #stateB {
 	float: right;
-	font-family: NanumGothic;
+	font-family: 'NanumSquare', sans-serif !important;
 	font-weight: 700;
 	font-size: 12px;
 	border: 3px solid #476347;
@@ -138,7 +140,7 @@ tbody {
 
 .formgroup input, button, select {
 	height: 30px;
-	font-family: NanumGothic;
+	font-family: 'NanumSquare', sans-serif !important;
 	font-weight: 600;
 }
 
@@ -146,14 +148,41 @@ tbody {
 	margin-left: 10px;
 }
 
-  .greenLetter{
-     	color:green;
-     }
-     
-     .blueLetter{
-     	color: #080165;
-     }
-     
-     .redLetter{
-     	color:red;
-     }
+.greenLetter {
+	color: green;
+}
+
+.blueLetter {
+	color: #080165;
+}
+
+.redLetter {
+	color: red;
+}
+
+.formName {
+	position: relative
+}
+
+.CellWithComment {
+	position: relative;
+}
+
+.formNameToolTip {
+	display: none;
+	position: absolute;
+	z-index: 100;
+	background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    opacity: 0.7;
+	padding: 3px;
+	top: 25px;
+	left: 0px;
+}
+
+.formName:hover span.formNameToolTip {
+	display: block;
+}
