@@ -164,19 +164,7 @@ public class BoardController {
 		try {
 		    	for (int i = 0; i < read_list.size() ; i++) {   
 			    		JSONObject ob =new JSONObject();
-			        
-//			        ob.put("id", read_list.get(i).getId());
-//			        ob.put("form_id", read_list.get(i).getForm_id());
-//			        ob.put("Category", read_list.get(i).getCategory());
-//			        ob.put("fieldName", read_list.get(i).getFieldName());
-//			        ob.put("fileName", read_list.get(i).getFileName());
-//			        ob.put("isEssential", read_list.get(i).getIsEssential());
-//			        ob.put("index", read_list.get(i).getIndex());
-//			        ob.put("regDate", read_list.get(i).getRegDate());
-//			        ob.put("key", read_list.get(i).getKey());
-//			        ob.put("field_id", read_list.get(i).getField_id());
-//			        ob.put("content", read_list.get(i).getContent());
-			    		
+			       
 			    	ob.put("Category", read_list.get(i).getCategory());
 			    	ob.put("Title", read_list.get(i).getTitle());	
 			    	ob.put("Wrter", read_list.get(i).getWriter());
