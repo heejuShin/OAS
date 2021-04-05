@@ -82,8 +82,8 @@
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               <select name="filterType" class="filterType">
                  <option value="all" <c:out value="${filterType =='all'? 'selected':'' }"/>>전체</option>
-                 <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>미신청</option>
-                 <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>신청현황</option>
+                 <option value="applyForm" <c:out value="${filterType =='applyForm'? 'selected':'' }"/>>신청현황</option>
+                 <option value="noApplyForm" <c:out value="${filterType =='noApplyForm'? 'selected':'' }"/>>미신청</option>
                  <option value="pastForm" <c:out value="${filterType =='pastForm'? 'selected':'' }"/>>신청마감</option>
               </select>
            </form>
@@ -239,7 +239,7 @@
             }
 
          }
-         var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
+         var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/><input type='hidden' id='linkName' name='linkName' value='"+userList[i].url+"'/></form>");
          $($(".tbodies").children()[i]).append(form);
          var form2=$("<form id='viewForm' action='viewForm/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
           $($(".tbodies").children()[i]).append(form2);
@@ -252,8 +252,15 @@
    });
 
     function openForm(obj){
-       var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
-      console.log("state_ID:" +state_ID);
+    	console.log("openForm");
+			var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
+			var urlLink = $(obj).parent().siblings("#form").find("#linkName").val();
+			var openTap = window.open('form/'+urlLink,'newTab');
+			var formTap = document.form;
+			formTap.target="newTap";
+			formTap.submit();
+			
+	      console.log("state_ID:" +state_ID);
         if(state_ID==0)
             $(obj).parent().siblings("#form").submit();
         else

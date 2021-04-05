@@ -29,7 +29,26 @@
 @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
 body {font-family: 'NanumSquare', sans-serif !important;}
+.formNameToolTip {
+	display: none;
+	position: absolute;
+	z-index: 100;
+	background-color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    opacity: 0.7;
+	padding: 3px;
+	top: 70px;
+	left: 0px;
+	height:30px;
+	font-size:11px !important;
+	right:0px !important;
+}
 
+h4:hover span.formNameToolTip {
+	display: block;
+}
  </style>
  
  <script type="text/javascript">
@@ -92,9 +111,14 @@ body {font-family: 'NanumSquare', sans-serif !important;}
                            var formContent= $("<div class='down-content'></div>");
                            $($($(".grid").children()[i]).children()[0]).append(formContent);
                            
-                           var formName =  $("<h6 class='formDate'>"+moment(form_list[i].startDate).format('YYYY-MM-DD')+"~"+moment(form_list[i].endDate).format('YYYY-MM-DD')+"</h6><h4 class='form'>"+form_list[i].formName +"</h4><p class='discription'>"+form_list[i].explanation+"</p>"); 
+                           if(form_list[i].formName.length > 17){
+                        	   var shortFormName = form_list[i].formName.substring(0,16);
+                        	   var formName =  $("<h6 class='formDate'>"+moment(form_list[i].startDate).format('YYYY-MM-DD')+"~"+moment(form_list[i].endDate).format('YYYY-MM-DD')+"</h6><h4 class='form'>"+shortFormName +" ...<span class='formNameToolTip'>"+form_list[i].formName+"</span></h4><p class='discription'>"+form_list[i].explanation+"</p>"); 
+                        	   $($($($(".grid").children()[i]).children()[0]).children()[0]).append(formName);
+                           }else{
+                           	var formName =  $("<h6 class='formDate'>"+moment(form_list[i].startDate).format('YYYY-MM-DD')+"~"+moment(form_list[i].endDate).format('YYYY-MM-DD')+"</h6><h4 class='form'>"+form_list[i].formName +"</h4><p class='discription'>"+form_list[i].explanation+"</p>"); 
                                  $($($($(".grid").children()[i]).children()[0]).children()[0]).append(formName);
-                                 
+                           }
                                  //$t = $(".discription").val().replace();
                            
                                  var category =  $("<span class='category_name'>"+form_list[i].categoryName +"</span>"); 
@@ -112,7 +136,7 @@ body {font-family: 'NanumSquare', sans-serif !important;}
                                 	 $($($(".grid").children()[i]).children()[0]).append(a);
                                  }
  								 
- 								var form=$("<form id='myform' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
+ 								var form=$("<form id='myform' action='form/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='linkName' name='linkName' value='"+form_list[i].url+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form);
  								var form2=$("<form id='viewForm' action='viewForm/"+form_list[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+form_list[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+form_list[i].state_id+"'/></form>");
  								$($($(".grid").children()[i]).children()[0]).append(form2);
@@ -123,12 +147,18 @@ body {font-family: 'NanumSquare', sans-serif !important;}
                             });
 
                      		function openForm(obj){
-                         		console.log("openForm");
-                         		var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
-                         		if(state_ID==0)
-                           			$(obj).parent().siblings("#myform").submit();
-                                else
-                                	$(obj).parent().siblings("#viewForm").submit();
+                     			console.log("openForm");
+                     			var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
+                     			var urlLink = $(obj).parent().siblings("#myform").find("#linkName").val();
+                     			var openTap = window.open('form/'+urlLink,'newTab');
+                     			var formTap = document.myform;
+                     			formTap.target="newTap";
+                     			formTap.submit();
+                     			if(state_ID==0)
+                     				$(obj).parent().siblings("#myform").submit();
+                     			else
+                     				$(obj).parent().siblings("#viewForm").submit();
+
                             }
 
                      		function delSubmitForm(obj){
