@@ -255,9 +255,10 @@
     	console.log("openForm");
 			var state_ID=$(obj).parent().siblings("#form").find("#stateID").val();
 			var urlLink = $(obj).parent().siblings("#form").find("#linkName").val();
-			var openTap = window.open('form/'+urlLink,'newTab');
+			var randomString = Math.random().toString(36).slice(2);
+			var openTap = window.open('form/'+urlLink,randomString);
 			var formTap = document.form;
-			formTap.target="newTap";
+			formTap.target=randomString;
 			formTap.submit();
 			
 	      console.log("state_ID:" +state_ID);

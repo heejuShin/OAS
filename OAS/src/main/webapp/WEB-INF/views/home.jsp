@@ -150,9 +150,10 @@ h4:hover span.formNameToolTip {
                      			console.log("openForm");
                      			var state_ID=$(obj).parent().siblings("#myform").find("#stateID").val();
                      			var urlLink = $(obj).parent().siblings("#myform").find("#linkName").val();
-                     			var openTap = window.open('form/'+urlLink,'newTab');
+                     			var randomString = Math.random().toString(36).slice(2);
+                     			var openTap = window.open('form/'+urlLink,randomString);
                      			var formTap = document.myform;
-                     			formTap.target="newTap";
+                     			formTap.target=randomString;
                      			formTap.submit();
                      			if(state_ID==0)
                      				$(obj).parent().siblings("#myform").submit();
