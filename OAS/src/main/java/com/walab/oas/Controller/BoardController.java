@@ -1,4 +1,4 @@
-package com.walab.oas.Board;
+package com.walab.oas.Controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.walab.oas.Board.BoardDAO;
+import com.walab.oas.Board.BoardService;
+import com.walab.oas.Board.BoardVO;
+import com.walab.oas.Board.FileVO;
 import com.walab.oas.DTO.PageMaker;
 import com.walab.oas.DTO.ReadResult;
 import com.walab.oas.DTO.SearchCriteria;
@@ -78,40 +82,38 @@ public class BoardController {
        ModelAndView mav=new ModelAndView("redirect:../../board/list");
       
        BoardVO board = new BoardVO();
-//       board.setSubject(request.getParameter("subject"));
-//       board.setContent(request.getParameter("content"));
-//       board.setWriter(request.getParameter("writer"));
     	
     	if(files.isEmpty()){ //업로드할 파일이 없을 시
     		boardService.insertBoard(vo); //게시글 insert
-        }else {
-            String fileName = files.getOriginalFilename(); // 사용자 컴에 저장된 파일명 그대로
-            //확장자
-            String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
-            File destinationFile; // DB에 저장할 파일 고유명
-            String destinationFileName;
-            //절대경로 설정 안해주면 지 맘대로 들어가버려서 절대경로 박아주었습니다.
-            String fileUrl = "/OAS/src/main/webapp/resources/fileupload";
-
-            do { //우선 실행 후
-              //고유명 생성
-              destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + fileNameExtension;
-              destinationFile = new File(fileUrl + destinationFileName); //합쳐주기
-            } while (destinationFile.exists()); 
-
-            destinationFile.getParentFile().mkdirs(); //디렉토리
-            files.transferTo(destinationFile);
-
-            boardService.insertBoard(vo);
-
-            FileVO file = new FileVO();
-            file.setB_no(vo.getSeq());
-            file.setFilename(destinationFileName);
-            file.setFileoriginname(fileName);
-            file.setFileurl(fileUrl);
-            
-            boardService.fileInsert(file);
-          }
+        }
+//    	else {
+//            String fileName = files.getOriginalFilename(); // 사용자 컴에 저장된 파일명 그대로
+//            //확장자
+//            String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
+//            File destinationFile; // DB에 저장할 파일 고유명
+//            String destinationFileName;
+//            //절대경로 설정 안해주면 지 맘대로 들어가버려서 절대경로 박아주었습니다.
+//            String fileUrl = "/OAS/src/main/webapp/resources/fileupload";
+//
+//            do { //우선 실행 후
+//              //고유명 생성
+//              destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + fileNameExtension;
+//              destinationFile = new File(fileUrl + destinationFileName); //합쳐주기
+//            } while (destinationFile.exists()); 
+//
+//            destinationFile.getParentFile().mkdirs(); //디렉토리
+//            files.transferTo(destinationFile);
+//
+//            boardService.insertBoard(vo);
+//
+//            FileVO file = new FileVO();
+//            file.setB_no(vo.getSeq());
+//            file.setFilename(destinationFileName);
+//            file.setFileoriginname(fileName);
+//            file.setFileurl(fileUrl);
+//            
+//            boardService.fileInsert(file);
+//          }
        return mav;
     }
     
