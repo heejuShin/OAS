@@ -116,6 +116,7 @@ $( document ).ready(function() {
 	  
 	  //field 유형 나타내기
 	  $("#field_add").find(".field_type").attr("name", "f_type"+count);
+	  $("#field_add").find('.field_type').attr('disabled', true);
 	  $("#field_add").find('.field_type option').attr('selected', false);
 	  $("#field_add").find('.field_type option[value='+formDetail[i].fieldType+']').attr('selected', true).change();
 	  
@@ -262,6 +263,7 @@ $( document ).ready(function() {
 	  $("#field_add").find(".isEssential").val("0");
 	  
 	  //field 유형 나타내기
+	  $("#field_add").find('.field_type').attr('disabled', false);
 	  $("#field_add").find('.field_type option').attr('selected', false);
 	  $("#field_add").find('.field_type option:eq(0)').attr('selected', true).change();
 	  

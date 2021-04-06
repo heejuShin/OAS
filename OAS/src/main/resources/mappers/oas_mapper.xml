@@ -443,7 +443,7 @@
      ]]>
    </select>
    <update id="modifyForm" parameterType="com.walab.oas.DTO.Form">
-      UPDATE `Form` SET category_id=#{category_id}, user_id=#{user_id}, formName= #{formName},explanation= #{explanation},url=#{url},isAvailable=#{isAvailable},plusPoint=#{plusPoint},minusPoint=#{minusPoint},startDate=#{start},endDate=#{end} WHERE id=#{id};
+      UPDATE `Form` SET category_id=#{category_id}, formName= #{formName},explanation= #{explanation},url=#{url},startDate=#{start},endDate=#{end} WHERE id=#{id};
    </update>
    <update id="modifyField" parameterType="com.walab.oas.DTO.Field">
       UPDATE `Field` SET form_id=#{form_id},fieldType=#{fieldType},fieldName=#{fieldName},isEssential=#{isEssential} WHERE id=#{id};

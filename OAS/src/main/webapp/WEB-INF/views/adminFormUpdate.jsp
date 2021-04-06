@@ -78,7 +78,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	
 	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=15"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=71"></script>
+  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=72"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <!-- resizable -->
@@ -215,7 +215,7 @@
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
-						<select class="field_type  " name="f_type3" style="clear:both" disabled> <!-- TODO required -->
+						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected disabled>질문유형</option>
 						  <option value="text">단답형</option>
 						  <option value="textarea">장문형</option>
