@@ -2,7 +2,6 @@ package com.walab.oas.Board;
 
 import java.util.List;
 
-import com.walab.oas.Board.domain.FileVO;
 import com.walab.oas.DTO.SearchCriteria;
 
 public interface BoardService {
@@ -13,6 +12,6 @@ public interface BoardService {
 	public List<BoardVO> getBoardList(SearchCriteria cri);
 	//public int fileInsert(FileVO file) throws Exception;
 	//public void fileInsertService(FileVO file);
-	public int fileInsertService(FileVO file) throws Exception;
+	public int fileInsert(FileVO file) throws Exception;
 	public int countBoard(String searchType, String keyword) throws Exception;
 }

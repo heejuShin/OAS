@@ -24,9 +24,9 @@
  	}
 
     #yourModal{
-    	height: 600px !important;
+    	height: 80% !important;
     	overflow: scroll !important;
-		margin-top: 180px !important;
+		margin-top: 10% !important;
     }
     /* filter - select */
 	.filters {

@@ -292,6 +292,7 @@ public class AdminController {
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
 				String explanation = request.getParameter("explanation");
+				//TO DO
 				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
@@ -435,11 +436,11 @@ public class AdminController {
 	@ResponseBody
 	public Form getFormInfo(HttpServletRequest request, HttpSession session) throws Exception {
 				
-		System.out.println("oghoho");
 		int form_id=Integer.parseInt(request.getParameter("form_id"));
 		
 		Form formInfo=adminDAO.formInfo(form_id);
 		
+		formInfo.setExplanation(formInfo.getExplanation().replaceAll("<br>", ""));
 		System.out.println("formInfo: "+formInfo);
 				
 		return formInfo;
@@ -513,6 +514,8 @@ public class AdminController {
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
 				String explanation = request.getParameter("explanation");
+				//TO DO 
+				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
 				form.setExplanation(explanation);
 				
 				form.setUrl(url);

@@ -86,6 +86,9 @@ input[type=radio], input[type=checkbox] {
 	width: 350px;
 	margin-bottom: 10px;
 }
+.field_title:focus{
+border-bottom:#333333 1px solid !important;
+}
 
 .button {
 	width: 500px;
@@ -292,7 +295,7 @@ button {
 .modal_content {
 	font-size: 15px;
 	font-weight: 600;
-	'
+	
 }
 
 #link {
