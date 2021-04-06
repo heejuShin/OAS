@@ -136,6 +136,7 @@
 			
 			<div class="wrap-input100  bg1">
 				<textarea id="txtArea" rows="2" cols="20" wrap="hard" class="input100 InputFonts" style="margin-top: 5px; margin-left:-10px;" name="explanation" placeholder="설문지 설명" ></textarea>
+				<div style="float: right; margin-top: 20px;" id="test_cnt">(0 / 1000)</div>
 			</div>
 			<!-- <script>
 			$("#txtArea").on("keypress",function(e) {
@@ -396,7 +397,7 @@ $('#state').on('select2:unselect', function(e) {
       });
   $("#state").select2({
       tags: true,
-      tokenSeparators: [',', ' ']
+      tokenSeparators: [',']
   })
   
 var category_list = ${category_list};
@@ -419,6 +420,15 @@ $(document).click(function(e) {
 		$("#bg").remove();
 		$("#preview_modal").empty();
     }
+    
+    $('#txtArea').on('keyup', function() {
+        $('#test_cnt').html("("+$(this).val().length+" / 1000)");
+ 
+        if($(this).val().length > 1000) {
+            $(this).val($(this).val().substring(0, 1000));
+            $('#test_cnt').html("(1000 / 1000)");
+        }
+    });
     
 });
 

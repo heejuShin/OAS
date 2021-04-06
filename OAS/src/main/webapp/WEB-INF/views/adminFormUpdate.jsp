@@ -129,6 +129,7 @@
 				
 				<div class="wrap-input100  bg1" >
 					<textarea class="input100 InputFonts"  id="explanation" name="explanation" placeholder="설문지 설명"></textarea>
+					<div style="float: right; margin-top: 20px;" id="test_cnt" ></div>
 				</div>
 				<input type="hidden" id="state_selected" name="state"/>
 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
@@ -282,7 +283,16 @@
 		var value = $("#state").val();
 	    var s = value.toString();
 	    $("#state_selected").val(s); 
-
+	    
+	   
+	    $('#explanation').on('keyup', function() {
+	        $('#test_cnt').html("("+$(this).val().length+" / 1000)");
+	 
+	        if($(this).val().length > 1000) {
+	            $(this).val($(this).val().substring(0, 1000));
+	            $('#test_cnt').html("(1000 / 1000)");
+	        }
+	    });
 	});
 
 	
