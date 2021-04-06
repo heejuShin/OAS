@@ -231,7 +231,8 @@ h4:hover span.formNameToolTip {
         <div class="board_section">
            <div class="title">
            
-              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+!              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+           	   <button class="btn btn-outline-success my-2 my-sm-0" button type="button" onclick="location.href='<%=request.getContextPath()%>/board/list"> 더보기</button>
            
            </div>
                 <div class="tablelist">
