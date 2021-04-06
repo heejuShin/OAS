@@ -1,47 +1,3 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-<c:set var="path" value="${pageContext.request.contextPath}"/>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Edit Form</title>
-<link rel="stylesheet" href="${path}/resources/css/editform_style.css">
-</head>
-
-<body>
-
-
-
-<h1>View Form</h1>
-
-<form:form commandName="u" action="redirect:list" method="POST">
- 	<form:hidden path="seq"/>
-	<table id="edit">
-	<tr><td class="first">Category:</td><td><form:input path="category" /></td></tr>
-	<tr><td class="first">Title:</td><td><form:input path="title" /></td></tr>
-	<tr><td class="first">Writer:</td><td><form:input path="writer" /></td></tr>
-	<tr><td class="first">Content:</td><td><form:textarea cols="50" rows="5" path="content"></form:textarea></td></tr>
-	
-	<c:if test="${board.fileName ne null}">
-			<tr>
-				<td bgcolor="orange">첨부파일</td>
-				<td align="left"><a href="fileDownload.do?fileName=${board.fileName}">${board.fileName}</a></td>
-			</tr>
-	</c:if>
-	</table>
-
-	
-	<input type="submit" value="수정하기" />
-	<input type="button" value="취소하기" onclick="history.back()"/>	
- </form:form>
-</body>
-</html> --%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.walab.oas.Board.*,java.util.*"%>
@@ -53,31 +9,66 @@
 <head>
 <meta charset="UTF-8">
 <title>View Member</title>
-<link rel="stylesheet" href="member.css">
+
+<!--  button css-->
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/buttonstyle.css?v=2">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
+
+<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=2">
+
+
+	<!--  Form CSS -->
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
+	
+	<!-- checkbox CSS -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+	
+<!-- 합쳐지고 최소화된 최신 CSS --> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
 
 <style>
-	#list {text-align:center;}
+
+input:not(.submit),textarea{
+		width:100%;
+}
+.read_table{
+  width:90%;
+  padding:0 5%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.submit{
+  margin-top:2%;
+  margin-left:50%;
+  background-color: #d69fa9;
+  border: #d69fa9;
+  border-radius:5px;
+  padding:1%;
+  width:5%;
+}
 </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
 
-<%--  <%
-	BoardDAO boardDAO = new BoardDAO();
-	String id=request.getParameter("id");
-	BoardVO read_list=boardDAO.getBoard(Integer.parseInt(id)); //에러 (java.lang.NumberFormatException: null)
-	request.setAttribute("vo",read_list);
-%> --%>
-<%
-	/* String id=request.getParameter("read_list");
-	System.out.println("view의 id는 "+id); */
-	
-	/* BoardVO read_list = BoardDAO.getBoard(Integer.parseInt(id));
-	request.setAttribute("read_list", read_list); */
-%>
+<div id="headTitle"><h2>게시물 보기 </h2></div>
 
-<h1 id='title'>View</h1>
-
-<table id="list" width="90%">
+<div class="container-write">
+<table class="read_table">
 	<tr>
 	<th>Id</th>
 	<th>Category</th>
@@ -105,6 +96,8 @@
 	
 
 </table>
+</div>
+
 <button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 
 <button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='../list'">목록보기 </button>
