@@ -75,13 +75,13 @@
         //함수1. 체크박스 전체 선택 / 해제 함수
         $("#allCheck").click(function () {
           if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
-            $("input[type=checkbox]").prop("checked",true); // 전체선택 체크박스가 해제된 경우 
+            $("input[type=checkbox].not('.headerCheck')").prop("checked",true); // 전체선택 체크박스가 해제된 경우 
           } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
-            $("input[type=checkbox]").prop("checked",false); 
+            $("input[type=checkbox].not('.headerCheck')").prop("checked",false); 
           } 
         });
         //함수2. 체크박스 해제시 전체 체크박스 해제
-        $("input:checkbox[name=result]").click(function () {
+        $("input:checkbox[name=result].not('.headerCheck'").click(function () {
           if($(this).is(":checked") == false){
             $("#allCheck").prop("checked",false);
           }
@@ -98,7 +98,7 @@
 	          });
 	     
 	        //check box 전체 해제
-	        $("input[type=checkbox]").prop("checked",false); 
+	        $("input[type=checkbox].not('.headerCheck'").prop("checked",false); 
 	        $("#stateSubmitB").css("display","inline-block");
         });
         
@@ -172,12 +172,12 @@
                   	<tr><th colspan="9">
 	                  			<div id="stopControlDiv">
 	                  				<div id="msgBox">
-		                  				<input type="checkbox" id="isAvailableCheck" name="isAvailableCheck" value="">
+		                  				<input type="checkbox" class="headerCheck" id="isAvailableCheck" name="isAvailableCheck" value="">
 										<label id="stopMsg">응답 중단하기</label>
 										<input type="hidden" id="isAvailable" name="isAvailable" value="">
 									</div>
 									<div id="msgBox">
-										<input type="checkbox" id="isUserEditCheck" name="isUserEditCheck" value="">
+										<input type="checkbox" class="headerCheck" id="isUserEditCheck" name="isUserEditCheck" value="">
 										<label id="stopMsg">응답 수정가능</label>
 										<input type="hidden" id="isUserEdit" name="isUserEdit" value="">
 									</div>

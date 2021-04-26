@@ -180,8 +180,8 @@
 	        <span class="modal_title">제목 : </span><span id="confirm_title" class="modal_content"></span><br>
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
-	        <span class="modal_title">링크 : </span><input id="link" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/><input id="linkOri" type="hidden" value="" />
-	        <button id="red_ck_link" type="button">중복 확인</button>
+	        <span class="modal_title">링크 : </span><input id="link" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요." readonly/><input id="linkOri" type="hidden" value="" />
+	        <!-- <button id="red_ck_link" type="button">중복 확인</button> -->
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
 	        </p>
 	        <div id="modal_buttons">

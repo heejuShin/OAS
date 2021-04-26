@@ -456,7 +456,7 @@ header .navbar {
 	text-align:center;
 }
 
-.product-item .down-content h6 {
+.product-item .down-content h6:not(.applyNum *) {
 	position: absolute;
 	top: 30px;
 	right: 30px; 

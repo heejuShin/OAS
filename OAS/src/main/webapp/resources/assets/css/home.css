@@ -184,3 +184,29 @@ td {
 	font-weight: 600;
 	padding: 10px;
 }
+
+.applyNum{
+	right:70%;
+	position: absolute;
+    top: 30px;
+    margin-bottom: 2%;
+}
+.applyNum *{
+	display:inline-block;
+}
+
+@media screen and (max-width: 1300px) and (min-width: 0px) {
+	.applyNum>h6 {
+		display:none;
+	}
+	.applyNum{
+		border-radius: 50%;
+		background-color:#1a6692;
+		width: 15px;
+	    text-align: center;
+	    right: 80%;
+	}
+	.applyNum>h5{
+		color:white;
+	}
+}

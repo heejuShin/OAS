@@ -38,7 +38,7 @@
 	
 	<!-- Additional CSS Files -->
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/fontawesome.css">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css?ver=5">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/templatemo-sixteen.css?ver=6">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/owl.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/adding.css">
 	
