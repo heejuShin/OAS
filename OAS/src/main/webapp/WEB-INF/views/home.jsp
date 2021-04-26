@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/home.css?ver=2">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/home.css?ver=7">
 
 
  <style>
@@ -85,7 +85,7 @@ h4:hover span.formNameToolTip {
                                
                                for (const [key, value] of c_list) {
                            	    console.log("Those are ", key, value);
-                           	}
+                           		}
                                for(var i=0; i<category_list.length;i++){
                             	   console.log("c is" + c_list.get(category_list[i].categoryName));
                					  var filter_li = $("<li data-filter='.category_"+category_list[i].id+"'>"+category_list[i].categoryName+"</li>");
@@ -110,6 +110,24 @@ h4:hover span.formNameToolTip {
                       
                            var formContent= $("<div class='down-content'></div>");
                            $($($(".grid").children()[i]).children()[0]).append(formContent);
+							
+							//해당 폼 신청자 수 적기
+							var resultCount;
+							$.ajax({ //해당 form의 신청자 count가져오기
+								url : "admin/resultCount",
+								type : "post",
+								data:{"form_id":form_list[i].id},
+								dataType : "json",
+								async: false,
+								success: function(data){
+								resultCount = data;
+								},
+								error:function(request, status, error){
+									alert("code:"+request.status+"\n"+"\n"+"error:"+error);
+								}
+							});	
+						   var applyNum=$("<div class='applyNum'><h6>신청자:</h6><h5>"+resultCount+"</h5><h6>명</h6></div>")
+                           $($($($(".grid").children()[i]).children()[0]).children()[0]).append(applyNum);
                            
                            if(form_list[i].formName.length > 17){
                         	   var shortFormName = form_list[i].formName.substring(0,16);
@@ -230,10 +248,10 @@ h4:hover span.formNameToolTip {
          </div>
         <div class="board_section">
            <div class="title">
-           
-!              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
-           	   <button class="btn btn-outline-success my-2 my-sm-0" button type="button" onclick="location.href='<%=request.getContextPath()%>/board/list"> 더보기</button>
-           
+   
+              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+           	  <h5 style="position:absolute;right:17%;"><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span>더보기</span></a></h5>
+
            </div>
                 <div class="tablelist">
                    <table class="table table-hover">
