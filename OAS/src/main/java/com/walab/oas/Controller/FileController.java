@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
+/*
 import com.walab.oas.DTO.AttachFileDTO;
 
 import net.coobird.thumbnailator.Thumbnailator;
@@ -202,4 +202,4 @@ public class FileController {
 
 }
 
-
+*/
