@@ -120,12 +120,13 @@ h4:hover span.formNameToolTip {
 								dataType : "json",
 								async: false,
 								success: function(data){
-								resultCount = data;
+									resultCount = data;
 								},
 								error:function(request, status, error){
-									alert("code:"+request.status+"\n"+"\n"+"error:"+error);
+									console.log("code:"+request.status+"\n"+"\n"+"error:"+error);
 								}
 							});	
+							
 						   var applyNum=$("<div class='applyNum'><h6>신청자:</h6><h5>"+resultCount+"</h5><h6>명</h6></div>")
                            $($($($(".grid").children()[i]).children()[0]).children()[0]).append(applyNum);
                            

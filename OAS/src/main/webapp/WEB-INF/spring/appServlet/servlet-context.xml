@@ -48,6 +48,7 @@
          <exclude-mapping path="/"/>
          <exclude-mapping path="/login/**"/>
 	 <exclude-mapping path="/resources/**"/> 
+	 	 <exclude-mapping path="/admin/resultCount"/> 
 	 <!-- plz  -->
 
          <beans:ref bean="logininterceptor"/>
