@@ -140,9 +140,9 @@ $('#state').on('select2:unselect', function(e) {
      $("#state_selected").val(s); 
       });
       
-  $("#state").select2({
+  /*$("#state").select2({
       tags: true,
       tokenSeparators: [',', ' ']
-  });
+  });*/
  
     </script>

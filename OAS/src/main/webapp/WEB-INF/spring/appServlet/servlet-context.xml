@@ -30,9 +30,12 @@
 	<beans:bean id="excelDownloadView" class="com.walab.oas.DAO.ExcelDownloadDAO"/>
     
     <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
-    
-    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-    
+    <context:component-scan
+		base-package="org.zerock.controller" />
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean>
+	    
    <beans:bean id="authinterceptor" class="com.walab.oas.Intercept.AuthIntercept" />
    <beans:bean id="logininterceptor" class="com.walab.oas.Intercept.LoginIntercept" />
    
