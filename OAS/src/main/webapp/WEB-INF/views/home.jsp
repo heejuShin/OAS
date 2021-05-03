@@ -127,6 +127,8 @@ h4:hover span.formNameToolTip {
 								}
 							});	
 							
+						   var applyNum="";
+						   if(resultCount!=null)
 						   var applyNum=$("<div class='applyNum'><h6>신청자:</h6><h5>"+resultCount+"</h5><h6>명</h6></div>")
                            $($($($(".grid").children()[i]).children()[0]).children()[0]).append(applyNum);
                            
@@ -285,7 +287,7 @@ h4:hover span.formNameToolTip {
           <div class="col-md-12">
             <div class="filters" style="padding-bottom:45px; margin-bottom:30px;">
               <ul class="ul_filters">
-                  <li class="active" data-filter="*">All Products</li>
+                  <li class="active" data-filter="*">전체</li>
               </ul>     
 	            <form class="form-inline" name="searchForm" action="<%=request.getContextPath()%>/" method="POST" style="float:right;">
 	                    <input type="hidden" name="searchType" value="all">
