@@ -58,8 +58,6 @@
 <c:set var="admin" value="${admin}"/><c:if test="${admin ne '2'}"><button name='stateB' id="stateB" onclick="location.href='../../oas/admin/board/add'">게시글 작성 </button></c:if>
 
 <div class="table-responsive" data-pattern="priority-columns">
-
-<!-- 여기 검색창 들어갈 예정임 -->
 <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
 <thead>
 <tr>
