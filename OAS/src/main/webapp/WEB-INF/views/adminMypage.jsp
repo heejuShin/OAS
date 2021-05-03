@@ -166,6 +166,21 @@
         <script>
 							//표 동적 생성하는 부분
                             $(document).ready(function () {
+                            	//command injection 방지
+                                var replaceId = /[~!@\#$%^&*\()\-=+_'\;<>\/.\`:\"\\,\[\]?|{}]/gi;
+                                $("#keyword").on("focusout", function() {
+                                    var x = $(this).val();
+                                    if (x.length > 0) {
+                                        if (x.match(replaceId)) {
+                                           x = x.replace(replaceId, "");
+                                        }
+                                        $(this).val(x);
+                                    }
+                                }).on("keyup", function() {
+                                    $(this).val($(this).val().replace(replaceId, ""));
+
+                                });
+                            	
 								var categoryList=${categoryList};
 								for(var i=0; i < categoryList.length; i++){
 									var option=$("<option data-filter='.category"+categoryList[i].id+"' value='"+categoryList[i].categoryName+"'>"+categoryList[i].categoryName+"</option>");

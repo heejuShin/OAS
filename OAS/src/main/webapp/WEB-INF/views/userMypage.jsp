@@ -77,7 +77,7 @@
             
             <form class="form-inline formgroup" name="searchForm" action="<%=request.getContextPath()%>/mypage" method="POST" >
               <input type="hidden" name="searchType" value="all">
-              <input type="text" class="form-control mr-sm-2" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
+              <input type="text" class="form-control mr-sm-2" id="keyword" name="keyword" value="${keyword}" placeholder="카테고리+제목+등록자" aria-label="검색">
               
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               <select name="filterType" class="filterType">
@@ -161,8 +161,23 @@
                            
    //표 동적 생성하는 부분
      $(document).ready(function () {
+    	 
+   	  //command injection 방지
+        var replaceId = /[~!@\#$%^&*\()\-=+_'\;<>\/.\`:\"\\,\[\]?|{}]/gi;
+        $("#keyword").on("focusout", function() {
+            var x = $(this).val();
+            if (x.length > 0) {
+                if (x.match(replaceId)) {
+                   x = x.replace(replaceId, "");
+                }
+                $(this).val(x);
+            }
+        }).on("keyup", function() {
+            $(this).val($(this).val().replace(replaceId, ""));
 
-        var categoryList=${categoryList};
+        });
+
+      var categoryList=${categoryList};
       for(var i=0; i < categoryList.length; i++){
          var option=$("<option data-filter='.category"+categoryList[i].id+"' value='.category"+categoryList[i].id+"'>"+categoryList[i].categoryName+"</option>");
          $(".filter-category").append(option);

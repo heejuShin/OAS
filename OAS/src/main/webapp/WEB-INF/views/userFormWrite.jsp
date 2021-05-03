@@ -48,6 +48,34 @@
 	<script>
 	$(document).ready(function () {
 		
+		//command injection 방지
+        var replaceId = /[~!@\#$%^&*\()\-=+_'\;<>\/.\`:\"\\,\[\]?|{}]/gi;
+        $("#fieldInputs").on('focusout', ".input100", function(){
+        //$("input").on("focusout", function() {
+            var x = $(this).val();
+            if (x.length > 0) {
+                if (x.match(replaceId)) {
+                   x = x.replace(replaceId, "");
+                }
+                $(this).val(x);
+            }
+        }).on("keyup", function() {
+            $(this).val($(this).val().replace(replaceId, ""));
+
+        });
+		$("textarea").on("focusout", function() {
+	        var x = $(this).val();
+	        if (x.length > 0) {
+	            if (x.match(replaceId)) {
+	               x = x.replace(replaceId, "");
+	            }
+	            $(this).val(x);
+	        }
+	    }).on("keyup", function() {
+	        $(this).val($(this).val().replace(replaceId, ""));
+	  });
+	
+		
 		var formInfo = ${form_info};
 		var fieldInfo = ${field_list};
 		
