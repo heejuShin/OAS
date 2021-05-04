@@ -165,7 +165,6 @@
   
 			    </select>
 			</div>
-
 			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
