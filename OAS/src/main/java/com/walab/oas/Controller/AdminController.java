@@ -299,8 +299,9 @@ public class AdminController {
 				String formName = request.getParameter("formName");
 				form.setFormName(formName);
 				String explanation = request.getParameter("explanation");
-				//TO DO
-				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
+				explanation = explanation.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+				System.out.println("check..");
+				//explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
 				form.setUrl(url);

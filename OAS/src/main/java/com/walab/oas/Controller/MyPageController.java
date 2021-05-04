@@ -350,8 +350,6 @@ public class MyPageController {
 			        ob2.put("name", major.get(i).getName());
 			        ob2.put("department_id", major.get(i).getDepartment_id());
 			        ob2.put("department_name", major.get(i).getDepartment_name());
-			        System.out.println("->"+major.get(i).getDepartment_name());
-			        System.out.println(ob2);
 		            major_list.put(ob2);
 				}
 			}catch(JSONException e){
