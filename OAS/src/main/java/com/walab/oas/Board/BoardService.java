@@ -12,6 +12,6 @@ public interface BoardService {
 	public List<BoardVO> getBoardList(SearchCriteria cri);
 	//public int fileInsert(FileVO file) throws Exception;
 	//public void fileInsertService(FileVO file);
-	public int fileInsert(FileVO file) throws Exception;
+//	public int fileInsert(FileVO file) throws Exception;
 	public int countBoard(String searchType, String keyword) throws Exception;
 }
