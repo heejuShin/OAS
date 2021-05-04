@@ -61,7 +61,6 @@
             }
         }).on("keyup", ".input100", function() {
             $(this).val($(this).val().replace(replaceId, ""));
-
         });
 	
 		
