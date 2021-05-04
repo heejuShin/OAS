@@ -234,6 +234,7 @@ $(function() {
 					<p class="label-input100 submit_dates"><span id="regDate"></span> / <span id="editDate"></span></p>
 				</div>
 				
+				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
 				</div>

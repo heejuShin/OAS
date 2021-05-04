@@ -77,8 +77,15 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/admin/board/addok", method = RequestMethod.POST)    
-    public ModelAndView addPostOk(BoardVO vo, HttpServletRequest request, @RequestPart MultipartFile files) throws Exception{     
+    public ModelAndView addPostOk(BoardVO vo, HttpSession session,HttpServletRequest request, @RequestPart MultipartFile files) throws Exception{     
        
+    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+    	String requestedCsrfToken = request.getParameter("csrfToken");
+    	        
+    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+    	    return new ModelAndView("error/csrfMsg");
+    	}
+    	
        ModelAndView mav=new ModelAndView("redirect:../../board/list");
       
        BoardVO board = new BoardVO();
@@ -229,7 +236,14 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/board/editok", method = RequestMethod.POST)    
-    public ModelAndView editPostOk(BoardVO vo){
+    public ModelAndView editPostOk(HttpSession session,HttpServletRequest request,BoardVO vo){
+
+    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+    	String requestedCsrfToken = request.getParameter("csrfToken");
+    	        
+    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+    	    return new ModelAndView("error/csrfMsg");
+    	}
     	ModelAndView mav=new ModelAndView("redirect:list");
     	if(boardService.updateBoard(vo) == 0)
     		System.out.println("데이터 수정 실패 ");

@@ -63,7 +63,7 @@
 		<div class="wrap-contact100">
 			<form class="contact100-form" action="submit" id="userForm" method="POST">
 				<span>신청이 완료된 폼입니다.</span>
-				
+				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<span class="contact100-form-title" id="form_title"></span>
 
 				<div class="wrap-input100 bg0">

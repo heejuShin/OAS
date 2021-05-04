@@ -82,7 +82,13 @@ ModelAndView mav = new ModelAndView();
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
 		System.out.println("<submitForm> controller");
-		
+
+    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+    	String requestedCsrfToken = request.getParameter("csrfToken");
+    	        
+    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+    	    return new ModelAndView("error/csrfMsg");
+    	}
 		//result 기록  
 		String formID  = request.getParameter("form_index");
 		int  form_id = Integer.parseInt(formID);
@@ -257,6 +263,13 @@ ModelAndView mav = new ModelAndView();
 	@RequestMapping(value="/userForm/update",method=RequestMethod.POST)
 	public ModelAndView UpdateUserFromData(HttpServletRequest request, HttpSession session) throws Exception {
 
+
+    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+    	String requestedCsrfToken = request.getParameter("csrfToken");
+    	        
+    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+    	    return new ModelAndView("error/csrfMsg");
+    	}
 		ModelAndView mav=new ModelAndView();
 		System.out.println("in user form update><");
 		

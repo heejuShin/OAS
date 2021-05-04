@@ -262,6 +262,13 @@ public class AdminController {
 		@ModelAttribute("ses")
 		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
 
+	    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+	    	String requestedCsrfToken = request.getParameter("csrfToken");
+	    	        
+	    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+	    	    return new ModelAndView("error/csrfMsg");
+	    	}
+	    	
 			ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 
 			Form form = new Form();
@@ -477,6 +484,13 @@ public class AdminController {
 	@RequestMapping(value="/form/view/formUpdate",method=RequestMethod.POST)
 	public @ResponseBody ModelAndView modifyFormData(HttpServletRequest request, HttpSession session) throws Exception {
 
+    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+    	String requestedCsrfToken = request.getParameter("csrfToken");
+    	        
+    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+    	    return new ModelAndView("error/csrfMsg");
+    	}
+    	
 		ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
 		System.out.println("in form update><");
 		Form form = new Form();

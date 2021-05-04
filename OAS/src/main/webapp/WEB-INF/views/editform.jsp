@@ -106,7 +106,7 @@ textarea{
 			</tr>
 	</c:if> --%>
 	</table>
-
+	<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 	<div class="buttonBox">
 		<input type="submit" class="submit" value="수정하기" />
 		<input type="button" class="back" value="취소하기" onclick="history.back()"/>	

@@ -157,6 +157,7 @@
               
               
             </div >
+            <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
             <button class="w3-button w3-black" id="userJoinFormB" type="button">확인</button>
           </form>
     
