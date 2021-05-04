@@ -43,6 +43,21 @@
 	
 <script>
 	$(document).ready(function () {
+		
+		//command injection 방지
+        var replaceId = /[\#$^&\\='\;<>\\`\\\\[\]|{}]/gi;
+        $("#fieldInputs").on('focusout', ".input100", function(){
+            var x = $(this).val();
+            if (x.length > 0) {
+                if (x.match(replaceId)) {
+                   x = x.replace(replaceId, "");
+                }
+                $(this).val(x);
+            }
+        }).on("keyup", ".input100", function() {
+            $(this).val($(this).val().replace(replaceId, ""));
+        });
+        
 		var formInfo = ${form_info};
 		var fieldInfo = ${field_list};
 		var resultContent = ${read_list};
