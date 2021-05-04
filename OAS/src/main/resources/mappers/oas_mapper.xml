@@ -66,7 +66,7 @@
       FROM (SELECT s.*,categoryName FROM 
             (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.*,st.stateName FROM 
             (SELECT Result.regDate,Result.form_id,Result.user_id,State.stateName,Result.state_id  FROM 
-               (SELECT * FROM Result WHERE Result.user_id=${user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isAvailable=1
+               (SELECT * FROM Result WHERE Result.user_id=#{user_id})as Result  INNER JOIN State ON Result.state_id=State.id)as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isAvailable=1
                   <include refid="userFilter" />
                       )as s LEFT OUTER JOIN Category ON s.category_id=Category.id) as c INNER join User as u ON (c.user_id = u.id)
        
@@ -79,7 +79,7 @@
    <select id="countUserTab1" resultType="int">
       SELECT count(*)
          FROM (SELECT s.*,categoryName FROM (SELECT form_id, st.user_id as user ,state_id,st.regDate as registDate,Form.* FROM 
-            (SELECT * FROM Result WHERE Result.user_id=${user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isAvailable=1
+            (SELECT * FROM Result WHERE Result.user_id=#{user_id})as st RIGHT OUTER JOIN Form ON st.form_id=Form.id WHERE isAvailable=1
             <include refid="userFilter" />
             ) as s  
              LEFT OUTER JOIN Category ON s.category_id=Category.id) as c
@@ -478,11 +478,11 @@
     </select>
     
    <update id="changeAvailable" parameterType="int" >
-      UPDATE Form SET isAvailable = ${isAvailable} WHERE id = #{form_id};
+      UPDATE Form SET isAvailable = #{isAvailable} WHERE id = #{form_id};
    </update>
 
    <update id="changeUserEdit" parameterType="int" >
-      UPDATE Form SET isUserEdit = ${isUserEdit} WHERE id = #{form_id};
+      UPDATE Form SET isUserEdit = #{isUserEdit} WHERE id = #{form_id};
    </update>
 
    <delete id="deleteDefaultState">
