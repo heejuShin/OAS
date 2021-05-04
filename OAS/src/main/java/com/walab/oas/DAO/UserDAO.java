@@ -75,4 +75,12 @@ public class UserDAO {
 	public List<ReadResult> getReadResultContent(int result_id){
 		return sqlSession.selectList(namespace+".getReadResultContent",result_id);	
 	}
+	
+	public void setFile(String storedName, String originalName) {
+	      Map<String, Object> map = new HashMap<String, Object>();
+	      map.put("fileName", storedName);
+	      map.put("fileRealName", originalName);
+	      System.out.println(map);
+	      sqlSession.insert(namespace + ".inputFile", map);      
+	   }
 }

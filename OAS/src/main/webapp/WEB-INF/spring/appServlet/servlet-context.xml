@@ -19,7 +19,7 @@
 	 <beans:bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <beans:property name="order" value="0"/>
     </beans:bean>
-
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -33,13 +33,15 @@
     <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
     <context:component-scan
 		base-package="org.zerock.controller" />
-	<beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
-	</beans:bean>
 	    
    <beans:bean id="authinterceptor" class="com.walab.oas.Intercept.AuthIntercept" />
    <beans:bean id="logininterceptor" class="com.walab.oas.Intercept.LoginIntercept" />
-   
+   <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <beans:property name="defaultEncoding" value="utf-8"></beans:property>
+      <beans:property name="maxUploadSize" value="104857560"></beans:property>
+      <beans:property name="maxUploadSizePerFile" value="2097152"></beans:property>
+      <beans:property name="maxInMemorySize" value="10485756"></beans:property>
+   </beans:bean>
    <!-- json형식의 데이터 전달에서 스크립트 공격 필터링 -->
    <beans:bean id="htmlEscapingObjectMapper" class="com.walab.oas.security.HtmlEscapingObjectMapperFactory" />
 	 <mvc:annotation-driven>

@@ -110,13 +110,14 @@
 		for(var i = 0 ; i < fieldInfo.length; i++){
 			console.log("step3");
 				//form 제출시 확인 필요한 필드 클래스 명으로 지정 
-				if(fieldInfo[i].field_star == 1){
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'>Q. "+fieldInfo[i].field_name+"<span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
- 						$("#fieldInputs").append(divTitle);
- 				}else{
-						var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'>Q. "+fieldInfo[i].field_name+"</p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
-						$("#fieldInputs").append(divTitle);
-					} 
+			if(fieldInfo[i].field_star == 1){
+                var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'>Q. "+fieldInfo[i].field_name+"<span class='redCSS'>*</span></p> <input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv checkDiv'></div></div>");
+                 $("#fieldInputs").append(divTitle);
+           }else{
+                var divTitle = $("<div id='field_"+ fieldInfo[i].field_id+"' class='wrap-input100 bg1'><p class='label-input100 nameMargin questionP'>Q. "+fieldInfo[i].field_name+"</p><input type='hidden' name='field_ids' value='"+fieldInfo[i].field_id+"'><div class='inputDiv'></div></div>");
+                $("#fieldInputs").append(divTitle);
+             } 
+ 
 				console.log("step3.5");
 				//아래의 항목의 경우 별도의 옵션 필요
 				if(fieldInfo[i].field_type == 'select' || fieldInfo[i].field_type == 'radio' || fieldInfo[i].field_type == 'checkbox'){
