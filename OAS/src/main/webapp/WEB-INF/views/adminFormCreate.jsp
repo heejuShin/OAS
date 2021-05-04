@@ -197,6 +197,9 @@
             <button type="button" class="edit">수정</button>
             <button type="button" class="cancle">취소</button>
           </div>
+          
+          <!-- csrf token -->
+          <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
          
 
         <div id="confirm_modal">

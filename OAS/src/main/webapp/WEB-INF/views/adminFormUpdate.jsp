@@ -102,7 +102,7 @@
 						설문 수정하기
 					</span>
 					
-		
+		<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 	          <div class="wrap-input100 bg1 rs1-wrap-input100">
 								
 			 	<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
@@ -112,7 +112,7 @@
 	
 	 		</div>
 	
-	
+				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<div class="wrap-input100  bg1 rs1-wrap-input100" >
 						<input class="input100 InputFonts" type="text" id="formName" name="formName" placeholder="제목을 입력해주세요" value="" required="">
 				</div>

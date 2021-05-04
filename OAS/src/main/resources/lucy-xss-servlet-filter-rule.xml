@@ -60,4 +60,34 @@ url disable이 true이면 지정한 url 내의 모든 파라미터는 필터링�
 </params>
 </url-rule>
 </url-rule-set> -->
+
+<!-- url 별 필터링 룰 선언 -->
+    <url-rule-set>
+       
+       <!-- url disable이 true이면 지정한 url 내의 모든 파라메터는 필터링 되지 않는다. -->
+       <url-rule>
+           <url disable="true">/disableUrl1.do</url>
+       </url-rule>
+       
+        <!-- url1 내의 url1Parameter는 필터링 되지 않으며 또한 url1PrefixParameter로 시작하는 파라메터도 필터링 되지 않는다. -->
+        <url-rule>
+            <url>/url1.do</url>
+            <params>
+                <param name="url1Parameter" useDefender="false" />
+                <param name="url1PrefixParameter" usePrefix="true" useDefender="false" />
+            </params>
+        </url-rule>
+        
+        <!-- url2 내의 url2Parameter1만 필터링 되지 않으며 url2Parameter2는 xssSaxFilterDefender를 사용해 필터링 한다.  -->
+        <url-rule>
+            <url>/url2.do</url>
+            <params>
+                <param name="url2Parameter1" useDefender="false" />
+                <param name="url2Parameter2">
+                    <defender>xssSaxFilterDefender</defender>
+                </param>
+            </params>
+        </url-rule>
+    </url-rule-set>
+    
 </config>

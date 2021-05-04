@@ -50,8 +50,17 @@
 	        <url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-<!-- xss 방지 (luch-xss-servlet-filter) -->
-
+	<!-- xss 방지 (luch-xss-servlet-filter) -->
+	<!-- multipart/form-data도 xss필터를 거치기 위해 -->
+    <filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<filter>
 		<filter-name>xssEscapeServletFilter</filter-name>
 		<filter-class>com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter</filter-class>
@@ -59,6 +68,17 @@
 	<filter-mapping>
 		<filter-name>xssEscapeServletFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	<filter>
+  		<filter-name>XssEscapeServletCustomFilter</filter-name>
+  		<filter-class>com.walab.oas.security.XssEscapeServletCustomFilter</filter-class>
+	</filter>
+
+    <filter-mapping>
+    	<filter-name>XssEscapeServletCustomFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 

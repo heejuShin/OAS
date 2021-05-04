@@ -292,7 +292,7 @@
 		<form action="userForm/update" id="userForm" class="contact100-form" method="post">
 			<span>이미 신청이 완료된 폼으로, 수정이 가능합니다.</span>
 			<span class="contact100-form-title" id="form_title"></span>
-
+				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<div class="wrap-input100 bg0">
 					<p class="label-input100 form_explanation" ></p>
 					<p class="label-input100 form_date"> 신청 기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>

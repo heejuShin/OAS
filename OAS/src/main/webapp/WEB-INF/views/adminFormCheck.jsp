@@ -186,6 +186,7 @@
 				    			  <input name="formID" value="${form_id}" type="hidden"/>
 				    			  <input type="hidden" id="state" name="state" value="*">
 				    			  <input type="submit" id="excelDown" value="EXCEL 다운"/>
+				    			  <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				    			  	<div class="excel_tooltip">아래 표에서 <br>선택한 상태에<br>해당되는 응답만 <br>다운됩니다.</div>
 							      </form>
 								</div>

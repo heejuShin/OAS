@@ -126,7 +126,16 @@ public class MyPageController {
 		}
 		
 		@RequestMapping(value="/admin/mypage/state/save", method=RequestMethod.POST)
-		public ModelAndView saveDefaultState (HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes ra) throws Exception {
+		public ModelAndView saveDefaultState (HttpSession session,HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes ra) throws Exception {
+			
+
+	    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+	    	String requestedCsrfToken = request.getParameter("csrfToken");
+	    	        
+	    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+	    	    return new ModelAndView("error/csrfMsg");
+	    	}
+	    	
 			ModelAndView mav = new ModelAndView("redirect:/alert");
 			
 			State state= new State();
@@ -252,9 +261,15 @@ public class MyPageController {
 		}
 		
 		@RequestMapping(value = "/info/modify" ,method = RequestMethod.POST)
-		  public ModelAndView modifyInfo(HttpSession session,User user) throws Exception {
+		  public ModelAndView modifyInfo(HttpServletRequest request, HttpSession session,User user) throws Exception {
+
+	    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+	    	String requestedCsrfToken = request.getParameter("csrfToken");
+	    	        
+	    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+	    	    return new ModelAndView("error/csrfMsg");
+	    	}
 			ModelAndView mav = new ModelAndView();
-			
 			
 			mypageDao.modifyInfo(user);
 			
@@ -263,9 +278,15 @@ public class MyPageController {
 		}
 		
 		@RequestMapping(value = "/admin/info/modify" ,method = RequestMethod.POST)
-		  public ModelAndView adminModifyInfo(HttpSession session,User user) throws Exception {
+		  public ModelAndView adminModifyInfo(HttpServletRequest request,HttpSession session,User user) throws Exception {
+
+	    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+	    	String requestedCsrfToken = request.getParameter("csrfToken");
+	    	        
+	    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+	    	    return new ModelAndView("error/csrfMsg");
+	    	}
 			ModelAndView mav = new ModelAndView();
-			
 			
 			mypageDao.modifyInfo(user);
 			

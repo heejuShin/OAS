@@ -54,6 +54,7 @@
           </div>
           
           <form class="w3-container" action="<%=request.getContextPath()%>/admin/info/modify" method="POST">
+          <input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
             <div class="w3-section">
               <div>
               <label>이름</label>

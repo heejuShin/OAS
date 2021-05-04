@@ -78,7 +78,7 @@
 			    <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
 			</div>
 			<input type="hidden" id="state_selected" name="state" style="width: 1000px;"/>
-			
+			<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 			
 		<div class="button_div" style="font-weight: 600;">
             <button style="border-color: #28a745; color: #28a745" type="submit">저장</button>

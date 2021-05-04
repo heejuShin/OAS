@@ -265,7 +265,7 @@
 			<form class="contact100-form" action="../submit" id="userForm" method="POST">
 				<input type="hidden" name="form_index" value="${form_ID}" >
 				<span class="contact100-form-title" id="form_title"> </span>
-
+				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<div class="wrap-input100 bg0">
 					<p class="label-input100 form_explanation" ></p>
 					<p class="label-input100 form_date">신청기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>

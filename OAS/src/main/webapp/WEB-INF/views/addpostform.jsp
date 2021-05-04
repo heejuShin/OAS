@@ -65,6 +65,7 @@
 </td>
 </tr>
 </table>
+<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 	<div class="uploadResult">
 		<ul></ul>
 	</div>
