@@ -86,7 +86,7 @@ ModelAndView mav = new ModelAndView();
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr, MultipartFile uploadFile) throws Exception {
 		System.out.println("<submitForm> controller");
-		System.out.println("Foreach "+uploadFile.getOriginalFilename());
+		//System.out.println("Foreach "+uploadFile.getOriginalFilename());
 
     	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
     	String requestedCsrfToken = request.getParameter("csrfToken");
@@ -103,7 +103,7 @@ ModelAndView mav = new ModelAndView();
 			user_id=(Integer) session.getAttribute("id");
 		}
 		
-		
+		if(uploadFile!=null) {
 		String root_path = request.getSession().getServletContext().getRealPath("/");  
         String attach_path = "resources/upload/";
         String filename = uploadFile.getOriginalFilename();
@@ -115,6 +115,7 @@ ModelAndView mav = new ModelAndView();
         String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
 
         userDao.setFile(storedFileName, filename);
+		}
 
 		
 		
@@ -165,6 +166,7 @@ ModelAndView mav = new ModelAndView();
 	 	System.out.println("<submitForm> controller end");
 		return new ModelAndView("redirect:/userFormView");
 	}
+	
 	
 	//form view
 	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
@@ -233,7 +235,7 @@ ModelAndView mav = new ModelAndView();
 		return mav;
 	}
 	
-	//form view
+	//form Update
 	@RequestMapping(value = "/userFormUpdate") // GET 방식으로 페이지 호출
 	public ModelAndView userFormUpdate (HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<viewUserForm> controller");

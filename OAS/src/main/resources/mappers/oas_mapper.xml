@@ -273,6 +273,15 @@
        INSERT INTO FILE (fileName,fileRealName) VALUE (#{fileName},#{fileRealName});
     </insert> 
     
+    <!-- 첨부파일 다운 -->
+	<select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+			fileName,
+			fileRealName
+		FROM FILE
+		WHERE id = #{FILE_NO}
+	</select>
+	
     <!-- 상태 id 생성  -->
    <insert id="stateCreate" parameterType="com.walab.oas.DTO.State">
        INSERT INTO State (form_id,stateName,isDefault) VALUE (#{form_id}, #{stateName}, #{isDefault});

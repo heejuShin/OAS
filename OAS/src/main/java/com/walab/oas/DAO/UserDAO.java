@@ -83,4 +83,8 @@ public class UserDAO {
 	      System.out.println(map);
 	      sqlSession.insert(namespace + ".inputFile", map);      
 	   }
+	// 첨부파일 다운로드
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectFileInfo", map);
+	}
 }
