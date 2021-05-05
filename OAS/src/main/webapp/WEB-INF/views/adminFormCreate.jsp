@@ -371,6 +371,7 @@ $(document).ready(function(){
     let todayTime = new Date(); 
     let hours = todayTime.getHours().toString();
     let minutes = todayTime.getMinutes().toString();
+    if(hours.length==1) hours = '0'+hours;
 	if(minutes.length==1) minutes = '0'+minutes;
     $('#startTime').val(hours+":"+minutes);
     $('#endTime').val(hours+":"+minutes);
