@@ -75,8 +75,8 @@ public class Form {
 
 	public String getExplanation() {
 		if(explanation!=null) {
-			if(explanation.contains("<br>"))
-				explanation = explanation.replaceAll("<br>", "");
+			if(explanation.contains("<br/>"))
+				explanation = explanation.replaceAll("<br/>", "");
 		}
 		return explanation;
 	}
