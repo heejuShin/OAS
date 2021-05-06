@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.UserDAO;
+import com.walab.oas.DTO.AttachFileDTO;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
@@ -190,6 +191,7 @@ ModelAndView mav = new ModelAndView();
 		Result result_info = userDao.resultinfo(result_id);
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
 		System.out.println("result_info:"+result_id);
+
 		//form + result 정보 
 		JSONArray jArray1 = new JSONArray();
 		try {
@@ -272,7 +274,6 @@ ModelAndView mav = new ModelAndView();
 		ObjectMapper mapper2=new ObjectMapper();
 		String jArray2=mapper2.writeValueAsString(field_list);
 		
-		//List<ReadResult> read_list=adminDao.getReadList(result_id);
 		List<ReadResult> read_list=userDao.getReadResultContent(result_id);
 		
 		ObjectMapper mapper=new ObjectMapper();

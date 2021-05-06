@@ -9,6 +9,7 @@ public class Result_Content {
 	private String content;
 	private Date regDate;
 	private Date editDate;
+	private int file_id;
 	@Override
 	public String toString() {
 		return "Result_Content [id=" + id + ", result_id=" + result_id + ", field_id=" + field_id + ", content="
@@ -19,6 +20,12 @@ public class Result_Content {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getFile_id() {
+		return file_id;
+	}
+	public void setFile_id(int file_id) {
+		this.file_id = file_id;
 	}
 	public int getResult_id() {
 		return result_id;
