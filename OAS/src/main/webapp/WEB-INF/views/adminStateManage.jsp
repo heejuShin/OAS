@@ -74,7 +74,7 @@
 	<form action = "./state/save" method="post">
          
 			<div class="wrap-input100  bg1 selectState" style="font-size: 15px;">
-				<select class="form-control" id="state" style="width: 80%; border:none;" id="state" multiple="multiple"></select>
+				<select class="form-control" id="state" style="width: 80%; border:none;"  multiple="multiple"></select>
 			    <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
 			</div>
 			<input type="hidden" id="state_selected" name="state" style="width: 1000px;"/>
