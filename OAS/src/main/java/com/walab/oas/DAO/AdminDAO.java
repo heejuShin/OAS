@@ -212,4 +212,12 @@ public class AdminDAO {
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(namespace + ".selectFileInfo", map);
 	}
+	
+	public int deleteCategory(String categoryName) {
+		return sqlSession.delete(namespace+".deleteCategory",categoryName);
+	}
+	
+	public int createCategory(String name) {
+		return sqlSession.insert(namespace+".createCategory",name);
+	}
 }
