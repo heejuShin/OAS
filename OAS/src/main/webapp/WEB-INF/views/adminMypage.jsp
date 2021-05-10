@@ -45,6 +45,10 @@
 		    max-width: 100% !important;
 		}
      }
+     
+   
+     
+     
      </style>
 
 
@@ -267,17 +271,30 @@
 	                    			}
 	                    			//모집마감(결과보기, 신청자가 없으면 삭제 가능)
 	                    			else if((new Date()>new Date(adminList[i].endDate)) || adminList[i].isAvailable==0){
-	                    			if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isAvailable==0)
+	                    				if(!(new Date()>new Date(adminList[i].endDate)) && adminList[i].isAvailable==0)
 	                    					var td6 = $("<td class='blueLetter'>신청중지</td>"); 
 		                    			else
 		                    				var td6 = $("<td class='redLetter'>신청마감</td>"); 
 		                    		    $($(".tbodies").children()[i]).append(td6);
+
+
+		                    		    <%-- var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button></td>");
+		                    		    $($(".tbodies").children()[i]).append(a);
+		                    			var form=$("<form id='updateForm' action='<%=request.getContextPath()%>/admin/form/view/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+		                    			$($(".tbodies").children()[i]).append(form); --%>
 		                    			
-	                    				var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
-										$($(".tbodies").children()[i]).append(a);
-										var form=$("<form id='resultForm' action='resultForm/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/><input type='hidden' id='' name='select_formTitle' value='"+adminList[i].formName+"'/></form>");
-										$($(".tbodies").children()[i]).append(form);
-										
+		                    			if(resultCount!=0){
+		                    				 var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'resultForm(this);'><img class='iconImg' src='../resources/img/form.png'><span class='tooltiptext'>응답지</span></button></td>");
+				                    		 $($(".tbodies").children()[i]).append(a);
+				                    		 var form=$("<form id='updateForm' action='<%=request.getContextPath()%>/admin/form/view/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+				                    		 $($(".tbodies").children()[i]).append(form);
+			                    			 
+		                    			}else{
+		                    				 var a=$("<td><button id='resultForm_"+adminList[i].id+"' type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = 'openForm(this);'><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button></td>");
+				                    		    $($(".tbodies").children()[i]).append(a);
+				                    			var form=$("<form id='updateForm' action='<%=request.getContextPath()%>/admin/form/view/"+adminList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+adminList[i].id+"'/></form>");
+				                    			$($(".tbodies").children()[i]).append(form);
+			                    		}
 										/* var resultCount;
 										$.ajax({ //해당 form의 신청자 count가져오기
 											url : "resultCount",
