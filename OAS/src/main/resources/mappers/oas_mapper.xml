@@ -546,9 +546,9 @@
       SELECT * from Department;
    </select>
    
-      <select id="majorList" resultType="com.walab.oas.DTO.Major">
+   <select id="majorList" resultType="com.walab.oas.DTO.Major">
       SELECT Major.*, Department.name as department_name from Major 
-		INNER JOIN Department ON Major.department_id = Department.id;
+	  INNER JOIN Department ON Major.department_id = Department.id;
    </select>
    <!-- 선택한 내 Form 데이터 삭제하기 -->
    <delete id="deleteMyForm" parameterType="int">
@@ -564,4 +564,13 @@
    <delete id="deleteItem" parameterType="int">
        update Item SET isDelete=1 where id=#{item_id};
    </delete>
+   
+   <!-- Category 삭제하기 -->
+   <delete id="deleteCategory" parameterType="String">
+       delete from Category where categoryName=#{categoryName};
+   </delete>
+   
+   <insert id="createCategory" parameterType="String" >
+       INSERT INTO Category (categoryName) VALUE (#{name});
+   </insert> 
 </mapper>
