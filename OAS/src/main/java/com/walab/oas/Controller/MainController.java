@@ -206,7 +206,6 @@ public class MainController {
 			endDate = f.parse(fm.format(form_info.get(0).getEndDate()));		
 			
 			if(current.compareTo(endDate)>0) {
-				System.out.println("신청마감됨");
 				mav.addObject("form_info", jArray1);
 				mav.setViewName("deadLineForm");
 				return mav;

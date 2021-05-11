@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=3">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/deadLineForm.css?ver=2">
 	
 	<!-- checkbox CSS -->
@@ -69,7 +69,7 @@
 					<p class="label-input100 form_deadLine">신청이 마감된 폼입니다.</p>
 				</div>
 				
-				<div class="wrap-input100 button rs1-wrap-input100 formbts">
+				<div class="wrap-input100 button rs1-wrap-input100 formbts"">
 					<button class="contact100-form-btn gotoHome" type="button" id="mypageB" onclick="location.href='<%=request.getContextPath()%>/'" >
 						<span>Home</span>
 					</button>

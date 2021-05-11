@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.UserDAO;
+import com.walab.oas.DTO.AttachFileDTO;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
@@ -86,7 +87,7 @@ ModelAndView mav = new ModelAndView();
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
 	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr, MultipartFile uploadFile) throws Exception {
 		System.out.println("<submitForm> controller");
-		System.out.println("Foreach "+uploadFile.getOriginalFilename());
+		//System.out.println("Foreach "+uploadFile.getOriginalFilename());
 
     	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
     	String requestedCsrfToken = request.getParameter("csrfToken");
@@ -103,7 +104,7 @@ ModelAndView mav = new ModelAndView();
 			user_id=(Integer) session.getAttribute("id");
 		}
 		
-		
+		if(uploadFile!=null) {
 		String root_path = request.getSession().getServletContext().getRealPath("/");  
         String attach_path = "resources/upload/";
         String filename = uploadFile.getOriginalFilename();
@@ -115,6 +116,7 @@ ModelAndView mav = new ModelAndView();
         String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
 
         userDao.setFile(storedFileName, filename);
+		}
 
 		
 		
@@ -166,6 +168,7 @@ ModelAndView mav = new ModelAndView();
 		return new ModelAndView("redirect:/userFormView");
 	}
 	
+	
 	//form view
 	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
 	public ModelAndView viewUserForm (RedirectAttributes redirectAttr,HttpSession session, HttpServletRequest request) throws Exception {
@@ -188,6 +191,7 @@ ModelAndView mav = new ModelAndView();
 		Result result_info = userDao.resultinfo(result_id);
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
 		System.out.println("result_info:"+result_id);
+
 		//form + result 정보 
 		JSONArray jArray1 = new JSONArray();
 		try {
@@ -233,7 +237,7 @@ ModelAndView mav = new ModelAndView();
 		return mav;
 	}
 	
-	//form view
+	//form Update
 	@RequestMapping(value = "/userFormUpdate") // GET 방식으로 페이지 호출
 	public ModelAndView userFormUpdate (HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<viewUserForm> controller");
@@ -270,7 +274,6 @@ ModelAndView mav = new ModelAndView();
 		ObjectMapper mapper2=new ObjectMapper();
 		String jArray2=mapper2.writeValueAsString(field_list);
 		
-		//List<ReadResult> read_list=adminDao.getReadList(result_id);
 		List<ReadResult> read_list=userDao.getReadResultContent(result_id);
 		
 		ObjectMapper mapper=new ObjectMapper();

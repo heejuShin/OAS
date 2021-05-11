@@ -77,7 +77,7 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/admin/board/addok", method = RequestMethod.POST)    
-    public ModelAndView addPostOk(BoardVO vo, HttpSession session,HttpServletRequest request, @RequestPart MultipartFile files) throws Exception{     
+    public ModelAndView addPostOk(BoardVO vo, HttpSession session,HttpServletRequest request) throws Exception{     
        
     	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
     	String requestedCsrfToken = request.getParameter("csrfToken");
@@ -90,9 +90,9 @@ public class BoardController {
       
        BoardVO board = new BoardVO();
     	
-    	if(files.isEmpty()){ //업로드할 파일이 없을 시
-    		boardService.insertBoard(vo); //게시글 insert
-        }
+//    	if(files.isEmpty()){ //업로드할 파일이 없을 시
+//    		boardService.insertBoard(vo); //게시글 insert
+//        }
 //    	else {
 //            String fileName = files.getOriginalFilename(); // 사용자 컴에 저장된 파일명 그대로
 //            //확장자
@@ -153,8 +153,8 @@ public class BoardController {
 		List<BoardVO> read_list = dao.getBoardList(cri);
 		
 		//파일 
-		FileVO file = new FileVO();
-		boardService.fileInsert(file);
+//		FileVO file = new FileVO();
+//		boardService.fileInsert(file);
 		
 		JSONArray readContent = new JSONArray();
 		try {
@@ -194,8 +194,8 @@ public class BoardController {
 		List<BoardVO> read_list = dao.getBoardList(cri);
 		
 		//파일 
-		FileVO file = new FileVO();
-		boardService.fileInsert(file);
+//		FileVO file = new FileVO();
+//		boardService.fileInsert(file);
 		
 		JSONArray readContent = new JSONArray();
 		try {

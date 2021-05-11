@@ -50,9 +50,9 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.countBoard(searchType,keyword);
 	}
 	  //파일 업로드 추가
-	  @Override
-	  public int fileInsert(FileVO file) {
-	    return boardDAO.fileInsert(file);
-	  }
+//	  @Override
+//	  public int fileInsert(FileVO file) {
+//	    return boardDAO.fileInsert(file);
+//	  }
 
 }

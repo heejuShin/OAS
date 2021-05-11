@@ -273,6 +273,15 @@
        INSERT INTO FILE (fileName,fileRealName) VALUE (#{fileName},#{fileRealName});
     </insert> 
     
+    <!-- 첨부파일 다운 -->
+	<select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+			fileName,
+			fileRealName
+		FROM FILE
+		WHERE id = #{FILE_NO}
+	</select>
+	
     <!-- 상태 id 생성  -->
    <insert id="stateCreate" parameterType="com.walab.oas.DTO.State">
        INSERT INTO State (form_id,stateName,isDefault) VALUE (#{form_id}, #{stateName}, #{isDefault});
@@ -310,14 +319,21 @@
    
    <!-- 개별보기 내용 -->
    <select id='getReadList' parameterType="HashMap" resultType="com.walab.oas.DTO.ReadResult">
-   SELECT * from Field 
-   INNER JOIN
-   (select field_id, content from ResultContent 
-   INNER JOIN Result ON (ResultContent.result_id=Result.id)
-   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{form_id};
+   SELECT field_id, content, fieldName, file_id,`form_id`,`fieldType`,`isEssential`,`index`,`key`,`isDelete`,FILE.fileName, `fileRealName`,B.regDate FROM `FILE`  INNER JOIN
+   	SELECT * from Field 
+	   INNER JOIN
+	   (select field_id, content from ResultContent 
+	   INNER JOIN Result ON (ResultContent.result_id=Result.id)
+	   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) 
+	   where Field.form_id=#{form_id})B ON (FILE.id=B.file_id) where FILE.id=#{file_id};
    </select>
    
-   	
+	<select id='getReadResultFile' parameterType="int" resultType="com.walab.oas.DTO.AttachFileDTO">
+		SELECT FILE.id as f_id, fileName, fileRealName, ResultContent.id as rc_id, result_id, field_id, content
+		INNER JOIN ResultContent 
+		ON (ResultContent.file_id= FILE.id);
+	</select>
+	
 	<select id='getReadResultContent' parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
 		SELECT A.id as id,fieldType,content from Field 
 		INNER JOIN
@@ -498,11 +514,20 @@
       select * FROM Result WHERE id = #{result_id};
    </select>
    
-   <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+<!--    <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
      <![CDATA[
          SELECT fieldType,fieldName,fileName,isEssential,`index`,content FROM Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id};
      ]]>
+   </select> -->
+   <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+     <![CDATA[
+       SELECT fieldType,fieldName,FILE.fileName,isEssential,`index`,content FROM 
+		(SELECT fieldType,fieldName,fileName,isEssential,`index`,content, file_id FROM 
+		Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id})as A
+		LEFT JOIN FILE on FILE.id = A.file_id;
+     ]]>
    </select>
+   
    
    <select id="getResultId" resultType="int">
       select id from Result where form_id = #{form_id} AND user_id=#{user_id};

@@ -168,7 +168,6 @@
   
 			    </select>
 			</div>
-
 			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
@@ -373,8 +372,10 @@ $(document).ready(function(){
     $('#endDate').val(today);
 
     let todayTime = new Date(); 
-    let hours = todayTime.getHours();
-    let minutes = todayTime.getMinutes();
+    let hours = todayTime.getHours().toString();
+    let minutes = todayTime.getMinutes().toString();
+    if(hours.length==1) hours = '0'+hours;
+	if(minutes.length==1) minutes = '0'+minutes;
     $('#startTime').val(hours+":"+minutes);
     $('#endTime').val(hours+":"+minutes);
     
