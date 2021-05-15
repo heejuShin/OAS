@@ -2,6 +2,7 @@ package com.walab.oas.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -103,23 +104,7 @@ ModelAndView mav = new ModelAndView();
 		if(session.getAttribute("id")!=null) {
 			user_id=(Integer) session.getAttribute("id");
 		}
-		
-		if(uploadFile!=null) {
-		String root_path = request.getSession().getServletContext().getRealPath("/");  
-        String attach_path = "resources/upload/";
-        String filename = uploadFile.getOriginalFilename();
-        File f = new File(root_path + attach_path + filename);
-        System.out.println("Path is "+root_path + attach_path + filename);
-        uploadFile.transferTo(f);
-        String originalFileExtension = filename.substring(filename.lastIndexOf("."));
-        
-        String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
-
-        userDao.setFile(storedFileName, filename);
-		}
-
-		
-		
+				
 		
 		System.out.println("form id:"+form_id);
 
@@ -144,16 +129,43 @@ ModelAndView mav = new ModelAndView();
 	    String contents[]  = request.getParameterValues("content");
 	    String field_types[] = request.getParameterValues("field_type");
 
-	    for(int i = 0; i < contents.length; i++) {
-
+	    for(int i = 0; i < field_ids.length; i++) {
+	    	System.out.println("Type is "+field_types[i].equals("file"));
 	    	Result_Content result_content = new Result_Content();
-            if(field_types[i]!="file") {
+            if(!field_types[i].equals("file")) {
                result_content.setResult_id(result_id);
                result_content.setField_id(Integer.parseInt(field_ids[i]));
                result_content.setContent(contents[i]);
                
                System.out.println(result_content);
                userDao.setContent(result_content);
+            }else {
+            	String root_path = request.getSession().getServletContext().getRealPath("/");  
+                String attach_path = "resources/upload/";
+                String filename = uploadFile.getOriginalFilename();
+                File f = new File("C:\\Users\\shb59\\git\\OAS\\OAS\\src\\main\\webapp\\resources\\img" + filename);
+                System.out.println("Path is "+root_path + attach_path + filename);
+                uploadFile.transferTo(f);
+                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
+                
+                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+                
+                
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("id", 0);
+	      	    map.put("fileName", storedFileName);
+	      	    map.put("fileRealName", filename);
+
+                int erase = userDao.setFile(map);
+                System.out.println("erase is "+(int) map.get("id"));
+                
+                result_content.setResult_id(result_id);
+                result_content.setField_id(Integer.parseInt(field_ids[i]));
+                result_content.setContent("");
+                result_content.setFile_id((int) map.get("id"));
+                
+                System.out.println(result_content);
+                userDao.setContent(result_content);
             }
 
 	    }

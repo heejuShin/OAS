@@ -78,13 +78,10 @@ public class UserDAO {
 		return sqlSession.selectList(namespace+".getReadResultContent",result_id);	
 	}
 	
-	public void setFile(String storedName, String originalName) {
-	      Map<String, Object> map = new HashMap<String, Object>();
-	      map.put("fileName", storedName);
-	      map.put("fileRealName", originalName);
-	      System.out.println(map);
-	      sqlSession.insert(namespace + ".inputFile", map);      
-	   }
+	public int setFile(Map<String, Object> map) throws Exception {
+
+        return sqlSession.insert(namespace + ".inputFile", map);      
+     }
 	
 	// 첨부파일 다운로드
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) {

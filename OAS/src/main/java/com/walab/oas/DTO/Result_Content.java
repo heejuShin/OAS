@@ -13,7 +13,7 @@ public class Result_Content {
 	@Override
 	public String toString() {
 		return "Result_Content [id=" + id + ", result_id=" + result_id + ", field_id=" + field_id + ", content="
-				+ content + ", regDate=" + regDate + ", editDate=" + editDate + "]";
+				+ content + ", file_id=" + file_id + ", regDate=" + regDate + ", editDate=" + editDate + "]";
 	}
 	public int getId() {
 		return id;
