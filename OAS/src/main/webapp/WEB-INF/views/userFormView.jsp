@@ -136,16 +136,20 @@
 				var answerBox = $('<p class="label-input100 nameMargin answerP">응답 없음</p>')
 			else{
 				var result_content = fieldInfo[i].field_content;
+				console.log("field_content : " + result_content);
+
 
 				if(fieldInfo[i].field_type == "checkbox" && result_content.indexOf("$") != -1 ){ //checkbox type이고 답이 복수 일 때
 					result_content = result_content.slice(0,-1); //마지막 $ 삭제
 					result_content = result_content.split("$").join(" / "); // $를 /로 대체
 				}
-
-				if(fieldInfo[i].field_type == "file")
-					var answerBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_content+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
 				
-				var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>')
+				if(fieldInfo[i].field_type == "file"){
+					var answerBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+					console.log("field_file : " + fieldInfo[i].field_file);
+				}
+				else{			var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>')
+}
 			}
 			
 			$("#fieldInputs").children("#result_"+i).append(answerBox);	

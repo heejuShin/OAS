@@ -138,6 +138,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/admin/mypage/state">상태 관리</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/admin/categoryPage">카테고리 관리</a>
+              </li>
               </c:if>
               <c:if test="${admin == 2 }">
               <li class="nav-item">

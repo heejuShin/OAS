@@ -2,6 +2,7 @@ package com.walab.oas.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.UserDAO;
+import com.walab.oas.DTO.AttachFileDTO;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
@@ -84,9 +86,9 @@ ModelAndView mav = new ModelAndView();
 	
 	//form 제출하기 
 	@RequestMapping(value = "/submit" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
-	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr, MultipartFile uploadFile) throws Exception {
+	public ModelAndView submitForm (HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr, List<MultipartFile> uploadFile) throws Exception {
 		System.out.println("<submitForm> controller");
-		System.out.println("Foreach "+uploadFile.getOriginalFilename());
+		//System.out.println("Foreach "+uploadFile.getOriginalFilename());
 
     	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
     	String requestedCsrfToken = request.getParameter("csrfToken");
@@ -102,22 +104,7 @@ ModelAndView mav = new ModelAndView();
 		if(session.getAttribute("id")!=null) {
 			user_id=(Integer) session.getAttribute("id");
 		}
-		
-		
-		String root_path = request.getSession().getServletContext().getRealPath("/");  
-        String attach_path = "resources/upload/";
-        String filename = uploadFile.getOriginalFilename();
-        File f = new File(root_path + attach_path + filename);
-        System.out.println("Path is "+root_path + attach_path + filename);
-        uploadFile.transferTo(f);
-        String originalFileExtension = filename.substring(filename.lastIndexOf("."));
-        
-        String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
-
-        userDao.setFile(storedFileName, filename);
-
-		
-		
+				
 		
 		System.out.println("form id:"+form_id);
 
@@ -141,17 +128,50 @@ ModelAndView mav = new ModelAndView();
 	    String field_ids[]  = request.getParameterValues("field_ids");
 	    String contents[]  = request.getParameterValues("content");
 	    String field_types[] = request.getParameterValues("field_type");
-
-	    for(int i = 0; i < contents.length; i++) {
-
+	    int conNum=0;
+	    int fileNum=0;
+	    
+	    for(int i = 0; i < field_ids.length; i++) {
+	    	System.out.println("Type is "+field_types[i].equals("file"));
+	    	
 	    	Result_Content result_content = new Result_Content();
-            if(field_types[i]!="file") {
+            if(!field_types[i].equals("file")) {
                result_content.setResult_id(result_id);
                result_content.setField_id(Integer.parseInt(field_ids[i]));
-               result_content.setContent(contents[i]);
+               result_content.setContent(contents[conNum]);
+               conNum++;
                
                System.out.println(result_content);
                userDao.setContent(result_content);
+            }else {
+            	System.out.println(uploadFile);
+            	String root_path = request.getSession().getServletContext().getRealPath("/");  
+                String attach_path = "resources/upload/";
+                String filename = uploadFile.get(fileNum).getOriginalFilename();
+                File f = new File("C:\\Users\\shb59\\git\\OAS\\OAS\\src\\main\\webapp\\resources\\img" + filename);
+                System.out.println("Path is "+root_path + attach_path + filename);
+                uploadFile.get(fileNum).transferTo(f);
+                fileNum++;
+                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
+                
+                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+                
+                
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("id", 0);
+	      	    map.put("fileName", storedFileName);
+	      	    map.put("fileRealName", filename);
+
+                int erase = userDao.setFile(map);
+                System.out.println("erase is "+(int) map.get("id"));
+                
+                result_content.setResult_id(result_id);
+                result_content.setField_id(Integer.parseInt(field_ids[i]));
+                result_content.setContent("");
+                result_content.setFile_id((int) map.get("id"));
+                
+                System.out.println(result_content);
+                userDao.setContent(result_content);
             }
 
 	    }
@@ -165,6 +185,7 @@ ModelAndView mav = new ModelAndView();
 	 	System.out.println("<submitForm> controller end");
 		return new ModelAndView("redirect:/userFormView");
 	}
+	
 	
 	//form view
 	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
@@ -188,6 +209,7 @@ ModelAndView mav = new ModelAndView();
 		Result result_info = userDao.resultinfo(result_id);
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
 		System.out.println("result_info:"+result_id);
+
 		//form + result 정보 
 		JSONArray jArray1 = new JSONArray();
 		try {
@@ -233,7 +255,7 @@ ModelAndView mav = new ModelAndView();
 		return mav;
 	}
 	
-	//form view
+	//form Update
 	@RequestMapping(value = "/userFormUpdate") // GET 방식으로 페이지 호출
 	public ModelAndView userFormUpdate (HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<viewUserForm> controller");
@@ -270,7 +292,6 @@ ModelAndView mav = new ModelAndView();
 		ObjectMapper mapper2=new ObjectMapper();
 		String jArray2=mapper2.writeValueAsString(field_list);
 		
-		//List<ReadResult> read_list=adminDao.getReadList(result_id);
 		List<ReadResult> read_list=userDao.getReadResultContent(result_id);
 		
 		ObjectMapper mapper=new ObjectMapper();

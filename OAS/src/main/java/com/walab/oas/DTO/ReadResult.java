@@ -1,6 +1,5 @@
 package com.walab.oas.DTO;
 
-import java.sql.Timestamp;
 
 public class ReadResult {
 	private int id;
@@ -9,6 +8,7 @@ public class ReadResult {
 	private String fieldType;
 	private String fieldName;
 	private String fileName;
+	private String fileRealName;
 	private int isEssential;
 	private int index;
 	private String regDate;
@@ -19,7 +19,7 @@ public class ReadResult {
 	@Override
 	public String toString() {
 		return "ReadResult [id=" + id + ", form_id=" + form_id + ", user_id=" + user_id + ", fieldType=" + fieldType
-				+ ", fieldName=" + fieldName + ", fileName=" + fileName + ", isEssential=" + isEssential + ", index="
+				+ ", fieldName=" + fieldName + ", fileName=" + fileName + ", fileRealName=" + fileRealName + ", isEssential=" + isEssential + ", index="
 				+ index + ", regDate=" + regDate + ", editDate=" + editDate + ", key=" + key + ", field_id=" + field_id
 				+ ", content=" + content + "]";
 	}
@@ -58,6 +58,12 @@ public class ReadResult {
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	public String getFileRealName() {
+		return fileRealName;
+	}
+	public void setFileRealName(String fileRealName) {
+		this.fileRealName = fileRealName;
 	}
 	public int getIsEssential() {
 		return isEssential;

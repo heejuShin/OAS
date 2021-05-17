@@ -208,4 +208,16 @@ public class AdminDAO {
 	public int deleteItem(int item_id) {
 		return sqlSession.update(namespace+".deleteItem",item_id);
 	}
+	// 첨부파일 다운로드
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(namespace + ".selectFileInfo", map);
+	}
+	
+	public int deleteCategory(String categoryName) {
+		return sqlSession.delete(namespace+".deleteCategory",categoryName);
+	}
+	
+	public int createCategory(String name) {
+		return sqlSession.insert(namespace+".createCategory",name);
+	}
 }

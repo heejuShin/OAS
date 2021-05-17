@@ -265,14 +265,26 @@
     
     <!-- result  content  넣기   -->
    <insert id="inputContent" parameterType="com.walab.oas.DTO.Result_Content" >
-       INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
+       INSERT INTO ResultContent (result_id,field_id,content,file_id) VALUE (#{result_id},#{field_id},#{content},#{file_id});
     </insert> 
     
-    <!-- File  content  넣기   -->
+   <!-- File  content  넣기   -->
     <insert id="inputFile" parameterType="HashMap" >
        INSERT INTO FILE (fileName,fileRealName) VALUE (#{fileName},#{fileRealName});
+       <selectKey keyProperty="id" resultType="Integer">
+          SELECT LAST_INSERT_ID()
+      </selectKey>
     </insert> 
     
+    <!-- 첨부파일 다운 -->
+	<select id="selectFileInfo" parameterType="hashMap" resultType="hashMap">
+		SELECT 
+			fileName,
+			fileRealName
+		FROM FILE
+		WHERE id = #{FILE_NO}
+	</select>
+	
     <!-- 상태 id 생성  -->
    <insert id="stateCreate" parameterType="com.walab.oas.DTO.State">
        INSERT INTO State (form_id,stateName,isDefault) VALUE (#{form_id}, #{stateName}, #{isDefault});
@@ -310,14 +322,21 @@
    
    <!-- 개별보기 내용 -->
    <select id='getReadList' parameterType="HashMap" resultType="com.walab.oas.DTO.ReadResult">
-   SELECT * from Field 
-   INNER JOIN
-   (select field_id, content from ResultContent 
-   INNER JOIN Result ON (ResultContent.result_id=Result.id)
-   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{form_id};
+   SELECT field_id, content, fieldName, file_id,`form_id`,`fieldType`,`isEssential`,`index`,`key`,`isDelete`,FILE.fileName, `fileRealName`,B.regDate FROM `FILE`  INNER JOIN
+   	SELECT * from Field 
+	   INNER JOIN
+	   (select field_id, content from ResultContent 
+	   INNER JOIN Result ON (ResultContent.result_id=Result.id)
+	   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) 
+	   where Field.form_id=#{form_id})B ON (FILE.id=B.file_id) where FILE.id=#{file_id};
    </select>
    
-   	
+	<select id='getReadResultFile' parameterType="int" resultType="com.walab.oas.DTO.AttachFileDTO">
+		SELECT FILE.id as f_id, fileName, fileRealName, ResultContent.id as rc_id, result_id, field_id, content
+		INNER JOIN ResultContent 
+		ON (ResultContent.file_id= FILE.id);
+	</select>
+	
 	<select id='getReadResultContent' parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
 		SELECT A.id as id,fieldType,content from Field 
 		INNER JOIN
@@ -498,11 +517,20 @@
       select * FROM Result WHERE id = #{result_id};
    </select>
    
-   <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+<!--    <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
      <![CDATA[
          SELECT fieldType,fieldName,fileName,isEssential,`index`,content FROM Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id};
      ]]>
+   </select> -->
+   <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
+     <![CDATA[
+       SELECT fieldType,fieldName,FILE.fileName,isEssential,`index`,content FROM 
+		(SELECT fieldType,fieldName,fileName,isEssential,`index`,content, file_id FROM 
+		Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id})as A
+		LEFT JOIN FILE on FILE.id = A.file_id;
+     ]]>
    </select>
+   
    
    <select id="getResultId" resultType="int">
       select id from Result where form_id = #{form_id} AND user_id=#{user_id};
@@ -521,9 +549,9 @@
       SELECT * from Department;
    </select>
    
-      <select id="majorList" resultType="com.walab.oas.DTO.Major">
+   <select id="majorList" resultType="com.walab.oas.DTO.Major">
       SELECT Major.*, Department.name as department_name from Major 
-		INNER JOIN Department ON Major.department_id = Department.id;
+	  INNER JOIN Department ON Major.department_id = Department.id;
    </select>
    <!-- 선택한 내 Form 데이터 삭제하기 -->
    <delete id="deleteMyForm" parameterType="int">
@@ -539,4 +567,13 @@
    <delete id="deleteItem" parameterType="int">
        update Item SET isDelete=1 where id=#{item_id};
    </delete>
+   
+   <!-- Category 삭제하기 -->
+   <delete id="deleteCategory" parameterType="String">
+       delete from Category where categoryName=#{categoryName};
+   </delete>
+   
+   <insert id="createCategory" parameterType="String" >
+       INSERT INTO Category (categoryName) VALUE (#{name});
+   </insert> 
 </mapper>

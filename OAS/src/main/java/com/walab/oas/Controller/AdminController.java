@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.walab.oas.DAO.AdminDAO;
@@ -1042,4 +1043,82 @@ public class AdminController {
 		int isUserEdit=Integer.parseInt(request.getParameter("isUserEdit"));
 		adminDAO.changeUserEdit(form_id,isUserEdit);
 	}
+	
+	
+//	카테고리 관리하기
+	@RequestMapping(value="/categoryPage")
+	public ModelAndView manageCategory (HttpSession session) {
+		ModelAndView mav = new ModelAndView("categoryManage");
+		
+		List<Category> category_list = mainDao.categoryList();
+		JSONArray jArray = new JSONArray();
+		
+		try{
+			for (int i = 0; i < category_list.size() ; i++) {   
+	    		JSONObject ob2 =new JSONObject();
+	    		ob2.put("category_id", category_list.get(i).getId());
+		        ob2.put("categoryName", category_list.get(i).getCategoryName());
+	            jArray.put(ob2);
+			}
+		}catch(JSONException e){
+	    	e.printStackTrace();
+	    }
+		
+		mav.addObject("category_list",jArray);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/category/save", method=RequestMethod.POST)
+	public ModelAndView saveCategory (HttpSession session,HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes ra) throws Exception {
+		
+
+    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
+    	String requestedCsrfToken = request.getParameter("csrfToken");
+    	        
+    	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
+    	    return new ModelAndView("error/csrfMsg");
+    	}
+    	
+		ModelAndView mav = new ModelAndView("redirect:/alert");
+		
+		String categoryname = request.getParameter("category");
+		String oriCategoryId = request.getParameter("oricategory_ids");
+		String[] cateogrynames = categoryname.split(",");
+		String[] oriIds = oriCategoryId.split(",");
+		
+		ArrayList<String> ids=new ArrayList<String>();
+		int i;
+		for(i=0; i<cateogrynames.length; i++){//현재 존재하는 카테고리의 이름들을 담음
+			if(!cateogrynames[i].equals(""))
+				ids.add(cateogrynames[i]);
+		}
+		System.out.println(ids);
+		for(i=0; i<oriIds.length; i++) {
+			if(!ids.contains(oriIds[i])) {//포함되어있지 않으면 삭제
+				adminDAO.deleteCategory(oriIds[i]);
+			}
+			else {
+				ids.remove(oriIds[i]);
+			}
+		}
+		for (i = 0; i < ids.size(); i++) { //새로만드는 카테고리는 삽입
+			adminDAO.createCategory(ids.get(i));
+		}
+		ra.addFlashAttribute("msg", "변경 되었습니다.");
+        ra.addFlashAttribute("url","./admin/categoryPage");
+        
+		return mav;
+	}
+	
+	public boolean isNumeric(String input) { //숫자인지 판별
+		try {
+			Double.parseDouble(input);
+			return true;
+		}
+		catch (NumberFormatException e) {
+			return false;
+		}
+	}
+	
 }

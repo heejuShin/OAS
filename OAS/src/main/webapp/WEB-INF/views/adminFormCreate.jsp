@@ -7,10 +7,27 @@
 <meta charset="UTF-8">
 <title>Create Form</title>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> div 크기 조정
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=2">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Font -->
+ 	 <style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+ 	
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+	</style> 
+    
+    
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3"> 
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -23,46 +40,24 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2">
-	
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2"> 
+	 
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css"> 
 		
 	
 	 <!-- resizable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
 	
-	<!-- Form JS -->
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/popper.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/moment.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
-	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-
-
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=24"></script>
-
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-   
-    <!-- 아이콘 -->
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	<!-- 카테고리 관련 CDN -->
-	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-	<!-- momment -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+  crossorigin="anonymous"></script> 
+	
+
+   
   
   <!-- Font -->
  	<style type="text/css">
@@ -77,6 +72,7 @@
  		}
  
 	</style>
+
 
 </head>
   <body>
@@ -93,6 +89,34 @@
 
   
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
+	
+		<!-- Form JS -->
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/popper.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
+
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=24"></script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+   
+     <!-- 아이콘 -->
+     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> 
+	<!-- 카테고리 관련 CDN -->
+	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<!-- select2 javascript cdn -->
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+	
+
+	<!-- momment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> 
+	
 	
 	
 
@@ -168,6 +192,13 @@
   
 			    </select>
 			</div>
+			
+			<!-- <div class="wrap-input100  bg1 selectState" style="font-size: 15px;">
+				<select class="form-control" id="state" style="width: 80%; border:none;"  multiple="multiple"></select>
+			    <p class="label-input100" style="margin-bottom:100px; margin-top: 5px;">신청폼에 기본으로 저장되는 상태입니다.</p>
+			</div> -->
+			
+			
 			 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
