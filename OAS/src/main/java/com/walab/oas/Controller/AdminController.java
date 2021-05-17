@@ -302,7 +302,7 @@ public class AdminController {
 				String explanation = request.getParameter("explanation");
 				//explanation = explanation.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
 				System.out.println("check..");
-				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br/>");
+				explanation = explanation.replaceAll(System.getProperty("line.separator"), "<br>");
 				form.setExplanation(explanation);
 				String url = request.getParameter("url");
 				form.setUrl(url);
@@ -449,7 +449,7 @@ public class AdminController {
 		
 		Form formInfo=adminDAO.formInfo(form_id);
 		
-		formInfo.setExplanation(formInfo.getExplanation().replaceAll("<br/>", ""));
+		formInfo.setExplanation(formInfo.getExplanation().replaceAll("<br>", ""));
 		System.out.println("formInfo: "+formInfo);
 				
 		return formInfo;
