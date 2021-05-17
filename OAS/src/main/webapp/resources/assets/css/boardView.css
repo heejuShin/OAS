@@ -1,0 +1,26 @@
+.header{
+	text-align:center;
+}
+.main{
+	padding:1%;
+}
+.content{
+	height:500px;
+	overflow:auto;
+}
+.content p{
+	font-weight: normal !important;
+}
+.date p{
+	text-align:right;
+	-webkit-text-stroke: thin;
+	font-size:12px;
+}
+#stateB{
+	margin:0 auto;
+	background-color:#d69fa9;
+	border-radius:5px;	
+}
+.container{
+	padding-top:15px;
+}
