@@ -26,9 +26,9 @@
 <form action="addok" method="post"  enctype="multipart/form-data">
 	<div class="formField">
 		<table>
-			<tr><td>Category:</td><td><input type="text" name="category"/></td></tr>
-			<tr> <td>Title:</td> <td><input type="text" name="title"/></td></tr>
-			<tr><td>Writer:</td><td><input type="text" name="writer"/></td></tr>
+			<tr><td>카테고리:</td><td><input type="text" name="category"/></td></tr>
+			<tr> <td>제목:</td> <td><input type="text" name="title"/></td></tr>
+			<tr><td>글쓴이:</td><td><input type="text" name="writer"/></td></tr>
 		</table>
 		
 		<hr/>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div class="buttonDiv">
-		<input id="but" class="button" type="submit" value="Add Post"/>
+		<input id="but" class="button" type="submit" value="  등록  "/>
 		<button id="but" class="button" onclick="location.href='../../board/list'">목록보기 </button>
 	</div>
 

@@ -62,10 +62,10 @@
 <thead>
 <tr>
 	<th>NO</th>
-	<th>카테고리 </th>
-	<th>제목 </th>
-	<th>등록자  </th>
-	<th>등록 일자 </th>
+	<th>카테고리</th>
+	<th>제목</th>
+	<th>글쓴이</th>
+	<th>등록 일자</th>
 	<c:set var="admin" value="${admin}" /><c:if test="${admin ne '2'}"><th>게시글 관리 </th></c:if>
 </tr>
 
