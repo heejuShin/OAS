@@ -11,6 +11,10 @@
 <title>Edit Form</title>
 <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=2">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<style>	
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+ 	 	* {font-family: 'NanumSquare', sans-serif !important;}   
+</style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/basic/header.jsp" /> 

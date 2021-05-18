@@ -64,7 +64,7 @@ input:not(.submit),textarea{
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
-
+<main>
 <div id="headTitle"><h2>게시물 보기 </h2></div>
 
 <div class="container-write">
@@ -101,6 +101,12 @@ input:not(.submit),textarea{
 <button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../editform/${u.getSeq()}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 
 <button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='../list'">목록보기 </button>
+</main>
+
+
+<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 
 </body>
+
+
 </html>
