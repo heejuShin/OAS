@@ -75,18 +75,18 @@
         //함수1. 체크박스 전체 선택 / 해제 함수
         $("#allCheck").click(function () {
           if($("#allCheck").prop("checked")) { //해당화면에 전체 checkbox들을 체크해준다 
-            $("input[type=checkbox].not('.headerCheck')").prop("checked",true); // 전체선택 체크박스가 해제된 경우 
+            $("input[type=checkbox]").not('.headerCheck').prop("checked",true); // 전체선택 체크박스가 해제된 경우 
           } else { //해당화면에 모든 checkbox들의 체크를해제시킨다. 
-            $("input[type=checkbox].not('.headerCheck')").prop("checked",false); 
+            $("input[type=checkbox]").not('.headerCheck').prop("checked",false); 
           } 
         });
-        //함수2. 체크박스 해제시 전체 체크박스 해제
-        $("input:checkbox[name=result].not('.headerCheck'").click(function () {
+         //함수2. 체크박스 해제시 전체 체크박스 해제
+        $("input[type=checkbox]").not('.headerCheck').click(function () {
           if($(this).is(":checked") == false){
             $("#allCheck").prop("checked",false);
           }
             
-        });
+        }); 
         //함수3. '적용' 버튼 클릭시 함수 (체크된 라인의 상태가 바뀜)
         $("button[name='stateB']").click(function () {
 	          var state = $("select[name=stateName]").val(); // 적용할 state_id 
