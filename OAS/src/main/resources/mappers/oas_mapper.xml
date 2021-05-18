@@ -265,12 +265,15 @@
     
     <!-- result  content  넣기   -->
    <insert id="inputContent" parameterType="com.walab.oas.DTO.Result_Content" >
-       INSERT INTO ResultContent (result_id,field_id,content) VALUE (#{result_id},#{field_id},#{content});
+       INSERT INTO ResultContent (result_id,field_id,content,file_id) VALUE (#{result_id},#{field_id},#{content},#{file_id});
     </insert> 
     
-    <!-- File  content  넣기   -->
+   <!-- File  content  넣기   -->
     <insert id="inputFile" parameterType="HashMap" >
        INSERT INTO FILE (fileName,fileRealName) VALUE (#{fileName},#{fileRealName});
+       <selectKey keyProperty="id" resultType="Integer">
+          SELECT LAST_INSERT_ID()
+      </selectKey>
     </insert> 
     
     <!-- 첨부파일 다운 -->

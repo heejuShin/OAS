@@ -5,45 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>게시물 작성  </title>
-
-<!--  button css-->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/buttonstyle.css?v=2">
-
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=18">
 <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=2">
-
-
-	<!--  Form CSS -->
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/iconic/css/material-design-iconic-font.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/animate/animate.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/css-hamburgers/hamburgers.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/animsition/css/animsition.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/select2/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=1">
-	
-	<!-- checkbox CSS -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
-	
-<!-- 합쳐지고 최소화된 최신 CSS --> 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-
-	
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 </head>
 <body>
+
 <jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/assets/js/uploadAjax.js"></script>
 
+<!-- html 에디터 -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <main>
 
@@ -51,34 +24,46 @@
 
 <div class="container-contact100">
 <form action="addok" method="post"  enctype="multipart/form-data">
-<table>
-<tr><td>Category:</td><td><input type="text" name="category"/></td></tr>
-<tr><td>Title:</td><td><input type="text" name="title"/></td></tr>
-<tr><td>Writer:</td><td><input type="text" name="writer"/></td></tr>
-<tr><td>Content:</td><td><textarea cols="50" rows="5" name="content"></textarea></td></tr>
-<tr>
-	<td>파일 업로드: </td><td align="left">
-	<div class="uploadDiv">
-		<input type="file" name="uploadFile" multiple>
+	<div class="formField">
+		<table>
+			<tr><td>Category:</td><td><input type="text" name="category"/></td></tr>
+			<tr> <td>Title:</td> <td><input type="text" name="title"/></td></tr>
+			<tr><td>Writer:</td><td><input type="text" name="writer"/></td></tr>
+		</table>
+		
+		<hr/>
+		
+		<div id="textField"> <textarea id="summernote" class="form-control" name="content"></textarea> <!-- <p>Content:</p><textarea cols="50" rows="5" name="content"></textarea> --></div>
+		<script>
+		  $('#summernote').summernote({
+	        tabsize: 3,
+	        height: 300
+	      });
+	    </script>
+	    <div class="file">
+			<div class="fileInput"><p>파일 업로드: </p>
+				<div class="uploadDiv">
+					<input type="file" name="uploadFile" multiple>
+				</div>
+				<!-- <button id="uploadBtn">Upload</button> -->
+			</div>
+			<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
+			<div class="uploadResult">
+				<ul></ul>
+			</div>
+			
+			<div class='bigPictureWrapper'>
+				<div class='bigPicture'></div>
+			</div>
+		</div>
 	</div>
-	<button id="uploadBtn">Upload</button>
-</td>
-</tr>
-</table>
-<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
-	<div class="uploadResult">
-		<ul></ul>
+	<div class="buttonDiv">
+		<input id="but" class="button" type="submit" value="Add Post"/>
+		<button id="but" class="button" onclick="location.href='../../board/list'">목록보기 </button>
 	</div>
-	
-	<div class='bigPictureWrapper'>
-		<div class='bigPicture'></div>
-	</div>
-<input type="submit" value="Add Post"/>
+
 </form>
 </div>
-
-<button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='../../board/list'">목록보기 </button>
-
 </main>
 
 <footer>
@@ -86,4 +71,5 @@
 </footer>
 
 </body>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/addPost.css?ver=<%=System.currentTimeMillis()%>">
 </html>

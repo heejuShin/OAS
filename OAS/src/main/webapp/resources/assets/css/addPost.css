@@ -1,0 +1,43 @@
+
+table input,textarea{
+	/* border:none; */
+	width:100%;
+	padding:0.5%;
+}
+.formField table{
+	width:100%;
+	/* border: 1px solid #444444; */
+}
+.formField table td{
+	/* border: 1px solid #444444; */
+	padding:1%; 
+}
+.formField table tr>td:first-child{
+	width:10%;
+	font-size:15px;
+	text-align:left;
+}
+.fileInput *{
+	display:inline-block;
+}
+.file{
+	margin-top:2%;
+}
+.buttonDiv{
+	text-align:center;
+	margin-top:2%;
+}
+#but{
+	margin:0.5%;
+	
+	border-radius:5px;	
+	border:none;
+	font-size:15px;
+	padding:0.5%;
+}
+.button{
+	background-color:#d69fa9;
+}
+.submit{
+	background-color:#d69fa9;
+}

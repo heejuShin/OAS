@@ -27,7 +27,7 @@
 		<beans:property name="order" value="1"></beans:property>
 		
 	</beans:bean>
-	
+
 	<beans:bean id="excelDownloadView" class="com.walab.oas.DAO.ExcelDownloadDAO"/>
     
     <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>

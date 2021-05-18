@@ -59,6 +59,20 @@
 
    
   
+  <!-- Font -->
+ 	<style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+ 	
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+ 
+	</style>
+
 
 </head>
   <body>
@@ -170,9 +184,11 @@
       return false;
     }
   });</script> -->
+  
+  
 			<div class="wrap-input100  bg1" style="margin-bottom: 40px;">
 				<p class="label-input100" style="margin-bottom:10px; margin-top:5px;">상태 선택<span class="essential"> * </span></p>
-				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px" class="form-state">
+				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px;" class="form-state">
   
 			    </select>
 			</div>
@@ -187,7 +203,7 @@
 			 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
               				<input name="minusPoint" type="hidden" value="0"/> <!-- type="number" --> 
 
-			<input type="hidden" id="state_selected" name="state" style="width:1000px;" />
+			<input type="hidden" id="state_selected" name="state" style="width:1000px; margin-top:30px" />
 			
               				<input type="hidden" id="count" name="count" value="0"/>
 			
