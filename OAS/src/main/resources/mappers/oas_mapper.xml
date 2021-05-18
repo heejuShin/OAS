@@ -282,7 +282,7 @@
 			fileName,
 			fileRealName
 		FROM FILE
-		WHERE id = #{FILE_NO}
+		WHERE id = #{f_id}
 	</select>
 	
     <!-- 상태 id 생성  -->
@@ -524,7 +524,8 @@
    </select> -->
    <select id="getContent" parameterType="int" resultType="com.walab.oas.DTO.ReadResult">
      <![CDATA[
-       SELECT fieldType,fieldName,FILE.fileName,isEssential,`index`,content FROM 
+SELECT fieldType,fieldName,FILE.fileName,FILE.fileRealName, isEssential,`index`,content , FILE.id FROM 
+
 		(SELECT fieldType,fieldName,fileName,isEssential,`index`,content, file_id FROM 
 		Field LEFT JOIN ResultContent ON Field.id = ResultContent.field_id WHERE result_id = #{result_id})as A
 		LEFT JOIN FILE on FILE.id = A.file_id;

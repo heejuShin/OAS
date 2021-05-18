@@ -3,11 +3,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
 import java.util.HashMap;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -16,6 +18,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,6 +49,8 @@ public class UserController {
 	
 	@Autowired
 	private AdminDAO adminDao; 
+	
+	public String root;
 
 	//item 정보 불러오기 
 	@RequestMapping(value = "/getItem" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
@@ -191,7 +196,7 @@ ModelAndView mav = new ModelAndView();
 	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
 	public ModelAndView viewUserForm (RedirectAttributes redirectAttr,HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<viewUserForm> controller");
-		
+		root = request.getContextPath();
 		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 		int form_id=(Integer)redirectMap.get("form_id");
 		int result_id= (Integer)redirectMap.get("result_id");
@@ -207,6 +212,7 @@ ModelAndView mav = new ModelAndView();
 			return mav;
 		}
 		Result result_info = userDao.resultinfo(result_id);
+		
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
 		System.out.println("result_info:"+result_id);
 
@@ -236,7 +242,8 @@ ModelAndView mav = new ModelAndView();
 			        
 			        ob.put("field_name", resultContent.get(i).getFieldName());
 			        ob.put("field_type", resultContent.get(i).getFieldType());
-			        ob.put("field_file", resultContent.get(i).getFileName());
+			        ob.put("field_file", resultContent.get(i).getFileRealName());
+			        ob.put("field_fileid", resultContent.get(i).getFile_id());
 			        ob.put("field_star", resultContent.get(i).getIsEssential());
 			        ob.put("field_index", resultContent.get(i).getIndex());
 			        ob.put("field_content", resultContent.get(i).getContent());
@@ -325,13 +332,34 @@ ModelAndView mav = new ModelAndView();
 			
 		for(int i=0; i<isModified.length; i++) {
 			if(Integer.parseInt(isModified[i])==1) {
-				System.out.println("updateghghgh");
 	    		userDao.updateContent(Integer.parseInt(id[i]),contents[i]);
 			}
 		}//반복문 끝 (ResultContent 수정)
 		
 		mav.setViewName("redirect:/");
 		return mav;
+	}
+	
+	@RequestMapping(value="/fileDown")
+	public void fileDown(@RequestParam Map<String, Object> map,HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String root_path = request.getSession().getServletContext().getRealPath("/");  
+		System.out.println("root path is "+root_path);
+		System.out.println(map); 
+		
+		Map<String, Object> resultMap = userDao.selectFileInfo(map);
+		String storedFileName = (String) resultMap.get("fileName");
+		String originalFileName = (String) resultMap.get("fileRealName");
+		System.out.println("originalFileName is "+originalFileName);
+		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("/Users/hayeon/git/OAS/OAS/src/main/webapp/resources/attachments/"+storedFileName));
+		
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+		
 	}
 
 }
