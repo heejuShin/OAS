@@ -275,10 +275,7 @@
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
- 					<div class='uploadDiv'>
-						<input type='file' name='uploadFile' multiple>
-						<button id='uploadBtn'>Upload</button>
-					</div> 
+ 					<div class='uploadDiv'></div> 
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>
