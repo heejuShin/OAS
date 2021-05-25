@@ -293,13 +293,13 @@
     
     <!-- Form 관련 쿼리 정리 -->
       <insert id="formCreate" parameterType="com.walab.oas.DTO.Form">
-         INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
-         VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
+         INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`file_id`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
+         VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{file_id},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
       </insert>
       
       <insert id="fieldCreate" parameterType ="com.walab.oas.DTO.Field">
       INSERT INTO `Field` (`form_id`,`fieldType`,`fieldName`,`fileName`,`isEssential`,`key`) 
-      VALUES (#{form_id},#{fieldType},#{fieldName},NULL,#{isEssential},#{key});
+      VALUES (#{form_id},#{fieldType},#{fieldName},#{fileName},#{isEssential},#{key});
       
       </insert>
       

@@ -145,7 +145,7 @@ ModelAndView mav = new ModelAndView();
                result_content.setField_id(Integer.parseInt(field_ids[i]));
                result_content.setContent(contents[conNum]);
                conNum++;
-               
+                
                System.out.println(result_content);
                userDao.setContent(result_content);
             }else {

@@ -127,7 +127,7 @@
     
 		<div class="wrap-contact100" style="padding : 0px 100px 90px 100px">
 		<div id="menu-bar"><p id="add_p">+</p></div>
-				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
+				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()" enctype="multipart/form-data">
 					<span class="contact100-form-title">
 						설문 만들기
 					</span>
@@ -162,6 +162,7 @@
 			<div class="wrap-input100  bg1">
 				<textarea id="txtArea" rows="2" cols="20" wrap="hard" class="input100 InputFonts" style="margin-top: 5px; margin-left:-10px;" name="explanation" placeholder="설문지 설명" ></textarea>
 				<div style="float: right; margin-top: 20px;" id="test_cnt">(0 / 1000)</div>
+				<input type="file" name="adminUploadFile" />
 			</div>
 			<!-- <script>
 			$("#txtArea").on("keypress",function(e) {
@@ -274,8 +275,6 @@
 					<input type="hidden" class="count" id="count?" name="count3" value="0">		
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
-					
- 					<div class='uploadDiv'></div> 
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>

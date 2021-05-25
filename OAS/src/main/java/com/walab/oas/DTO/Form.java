@@ -8,7 +8,7 @@ import java.util.Locale;
 public class Form {
 	private int id;
 	private int category_id;
-
+	private int file_id;
 	private int user_id;
 	private String formName;
 	private String explanation;
@@ -44,6 +44,11 @@ public class Form {
 	public int getId() {
 		return id;
 	}
+	public int getFile_id() {
+		return file_id;
+	}
+	
+	
 
 	public void setId(int id) {
 		this.id = id;
@@ -71,6 +76,10 @@ public class Form {
 
 	public void setFormName(String formName) {
 		this.formName = formName;
+	}
+	
+	public void setFile_id(int id) {
+		this.file_id = id;
 	}
 
 	public String getExplanation() {

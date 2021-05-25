@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.sql.Date;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +27,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +40,7 @@ import com.walab.oas.DAO.AdminDAO;
 import com.walab.oas.DAO.ExcelDownloadDAO;
 import com.walab.oas.DAO.MainDAO;
 import com.walab.oas.DAO.MyPageDAO;
+import com.walab.oas.DAO.UserDAO;
 import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Field;
 import com.walab.oas.DTO.Form;
@@ -57,6 +61,8 @@ public class AdminController {
 	private AdminDAO adminDAO;
 	@Autowired
 	private MainDAO mainDao;
+	@Autowired
+	private UserDAO userDao;
 	@Autowired
 	private MyPageDAO mypageDao;
 	
@@ -105,7 +111,7 @@ public class AdminController {
 	@RequestMapping(value= {"/form/create/preview", "/form/view/create/preview"},method=RequestMethod.POST)
 	@ResponseBody 
 	public ModelAndView previewFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-
+		//System.out.println("In formcreatepreview "+adminUploadFile);
 		ModelAndView mav = new ModelAndView();
 		System.out.println("preview!!");
 		String form_name  = request.getParameter("form_name");
@@ -261,8 +267,8 @@ public class AdminController {
 		@SuppressWarnings("finally")
 		@RequestMapping(value="/form/formCreate",method=RequestMethod.POST)
 		@ModelAttribute("ses")
-		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-
+		public @ResponseBody ModelAndView saveFormData(HttpServletRequest request, HttpServletResponse response, HttpSession session, MultipartFile adminUploadFile) throws Exception {
+		
 	    	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
 	    	String requestedCsrfToken = request.getParameter("csrfToken");
 	    	        
@@ -274,6 +280,32 @@ public class AdminController {
 
 			Form form = new Form();
 			Category cg = new Category();
+			int file_id=0;
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(adminUploadFile != null) {
+				System.out.println(adminUploadFile);
+            	String root_path = request.getSession().getServletContext().getRealPath("/");  
+                String attach_path = "resources/upload/";
+                String filename = adminUploadFile.getOriginalFilename();
+                File f = new File("C:\\Users\\shb59\\git\\OAS\\OAS\\src\\main\\webapp\\resources\\img" + filename);
+                System.out.println("Path is "+root_path + attach_path + filename);
+                adminUploadFile.transferTo(f);
+                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
+                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+                
+                
+                
+                map.put("id", 0);
+	      	    map.put("fileName", storedFileName);
+	      	    map.put("fileRealName", filename);
+
+                int erase = userDao.setFile(map);
+                System.out.println("erase is "+(int) map.get("id"));
+                file_id = (int) map.get("id");
+			}
+			file_id = (int) map.get("id");
+			form.setFile_id(file_id);
+			
 			int category_id = 0;
 			try {
 				Integer.parseInt(request.getParameter("category_id"));
@@ -346,6 +378,7 @@ public class AdminController {
 
 				//Field
 				int f_cnt = Integer.parseInt(request.getParameter("count"));
+				int fileNum = 0;
 				for(int i=1; i<=f_cnt; i++) {
 					Field field = new Field();
 					String title = request.getParameter("f_title"+Integer.toString(i));
@@ -356,16 +389,15 @@ public class AdminController {
 						field.setForm_id(form_id); 
 						field.setFieldName(title); 
 						String fieldType = request.getParameter("f_type"+Integer.toString(i));
+						System.out.println("Field Type is "+fieldType);
 						field.setFieldType(fieldType);
-						String fileName; // 이거 어떻게 할지 고민
-						//field.setFileName(fileName);
+						
 						int isEssential = Integer.parseInt(request.getParameter("isEssential"+Integer.toString(i)));
 						field.setIsEssential(isEssential);
 						int index;
 						//field.setIndex(index);
 						String key = Integer.toString(form_id) + "_" + Integer.toString(i);
 						field.setKey(key);
-						adminDAO.createField(field);
 						
 						if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
 							int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)));
@@ -384,6 +416,7 @@ public class AdminController {
 								}
 							}//item 반복문
 						}
+						adminDAO.createField(field);
 					}
 				}	//field 반복문			
 				return mav;
