@@ -498,7 +498,6 @@ public class AdminController {
 	@RequestMapping(value= "/form/view/field", method = RequestMethod.POST) // 주소 호출 명시 . 호출하려는 주소 와 REST 방식설정 (GET)
 	@ResponseBody
 	public List<Field> getFieldList(HttpServletRequest request, HttpSession session) throws Exception {
-		System.out.println("oghoho");
 		int form_id=Integer.parseInt(request.getParameter("form_id"));
 			
 		List<Field> formDetailField=adminDAO.formDetailField(form_id);
@@ -533,11 +532,29 @@ public class AdminController {
     	}
     	
 		ModelAndView mav = new ModelAndView("redirect:/admin/mypage");
-		System.out.println("in form update><");
 		Form form = new Form();
 		Category cg = new Category();
 		int category_id = 0;
 		int form_id = Integer.parseInt(request.getParameter("formId"));
+		
+		//todo
+		//state 추가
+		List<State> state_list = mainDao.stateList(form_id);
+		JSONArray jArray2 = new JSONArray();
+		
+		try{
+			for (int i = 0; i < state_list.size() ; i++) {   
+	    		JSONObject ob2 =new JSONObject();
+	    		ob2.put("id", state_list.get(i).getId());
+		        ob2.put("stateName", state_list.get(i).getStateName());
+	            jArray2.put(ob2);
+			}
+		}catch(JSONException e){
+	    	e.printStackTrace();
+	    }
+		
+		mav.addObject("state_list",jArray2);
+		
 		try {
 			Integer.parseInt(request.getParameter("category_id"));
 			category_id = Integer.parseInt(request.getParameter("category_id"));
