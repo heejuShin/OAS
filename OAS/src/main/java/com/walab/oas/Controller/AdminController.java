@@ -455,6 +455,23 @@ public class AdminController {
 	   System.out.println("link:"+link);
 		int form_id=adminDAO.getFormId(link); 
 		
+		//todo
+		//state 추가
+		List<State> state_list = mainDao.stateList(form_id);
+		JSONArray jArray2 = new JSONArray();
+		
+		try{
+			for (int i = 0; i < state_list.size() ; i++) {   
+	    		JSONObject ob2 =new JSONObject();
+	    		ob2.put("id", state_list.get(i).getId());
+		        ob2.put("stateName", state_list.get(i).getStateName());
+	            jArray2.put(ob2);
+			}
+		}catch(JSONException e){
+	    	e.printStackTrace();
+	    }
+		
+		mav.addObject("state_list",jArray2);
 		
 		List<Category> category_list = mainDao.categoryList();
 		JSONArray jArray3 = new JSONArray();

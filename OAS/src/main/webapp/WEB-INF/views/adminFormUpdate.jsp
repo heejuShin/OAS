@@ -6,10 +6,35 @@
 <meta charset="UTF-8">
 <title>설문 수정하기 </title>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> div 크기 조정
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Font -->
+ 	 <style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+ 	
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+ 		
+ 		.select2-container{
+ 		min-height: 49px !important;
+ 		}
+ 		
+ 		.select2-selection--multiple{
+ 		min-height: 49px !important;
+ 		}
+	</style> 
+    
+    
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3"> 
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -27,6 +52,8 @@
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
+	
+	
 	<!-- resizable -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -141,17 +168,9 @@
 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
 		
               
-            <div class="wrap-input100  bg1" >
+            <div class="wrap-input100  bg1" style="margin-bottom: 40px;">
 				<p class="label-input100" style="margin-bottom:5px">상태 선택<span class="essential"> * </span></p>
-				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px">
-			          <option selected="selected" value="대기중">대기 중</option>
-			          <option selected="selected" value="입금전">입금 전</option>
-			          <option selected="selected" value="방문요망">방문요망</option>
-			          <option selected="selected" value="완료">완료</option>
-			          <option selected="selected" value="불가">불가</option>
-			          <option selected="selected" value="신청중">신청 중</option>
-			          <option selected="selected" value="신청마감">신청마감</option>
-			          <option selected="selected" value="예약">예약</option>    
+				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px;"  class="form-state">  
 			      </select>
 			      
 			</div>
@@ -280,6 +299,14 @@
   
   <script>
   $( document ).ready(function() {
+	  
+		var state_list = ${state_list};
+		for (var i = 0; i < state_list.length; i++) {
+			var selectOption = $("<option selected=\"selected\" value='"+state_list[i].stateName+"'>"+state_list[i].stateName+"</option>");
+			$("#state").append(selectOption);
+		}
+		
+		
 		var value = $("#state").val();
 	    var s = value.toString();
 	    $("#state_selected").val(s); 
@@ -330,14 +357,6 @@
 	    }
 	    
 	});
-	/** TODO
-	* 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
-	* 그래도 어느 정도의 CSS
-	* 상태 선택
-	* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
-	* '기타' 추가 기능
-	* 복사 기능
-	**/
 
 	
 </script>
