@@ -45,6 +45,10 @@
 		    max-width: 100% !important;
 		}
      }
+     
+     body{
+     min-width: 1500px !important;
+     }
      </style>
 
 
