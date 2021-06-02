@@ -34,7 +34,8 @@ $( document ).ready(function() {
 	
 	$("#category_select option").attr('selected', false);
 	$("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
-	$(".select2-selection__rendered").html(formInfo.categoryName);
+	//$(".select2-selection__rendered").html(formInfo.categoryName);
+	//$("#category_selected").html(formInfo.categoryName);
 	
 	let startD=formInfo.startDate;
 	let endD=formInfo.endDate;
