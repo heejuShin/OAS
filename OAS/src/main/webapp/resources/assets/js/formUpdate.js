@@ -34,8 +34,9 @@ $( document ).ready(function() {
 	
 	$("#category_select option").attr('selected', false);
 	$("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
+	//if( $(".select2-selection__rendered").html()=="카테고리 선택") alert($(".select2-selection__rendered").html());
 	//$(".select2-selection__rendered").html(formInfo.categoryName);
-	//$("#category_selected").html(formInfo.categoryName);
+	$("#select2-category_select-container").html(formInfo.categoryName);
 	
 	let startD=formInfo.startDate;
 	let endD=formInfo.endDate;
