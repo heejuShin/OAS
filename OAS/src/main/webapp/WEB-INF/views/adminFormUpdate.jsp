@@ -102,7 +102,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
 
 	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=15"></script>
-   	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=87"></script>
+   	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=89"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -200,15 +200,9 @@
 			<div class="wrap-input100  bg1" style="margin-bottom: 40px;">
 				<p class="label-input100" style="margin-bottom:10px; margin-top:5px;">상태 선택<span class="essential"> * </span></p>
 				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px;" class="form-state">
-  					<option id='hi' selected="selected" value='hello'>왜...</option>
-  					<option id='hi' selected="selected" value='hello'>안되냐..</option>
+				
 			    </select>
-			</div>
-			
-			    <select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
-					<option id="category_selected" value="" selected="" disabled="">카테고리 선택</option>
-						<input name="categoryNum" value="3" type="hidden">
-				</select>
+			</div> 
 			
 			<input type="hidden" id="state_selected" name="state"/>
 
@@ -409,6 +403,32 @@
 	    }
 	    
 	});
+	
+	$('#state').on('select2:select', function(e) {
+	    var id = e.params.data.id;
+	    var value = $(this).val();
+	    var s = value.toString();
+	    $("#state_selected").val(s); 
+	    //console.log(document.getElementById('state_selected').value);
+	      });
+	$('#state').on('select2:unselect', function(e) {
+	    var id = e.params.data.id;
+	    if(id=="대기중"){
+	    	alert("'대기중' 옵션은 삭제할 수 없습니다.");
+	    	$("#대기중").remove();
+	    	$("#select2-state-result-h02g-대기중").remove();
+	    	//(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중" data-select2-id="select2-data-2-uqij"><button type="button" class="select2-selection__choice__remove" tabindex="-1" title="Remove item" aria-label="Remove item" aria-describedly="select2-state-container-choice-wzzt-대기중"><span aria-hidden="true">x</span></button><span class="select2-selection__choice__display" id="select2-state-container-choice-wzzt-대기중">대기중</span></li>');
+	    	$(".form-state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
+	    }
+	    var value = $(this).val();
+	    var s = value.toString();
+	    $("#state_selected").val(s); 
+	    //console.log(document.getElementById('state_selected').value);
+	      });
+	  $("#state").select2({
+	      tags: true,
+	      tokenSeparators: [',']
+	  })
 	
 </script>
   
