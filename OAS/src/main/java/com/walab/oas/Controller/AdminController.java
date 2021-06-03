@@ -554,7 +554,6 @@ public class AdminController {
 		int category_id = 0;
 		int form_id = Integer.parseInt(request.getParameter("formId"));
 		
-		//todo
 		//state 추가
 		List<State> state_list = mainDao.stateList(form_id);
 		JSONArray jArray2 = new JSONArray();
@@ -608,7 +607,7 @@ public class AdminController {
 				form.setExplanation(explanation);
 				
 				form.setUrl(url);
-				int isAvailable = 0; //TODO
+				int isAvailable = 0; 
 				form.setIsAvailable(isAvailable);
 				int isUserEdit = 0;
 				form.setIsUserEdit(isUserEdit);
@@ -796,6 +795,8 @@ public class AdminController {
 		List<Result> date_list = adminDAO.getDate(id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
+	
+		
 		List<Field> field_list = mainDao.fieldList(form_ID);
 		int isDeleted = adminDAO.IsCategoryDeleted(form_ID);
 
@@ -850,8 +851,12 @@ public class AdminController {
 		    	for (int i = 0; i < form_info.size() ; i++) {   
 			    		JSONObject ob =new JSONObject();
 			        
+			    	//todo
 			        ob.put("form_name", form_info.get(i).getFormName());
-			        ob.put("form_detail", form_info.get(i).getExplanation());
+			        
+			        //formInfo.setExplanation(formInfo.getExplanation().replaceAll("<br>", ""));
+			        
+			        ob.put("form_detail", form_info.get(i).getExplanation().replaceAll("<br>", "\n"));
 			        ob.put("form_startDate", form_info.get(i).getStartDate());
 			        ob.put("form_endDate", form_info.get(i).getEndDate());
 			            

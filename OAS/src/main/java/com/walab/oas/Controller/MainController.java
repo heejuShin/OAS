@@ -187,6 +187,8 @@ public class MainController {
 				    		JSONObject ob =new JSONObject();
 				        
 				        ob.put("form_name", form_info.get(i).getFormName());
+				        ob.put("form_fileid", form_info.get(i).getFile_id());
+				        ob.put("form_fileid", form_info.get(i).getFile_id());
 				        ob.put("form_detail", form_info.get(i).getExplanation());
 				        ob.put("form_startDate", form_info.get(i).getStartDate());
 				        ob.put("form_endDate", form_info.get(i).getEndDate());
@@ -228,7 +230,7 @@ public class MainController {
 							            
 					jArray2.put(ob);      
 			    }
-			    System.out.println(jArray2.toString());
+			    System.out.println("여기는 main이야 "+jArray2.toString());
 			}catch(JSONException e){
 				e.printStackTrace();
 			}

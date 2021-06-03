@@ -153,13 +153,15 @@ ModelAndView mav = new ModelAndView();
             	String root_path = request.getSession().getServletContext().getRealPath("/");  
                 String attach_path = "resources/upload/";
                 String filename = uploadFile.get(fileNum).getOriginalFilename();
-                File f = new File("C:\\Users\\shb59\\git\\OAS\\OAS\\src\\main\\webapp\\resources\\img" + filename);
                 System.out.println("Path is "+root_path + attach_path + filename);
+                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
+                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+
+                File f = new File("/Users/hayeon/Documents/workspace-spring-tool-suite-4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/OAS/resources/attachments/" + storedFileName);
+
                 uploadFile.get(fileNum).transferTo(f);
                 fileNum++;
-                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
                 
-                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
                 
                 
                 Map<String, Object> map = new HashMap<String, Object>();
@@ -168,12 +170,12 @@ ModelAndView mav = new ModelAndView();
 	      	    map.put("fileRealName", filename);
 
                 int erase = userDao.setFile(map);
-                System.out.println("erase is "+(int) map.get("id"));
+//                System.out.println("erase is "+(int) map.get("id"));
                 
                 result_content.setResult_id(result_id);
                 result_content.setField_id(Integer.parseInt(field_ids[i]));
                 result_content.setContent("");
-                result_content.setFile_id((int) map.get("id"));
+//                result_content.setFile_id((int) map.get("id"));
                 
                 System.out.println(result_content);
                 userDao.setContent(result_content);
@@ -222,6 +224,7 @@ ModelAndView mav = new ModelAndView();
 			    	JSONObject ob =new JSONObject();
 			        
 			        ob.put("form_name", form_info.getFormName());
+			        ob.put("form_fileid", form_info.getFile_id());
 			        ob.put("form_detail", form_info.getExplanation());
 			        ob.put("form_startDate", form_info.getStartDate());
 			        ob.put("form_endDate", form_info.getEndDate());
@@ -284,6 +287,7 @@ ModelAndView mav = new ModelAndView();
 			JSONObject ob =new JSONObject();
 			        
 			ob.put("form_name", form_info.getFormName());
+			ob.put("form_fileid", form_info.getFile_id());
 			ob.put("form_detail", form_info.getExplanation());
 			ob.put("form_startDate", form_info.getStartDate());
 			ob.put("form_endDate", form_info.getEndDate());
@@ -338,28 +342,6 @@ ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("redirect:/");
 		return mav;
-	}
-	
-	@RequestMapping(value="/fileDown")
-	public void fileDown(@RequestParam Map<String, Object> map,HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String root_path = request.getSession().getServletContext().getRealPath("/");  
-		System.out.println("root path is "+root_path);
-		System.out.println(map); 
-		
-		Map<String, Object> resultMap = userDao.selectFileInfo(map);
-		String storedFileName = (String) resultMap.get("fileName");
-		String originalFileName = (String) resultMap.get("fileRealName");
-		System.out.println("originalFileName is "+originalFileName);
-		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
-		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("/Users/hayeon/git/OAS/OAS/src/main/webapp/resources/attachments/"+storedFileName));
-		
-		response.setContentType("application/octet-stream");
-		response.setContentLength(fileByte.length);
-		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
-		response.getOutputStream().write(fileByte);
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-		
 	}
 
 }
