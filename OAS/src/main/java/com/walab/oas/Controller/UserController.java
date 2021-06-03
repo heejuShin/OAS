@@ -233,7 +233,7 @@ ModelAndView mav = new ModelAndView();
 			            
 			        jArray1.put(ob);      
 		    
-		        System.out.println(jArray1.toString());
+		        System.out.println("~~~~~~"+jArray1.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
@@ -253,7 +253,7 @@ ModelAndView mav = new ModelAndView();
 			            
 			        jArray2.put(ob);      
 		    }
-		        System.out.println(jArray2.toString());
+		        System.out.println("-------"+jArray2.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }

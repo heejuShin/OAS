@@ -419,8 +419,9 @@ $('#state').on('select2:unselect', function(e) {
     if(id=="대기중"){
     	alert("'대기중' 옵션은 삭제할 수 없습니다.");
     	$("#대기중").remove();
-    	$("#select2-state-result-h02g-대기중").remove();
+    	//$("#select2-state-result-h02g-대기중").remove();
     	//(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중" data-select2-id="select2-data-2-uqij"><button type="button" class="select2-selection__choice__remove" tabindex="-1" title="Remove item" aria-label="Remove item" aria-describedly="select2-state-container-choice-wzzt-대기중"><span aria-hidden="true">x</span></button><span class="select2-selection__choice__display" id="select2-state-container-choice-wzzt-대기중">대기중</span></li>');
+    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>"대기중"</li>');
     	$(".form-state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
     }
     var value = $(this).val();
