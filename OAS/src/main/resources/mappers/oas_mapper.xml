@@ -282,7 +282,7 @@
 			fileName,
 			fileRealName
 		FROM FILE
-		WHERE id = #{f_id}
+		WHERE id = #{FILE_NO}
 	</select>
 	
     <!-- 상태 id 생성  -->
