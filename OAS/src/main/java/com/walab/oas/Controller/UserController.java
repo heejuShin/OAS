@@ -222,6 +222,8 @@ ModelAndView mav = new ModelAndView();
 			    	JSONObject ob =new JSONObject();
 			        
 			        ob.put("form_name", form_info.getFormName());
+					ob.put("form_fileid", form_info.getFile_id());
+
 			        ob.put("form_detail", form_info.getExplanation());
 			        ob.put("form_startDate", form_info.getStartDate());
 			        ob.put("form_endDate", form_info.getEndDate());
@@ -230,7 +232,7 @@ ModelAndView mav = new ModelAndView();
 			            
 			        jArray1.put(ob);      
 		    
-		        System.out.println(jArray1.toString());
+		        System.out.println("~~~~~~"+jArray1.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
@@ -250,7 +252,7 @@ ModelAndView mav = new ModelAndView();
 			            
 			        jArray2.put(ob);      
 		    }
-		        System.out.println(jArray2.toString());
+		        System.out.println("-------"+jArray2.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
@@ -284,6 +286,7 @@ ModelAndView mav = new ModelAndView();
 			JSONObject ob =new JSONObject();
 			        
 			ob.put("form_name", form_info.getFormName());
+			ob.put("form_fileid", form_info.getFile_id());
 			ob.put("form_detail", form_info.getExplanation());
 			ob.put("form_startDate", form_info.getStartDate());
 			ob.put("form_endDate", form_info.getEndDate());

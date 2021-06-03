@@ -33,7 +33,7 @@ public class Form {
 
 	@Override
 	public String toString() {
-		return "Form [id=" + id + ", category_id=" + category_id + ", user_id=" + user_id + ", formName=" + formName
+		return "Form [id=" + id + ", file_id=" + file_id + ", category_id=" + category_id + ", user_id=" + user_id + ", formName=" + formName
 				+ ", explanation=" + explanation + ", url=" + url + ", isAvailable=" + isAvailable + ", isUserEdit="
 				+ isUserEdit + ", plusPoint=" + plusPoint + ", minusPoint=" + minusPoint + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", regDate=" + regDate + ", editDate=" + editDate + ", userName=" + userName
@@ -78,8 +78,8 @@ public class Form {
 		this.formName = formName;
 	}
 	
-	public void setFile_id(int id) {
-		this.file_id = id;
+	public void setFile_id(int file_id) {
+		this.file_id = file_id;
 	}
 
 	public String getExplanation() {
