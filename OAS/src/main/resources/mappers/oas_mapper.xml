@@ -282,7 +282,7 @@
 			fileName,
 			fileRealName
 		FROM FILE
-		WHERE id = #{f_id}
+		WHERE id = #{FILE_NO}
 	</select>
 	
     <!-- 상태 id 생성  -->
@@ -293,13 +293,13 @@
     
     <!-- Form 관련 쿼리 정리 -->
       <insert id="formCreate" parameterType="com.walab.oas.DTO.Form">
-         INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
-         VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
+         INSERT INTO `Form` (`category_id`,`user_id`,`formName`,`explanation`,`file_id`,`url`,`isAvailable`,`isUserEdit`,`plusPoint`,`minusPoint`,`startDate`,`endDate`) 
+         VALUES (#{category_id}, #{user_id}, #{formName}, #{explanation},#{file_id},#{url},#{isAvailable},#{isUserEdit},#{plusPoint},#{minusPoint},#{start},#{end})
       </insert>
       
       <insert id="fieldCreate" parameterType ="com.walab.oas.DTO.Field">
       INSERT INTO `Field` (`form_id`,`fieldType`,`fieldName`,`fileName`,`isEssential`,`key`) 
-      VALUES (#{form_id},#{fieldType},#{fieldName},NULL,#{isEssential},#{key});
+      VALUES (#{form_id},#{fieldType},#{fieldName},#{fileName},#{isEssential},#{key});
       
       </insert>
       
@@ -322,13 +322,11 @@
    
    <!-- 개별보기 내용 -->
    <select id='getReadList' parameterType="HashMap" resultType="com.walab.oas.DTO.ReadResult">
-   SELECT field_id, content, fieldName, file_id,`form_id`,`fieldType`,`isEssential`,`index`,`key`,`isDelete`,FILE.fileName, `fileRealName`,B.regDate FROM `FILE`  INNER JOIN
-   	SELECT * from Field 
-	   INNER JOIN
-	   (select field_id, content from ResultContent 
-	   INNER JOIN Result ON (ResultContent.result_id=Result.id)
-	   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) 
-	   where Field.form_id=#{form_id})B ON (FILE.id=B.file_id) where FILE.id=#{file_id};
+   SELECT * from Field 
+   INNER JOIN
+   (select field_id, content from ResultContent 
+   INNER JOIN Result ON (ResultContent.result_id=Result.id)
+   where ResultContent.result_id=#{result_id}) A ON (Field.id=A.field_id) where Field.form_id=#{form_id};
    </select>
    
 	<select id='getReadResultFile' parameterType="int" resultType="com.walab.oas.DTO.AttachFileDTO">

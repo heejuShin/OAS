@@ -1,11 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create Form</title>
+<title>설문 만들기</title>
 
 <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> div 크기 조정
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> 카테고리 -->
@@ -127,7 +126,7 @@
     
 		<div class="wrap-contact100" style="padding : 0px 100px 90px 100px">
 		<div id="menu-bar"><p id="add_p">+</p></div>
-				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()">
+				<form id="cseeForm" action="formCreate" class="contact100-form" method="post" modelattribute="form" onsubmit="return isValidForm()" enctype="multipart/form-data">
 					<span class="contact100-form-title">
 						설문 만들기
 					</span>
@@ -162,6 +161,7 @@
 			<div class="wrap-input100  bg1">
 				<textarea id="txtArea" rows="2" cols="20" wrap="hard" class="input100 InputFonts" style="margin-top: 5px; margin-left:-10px;" name="explanation" placeholder="설문지 설명" ></textarea>
 				<div style="float: right; margin-top: 20px;" id="test_cnt">(0 / 1000)</div>
+				<input type="file" name="adminUploadFile" />
 			</div>
 			<!-- <script>
 			$("#txtArea").on("keypress",function(e) {
@@ -424,8 +424,9 @@ $('#state').on('select2:unselect', function(e) {
     if(id=="대기중"){
     	alert("'대기중' 옵션은 삭제할 수 없습니다.");
     	$("#대기중").remove();
-    	$("#select2-state-result-h02g-대기중").remove();
+    	//$("#select2-state-result-h02g-대기중").remove();
     	//(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중" data-select2-id="select2-data-2-uqij"><button type="button" class="select2-selection__choice__remove" tabindex="-1" title="Remove item" aria-label="Remove item" aria-describedly="select2-state-container-choice-wzzt-대기중"><span aria-hidden="true">x</span></button><span class="select2-selection__choice__display" id="select2-state-container-choice-wzzt-대기중">대기중</span></li>');
+    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>"대기중"</li>');
     	$(".form-state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
     }
     var value = $(this).val();

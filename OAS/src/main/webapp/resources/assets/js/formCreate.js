@@ -247,6 +247,7 @@ $( document ).ready(function() {
 
 	//메뉴바 이동 코드
 	var count = $("#list").children().length-1;
+	var fileCount = 0;
 	if(count<0)
 		count=0;
 	
@@ -260,6 +261,7 @@ $( document ).ready(function() {
 	$("#list").on('change', ".field_type", function(){
 	    var content;
 	    $(this).siblings(".content").empty();
+	    $(this).siblings(".uploadDiv").empty();
 	    if(this.value=="textarea"){
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
@@ -274,6 +276,7 @@ $( document ).ready(function() {
 	    }
 	    else if(this.value=="file"){
           content = "<input type='file' class=\"inputs \" name=\"uploadFile\"/><br><input type=\"submit\" value=\"파일 업로드\"/><br>";
+          
         }
 	    else{
 	      content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";

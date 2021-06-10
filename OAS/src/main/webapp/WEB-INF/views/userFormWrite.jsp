@@ -70,8 +70,15 @@
 		console.log("step1");
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
-		
+		console.log("formInfo : " + formInfo[0].form_fileid);
 		$('#form_title').text(formInfo[0].form_name);
+		$('#form_fileid').text(formInfo[0].form_fileid);
+		if(formInfo[0].form_fileid != null){
+			var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + formInfo[0].form_fileid + ')> '+첨부파일 다운로드+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+			console.log("formInfo : " + formInfo[0].form_fileid);
+			$("#formInputs").append(fileBox);
+			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
+		}
 		$('.form_explanation').html(formInfo[0].form_detail);
 		$('#startDate').text(moment(formInfo[0].form_startDate).format('YYYY.MM.DD HH:mm'));
 		$('#endDate').text(moment(formInfo[0].form_endDate).format('YYYY.MM.DD HH:mm'));
@@ -119,11 +126,13 @@
 					//console.log(optionlist);
 
 					 if(fieldInfo[i].field_type == 'select'){
+						 
 						 console.log("step5");
 						 var selectID = "select" + fieldInfo[i].field_id;
 						 $("#field_"+ fieldInfo[i].field_id).children('p').attr("for",selectID);
  						  var selectTag = $("<select id='"+selectID+"' class='form-control' name='content'></select>");
- 							$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(selectTag);
+ 						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(selectTag);
+ 						
 					 }
 
 					 for(var idx=0; idx < optionlist.length; idx++){
@@ -169,6 +178,7 @@
 						$("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(textTag);
 
 				}else if(fieldInfo[i].field_type == 'file'){
+					
                     var inputTag = $("<input class= 'input100' type='"+fieldInfo[i].field_type +"' name='uploadFile'>");
                     if(fieldInfo[i].field_file){
                        var downTag = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
@@ -176,9 +186,9 @@
                     }
                     inputTag.addClass("fileinput");
                     $("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(inputTag);
-                 }
-
-				else{
+                    
+                 }else{
+                     
 						var inputTag = $("<input class= 'input100' type='"+fieldInfo[i].field_type +"' name='content'>");
 
 						if(fieldInfo[i].field_type == 'text')
@@ -227,9 +237,10 @@
 						
 					});//필수 필드 검사 끝
 
+					
+
 					//필수값이 모두 입력 되었을 때 form submit 처리 
 					if(is_empty == 0) {
-						
 						$(".inputDiv").each(function (){
 							//radio,checkbox 가 필수가 아닐때 hidden input(관련 field_id) 지움
 							if ($(this).children('div').children().is(':radio') && $(this).children('div').children().is(':checked') < 1 ) {
@@ -266,7 +277,7 @@
 
 			        	$("#userForm").submit(); //제출 
 				}//필수값이 모두 입력 되었을 때 끝 
-					
+
 				
 			});//submitB 함수 끝
 
@@ -292,6 +303,9 @@
 <form class="contact100-form" action="../submit" id="userForm" method="POST" enctype="multipart/form-data">
 				<input type="hidden" name="form_index" value="${form_ID}" >
 				<span class="contact100-form-title" id="form_title"> </span>
+				<div id="formInputs"  class="contact100-form">
+				<input type="hidden" id="FILE_NO" name="FILE_NO" value=""> 
+				</div>
 				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<div class="wrap-input100 bg0">
 					<p class="label-input100 form_explanation" ></p>
@@ -309,9 +323,9 @@
 				</div>
 				<!-- input type : submit -->
 				<div class="wrap-input100 button rs1-wrap-input100 formbts">
-					<button class="contact100-form-btn" id="submitB">
-						<span>Submit<i class="fa fa-long-arrow-right m-l-7"
-							aria-hidden="true"></i></span>
+					<button class="contact100-form-btn" type="button" id="submitB">
+						<span>Submit<!-- <i class="fa fa-long-arrow-right m-l-7"
+							aria-hidden="true"></i> --></span>
 					</button>
 				</div>
 
@@ -324,6 +338,13 @@
 </body>
 
 <script>
+function fn_fileDown(fileNo){
+	var formObj = $("form[name='readForm']");
+	$("#FILE_NO").attr("value", fileNo);
+	formObj.attr("action", "/fileDown");
+	formObj.submit();
+}
+
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
