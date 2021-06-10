@@ -277,7 +277,7 @@
 					
  					<div class='uploadDiv'>
 						<input type='file' name='uploadFile' multiple>
-						<button id='uploadBtn'>Upload</button>
+						<button id='uploadBtn'>Upload</button> 
 					</div> 
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
