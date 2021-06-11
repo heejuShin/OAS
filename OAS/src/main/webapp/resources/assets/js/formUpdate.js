@@ -236,6 +236,10 @@ $( document ).ready(function() {
 		  }
 		  
 	  }
+	  else if(formDetail[i].fieldType=="file"){
+	  	content = "<input type='text' class=\"inputs \" placeholder=\"파일 업로드\" type=\""+this.value+"\" disabled/>"; 
+	    $("#field_add").find(".content").html(content);
+	  }
 	  else{
 	    content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 
 	    $("#field_add").find(".content").html(content);
