@@ -87,7 +87,7 @@ public class LoginController {
          {
       
       String rootPath = request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath();
-      
+      System.out.println(rootPath);
       HttpSession session = request.getSession();
       System.out.println("Session is "+ session);
       

@@ -285,31 +285,30 @@ public class AdminController {
 			
 			if(adminUploadFile != null) {
 				for(int i=0;i<1;i++) {
-				System.out.println(adminUploadFile);
-            	String root_path = request.getSession().getServletContext().getRealPath("/");  
-                String attach_path = "resources/upload/";
-                String filename = adminUploadFile.getOriginalFilename();
-                System.out.println("Filename is "+filename);
-                if(filename == "") break;
-                File f = new File("C:\\Users\\shb59\\git\\OAS\\OAS\\src\\main\\webapp\\resources\\img" + filename);
-                System.out.println("Path is "+root_path + attach_path + filename);
-                adminUploadFile.transferTo(f);
-                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
-                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
-                
-                
-                
-                map.put("id", 0);
-	      	    map.put("fileName", storedFileName);
-	      	    map.put("fileRealName", filename);
-
-                int erase = userDao.setFile(map);
-                System.out.println("erase is "+(int) map.get("id"));
-                file_id = (int) map.get("id");
-			
-			
-			file_id = (int) map.get("id");
-			form.setFile_id(file_id);
+					System.out.println(adminUploadFile);
+	            	String root_path = request.getSession().getServletContext().getRealPath("/");  
+	                String attach_path = "resources/upload/";
+	                String filename = adminUploadFile.getOriginalFilename();
+	                System.out.println("Filename is "+filename);
+	                if(filename == "") break;
+	                File f = new File("/Users/sia/git/OAS/OAS/src/main/webapp/resources/img" + filename);
+	                System.out.println("Path is "+root_path + attach_path + filename);
+	                adminUploadFile.transferTo(f);
+	                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
+	                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+	                
+	                
+	                map.put("id", 0);
+		      	    map.put("fileName", storedFileName);
+		      	    map.put("fileRealName", filename);
+	
+	                int erase = userDao.setFile(map);
+	                System.out.println("erase is "+(int) map.get("id"));
+	                file_id = (int) map.get("id");
+				
+				
+					file_id = (int) map.get("id");
+					form.setFile_id(file_id);
 				}
 			}
 			int category_id = 0;

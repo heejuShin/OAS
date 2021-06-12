@@ -101,7 +101,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=24"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=25"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -275,10 +275,10 @@
 					<input type="hidden" class="isFieldOri" name="isFieldOri?" value="0"/>
 					<input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
- 					<div class='uploadDiv'>
+ 					<!-- <div class='uploadDiv'>
 						<input type='file' name='uploadFile' multiple>
 						<button id='uploadBtn'>Upload</button> 
-					</div> 
+					</div>  -->
 					
 						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>

@@ -101,7 +101,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=15"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=16eeeeeee"></script>
    	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=90"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
@@ -160,8 +160,9 @@
 				</div>
 				
 				<div class="wrap-input100  bg1" >
-					<textarea class="input100 InputFonts"  id="explanation" name="explanation" placeholder="설문지 설명"></textarea>
-					<div style="float: right; margin-top: 20px;" id="test_cnt" ></div>
+					<textarea class="input100 InputFonts"  id="txtArea" rows="2" cols="20" wrap="hard" name="explanation" placeholder="설문지 설명"></textarea>
+					<div style="float: right; margin-top: 20px;" id="test_cnt" >(0 / 1000)</div>
+					<input type="file" name="adminUploadFile" />
 				</div>
 				
 				<input type="hidden" id="state_selected" name="state"/>
@@ -269,25 +270,24 @@
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
-						<select class="field_type  " name="f_type3" style="clear:both"> 
-						  <option value="" selected disabled>질문유형</option>
-						  <option value="text">단답형</option>
-						  <option value="textarea">장문형</option>
-						  <option value="radio">객관식</option>
-						  <option value="checkbox">체크박스</option>
-						  <option value="select">드롭다운</option>
-						  <option value="file">파일업로드</option>
-						  <option value="date">날짜</option>
-						  <option value="time">시간</option>
-						  <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
-						</select>
-
-						<div style="float: right;">
-						<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
-						<label for="필수질문">필수</label>
-						</div>
+			<select class="field_type  " name="f_type3" style="clear:both"> 
+				<option value="" selected disabled>질문유형</option>
+				<option value="text">단답형</option>
+				<option value="textarea">장문형</option>
+				<option value="radio">객관식</option>
+				<option value="checkbox">체크박스</option>
+				<option value="select">드롭다운</option>
+				<option value="file">파일업로드</option>
+				<option value="date">날짜</option>
+				<option value="time">시간</option>
+				<!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
+			</select>
+			<div style="float: right;">
+				<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
+				<label for="필수질문">필수</label>
+			</div>
 	
-						<div class="content" style="clear: both;"></div>
+			<div class="content" style="clear: both;"></div>
         </div>
       </div>
 
@@ -337,8 +337,55 @@
     
 <script>
   $( document ).ready(function() {
-	 
+
+	  const randomString = Math.random().toString(36).slice(2);
+		$("#link").val(randomString);
 		
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$"); //파일 확장자 정규식 
+		var maxSize = 5242880; // 5MB
+		
+		function checkExtension(fileName,fileSize){
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		$("#uploadBtn").on("click",function(e){
+			var formData = new FormData();
+			
+			var inputFile = $("input[name='uploadFile']");
+			
+			var files = inputFile[0].files;
+			
+			console.log(files);
+			
+			for(var i=0; i<files.length; i++){
+				if(!checkExtension(files[i].name,files[i].size)){
+					return false;
+				}
+				formData.append("uploadFile",files[i]);
+			}
+			
+			$.ajax({
+				url: '/uploadAjax',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				success: function(result){
+					alert("Uploaded");
+				}
+			});
+		});
+
+		//파일 js 끝
 		
 		var value = $("#state").val();
 	    var s = value.toString();
