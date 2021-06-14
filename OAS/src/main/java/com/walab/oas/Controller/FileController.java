@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import com.walab.oas.DAO.UserDAO;
 
-
+@RestController
+@RequestMapping(value = "")
 public class FileController {
 	@Autowired
 	private UserDAO userDao; 
