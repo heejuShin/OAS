@@ -291,7 +291,7 @@ public class AdminController {
 	                String filename = adminUploadFile.getOriginalFilename();
 	                System.out.println("Filename is "+filename);
 	                if(filename == "") break;
-	                File f = new File("/Users/sia/git/OAS/OAS/src/main/webapp/resources/img" + filename);
+	                File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
 	                System.out.println("Path is "+root_path + attach_path + filename);
 	                adminUploadFile.transferTo(f);
 	                String originalFileExtension = filename.substring(filename.lastIndexOf("."));

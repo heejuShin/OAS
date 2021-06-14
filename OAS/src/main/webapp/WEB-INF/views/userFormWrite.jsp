@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=3">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=4">
 	
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -31,6 +31,7 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/getContextPath.js?ver=1"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -47,9 +48,8 @@
 	
 	<script>
 	$(document).ready(function () {
-		
 		//command injection 방지
-        var replaceId = /[\#$^&\\='\;<>\\`\\\\[\]|{}]/gi;
+        var replaceId = /\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g;
         $("#fieldInputs").on('focusout', ".input100", function(){
         //$("input").on("focusout", function() {
             var x = $(this).val();
@@ -62,9 +62,9 @@
         }).on("keyup", ".input100", function() {
             $(this).val($(this).val().replace(replaceId, ""));
         });
-	
-		
+
 		var formInfo = ${form_info};
+		console.log(formInfo);
 		var fieldInfo = ${field_list};
 		
 		console.log("step1");
@@ -72,17 +72,19 @@
 		console.log("title : " + formInfo[0].form_name);
 		console.log("formInfo : " + formInfo[0].form_fileid);
 		$('#form_title').text(formInfo[0].form_name);
-		$('#form_fileid').text(formInfo[0].form_fileid);
-		if(formInfo[0].form_fileid != null){
-			var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + formInfo[0].form_fileid + ')> '+첨부파일 다운로드+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
-			console.log("formInfo : " + formInfo[0].form_fileid);
-			$("#formInputs").append(fileBox);
-			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
-		}
+		
 		$('.form_explanation').html(formInfo[0].form_detail);
 		$('#startDate').text(moment(formInfo[0].form_startDate).format('YYYY.MM.DD HH:mm'));
 		$('#endDate').text(moment(formInfo[0].form_endDate).format('YYYY.MM.DD HH:mm'));
 
+		if(formInfo[0].form_fileid != null){
+			$('#form_fileid').text(formInfo[0].form_fileid);
+			var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + formInfo[0].form_fileid + ')> 다운 <img src="../resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+			console.log("formInfo : " + formInfo[0].form_fileid);
+			$("#formInfo").append(fileBox);
+			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
+		}
+		
 		console.log("step2");
 
 		//field 만들기 
@@ -181,7 +183,7 @@
 					
                     var inputTag = $("<input class= 'input100' type='"+fieldInfo[i].field_type +"' name='uploadFile'>");
                     if(fieldInfo[i].field_file){
-                       var downTag = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+                       var downTag = $('<div class="wrap-input100 bg0 text_center marginTop "><button> '+fieldInfo[i].field_file+' 다운 <img src="../resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
                        $("#field_"+ fieldInfo[i].field_id).children(".inputDiv").append(downTag);
                     }
                     inputTag.addClass("fileinput");
@@ -304,14 +306,15 @@
 				<input type="hidden" name="form_index" value="${form_ID}" >
 				<span class="contact100-form-title" id="form_title"> </span>
 				<div id="formInputs"  class="contact100-form">
-				<input type="hidden" id="FILE_NO" name="FILE_NO" value=""> 
+					<input type="hidden" id="FILE_NO" name="FILE_NO" value=""> 
 				</div>
 				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
-				<div class="wrap-input100 bg0">
+				
+				
+				<div class="wrap-input100 bg0" id="formInfo">
 					<p class="label-input100 form_explanation" ></p>
 					<p class="label-input100 form_date">신청기간 : <span id="startDate"></span> ~ <span id="endDate"></span></p>
 				</div>
-				
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->
 				</div>

@@ -148,11 +148,11 @@ ModelAndView mav = new ModelAndView();
                 
                System.out.println(result_content);
                userDao.setContent(result_content);
-            }else {
-            	System.out.println(uploadFile);
+            }else { 
             	String root_path = request.getSession().getServletContext().getRealPath("/");  
-                String attach_path = "resources/upload/";
+                String attach_path = "resources/img/";
                 String filename = uploadFile.get(fileNum).getOriginalFilename();
+                System.out.println(filename);
                 System.out.println("Path is "+root_path + attach_path + filename);
                 String originalFileExtension = filename.substring(filename.lastIndexOf("."));
                 String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
