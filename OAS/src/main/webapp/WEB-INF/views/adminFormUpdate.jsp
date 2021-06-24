@@ -103,6 +103,7 @@
 
 	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=16eeeeeee"></script>
    	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=90"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/pageBackEvent.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
    
@@ -238,7 +239,7 @@
 	        
 	        </p>
 	        <div id="modal_buttons">
-	        	<button type="submit" id="form_submit" class="submit modal_bts">확인</button>
+	        	<button type="submit" id="form_submit" class="submit modal_bts submitB">확인</button>
 	        	<button type="button" class="modal_bts modal_close_btn">취소</button>
 	        </div>
 	        
