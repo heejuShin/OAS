@@ -553,22 +553,20 @@ public class AdminController {
 		int category_id = 0;
 		int form_id = Integer.parseInt(request.getParameter("formId"));
 		
-		//state 추가
-		List<State> state_list = mainDao.stateList(form_id);
-		JSONArray jArray2 = new JSONArray();
-		
-		try{
-			for (int i = 0; i < state_list.size() ; i++) {   
-	    		JSONObject ob2 =new JSONObject();
-	    		ob2.put("id", state_list.get(i).getId());
-		        ob2.put("stateName", state_list.get(i).getStateName());
-	            jArray2.put(ob2);
-			}
-		}catch(JSONException e){
-	    	e.printStackTrace();
-	    }
-		
-		mav.addObject("state_list",jArray2);
+		//state
+		State state= new State();
+		String statename = request.getParameter("state");
+		//System.out.println(statename);
+		String[] statenames = statename.split(",");
+		adminDAO.stateDel(form_id);
+		for (int i = 0; i < statenames.length; i++) {
+			state.setStateName(statenames[i]);
+			if(statenames[i].equals("대기중"))
+				state.setIsDefualt(1);
+			else state.setIsDefualt(0);
+			state.setForm_id(form_id);
+			adminDAO.createState(state);
+		}
 		
 		try {
 			Integer.parseInt(request.getParameter("category_id"));
