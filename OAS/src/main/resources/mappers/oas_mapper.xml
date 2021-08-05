@@ -59,7 +59,10 @@
              select * from State where form_id = #{formID};
           ]]> 
    </select>
-   
+   <delete id="deleteOState" parameterType="int">
+      DELETE from State WHERE form_id = #{formID};
+      
+   </delete>
    <!-- userMyPage 게시글 -->
    <select id="userlist" resultType="com.walab.oas.DTO.Form">
     SELECT c.id,c.category_id,c.categoryName, c.formName,url, c.startDate as startDate,c.endDate as endDate,c.regDate,u.userName,stateName,ifnull(state_id,0)as state_id
