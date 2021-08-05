@@ -286,16 +286,23 @@ public class AdminController {
 			if(adminUploadFile != null) {
 				for(int i=0;i<1;i++) {
 					System.out.println(adminUploadFile);
-	            	String root_path = request.getSession().getServletContext().getRealPath("/");  
-	                String attach_path = "resources/upload/";
+	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
+	                String attach_path = "resources/uploadFile/";
 	                String filename = adminUploadFile.getOriginalFilename();
+	                
 	                System.out.println("Filename is "+filename);
 	                if(filename == "") break;
-	                File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
-	                System.out.println("Path is "+root_path + attach_path + filename);
-	                adminUploadFile.transferTo(f);
+	                
 	                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
 	                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+	                System.out.println("storedFileName is "+storedFileName);
+	                
+	                //File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
+	                File f = new File(root_path + attach_path + storedFileName);
+	                System.out.println("Path is "+root_path + attach_path + storedFileName);
+	                
+	                adminUploadFile.transferTo(f);
+	                
 	                
 	                
 	                map.put("id", 0);
