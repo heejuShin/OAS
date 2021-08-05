@@ -137,6 +137,10 @@ $( document ).ready(function() {
 	    else if(this.value=="checkbox"){
 	      content = "<input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 	    }
+	    else if(this.value=="file"){
+          content = "<input type='file' class=\"inputs \" name=\"uploadFile\"/><br>";
+          
+        }
 	    else{
 	      content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    }

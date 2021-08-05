@@ -37,18 +37,18 @@
    <beans:bean id="authinterceptor" class="com.walab.oas.Intercept.AuthIntercept" />
    <beans:bean id="logininterceptor" class="com.walab.oas.Intercept.LoginIntercept" />
    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-      <beans:property name="defaultEncoding" value="utf-8"></beans:property>
-      <beans:property name="maxUploadSize" value="104857560"></beans:property>
-      <beans:property name="maxUploadSizePerFile" value="2097152"></beans:property>
-      <beans:property name="maxInMemorySize" value="10485756"></beans:property>
+   <beans:property name="defaultEncoding" value="utf-8"></beans:property>
+   <beans:property name="maxUploadSize" value="104857560"></beans:property>
+   <beans:property name="maxUploadSizePerFile" value="2097152"></beans:property>
+   <beans:property name="maxInMemorySize" value="10485756"></beans:property>
    </beans:bean>
    <!-- json형식의 데이터 전달에서 스크립트 공격 필터링 -->
    <beans:bean id="htmlEscapingObjectMapper" class="com.walab.oas.security.HtmlEscapingObjectMapperFactory" />
-	 <mvc:annotation-driven>
-	 <mvc:message-converters>
-		        <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
-		        	<beans:property name="objectMapper" ref="htmlEscapingObjectMapper"></beans:property>
-		        </beans:bean>
+   <mvc:annotation-driven>
+   <mvc:message-converters>
+	   	<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+		<beans:property name="objectMapper" ref="htmlEscapingObjectMapper"></beans:property>
+		</beans:bean>
 	</mvc:message-converters>
 	</mvc:annotation-driven>
    

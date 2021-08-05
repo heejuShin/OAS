@@ -8,7 +8,7 @@ import java.util.Locale;
 public class Form {
 	private int id;
 	private int category_id;
-
+	private int file_id;
 	private int user_id;
 	private String formName;
 	private String explanation;
@@ -33,7 +33,7 @@ public class Form {
 
 	@Override
 	public String toString() {
-		return "Form [id=" + id + ", category_id=" + category_id + ", user_id=" + user_id + ", formName=" + formName
+		return "Form [id=" + id + ", file_id=" + file_id + ", category_id=" + category_id + ", user_id=" + user_id + ", formName=" + formName
 				+ ", explanation=" + explanation + ", url=" + url + ", isAvailable=" + isAvailable + ", isUserEdit="
 				+ isUserEdit + ", plusPoint=" + plusPoint + ", minusPoint=" + minusPoint + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", regDate=" + regDate + ", editDate=" + editDate + ", userName=" + userName
@@ -44,6 +44,11 @@ public class Form {
 	public int getId() {
 		return id;
 	}
+	public int getFile_id() {
+		return file_id;
+	}
+	
+	
 
 	public void setId(int id) {
 		this.id = id;
@@ -71,6 +76,10 @@ public class Form {
 
 	public void setFormName(String formName) {
 		this.formName = formName;
+	}
+	
+	public void setFile_id(int file_id) {
+		this.file_id = file_id;
 	}
 
 	public String getExplanation() {

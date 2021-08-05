@@ -45,6 +45,10 @@
 		    max-width: 100% !important;
 		}
      }
+     
+     body{
+     min-width: 1500px !important;
+     }
      </style>
 
 
@@ -65,7 +69,7 @@
   <main>
 
   	<div id="headTitle">
-		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" style="cursor:pointer;" alt="profileImg" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
+		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 </h2></div>
      </div>
 
     <section id="demo" class="adminMypage_main">
@@ -217,8 +221,8 @@
 	                    		    var th1 = $("<th>"+adminList[i].categoryName+"<span class='co-name'></span></th>"); 
 	                    		    $($(".tbodies").children()[i]).append(th1);
 	                    		    
-	                    		    if(adminList[i].formName.length > 35){
-	                    		    	var shortFormName = adminList[i].formName.substring(0,34);
+	                    		    if(adminList[i].formName.length > 20){
+	                    		    	var shortFormName = adminList[i].formName.substring(0,20);
 	                    		    	var td2 = $("<td class='formName'>"+shortFormName+" ...<span class='formNameToolTip'>"+adminList[i].formName+"</span></td>"); 
 	                    		    }else{
 	                    		    	var td2 = $("<td class='formName'>"+adminList[i].formName+"</td>"); 

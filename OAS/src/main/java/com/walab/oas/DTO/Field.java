@@ -7,7 +7,7 @@ public class Field {
 	private int form_id;
 	private String fieldType;
 	private String fieldName;
-	private String fileName;
+	private int fileName;
 	private int isEssential;
 	private int index;
 	private Date regDate;
@@ -56,11 +56,11 @@ public class Field {
 		this.fieldName = fieldName;
 	}
 
-	public String getFileName() {
+	public int getFileName() {
 		return fileName;
 	}
 
-	public void setFileName(String fileName) {
+	public void setFileName(int fileName) {
 		this.fileName = fileName;
 	}
 

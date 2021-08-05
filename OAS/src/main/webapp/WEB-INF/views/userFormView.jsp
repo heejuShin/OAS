@@ -58,13 +58,18 @@
             <div></div>
         </div>
     </div>  
+
     <!-- ***** Preloader End ***** -->
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 			<form class="contact100-form" action="submit" id="userForm" name="readForm" method="POST">
 				<span>신청이 완료된 폼입니다.</span>
-				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
+ 				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<span class="contact100-form-title" id="form_title"></span>
+				
+				<div id="formInputs"  class="contact100-form">
+				<input type="hidden" id="FILE_NO" name="FILE_NO" value=""> 
+				</div>
 
 				<div class="wrap-input100 bg0">
 					<p class="label-input100 form_explanation" ></p>
@@ -101,10 +106,19 @@
 		var formInfo = ${form_info};
 		var fieldInfo = ${field_list};
 
-		console.log("step1");
-		console.log("title : " + formInfo[0].form_name);
+		console.log("여기는폼 뷰야 step1");
+		console.log("title!!!!!! : " + formInfo[0].form_name);
+		console.log("formInfo : " + formInfo[0].form_fileid);
 		
 		$('#form_title').text(formInfo[0].form_name);
+		
+		if(formInfo[0].form_fileid != null){
+			var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + formInfo[0].form_fileid + ')> '+첨부파일 다운로드+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+			console.log("formInfo : " + formInfo[0].form_fileid);
+			$("#formInputs").append(fileBox);
+			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
+		}
+		
 		$('.form_explanation').html(formInfo[0].form_detail);
 		$('#startDate').text(moment(formInfo[0].form_startDate).format('YYYY.MM.DD HH:mm'));
 		$('#endDate').text(moment(formInfo[0].form_endDate).format('YYYY.MM.DD HH:mm'));
@@ -121,7 +135,8 @@
 		console.log("step2");
 
 		for(var i = 0 ; i < fieldInfo.length; i++){
-
+			console.log(fieldInfo[i].field_type+" 타입");
+			
 			var divTitle = $('<div id="result_'+i+'" class="wrap-input100 bg1"></div>');
 			$("#fieldInputs").append(divTitle);
 
@@ -146,13 +161,16 @@
 					result_content = result_content.split("$").join(" / "); // $를 /로 대체
 				}
 				
-				if(fieldInfo[i].field_type == "file"){
-					var answerBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = downloadFile(' + fieldInfo[i].field_file + ')> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
-					console.log("field_fileid : " + fieldInfo[i].field_fileid);
-				}
-				else{			var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>')
-}
 			}
+			if(fieldInfo[i].field_type == "file"){
+				console.log("fieldInfo[i].field_fileid is " + fieldInfo[i].field_fileid);
+				var answerBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + fieldInfo[i].field_fileid + ')> '+fieldInfo[i].field_file+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
+				console.log("field_fileid : " + fieldInfo[i].field_fileid);
+			}
+			else{
+				var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>')
+			}
+			
 			
 			$("#fieldInputs").children("#result_"+i).append(answerBox);	
 			
@@ -160,18 +178,11 @@
 
 	}); //document ready
 	
-	function downloadFile(filename){
-	    const encFileName = encodeURI(filename);
-	    $.ajax({
-	        method:"GET",
-	        url : `fileDownLoad.do`,
-	        success : function(data) {
-	            window.location =`fileDownLoad.do?FileName=${encFileName}`;
-	        },
-	        error:function(request,status){
-	            alert("오류가 발생했습니다.");
-	        }
-	    });
+	function fn_fileDown(fileNo){
+		var formObj = $("form[name='readForm']");
+		$("#FILE_NO").attr("value", fileNo);
+		formObj.attr("action", "/fileDown");
+		formObj.submit();
 	}
 
 	</script>

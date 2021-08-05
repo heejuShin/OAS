@@ -8,8 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.walab.oas.DTO.AttachFileDTO;
-import com.walab.oas.DTO.Category;
 import com.walab.oas.DTO.Form;
 import com.walab.oas.DTO.Item;
 import com.walab.oas.DTO.ReadResult;
@@ -84,7 +82,7 @@ public class UserDAO {
      }
 	
 	// 첨부파일 다운로드
-	public Map<String, Object> selectFileInfo(Map<String, Object> map) {
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(namespace + ".selectFileInfo", map);
 	}
 }

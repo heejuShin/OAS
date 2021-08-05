@@ -34,7 +34,9 @@ $( document ).ready(function() {
 	
 	$("#category_select option").attr('selected', false);
 	$("#category_select option[value='+formInfo.category_id+']").attr('selected', true).change();
-	$(".select2-selection__rendered").html(formInfo.categoryName);
+	//if( $(".select2-selection__rendered").html()=="카테고리 선택") alert($(".select2-selection__rendered").html());
+	//$(".select2-selection__rendered").html(formInfo.categoryName);
+	$("#select2-category_select-container").html(formInfo.categoryName);
 	
 	let startD=formInfo.startDate;
 	let endD=formInfo.endDate;
@@ -233,6 +235,10 @@ $( document ).ready(function() {
 		    }
 		  }
 		  
+	  }
+	  else if(formDetail[i].fieldType=="file"){
+	  	content = "<input type='text' class=\"inputs \" placeholder=\"파일 업로드\" type=\""+this.value+"\" disabled/>"; 
+	    $("#field_add").find(".content").html(content);
 	  }
 	  else{
 	    content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 

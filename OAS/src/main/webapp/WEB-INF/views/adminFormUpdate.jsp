@@ -4,12 +4,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>설문 수정하기 </title>
+<title>설문 수정하기</title>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> <!-- div 크기 조정 -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> <!-- 카테고리 -->
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> div 크기 조정
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> 카테고리 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" /> <!-- 상태 -->
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Font -->
+ 	 <style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+ 	
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
+ 	
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+	</style> 
+    
+    
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3"> 
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -22,32 +39,44 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css">
-	
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/css/main.css?ver=2"> 
+	 
 	<!-- checkbox CSS -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css">
-	<!-- resizable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<!-- Font -->
-  <style type="text/css">
-  	@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/style.css"> 
+		
+	
+	 <!-- resizable -->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+	
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script> 
+	
+
+   
+  
+  <!-- Font -->
+ 	<style type="text/css">
+  		@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
  	
- 	*{
- 		font-family: 'NanumSquare', sans-serif !important;
- 		font-style:normal;
- 		font-weight:normal;
- 	}
+ 		body, p, #li {font-family: 'NanumSquare', sans-serif;}
  	
- 	body, p, #li {font-family: 'NanumSquare', sans-serif;}
- 	
-</style>
+ 		* {
+ 			font-family: 'NanumSquare', sans-serif !important;
+ 			font-style:normal;
+ 			font-weight:normal;	
+ 		}
+ 
+	</style>
+
+
 </head>
+  <body>
 
-<body>
-
-	 <!-- ***** Preloader Start ***** -->
+    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -59,13 +88,8 @@
 
   
 	<jsp:include page="/WEB-INF/views/basic/header.jsp" /> 
-
-    <!--body-->
-    
-    <!-- momment -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    
-	<!-- Form JS -->
+	
+		<!-- Form JS -->
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/animsition/js/animsition.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/js/popper.js"></script>
@@ -75,24 +99,31 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/countdowntime/countdowntime.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=15"></script>
-  	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=72"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
+
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=16eeeeeee"></script>
+   	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=90"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/pageBackEvent.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-    <!-- resizable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<!-- 아이콘 -->
-    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+   
+     <!-- 아이콘 -->
+     <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> 
 	<!-- 카테고리 관련 CDN -->
 	<script	src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<!-- select2 javascript cdn -->
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+	
 
+	<!-- momment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> 
 	
 	
+	
+
+    <!--body-->
+    
+    
     <div class="container-contact100">
     
 		<div class="wrap-contact100" style="padding : 0px 100px 90px 100px">
@@ -103,10 +134,12 @@
 					</span>
 					
 		<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
-	          <div class="wrap-input100 bg1 rs1-wrap-input100">
+	         <!-- todo --> <div class="wrap-input100 bg1 rs1-wrap-input100" id="category-wrap">
 								
+				
+				<!--  todo -->
 			 	<select class="form-control select2-hidden-accessible InputFonts" id="category_select" name="category_id" required="" tabindex="-1" aria-hidden="true">
-					<option value="" selected="" disabled="">카테고리 선택</option>
+					<option id="category_selected" value="" selected="" disabled="">카테고리 선택</option>
 						<input name="categoryNum" value="3" type="hidden">
 				</select>
 	
@@ -128,9 +161,11 @@
 				</div>
 				
 				<div class="wrap-input100  bg1" >
-					<textarea class="input100 InputFonts"  id="explanation" name="explanation" placeholder="설문지 설명"></textarea>
-					<div style="float: right; margin-top: 20px;" id="test_cnt" ></div>
+					<textarea class="input100 InputFonts"  id="txtArea" rows="2" cols="20" wrap="hard" name="explanation" placeholder="설문지 설명"></textarea>
+					<div style="float: right; margin-top: 20px;" id="test_cnt" >(0 / 1000)</div>
+					<input type="file" name="adminUploadFile" />
 				</div>
+				
 				<input type="hidden" id="state_selected" name="state"/>
 				<input name="plusPoint" type="hidden" value="0"/> <!-- type="number" -->
                 <input name="minusPoint" type="hidden" value="0"/> <!-- type="number" -->
@@ -139,22 +174,37 @@
                 <input type="hidden" id="count" name="count" value="0"/>
           	    <input type="hidden" class="fieldCount" name="fieldCount?" value="0"/>
 				<input name="isUserEdit" type="hidden" value="0"/> <!-- type="number" --> 
-		
-              
-            <div class="wrap-input100  bg1" >
-				<p class="label-input100" style="margin-bottom:5px">상태 선택<span class="essential"> * </span></p>
-				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px">
-			          <option selected="selected" value="대기중">대기 중</option>
-			          <option selected="selected" value="입금전">입금 전</option>
-			          <option selected="selected" value="방문요망">방문요망</option>
-			          <option selected="selected" value="완료">완료</option>
-			          <option selected="selected" value="불가">불가</option>
-			          <option selected="selected" value="신청중">신청 중</option>
-			          <option selected="selected" value="신청마감">신청마감</option>
-			          <option selected="selected" value="예약">예약</option>    
-			      </select>
-			      
-			</div>
+				
+			<!-- <script>
+			$("#txtArea").on("keypress",function(e) {
+			    var key = e.keyCode;
+
+			    // If the user has pressed enter
+			    if (key == 13) {
+			        document.getElementById("txtArea").value =document.getElementById("txtArea").value + "\n";
+			        return false;
+			    }
+			    else {
+			        return true;
+			    }
+			});
+			</script> -->
+			<!-- <script>
+			$(window).keydown(function(event){
+    if((event.which== 13) && ($(event.target)[0]!=$("textarea")[0])) {
+      event.preventDefault();
+      return false;
+    }
+  });</script> -->
+  
+  
+<!-- todo -->
+			<div class="wrap-input100  bg1" style="margin-bottom: 40px;">
+				<p class="label-input100" style="margin-bottom:10px; margin-top:5px;">상태 선택<span class="essential"> * </span></p>
+				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px;" class="form-state">
+				
+			    </select>
+			</div> 
 			
 			<input type="hidden" id="state_selected" name="state"/>
 
@@ -172,33 +222,39 @@
 				<span>수정</span>
 			</button>
           </div>
+		
+         
 
-        
         <div id="confirm_modal">
 	        <h4 id="modal_message">설문지 작성이 완료되었습니다.</h4>
 	        <p>
 	        <span class="modal_title">제목 : </span><span id="confirm_title" class="modal_content"></span><br>
 	        <span class="modal_title">분류 : </span><span id="confirm_category" class="modal_content"></span><br>
 	        <span class="modal_title">기간 : </span><span id="confirm_start" class="modal_content"></span> - <span id="confirm_end" class="modal_content"></span> <br>
-	        <span class="modal_title">링크 : </span><input id="link" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요." readonly/><input id="linkOri" type="hidden" value="" />
-	        <!-- <button id="red_ck_link" type="button">중복 확인</button> -->
+<!-- 	        <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" type="text" name="url" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+ -->	    <span class="modal_title">링크 : </span><input id="link" style="text-transform:uppsercase;" class="modal_content" name="url" type="text" placeholder="사용할 폼 주소 url을 입력해주세요."/>
+	        
+	        <!-- <button id="red_ck_link" type="button">중복 확인</button>-->
 	        <span id="link_dup_txt" style="margin-left: 10px;"></span><br>
+	        
 	        </p>
 	        <div id="modal_buttons">
-	        	<button type="submit" id="form_submit" class="submit modal_bts">확인</button>
+	        	<button type="submit" id="form_submit" class="submit modal_bts submitB">확인</button>
 	        	<button type="button" class="modal_bts modal_close_btn">취소</button>
 	        </div>
+	        
     	</div>
     	
     	
       </form>
-      </div>
+      	</div>
 	</div>
-        <div id="preview_modal">
-	       
+	
+		<div id="preview_modal">
+	        
     	</div>
 
-      <div class="add" id="field_add">
+     <div class="add" id="field_add">
         <div class="wrap-input100 bg0 form edit field" id="filed?"> <!--?에는 나중에 fieldId나 Index 들어감-->
         	<button type="button" class="remove removeField minusB">-</button>
 					
@@ -215,25 +271,24 @@
           <input type="hidden" class="fieldId" name="fieldId" value=""/>
 		  <input class="field_title input1002 bg0 " name="f_title3" placeholder="질문을 입력해주세요.">
 					
-						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
-						  <option value="" selected disabled>질문유형</option>
-						  <option value="text">단답형</option>
-						  <option value="textarea">장문형</option>
-						  <option value="radio">객관식</option>
-						  <option value="checkbox">체크박스</option>
-						  <option value="select">드롭다운</option>
-						  <option value="file">파일업로드</option>
-						  <option value="date">날짜</option>
-						  <option value="time">시간</option>
-						  <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
-						</select>
-
-						<div style="float: right;">
-						<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
-						<label for="필수질문">필수</label>
-						</div>
+			<select class="field_type  " name="f_type3" style="clear:both"> 
+				<option value="" selected disabled>질문유형</option>
+				<option value="text">단답형</option>
+				<option value="textarea">장문형</option>
+				<option value="radio">객관식</option>
+				<option value="checkbox">체크박스</option>
+				<option value="select">드롭다운</option>
+				<option value="file">파일업로드</option>
+				<option value="date">날짜</option>
+				<option value="time">시간</option>
+				<!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
+			</select>
+			<div style="float: right;">
+				<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
+				<label for="필수질문">필수</label>
+			</div>
 	
-						<div class="content" style="clear: both;"></div>
+			<div class="content" style="clear: both;"></div>
         </div>
       </div>
 
@@ -273,13 +328,66 @@
     	<input class="option_real" type="hidden" name="?content?" value=""/>
     	<input type="hidden" class="isItemDel" name="?isItemDel?" value="0"/>
     </div>
-   
-	<jsp:include page="/WEB-INF/views/basic/footer.jsp" />
 
   </body>
-  
-  <script>
+
+    <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
+    
+    <!-- select2 javascript cdn -->
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
+    
+<script>
   $( document ).ready(function() {
+
+	  const randomString = Math.random().toString(36).slice(2);
+		$("#link").val(randomString);
+		
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$"); //파일 확장자 정규식 
+		var maxSize = 5242880; // 5MB
+		
+		function checkExtension(fileName,fileSize){
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		$("#uploadBtn").on("click",function(e){
+			var formData = new FormData();
+			
+			var inputFile = $("input[name='uploadFile']");
+			
+			var files = inputFile[0].files;
+			
+			console.log(files);
+			
+			for(var i=0; i<files.length; i++){
+				if(!checkExtension(files[i].name,files[i].size)){
+					return false;
+				}
+				formData.append("uploadFile",files[i]);
+			}
+			
+			$.ajax({
+				url: '/uploadAjax',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'POST',
+				success: function(result){
+					alert("Uploaded");
+				}
+			});
+		});
+
+		//파일 js 끝
+		
 		var value = $("#state").val();
 	    var s = value.toString();
 	    $("#state_selected").val(s); 
@@ -294,7 +402,6 @@
 	        }
 	    });
 	});
-
 	
 	$('#state').on('select2:select', function(e) {
 	    var id = e.params.data.id;
@@ -317,6 +424,13 @@
 	}
 	console.log(categoryNum);
 	$(".form-control").append(categoryNum).html();
+	
+	var state_list = ${state_list};
+	for (var i = 0; i < state_list.length; i++) {
+		var selectOptions = "<option id='"+state_list[i].stateName+"' selected='selected' value='"+state_list[i].stateName+"'>"+state_list[i].stateName+"</option>";
+		$("#state").append("<option id='"+state_list[i].stateName+"' selected='selected' value='"+state_list[i].stateName+"'>"+state_list[i].stateName+"</option>");
+	}
+	
 	//select2 초기화
 	$(".form-control").select2({
 		tags : true
@@ -330,17 +444,36 @@
 	    }
 	    
 	});
-	/** TODO
-	* 자동으로 height 조정 (현재는 마우스로 크기조정 가능)
-	* 그래도 어느 정도의 CSS
-	* 상태 선택
-	* 이미지 추가 -> 전체적 or item 마다 -> DB 수정도 필요
-	* '기타' 추가 기능
-	* 복사 기능
-	**/
-
+	
+	$('#state').on('select2:unselect', function(e) {
+	    var id = e.params.data.id;
+	    if(id=="대기중"){
+	    	alert("'대기중' 옵션은 삭제할 수 없습니다.");
+	    	$("#대기중").remove();
+	    	//$("#select2-state-result-h02g-대기중").remove();
+	    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>"대기중"</li>');
+	    	$("#state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
+	    	//$(".select2-selection__rendered").prepend("");
+	    }
+	    var value = $(this).val();
+	    var s = value.toString();
+	    $("#state_selected").val(s); 
+	    //console.log(document.getElementById('state_selected').value);
+	      });
+	
+	$('#state').on('select2:select', function(e) {
+	    var id = e.params.data.id;
+	    var value = $(this).val();
+	    var s = value.toString();
+	    $("#state_selected").val(s); 
+	    //console.log(document.getElementById('state_selected').value);
+	      });
+	
+	  $("#state").select2({
+	      tags: true,
+	      tokenSeparators: [',']
+	  })
 	
 </script>
   
-
 </html>

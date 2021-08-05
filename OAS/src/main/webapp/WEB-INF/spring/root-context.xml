@@ -23,7 +23,6 @@
     <bean id="uploadPath" class="java.lang.String">
         <constructor-arg value="C:\\_dev\\file\\"/>
     </bean>
-    
 	<bean id="dataSource"
 
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
