@@ -220,4 +220,8 @@ public class AdminDAO {
 	public int createCategory(String name) {
 		return sqlSession.insert(namespace+".createCategory",name);
 	}
+	public void stateDel(int formID) {
+		sqlSession.delete(namespace + ".deleteOState", formID);
+	}	
+
 }
