@@ -230,10 +230,10 @@
 		 else
 			 $("#admin").children("option[value='']").attr("selected","selected");
 	 
- 	if(searchOption == "department" && keyword != "")
-   		$("#department").children("option[value="+keyword+"]").attr("selected","selected");
+ 	if(searchOption == "departments" && keyword != "")
+   		$("#departments").children("option[value="+keyword+"]").attr("selected","selected");
 	 else
-		 $("#department").children("option[value='']").attr("selected","selected"); 
+		 $("#departments").children("option[value='']").attr("selected","selected"); 
 
 		 for(var i = 0; i < UserInfo.length;i++){
 			 var no = ( page * ${perPageN}) + i+1;
