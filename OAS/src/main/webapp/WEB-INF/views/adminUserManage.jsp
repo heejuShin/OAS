@@ -88,7 +88,7 @@
 		                      <th data-priority="4">이메일</th>
 		                      <th data-priority="5">학번</th>
 		                      <th data-priority="6">
-		                      <select class="filters filter-status" id=department data-filter-group='department'>
+		                      <select class="filters filter-status" id="departments" data-filter-group='department'>
                               <option data-filter='' value="">학부</option>
                               <option value="전산전자공학부">전산전자공학부</option>
 			                  <option value="기계제어공학부">기계제어공학부</option>
@@ -230,7 +230,7 @@
 		 else
 			 $("#admin").children("option[value='']").attr("selected","selected");
 	 
- 	if(searchOption == "departments" && keyword != "")
+ 	if(searchOption == "department" && keyword != "")
    		$("#departments").children("option[value="+keyword+"]").attr("selected","selected");
 	 else
 		 $("#departments").children("option[value='']").attr("selected","selected"); 
