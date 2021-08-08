@@ -1,5 +1,7 @@
 
 var dup_check = false;
+var cnt_undefined = 0;
+
 function isValidForm(){
     if(!dup_check){
         alert("링크 중복 체크를 해주세요.");
@@ -84,7 +86,6 @@ $( document ).ready(function() {
 	//모달창
 	
 	$('#confirm').on('click', function() {
-		alert("hello");
 		console.log("confirm click");
    		
 		var name = $("#formName").val();
@@ -109,6 +110,7 @@ $( document ).ready(function() {
 	
 	
 	$('#preview').on('click', function() {
+		//alert("->"+cnt_undefined);
 		var category_name=$("#category_select option:selected").val();
 		var form_name= $("#formName").val();
 		var startDate= $("#startDate").val();
@@ -116,7 +118,8 @@ $( document ).ready(function() {
 	    var endDate = $("#endDate").val();
 	    var endTime = $("#endTime").val();
 		console.log(endTime);
-		if(category_name == "")
+		if(cnt_undefined != 0) alert("질문 유형을 선택하지않은 질문이 있습니다. 질문 유형을 선택하거나, 해당 질문을 삭제해주세요.");
+		else if(category_name == "")
 			alert("카테고리를 선택해주세요 ");
 		else if(form_name == "")
 			alert("제목을 입력해주세요 ");
@@ -260,6 +263,7 @@ $( document ).ready(function() {
 	//질문 유형 선택
 	$("#list").on('change', ".field_type", function(){
 	    var content;
+	    cnt_undefined--;
 	    $(this).siblings(".content").empty();
 	    $(this).siblings(".uploadDiv").empty();
 	    if(this.value=="textarea"){
@@ -286,6 +290,8 @@ $( document ).ready(function() {
 	
 	//field 추가
 	$("#menu-bar").click(function(){
+		
+	  cnt_undefined++;
 	  count++;
 	  
 	  $("#field_add").find(".field").attr("id", "field"+count);
@@ -307,11 +313,13 @@ $( document ).ready(function() {
 	//field 삭제
 	$("#list").on('click', ".removeCreate", function(){
 	  $("#count").val($("#count").val()-1);
+	  if($(this).siblings(".field_type").val()==null) cnt_undefined-- ;
 	  $(this).parent().remove();
 	})
 	
 	//객관식 아이템 추가-버튼 클릭시
 	$("#list").on('click', ".btn_add_radio", function(){
+	
 	
 	  //문자열 처리 (, 기준)
 		var inputs = $(this).siblings('input').val();
