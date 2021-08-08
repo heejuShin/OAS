@@ -187,7 +187,7 @@
   });</script> -->
   
   
-			<div class="wrap-input100  bg1" style="margin-bottom: 40px;">
+			<div class="wrap-input100  bg1" id="state_select" style="margin-bottom: 40px;">
 				<p class="label-input100" style="margin-bottom:10px; margin-top:5px;">상태 선택<span class="essential"> * </span></p>
 				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px;" class="form-state">
   
@@ -427,7 +427,7 @@ $('#state').on('select2:unselect', function(e) {
     	$("#대기중").remove();
     	//$("#select2-state-result-h02g-대기중").remove();
     	//(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중" data-select2-id="select2-data-2-uqij"><button type="button" class="select2-selection__choice__remove" tabindex="-1" title="Remove item" aria-label="Remove item" aria-describedly="select2-state-container-choice-wzzt-대기중"><span aria-hidden="true">x</span></button><span class="select2-selection__choice__display" id="select2-state-container-choice-wzzt-대기중">대기중</span></li>');
-    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>"대기중"</li>');
+    	$("#state_select .select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>대기중</li>');
     	$(".form-state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
     }
     var value = $(this).val();
