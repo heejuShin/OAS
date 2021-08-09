@@ -26,7 +26,7 @@
 	</style> 
     
     
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3"> 
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=4"> 
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -100,8 +100,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
-
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=26"></script>
+<!-- todo -->
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=36"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/pageBackEvent.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
@@ -293,7 +293,7 @@
 						  <option value="time">시간</option>
 						  <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
 						</select>
-
+						<input class="selected_option" value="" type="hidden"/> <!--타입 변경 구분용 (질문유형 -> 변경)-->
 						<div style="float: right;">
 						<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
 						<label for="필수질문">필수</label>
@@ -305,7 +305,7 @@
 
     <div class="add" id="radio_add">
       <div>
-        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item remove_item_Create minusB">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" style="margin-top: 10px" class="remove_item remove_item_Create minusB">X</button>
         <input class="real radio_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
