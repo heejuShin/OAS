@@ -282,8 +282,7 @@ public class AdminController {
 			Category cg = new Category();
 			int file_id=0;
 			Map<String, Object> map = new HashMap<String, Object>();
-			
-			if(adminUploadFile != null) {
+			if(adminUploadFile != null && !adminUploadFile.getOriginalFilename().equals("")) {
 				for(int i=0;i<1;i++) {
 					System.out.println(adminUploadFile);
 	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
