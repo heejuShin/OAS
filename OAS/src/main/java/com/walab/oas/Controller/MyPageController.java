@@ -176,7 +176,8 @@ public class MyPageController {
 			//userTab1 신청폼 개수 가져오기 (TAB1)
 			cri.setUser_id(user_id);
 			List<Form> userList = mypageDao.userList(cri); //admin의 폼 데이터 리스트를 가져온다
-			System.out.println(cri);
+			
+			//System.out.println(cri);
 			int count1 = mypageDao.countUserTab1(cri.getSearchType(), cri.getKeyword(), cri.getFilterType(),user_id);
 			
 			System.out.println("userList"+count1);
@@ -186,6 +187,7 @@ public class MyPageController {
 			
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(userList);
+			
 
 			List<Department> department = mypageDao.departmentList();
 			List<Major> major = mypageDao.majorList();
@@ -210,8 +212,8 @@ public class MyPageController {
 			        ob2.put("name", major.get(i).getName());
 			        ob2.put("department_id", major.get(i).getDepartment_id());
 			        ob2.put("department_name", major.get(i).getDepartment_name());
-			        System.out.println("->"+major.get(i).getDepartment_name());
-			        System.out.println(ob2);
+			        //System.out.println("->"+major.get(i).getDepartment_name());
+			        //System.out.println(ob2);
 		            major_list.put(ob2);
 				}
 			}catch(JSONException e){
@@ -224,6 +226,8 @@ public class MyPageController {
 			ObjectMapper cri_mapper=new ObjectMapper();
 			String cri_list=cri_mapper.writeValueAsString(cri);
 			mav.addObject("cri_list",cri_list);
+			//System.out.println("===>"+pageMaker);
+			//PageMaker [cri=SearchCriteria [searchType=null, keyword=null, filterType=null, user_id=42, form_id=0], totalCount=5, startPage=1, endPage=1, prev=false, next=false, displayPageNum=5]
 			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);
 			mav.addObject("keyword", cri.getKeyword());
