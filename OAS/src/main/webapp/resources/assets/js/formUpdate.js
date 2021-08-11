@@ -155,7 +155,7 @@ $( document ).ready(function() {
 	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
-	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
+	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
 	  	    $("#field_add").find(".content").html(content);
 	  	  	for(var j=0; j<item_list.length;j++){
 	  	  		var o_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -212,7 +212,7 @@ $( document ).ready(function() {
 		  }
 		  
 		  else if(formDetail[i].fieldType=="checkbox"){
-		    content = "<input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+		    content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 		    $("#field_add").find(".content").html(content);
 		  	for(var j=0; j<item_list.length;j++){
 		    	var c_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -241,7 +241,8 @@ $( document ).ready(function() {
 	    $("#field_add").find(".content").html(content);
 	  }
 	  else{
-	    content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 
+	    //content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 
+	    content = "<input type='"+this.value+"' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    $("#field_add").find(".content").html(content);
 	  }
 	  

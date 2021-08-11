@@ -43,6 +43,12 @@
 
  	 * {font-family: 'NanumSquare', sans-serif !important;}    
      </style>
+	  
+     <style>
+      tr{
+     	top : 0px !important;
+      }
+     </style>
   </head>
 
   <body>
@@ -188,17 +194,26 @@
          
       
       var userList=${userList};
-         for(var i=0; i < userList.length; i++){
-                                   
-            /*설문지 별 tr 만듦*/
-           var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>"); 
+         for(var i=0; i < userList.length; i++){ //userList.length
+        	 /*$(".tbodies").append(<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>);
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
+             var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
+             $($(".tbodies").children()[i]).append(th1);
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
+        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");*/
+           //설문지 별 tr 만듦
+           var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"'></tr>"); 
             $(".tbodies").append(divOne);
    
-         /* tr의 안에 들어갈 td */
+         //tr의 안에 들어갈 td//
           var td1 = $("<td>"+(i+1)+"</td>"); 
           $($(".tbodies").children()[i]).append(td1);
-      
-         var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
+   
+         var th1 = $("<td>"+userList[i].categoryName+"<span class='co-name'></span></td>"); 
          $($(".tbodies").children()[i]).append(th1);
 
          if(userList[i].formName.length > 35){
@@ -254,13 +269,13 @@
             }
 
          }
-         var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/><input type='hidden' id='linkName' name='linkName' value='"+userList[i].url+"'/></form>");
+         //alert($(".tbodies").children()[i].children()[0] + " && " + $(".tbodies").children()[i].children()[1]);
+         /*var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/><input type='hidden' id='linkName' name='linkName' value='"+userList[i].url+"'/></form>");
          $($(".tbodies").children()[i]).append(form);
          var form2=$("<form id='viewForm' action='viewForm/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
           $($(".tbodies").children()[i]).append(form2);
           var form3=$("<form id='delForm' action='delMyFormU/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
-          $($(".tbodies").children()[i]).append(form3);
-
+          $($(".tbodies").children()[i]).append(form3);*/
          
       }
 

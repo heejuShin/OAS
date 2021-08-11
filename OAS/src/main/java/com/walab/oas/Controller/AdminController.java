@@ -282,8 +282,7 @@ public class AdminController {
 			Category cg = new Category();
 			int file_id=0;
 			Map<String, Object> map = new HashMap<String, Object>();
-			
-			if(adminUploadFile != null) {
+			if(adminUploadFile != null && !adminUploadFile.getOriginalFilename().equals("")) {
 				for(int i=0;i<1;i++) {
 					System.out.println(adminUploadFile);
 	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
@@ -411,7 +410,19 @@ public class AdminController {
 						String key = Integer.toString(form_id) + "_" + Integer.toString(i);
 						field.setKey(key);
 						
+						adminDAO.createField(field);
+						
 						if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
+							if("select".equals(fieldType)) {
+								/*int field_id=adminDAO.getFieldId(key);
+								Item item = new Item();
+								item.setField_id(field_id);
+								item.setContent("내용을 선택해주세요");
+								int isDefault = 1;
+								//int isDefault = Integer.parseInt(request.getParameter(Integer.toString(i)+"isDefault"+Integer.toString(j))); 나중에 하자
+								item.setIsDefault(isDefault);
+								adminDAO.createItem(item);*/
+							}
 							int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)));
 							for(int j=1; j<=i_cnt; j++) {
 								Item item = new Item();
@@ -428,7 +439,6 @@ public class AdminController {
 								}
 							}//item 반복문
 						}
-						adminDAO.createField(field);
 					}
 				}	//field 반복문			
 				return mav;
