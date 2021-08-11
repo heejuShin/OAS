@@ -55,7 +55,7 @@
 <div id="headTitle"><h2>전산전자공학부 공지 </h2></div>
 
 <div class="board_section">
-<c:set var="admin" value="${admin}"/><c:if test="${admin ne '2'}"><button name='stateB' id="stateB" onclick="location.href='../../oas/admin/board/add'" style='margin-bottom: 1%;'>게시글 작성 </button></c:if>
+<c:set var="admin" value="${admin}"/><c:if test="${admin ne '2'}"><button name='stateB' id="stateB" onclick="location.href='<%=request.getContextPath()%>/admin/board/add'" style='margin-bottom: 1%;'>게시글 작성 </button></c:if>
 
 <div class="table-responsive" data-pattern="priority-columns">
 <table cellspacing="0" id="tech-companies-1" class="table table-small-font table-bordered table-striped">
@@ -82,7 +82,7 @@
 		<c:set var="admin" value="${admin}" />
 		<c:if test="${admin ne '2'}">
 		<td>
-			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='../../oas/admin/board/editform/${u.seq}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
+			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "location.href='<%=request.getContextPath()%>/admin/board/editform/${u.seq}'"><img class='iconImg' src='../resources/img/edit2.png'><span class='tooltiptext'>수정</span></button>
 			<button type='button' class='btn mb-md-0 mb-2 btn-outline iconButton' onClick = "javascript:delete_ok('${u.seq}')"><img class='iconImg' src='../resources/img/trash2.png'><span class='tooltiptext'>삭제</span></button>
  		</td>
  		</c:if>
