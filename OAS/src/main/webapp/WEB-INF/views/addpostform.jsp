@@ -28,7 +28,7 @@
 		<table>
 			<tr><td>Category:</td><td><input type="text" name="category"/></td></tr>
 			<tr> <td>Title:</td> <td><input type="text" name="title"/></td></tr>
-			<tr><td>Writer:</td><td><input type="text" name="writer"/></td></tr>
+			<tr><td>Writer:</td><td>${name}<input type="hidden" name="writer" value="${name}"/></td></tr>
 		</table>
 		
 		<hr/>
@@ -58,8 +58,8 @@
 		</div>
 	</div>
 	<div class="buttonDiv">
-		<input id="but" class="button" type="submit" value="Add Post"/>
-		<button id="but" class="button" onclick="location.href='../../board/list'">목록보기 </button>
+		<button id="but" class="button" type="submit">Add Post</button>
+		<span id="but" class="button" onclick="location.href='<%=request.getContextPath()%>/board/list'">목록보기 </span>
 	</div>
 
 </form>
