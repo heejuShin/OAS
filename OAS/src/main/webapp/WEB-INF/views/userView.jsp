@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>View Member</title>
+<title>회원 조회  </title>
 
 </head>
 <body>

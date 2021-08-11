@@ -90,6 +90,8 @@
 		var resultContent = ${read_list};
 		var category_isDeleted = ${category_isDeleted};
 		
+		
+		
 		console.log("step1");
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
