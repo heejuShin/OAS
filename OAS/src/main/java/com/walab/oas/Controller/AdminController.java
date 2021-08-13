@@ -146,6 +146,11 @@ public class AdminController {
 	    	int idx=0;
 	    	
 	    	for (int i = 1; i <= f_cnt ; i++) {   
+			
+			if(field_name[i] == "undefined" || field_name[i] == null || field_name[i] == "") {
+		    		continue;
+		    	}
+			
 		    	JSONObject ob =new JSONObject();
 		    	
 		        ob.put("field_id", field_id[i]);
