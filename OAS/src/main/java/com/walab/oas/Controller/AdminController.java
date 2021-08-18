@@ -289,21 +289,38 @@ public class AdminController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			if(adminUploadFile != null && !adminUploadFile.getOriginalFilename().equals("")) {
 				for(int i=0;i<1;i++) {
-					System.out.println(adminUploadFile);
+					//System.out.println(adminUploadFile);
+					
 	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
 	                String attach_path = "resources/uploadFile/";
 	                String filename = adminUploadFile.getOriginalFilename();
+	                
+					File Folder = new File(root_path+attach_path);
+
+					if (!Folder.exists()) {
+						try{
+						    Folder.mkdir(); //폴더 생성합니다.
+						    //System.out.println("폴더가 생성되었습니다.");
+					        } 
+					        catch(Exception e){
+						    e.getStackTrace();
+						}        
+				         }else {
+						//System.out.println("이미 폴더가 생성되어 있습니다.");
+					}
+
+	                
 	                
 	                System.out.println("Filename is "+filename);
 	                if(filename == "") break;
 	                
 	                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
 	                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
-	                System.out.println("storedFileName is "+storedFileName);
+	                //System.out.println("storedFileName is "+storedFileName);
 	                
 	                //File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
 	                File f = new File(root_path + attach_path + storedFileName);
-	                System.out.println("Path is "+root_path + attach_path + storedFileName);
+	                //System.out.println("Path is "+root_path + attach_path + storedFileName);
 	                
 	                adminUploadFile.transferTo(f);
 	                
