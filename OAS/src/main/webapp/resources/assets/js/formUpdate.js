@@ -118,6 +118,14 @@ $( document ).ready(function() {
 	  
 	  //field 유형 나타내기
 	  $("#field_add").find(".field_type").attr("name", "f_type"+count);
+	  
+	  $("#field_add").find(".field_type_real").attr("name", "f_type_real"+count);
+	  $("#field_add").find(".field_type_real").attr("value", formDetail[i].fieldType);
+	  //$("#field_add").find(".field_type_real").val("hey");
+	  //$("#field_add").find(".field_type_real").text("hey");
+	  //$("#field_add").find(".field_type_real").val(formDetail[i].fieldType);
+	  //$("#field_add").find(".field_type_real").html(formDetail[i].fieldType);
+	  
 	  $("#field_add").find('.field_type').attr('disabled', true);
 	  $("#field_add").find('.field_type option').attr('selected', false);
 	  $("#field_add").find('.field_type option[value='+formDetail[i].fieldType+']').attr('selected', true).change();
@@ -287,6 +295,16 @@ $( document ).ready(function() {
 		} else {
 			$(this).parent().siblings(".isEssential").val("0");
 		}
+	});
+	
+	//item 추가되었을시 수정했다고 표시
+	$("#list").on('click', ".btn_add_radio", function(){
+		$(this).closest(".isModified").val("1");
+	});
+	
+	//item 삭제되었을시 수정했다고 표시
+	$("#list").on('click', ".remove_item", function(){
+		$(this).closest(".isModified").val("1");
 	});
 	
 	$("#list").on('change', ".isDefault_fake", function(){

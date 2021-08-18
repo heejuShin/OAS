@@ -652,7 +652,10 @@ public class AdminController {
 			System.out.println("fieldC:"+fieldC);
 			int fieldCount = Integer.parseInt(fieldC);
 			for(int i=1; i<=fieldCount; i++) {
+				System.out.println("~~~~~~~~~~~~~~~"+isModified[i-1]);
+				//todo
 				if(Integer.parseInt(isModified[i-1])==1) {
+					System.out.println("홍ㅁㅇ롬읾ㄴㅇ러ㅣㅁㄴㅇ");
 					Field field = new Field();
 					String title = request.getParameter("f_title"+Integer.toString(i));
 					int isFieldDel = Integer.parseInt(request.getParameter("isFieldDel"+Integer.toString(i)));
@@ -661,11 +664,13 @@ public class AdminController {
 						continue;
 					}
 					if(title != null) {
-						
 						field.setId(Integer.parseInt(field_id[i-1]));
 						field.setForm_id(form_id); 
 						field.setFieldName(title); 
-						String fieldType = request.getParameter("f_type"+Integer.toString(i));
+						String fieldType = request.getParameter("f_type_real"+Integer.toString(i));
+						//System.out.println("~!~!~!~!~!~!"+title);
+						//System.out.println("~!~!~!~!~!~!"+fieldType);
+						
 						field.setFieldType(fieldType);
 						String fileName; // 이거 어떻게 할지 고민
 						//field.setFileName(fileName);
