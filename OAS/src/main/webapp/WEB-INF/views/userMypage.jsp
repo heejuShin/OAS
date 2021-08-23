@@ -194,6 +194,10 @@
          
       
       var userList=${userList};
+	var stateLentgh = ${stateLentgh};
+   	  var stateList = ${stateList};
+   	  var colorList = ['#D6D208', '#538CF5', '#F5942B', '#48F0C4', '#A839A2', '#38D60F', '#400DF5', '#F5C701', '#14B1F0', '#A83937'];
+   	
          for(var i=0; i < userList.length; i++){ //userList.length
         	 /*$(".tbodies").append(<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>);
         	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
@@ -250,11 +254,25 @@
    
          var td5 = $("<td>"+userList[i].userName+"</td>"); 
            $($(".tbodies").children()[i]).append(td5);
-         console.log("date:"+new Date());
+	var color = 0;
+       	var flag = 0;
+       	var k = 0;
+         //console.log("date:"+new Date());
            //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
            if(new Date()>new Date(userList[i].endDate)){
-               var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
-            $($(".tbodies").children()[i]).append(a);
+               for(k=0;k<stateLentgh;k++){
+       		   if(stateList[k] == userList[i].stateName){
+       				color = k;   
+       				flag = 1;
+       				break;
+       		   }
+       	   }
+       	   if(flag == 1)
+            	var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid "+colorList[color]+";' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
+       	   else 
+             var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
+
+       	   $($(".tbodies").children()[i]).append(a);
            }   
            else{
               //신청하기 (그 폼 신청페이지로 넘어가게)
@@ -264,7 +282,19 @@
             }
              //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
               else{
-                  var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
+                  for(k=0;k<stateLentgh;k++){
+              		   if(stateList[k].stateName == userList[i].stateName){
+              				color = k;   
+              				flag = 1;
+              				break;
+              		   }
+              	   }
+              	   if(flag == 1)
+                   	var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid "+colorList[color]+";' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button></td>");
+              	   else 
+                    var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button></td>");
+
+                  //var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
 
