@@ -336,7 +336,9 @@ $( document ).ready(function() {
 		}
 		//새로 추가했던 field면 그냥 삭제
 		else{
-			$("#count").val($("#count").val()-1);
+			if($(this).siblings(".field_type").val()==null) cnt_undefined-- ;
+			//console.log(cnt_undefined);
+			//$("#count").val($("#count").val()-1);
 			$(this).parent().remove();
 		}
 	});
@@ -455,7 +457,8 @@ $('#updatePreview').on('click', function() {
 	    var endDate = $("#endDate").val();
 	    var endTime = $("#endTime").val();
 		
-		if(category_name == "")
+		if(cnt_undefined != 0) alert("질문 유형을 선택하지않은 질문이 있습니다.\n질문 유형을 선택하거나, 해당 질문을 삭제해주세요.");
+		else if(category_name == "")
 			alert("카테고리를 선택해주세요 ");
 		else if(form_name == "")
 			alert("제목을 입력해주세요 ");
