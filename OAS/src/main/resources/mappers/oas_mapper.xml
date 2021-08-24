@@ -29,6 +29,10 @@
       ORDER BY state_id IS NULL ASC,id ASC
    </select> 
    
+   <select id="getUserByResultID" resultType="com.walab.oas.DTO.User">
+      select * from User where id = (SELECT user_id from Result where Result.id=#{id});
+   </select> 
+   
    <select id="getLink" resultType="String">
       select url from Form where id = #{id};
    </select> 
