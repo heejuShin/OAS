@@ -101,8 +101,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
 
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=20"></script>
-   	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=0818_5"></script>
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdateCreate.js?ver=21"></script>
+   	<script src="<%=request.getContextPath()%>/resources/assets/js/formUpdate.js?ver=0824_1"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/pageBackEvent.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
@@ -283,6 +283,7 @@
 				<option value="date">날짜</option>
 				<option value="time">시간</option>
 			</select>
+			<input class="selected_option" value="" type="hidden"/> <!--타입 변경 구분용 (질문유형 -> 변경)-->
 			<input type="hidden" class="field_type_real" name="f_type_real" style="border: 1px solid black;"></input><!-- select disabled 하면 값이 넘어가지않기때문에 이걸 이용! -->
 			<div style="float: right;">
 				<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
