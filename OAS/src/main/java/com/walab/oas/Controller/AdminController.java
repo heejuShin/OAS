@@ -839,6 +839,21 @@ public class AdminController {
 		List<Result> date_list = adminDAO.getDate(id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
+		
+		User writter = userDao.getUserByResultID(id);
+		
+		JSONArray writter_info = new JSONArray();
+		try {
+			JSONObject ob =new JSONObject();
+			ob.put("writter_name", writter.getUserName());
+			ob.put("writter_studentId", writter.getStudentId());
+			writter_info.put(ob); 
+		}catch(JSONException e){
+	        e.printStackTrace();
+	    }
+		
+		
+		
 	
 		
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -956,6 +971,7 @@ public class AdminController {
 		 mav.addObject("field_list", jArray2);
 		 mav.addObject("read_list",readContent);
 		 mav.addObject("category_name",c_name);
+		 mav.addObject("writter_info",writter_info);
 		 mav.addObject("category_isDeleted",isDeleted);
 		 mav.addObject("date_list",reg_edit_date);
 		 
