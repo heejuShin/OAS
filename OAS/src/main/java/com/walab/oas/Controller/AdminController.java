@@ -228,6 +228,9 @@ public class AdminController {
 	    	
 	    	for (int i = 1; i <= f_cnt ; i++) {   
 		    	JSONObject ob =new JSONObject();
+			if(field_name[i] == "undefined" || field_name[i] == null || field_name[i] == "") {
+		    		continue;
+		    	}
 		    	if(Integer.parseInt(isFieldDel[i])==1)
 		    		continue;
 		        ob.put("field_id", field_id[i]);
