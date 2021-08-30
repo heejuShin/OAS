@@ -64,8 +64,8 @@
 		
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
-		
-		$('#form_title').text(formInfo[0].form_name);
+				
+		$('#form_title').text(formInfo[0].form_name);	
 		$('.form_explanation').text(formInfo[0].form_detail);
 		$('#startDate').text(moment(formInfo[0].form_startDate).format('YYYY.MM.DD HH:mm'));
 		$('#endDate').text(moment(formInfo[0].form_endDate).format('YYYY.MM.DD HH:mm'));

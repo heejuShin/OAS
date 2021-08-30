@@ -127,6 +127,8 @@ $( document ).ready(function() {
 	$("#list").on('change', ".field_type", function(){
 		$(this).siblings(".content").empty();
 	    var content;
+	    if($(this).siblings(".selected_option").val()=="")
+	    	cnt_undefined--;
 	    if(this.value=="textarea"){
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
@@ -147,12 +149,14 @@ $( document ).ready(function() {
 	      content = "<input type='"+this.value+"' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    }
 	    $(this).siblings(".content").html(content);
+	    $(this).siblings(".selected_option").val(this.value);
 	});
 	
 	//field 추가
 	$("#menu-bar").click(function(){
 	  var count = $("div#list").children().length+1;
-	 console.log("count: "+count);
+	  cnt_undefined++;
+	 //console.log("count: "+count);
 	  if(count<0)
 		count=1;
 	  $("#field_add").find(".field").attr("id", "field"+count);

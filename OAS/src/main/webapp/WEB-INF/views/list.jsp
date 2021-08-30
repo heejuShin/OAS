@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>전산전자공학부 공지사항 </title>
+<title>전산전자공학부 공지 </title>
 
 <!-- css -->
 <!-- Responsive Tables -->
