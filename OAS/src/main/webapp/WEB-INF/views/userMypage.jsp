@@ -190,8 +190,7 @@
       }
 
       var criInfo=${cri_list};
-         $('.filterType option[value='+criInfo.filterType+']').prop('selected', 'selected').change();
-         
+               
       
       var userList=${userList};
 	var stateLentgh = ${stateLentgh};
@@ -199,16 +198,7 @@
    	  var colorList = ['#D6D208', '#538CF5', '#F5942B', '#48F0C4', '#A839A2', '#38D60F', '#400DF5', '#F5C701', '#14B1F0', '#A83937'];
    	
          for(var i=0; i < userList.length; i++){ //userList.length
-        	 /*$(".tbodies").append(<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>);
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
-             var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
-             $($(".tbodies").children()[i]).append(th1);
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");
-        	 $($(".tbodies").children()[i]).append("<td>"+(i+1)+"</td>");*/
+
            //설문지 별 tr 만듦
            var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"'></tr>"); 
             $(".tbodies").append(divOne);
@@ -227,7 +217,6 @@
 		    	var td2 = $("<td class='formName'>"+userList[i].formName+"</td>"); 
  		    }
    
-           //var td2 = $("<td>"+userList[i].formName+"</td>"); 
           $($(".tbodies").children()[i]).append(td2);
    
           var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
