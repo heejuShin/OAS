@@ -23,6 +23,10 @@ public class UserDAO {
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
 	
+	public User getUserByResultID(int id) throws Exception {
+		return sqlSession.selectOne(namespace + ".getUserByResultID",id);
+	}
+	
 	
 	public int joinUser(User user) throws Exception {
 		return sqlSession.insert(namespace + ".joinUser",user);

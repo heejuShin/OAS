@@ -146,6 +146,11 @@ public class AdminController {
 	    	int idx=0;
 	    	
 	    	for (int i = 1; i <= f_cnt ; i++) {   
+			
+			if(field_name[i] == "undefined" || field_name[i] == null || field_name[i] == "") {
+		    		continue;
+		    	}
+			
 		    	JSONObject ob =new JSONObject();
 		    	
 		        ob.put("field_id", field_id[i]);
@@ -223,6 +228,9 @@ public class AdminController {
 	    	
 	    	for (int i = 1; i <= f_cnt ; i++) {   
 		    	JSONObject ob =new JSONObject();
+			if(field_name[i] == "undefined" || field_name[i] == null || field_name[i] == "") {
+		    		continue;
+		    	}
 		    	if(Integer.parseInt(isFieldDel[i])==1)
 		    		continue;
 		        ob.put("field_id", field_id[i]);
@@ -284,21 +292,38 @@ public class AdminController {
 			Map<String, Object> map = new HashMap<String, Object>();
 			if(adminUploadFile != null && !adminUploadFile.getOriginalFilename().equals("")) {
 				for(int i=0;i<1;i++) {
-					System.out.println(adminUploadFile);
+					//System.out.println(adminUploadFile);
+					
 	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
 	                String attach_path = "resources/uploadFile/";
 	                String filename = adminUploadFile.getOriginalFilename();
+	                
+					File Folder = new File(root_path+attach_path);
+
+					if (!Folder.exists()) {
+						try{
+						    Folder.mkdir(); //폴더 생성합니다.
+						    //System.out.println("폴더가 생성되었습니다.");
+					        } 
+					        catch(Exception e){
+						    e.getStackTrace();
+						}        
+				         }else {
+						//System.out.println("이미 폴더가 생성되어 있습니다.");
+					}
+
+	                
 	                
 	                System.out.println("Filename is "+filename);
 	                if(filename == "") break;
 	                
 	                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
 	                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
-	                System.out.println("storedFileName is "+storedFileName);
+	                //System.out.println("storedFileName is "+storedFileName);
 	                
 	                //File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
 	                File f = new File(root_path + attach_path + storedFileName);
-	                System.out.println("Path is "+root_path + attach_path + storedFileName);
+	                //System.out.println("Path is "+root_path + attach_path + storedFileName);
 	                
 	                adminUploadFile.transferTo(f);
 	                
@@ -647,7 +672,10 @@ public class AdminController {
 			System.out.println("fieldC:"+fieldC);
 			int fieldCount = Integer.parseInt(fieldC);
 			for(int i=1; i<=fieldCount; i++) {
+				System.out.println("~~~~~~~~~~~~~~~"+isModified[i-1]);
+				//todo
 				if(Integer.parseInt(isModified[i-1])==1) {
+					System.out.println("홍ㅁㅇ롬읾ㄴㅇ러ㅣㅁㄴㅇ");
 					Field field = new Field();
 					String title = request.getParameter("f_title"+Integer.toString(i));
 					int isFieldDel = Integer.parseInt(request.getParameter("isFieldDel"+Integer.toString(i)));
@@ -656,11 +684,13 @@ public class AdminController {
 						continue;
 					}
 					if(title != null) {
-						
 						field.setId(Integer.parseInt(field_id[i-1]));
 						field.setForm_id(form_id); 
 						field.setFieldName(title); 
-						String fieldType = request.getParameter("f_type"+Integer.toString(i));
+						String fieldType = request.getParameter("f_type_real"+Integer.toString(i));
+						//System.out.println("~!~!~!~!~!~!"+title);
+						//System.out.println("~!~!~!~!~!~!"+fieldType);
+						
 						field.setFieldType(fieldType);
 						String fileName; // 이거 어떻게 할지 고민
 						//field.setFileName(fileName);
@@ -809,6 +839,21 @@ public class AdminController {
 		List<Result> date_list = adminDAO.getDate(id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
+		
+		User writter = userDao.getUserByResultID(id);
+		
+		JSONArray writter_info = new JSONArray();
+		try {
+			JSONObject ob =new JSONObject();
+			ob.put("writter_name", writter.getUserName());
+			ob.put("writter_studentId", writter.getStudentId());
+			writter_info.put(ob); 
+		}catch(JSONException e){
+	        e.printStackTrace();
+	    }
+		
+		
+		
 	
 		
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -926,6 +971,7 @@ public class AdminController {
 		 mav.addObject("field_list", jArray2);
 		 mav.addObject("read_list",readContent);
 		 mav.addObject("category_name",c_name);
+		 mav.addObject("writter_info",writter_info);
 		 mav.addObject("category_isDeleted",isDeleted);
 		 mav.addObject("date_list",reg_edit_date);
 		 

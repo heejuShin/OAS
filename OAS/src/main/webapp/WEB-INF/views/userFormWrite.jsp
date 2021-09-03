@@ -80,11 +80,14 @@
 
 		if(formInfo[0].form_fileid != null){
 			$('#form_fileid').text(formInfo[0].form_fileid);
-		var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><a href="../downloadFile?id='+formInfo[0].form_fileid+'"> 다운 <img src="../resources/img/download.png" alt="" style="height: 12px; width: 12px;"></a></div>');
+		var fileBox = $('<div id="fileDiv" class="wrap-input100 bg0 text_center marginTop "><a href="../downloadFile?id='+formInfo[0].form_fileid+'"> 다운 <img src="../resources/img/download.png" alt="" style="height: 12px; width: 12px;"></a></div>');
 
 
 			console.log("formInfo : " + formInfo[0].form_fileid);
 			$("#formInfo").append(fileBox);
+			if(formInfo[0].form_fileid == 0){
+				$('#fileDiv').css("display","none");
+				}
 			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
 		}
 		
