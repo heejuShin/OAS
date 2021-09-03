@@ -3,13 +3,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
 import java.util.HashMap;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -18,7 +16,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,8 +46,6 @@ public class UserController {
 	
 	@Autowired
 	private AdminDAO adminDao; 
-	
-	public String root;
 
 	//item 정보 불러오기 
 	@RequestMapping(value = "/getItem" ,method = RequestMethod.POST) // GET 방식으로 페이지 호출
@@ -145,23 +140,21 @@ ModelAndView mav = new ModelAndView();
                result_content.setField_id(Integer.parseInt(field_ids[i]));
                result_content.setContent(contents[conNum]);
                conNum++;
-                
+               
                System.out.println(result_content);
                userDao.setContent(result_content);
-            }else { 
+            }else {
+            	System.out.println(uploadFile);
             	String root_path = request.getSession().getServletContext().getRealPath("/");  
-                String attach_path = "resources/img/";
+                String attach_path = "resources/upload/";
                 String filename = uploadFile.get(fileNum).getOriginalFilename();
-                System.out.println(filename);
+                File f = new File("C:\\Users\\shb59\\git\\OAS\\OAS\\src\\main\\webapp\\resources\\img" + filename);
                 System.out.println("Path is "+root_path + attach_path + filename);
-                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
-                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
-
-                File f = new File("/Users/hayeon/Documents/workspace-spring-tool-suite-4/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/OAS/resources/attachments/" + storedFileName);
-
                 uploadFile.get(fileNum).transferTo(f);
                 fileNum++;
+                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
                 
+                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
                 
                 
                 Map<String, Object> map = new HashMap<String, Object>();
@@ -170,12 +163,12 @@ ModelAndView mav = new ModelAndView();
 	      	    map.put("fileRealName", filename);
 
                 int erase = userDao.setFile(map);
-//                System.out.println("erase is "+(int) map.get("id"));
+                System.out.println("erase is "+(int) map.get("id"));
                 
                 result_content.setResult_id(result_id);
                 result_content.setField_id(Integer.parseInt(field_ids[i]));
                 result_content.setContent("");
-//                result_content.setFile_id((int) map.get("id"));
+                result_content.setFile_id((int) map.get("id"));
                 
                 System.out.println(result_content);
                 userDao.setContent(result_content);
@@ -198,7 +191,7 @@ ModelAndView mav = new ModelAndView();
 	@RequestMapping(value = "/userFormView") // GET 방식으로 페이지 호출
 	public ModelAndView viewUserForm (RedirectAttributes redirectAttr,HttpSession session, HttpServletRequest request) throws Exception {
 		System.out.println("<viewUserForm> controller");
-		root = request.getContextPath();
+		
 		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
 		int form_id=(Integer)redirectMap.get("form_id");
 		int result_id= (Integer)redirectMap.get("result_id");
@@ -214,7 +207,6 @@ ModelAndView mav = new ModelAndView();
 			return mav;
 		}
 		Result result_info = userDao.resultinfo(result_id);
-		
 		List<ReadResult> resultContent =  userDao.getContents(result_id);
 		System.out.println("result_info:"+result_id);
 
@@ -224,7 +216,6 @@ ModelAndView mav = new ModelAndView();
 			    	JSONObject ob =new JSONObject();
 			        
 			        ob.put("form_name", form_info.getFormName());
-			        ob.put("form_fileid", form_info.getFile_id());
 			        ob.put("form_detail", form_info.getExplanation());
 			        ob.put("form_startDate", form_info.getStartDate());
 			        ob.put("form_endDate", form_info.getEndDate());
@@ -233,7 +224,7 @@ ModelAndView mav = new ModelAndView();
 			            
 			        jArray1.put(ob);      
 		    
-		        System.out.println("~~~~~~"+jArray1.toString());
+		        System.out.println(jArray1.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
@@ -245,15 +236,14 @@ ModelAndView mav = new ModelAndView();
 			        
 			        ob.put("field_name", resultContent.get(i).getFieldName());
 			        ob.put("field_type", resultContent.get(i).getFieldType());
-			        ob.put("field_file", resultContent.get(i).getFileRealName());
-			        ob.put("field_fileid", resultContent.get(i).getFile_id());
+			        ob.put("field_file", resultContent.get(i).getFileName());
 			        ob.put("field_star", resultContent.get(i).getIsEssential());
 			        ob.put("field_index", resultContent.get(i).getIndex());
 			        ob.put("field_content", resultContent.get(i).getContent());
 			            
 			        jArray2.put(ob);      
 		    }
-		        System.out.println("-------"+jArray2.toString());
+		        System.out.println(jArray2.toString());
 		    }catch(JSONException e){
 		        e.printStackTrace();
 		    }
@@ -288,7 +278,6 @@ ModelAndView mav = new ModelAndView();
 			JSONObject ob =new JSONObject();
 			        
 			ob.put("form_name", form_info.getFormName());
-			ob.put("form_fileid", form_info.getFile_id());
 			ob.put("form_detail", form_info.getExplanation());
 			ob.put("form_startDate", form_info.getStartDate());
 			ob.put("form_endDate", form_info.getEndDate());
@@ -337,6 +326,7 @@ ModelAndView mav = new ModelAndView();
 			
 		for(int i=0; i<isModified.length; i++) {
 			if(Integer.parseInt(isModified[i])==1) {
+				System.out.println("updateghghgh");
 	    		userDao.updateContent(Integer.parseInt(id[i]),contents[i]);
 			}
 		}//반복문 끝 (ResultContent 수정)

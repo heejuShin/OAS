@@ -63,6 +63,6 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</bean>	
-	<context:component-scan base-package="kr.co.util"></context:component-scan>
+		
 	<context:component-scan base-package="com.walab.oas"></context:component-scan>
 </beans>

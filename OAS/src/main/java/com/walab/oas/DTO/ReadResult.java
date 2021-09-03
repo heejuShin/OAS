@@ -2,7 +2,6 @@ package com.walab.oas.DTO;
 
 
 public class ReadResult {
-	
 	private int id;
 	private int form_id;
 	private int user_id;
@@ -16,12 +15,11 @@ public class ReadResult {
 	private String editDate;
 	private String key;
 	private int field_id;
-	private int file_id;
 	private String content;
 	@Override
 	public String toString() {
 		return "ReadResult [id=" + id + ", form_id=" + form_id + ", user_id=" + user_id + ", fieldType=" + fieldType
-				+ ", fieldName=" + fieldName + ", file_id=" + file_id+ ", fileName=" + fileName + ", fileRealName=" + fileRealName + ", isEssential=" + isEssential + ", index="
+				+ ", fieldName=" + fieldName + ", fileName=" + fileName + ", fileRealName=" + fileRealName + ", isEssential=" + isEssential + ", index="
 				+ index + ", regDate=" + regDate + ", editDate=" + editDate + ", key=" + key + ", field_id=" + field_id
 				+ ", content=" + content + "]";
 	}
@@ -42,12 +40,6 @@ public class ReadResult {
 	}
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
-	}
-	public int getFile_id() {
-		return id;
-	}
-	public void setFile_id(int file_id) {
-		this.file_id = file_id;
 	}
 	public String getFieldType() {
 		return fieldType;

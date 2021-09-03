@@ -49,7 +49,6 @@ public class Result_Content {
 		return regDate;
 	}
 	public void setRegDate(Date regDate) {
-	
 		this.regDate = regDate;
 	}
 	public Date getEditDate() {
