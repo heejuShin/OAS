@@ -265,7 +265,7 @@ h4:hover span.formNameToolTip {
         <div class="board_section">
            <div class="title">
    
-              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span><img src="<%=request.getContextPath()%>/resources/img/home_1.png" alt="img section"></span>SW 최신 공지</a></h2>
+              <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span></span>CSEE 최신 공지</a></h2>
            	  <h5 style="position:absolute;right:17%;"><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span>더보기</span></a></h5>
 
            </div>
