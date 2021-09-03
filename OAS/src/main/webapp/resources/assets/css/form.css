@@ -373,9 +373,7 @@ button {
 	font-size: 16px
 }
 
-.cancleB:hover {
-	filter: brightness(70%);
-}
+
 
 .formbts{
 	border: none !important;
@@ -386,9 +384,7 @@ button {
 	background-color: #7b7676;
 }
 
-#cancle:hover {
-	filter: brightness(80%);
-}
+
 
 .removeField {
     top: 20px;

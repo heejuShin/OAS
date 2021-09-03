@@ -211,14 +211,14 @@
           <div id="list" style="width: inherit;"></div>
           
              <div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts"><!--UPDATE시 사용 예정 -->
-			<button class="contact100-form-btn cancle" type="button" id="cancle" onclick="location.href='<%=request.getContextPath()%>/admin/mypage'">
+			<button class="contact100-form-btn cancle" type="button" id="cancle" style="color:#000;background:#fff;border:2px solid #000;" onclick="location.href='<%=request.getContextPath()%>/admin/mypage'">
 				<span>취소</span>
 			</button>	
           </div>
           
         
           <div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts"><!--UPDATE시 사용 예정 -->
-            <button class="contact100-form-btn edit" type="button" id="updatePreview" >
+            <button class="contact100-form-btn edit" type="button" id="updatePreview" style="color:#f33f3f;background:#fff;border:2px solid #f33f3f;">
 				<span>수정</span>
 			</button>
           </div>

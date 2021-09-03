@@ -70,6 +70,7 @@
 		console.log("step1");
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
+		document.title = formInfo[0].form_name;
 		console.log("formInfo : " + formInfo[0].form_fileid);
 		$('#form_title').text(formInfo[0].form_name);
 		
@@ -320,14 +321,14 @@
 				</div>
 				
 				<div class="wrap-input100 button rs1-wrap-input100 formbts">
-					<button class="contact100-form-btn" type="button" id="mypageB" onclick="location.href='<%=request.getContextPath()%>/'" >
+					<button class="contact100-form-btn" type="button" id="mypageB" style="color:#000;background:#fff;border:2px solid #000;" onclick="location.href='<%=request.getContextPath()%>/'" >
 						<span>설문 작성 취소</span>
 					</button>
 				</div>
 				<!-- input type : submit -->
 				<div class="wrap-input100 button rs1-wrap-input100 formbts">
-					<button class="contact100-form-btn" type="button" id="submitB">
-						<span>Submit<!-- <i class="fa fa-long-arrow-right m-l-7"
+					<button class="contact100-form-btn" type="button" id="submitB" style="color:#f33f3f;background:#fff;border:2px solid #f33f3f;">
+						<span>제출 <!-- <i class="fa fa-long-arrow-right m-l-7"
 							aria-hidden="true"></i> --></span>
 					</button>
 				</div>

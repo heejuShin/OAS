@@ -96,14 +96,19 @@ thead {
 	display: table-cell;
 	float: left;
 	margin-left: 10px;
-	border: #ffe902 4px solid;
-	background: #ffe902;
+	border: #28a745 1px solid;
+	color: #28a745;
+	background: #fff;
 	border-radius: 8px;
+	width:70px;
 }
 
 #stateB:hover {
-	filter: brightness(90%); 
-}
+/* 	filter: brightness(90%); 
+ */
+	color: #fff;
+	background: #28a745;
+ }
 
 
 /* delete modal*/
@@ -160,6 +165,12 @@ thead {
 
 .checkB:hover {
 	filter: brightness(90%); 
+}
+
+#excelDown {
+	background-color: white !important;
+	border: 1px #f65656 solid !important;
+	color: #f65656;
 }
 
 #deleteB {
