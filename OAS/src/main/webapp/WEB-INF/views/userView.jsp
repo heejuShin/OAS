@@ -22,8 +22,7 @@
 	        	<h1 class="mt-4">${u.getTitle()}</h1>
 	       		<!-- Author-->
 	            <p class="lead">
-	            	by
-	                <a href="#!">${u.getWriter()}</a>
+	            	by ${u.getWriter()}
 	            </p>
 	        </div>
             <hr />

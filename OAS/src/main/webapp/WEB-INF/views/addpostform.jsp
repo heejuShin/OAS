@@ -24,7 +24,7 @@
 
 <main>
 
-<div id="headTitle"><h2>게시물 작성 </h2></div>
+<div id="headTitle"><h2>전산전자공학부 공지사항 </h2></div>
 
 <div class="container-contact100">
 <form action="addok" method="post"  enctype="multipart/form-data">
