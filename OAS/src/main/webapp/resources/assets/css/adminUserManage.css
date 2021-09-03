@@ -5,6 +5,16 @@ main {
 	font-family: NanumGothic !important;
 }
 
+#searchB {
+	border: 1px solid #28a745;
+	
+	display: table-cell;
+	float: left;
+	margin-left: 10px;
+	background: #ffe902;
+	border-radius: 8px;
+}
+
 
 /* page title */
 
@@ -92,17 +102,20 @@ thead {
 	float: left;
 }
 
-#stateB {
+.stateB {
 	display: table-cell;
 	float: left;
 	margin-left: 10px;
-	border: #ffe902 4px solid;
-	background: #ffe902;
+	border: 1px solid #28a745;
+/* 	border: #ffe902 4px solid;
+ */	background: #ffe902;
 	border-radius: 8px;
 }
 
 #stateB:hover {
-	filter: brightness(90%); 
+/* 	filter: brightness(90%); 
+ */	background-color: #28a745;
+	color:white;
 }
 
 
