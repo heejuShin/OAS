@@ -17,6 +17,8 @@ public class BoardDAO {
 	private static String namespace ="com.walab.oas.mappers.board-mapper";
 	
 	public int insertBoard(BoardVO vo) {
+		//vo.setContent(vo.getContent().replaceAll(System.getProperty(""), ""));
+		vo.setContent(vo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		return sqlSession.insert(namespace+".insertBoard", vo);
 	}
 	
@@ -25,6 +27,10 @@ public class BoardDAO {
 	}
 	
 	public int updateBoard(BoardVO vo) {
+		//vo.setContent(vo.getContent().replaceAll(System.getProperty("line.separator"), "<br>"));
+		//vo.setContent(vo.getContent().replaceAll("&lt;p&gt;", ""));
+		//vo.setContent(vo.getContent().replaceAll("&lt;/p&gt;", ""));
+		//vo.setContent(vo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", ""));
 		return sqlSession.update(namespace+".updateBoard", vo);
 	}
 	
@@ -34,6 +40,7 @@ public class BoardDAO {
 	}
 	
 	public List<BoardVO> getBoardList(SearchCriteria  cri) {
+		//for문 안에 객체.setContent(객체.getContent().replaceAll("<br>", ""));
 		return sqlSession.selectList(namespace+".getBoardList",cri);
 	}
 	

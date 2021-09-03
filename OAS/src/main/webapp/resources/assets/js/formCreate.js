@@ -325,7 +325,7 @@ $( document ).ready(function() {
 	
 	//field 삭제
 	$("#list").on('click', ".removeCreate", function(){
-	  $("#count").val($("#count").val()-1);
+	  //$("#count").val($("#count").val()-1);
 	  if($(this).siblings(".field_type").val()==null) cnt_undefined-- ;
 	  $(this).parent().remove();
 	})

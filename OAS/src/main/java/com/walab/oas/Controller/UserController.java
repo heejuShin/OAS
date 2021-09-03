@@ -259,6 +259,7 @@ ModelAndView mav = new ModelAndView();
 		    }
 		
 		mav.addObject("form_info", jArray1);
+		System.out.println("----->"+jArray1.toString());
 		mav.addObject("field_list", jArray2);
 		mav.setViewName("userFormView");
 		System.out.println("<viewUserForm> controller end");
