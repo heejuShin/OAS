@@ -266,7 +266,7 @@ h4:hover span.formNameToolTip {
            <div class="title">
    
               <h2><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span></span>CSEE 최신 공지</a></h2>
-           	  <h5 style="position:absolute;right:17%;"><a href='<%=request.getContextPath()%>/board/list' style="color:#f33f3f"><span>더보기</span></a></h5>
+           	  <h5 style="position:absolute;right:17%;"><a href='<%=request.getContextPath()%>/board/list' style="color:#000"><span>더보기</span></a></h5>
 
            </div>
                 <div class="tablelist">
@@ -280,7 +280,7 @@ h4:hover span.formNameToolTip {
                     <tbody>
                     <c:forEach items="${list}" var="BoardVO" end="4">
                             <tr>
-                            	<td><a href="<%=request.getContextPath()%>/board/view/${BoardVO.seq}" class="titlelink">${BoardVO.title}</a></td>
+                            	<td><a href="<%=request.getContextPath()%>/board/view/${BoardVO.seq}" class="titlelink" style="color:#000;">${BoardVO.title}</a></td>
       				<td class="board_date"><fmt:formatDate pattern="yyyy-MM-dd" value="${BoardVO.regdate}"/></td>
                             </tr>
                     </c:forEach>
