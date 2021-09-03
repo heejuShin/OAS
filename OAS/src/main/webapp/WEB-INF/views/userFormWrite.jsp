@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-<title>설문 확인 </title>
+<title>Test Form</title>
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -70,7 +70,6 @@
 		console.log("step1");
 		//form title & explation 만들기 
 		console.log("title : " + formInfo[0].form_name);
-		document.title = formInfo[0].form_name; //설문 이름으로 title 설정 
 		console.log("formInfo : " + formInfo[0].form_fileid);
 		$('#form_title').text(formInfo[0].form_name);
 		
@@ -80,14 +79,9 @@
 
 		if(formInfo[0].form_fileid != null){
 			$('#form_fileid').text(formInfo[0].form_fileid);
-		var fileBox = $('<div id="fileDiv" class="wrap-input100 bg0 text_center marginTop "><a href="../downloadFile?id='+formInfo[0].form_fileid+'"> 다운 <img src="../resources/img/download.png" alt="" style="height: 12px; width: 12px;"></a></div>');
-
-
+			var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + formInfo[0].form_fileid + ')> 다운 <img src="../resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
 			console.log("formInfo : " + formInfo[0].form_fileid);
 			$("#formInfo").append(fileBox);
-			if(formInfo[0].form_fileid == 0){
-				$('#fileDiv').css("display","none");
-				}
 			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
 		}
 		
@@ -213,8 +207,6 @@
 				}
 
 			}//field 수 만큼 반복
-
-		
 
 
 
@@ -348,30 +340,13 @@
 	</div>
 </body>
 
-
 <script>
-<%-- function fn_fileDown(fileNo){
-	/* var formObj = $("form[name='readForm']");
+function fn_fileDown(fileNo){
+	var formObj = $("form[name='readForm']");
 	$("#FILE_NO").attr("value", fileNo);
 	formObj.attr("action", "/fileDown");
-	formObj.submit(); */
-	console.log("fn_fileDown");
-
-	$.ajax({
-        url:'<%=request.getContextPath()%>/download',
-        type:'GET',
-        data: {fieldID : fieldInfo[i].field_id} ,
-        dataType : 'json',
-        async: false,
-        success:function(data){
-            optionlist = data;
-            console.log(" 파일 다운로드 !!");
-
-        },
-        error:function(jqXHR, textStatus, errorThrown){
-            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-        }
-} --%>
+	formObj.submit();
+}
 
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

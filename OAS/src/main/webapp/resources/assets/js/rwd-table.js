@@ -110,9 +110,9 @@
         pattern: 'priority-columns',
         stickyTableHeader: true,
         fixedNavbar: '.navbar-fixed-top',  // Is there a fixed navbar? The stickyTableHeader needs to know about it!
-        addDisplayAllBtn: false, // should it have a display-all button?
-        addFocusBtn: false,  // should it have a focus button?
-        focusBtnIcon: '',
+        addDisplayAllBtn: true, // should it have a display-all button?
+        addFocusBtn: true,  // should it have a focus button?
+        focusBtnIcon: 'glyphicon glyphicon-screenshot',
         mainContainer: window,
         i18n: {
             focus     : 'Focus',
@@ -137,7 +137,7 @@
         }
 
         this.$dropdownGroup = $('<div class="btn-group dropdown-btn-group pull-right" />');
-        //this.$dropdownBtn = $('<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + ' <span class="caret"></span></button>');
+        this.$dropdownBtn = $('<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' + this.options.i18n.display + ' <span class="caret"></span></button>');
         this.$dropdownContainer = $('<ul class="dropdown-menu"/>');
 
         // Focus btn
@@ -171,7 +171,7 @@
          // Display-all btn
         if(this.options.addDisplayAllBtn) {
             // Create display-all btn
-            //this.$displayAllBtn = $('<button type="button" class="btn btn-default">' + this.options.i18n.displayAll + '</button>');
+            this.$displayAllBtn = $('<button type="button" class="btn btn-default">' + this.options.i18n.displayAll + '</button>');
             // Add display-all btn to dropdown-btn-group
             this.$dropdownGroup.append(this.$displayAllBtn);
 

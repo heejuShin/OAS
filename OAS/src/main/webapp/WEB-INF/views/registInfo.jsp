@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 등록 </title>
+<title>Insert title here</title>
   <!-- wschool css -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

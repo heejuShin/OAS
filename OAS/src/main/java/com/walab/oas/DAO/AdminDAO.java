@@ -17,7 +17,6 @@ import com.walab.oas.DTO.Result_Content;
 import com.walab.oas.DTO.SearchCriteria;
 import com.walab.oas.DTO.State;
 import com.walab.oas.DTO.User;
-import com.walab.oas.DTO.file;
 import com.walab.oas.DTO.ReadResult;
 
 @Repository
@@ -27,11 +26,6 @@ public class AdminDAO {
 	SqlSession sqlSession;
 	
 	private static String namespace ="com.walab.oas.mappers.oas_mapper";
-	
-	public file getFileInfo(int id) {
-		System.out.println("getFileInfo fun");
-		return sqlSession.selectOne(namespace + ".get_file_info",id);
-	}
 	
 	public List<Result> submitterList(SearchCriteria cri) {
 
@@ -226,8 +220,4 @@ public class AdminDAO {
 	public int createCategory(String name) {
 		return sqlSession.insert(namespace+".createCategory",name);
 	}
-	public void stateDel(int formID) {
-		sqlSession.delete(namespace + ".deleteOState", formID);
-	}	
-
 }

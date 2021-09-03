@@ -18,19 +18,10 @@
        </selectKey>
     </insert>
     
-    <!-- get file information by id -->
-    <select id="get_file_info" resultType="com.walab.oas.DTO.file">
-      	select * from FILE where id = #{id};
-   </select> 
-    
     <select id="form_list" resultType="com.walab.oas.DTO.Form">
       select DISTINCT Category.id as category_id, categoryName ,f.id as id, formName,explanation,url, startDate,endDate, ifnull(state_id,0)as state_id,isAvailable,Result_editD as editDate from Category RIGHT OUTER JOIN (SELECT Form.*, Result.state_id,Result.editDate as Result_editD FROM Form LEFT OUTER JOIN (SELECT * FROM Result WHERE user_id=#{user_id})as Result ON Form.id=Result.form_id WHERE date(now()) between date(startDate) AND date(endDate))f ON Category.id=f.category_id WHERE isAvailable=1
       <include refid="searchMain" />
       ORDER BY state_id IS NULL ASC,id ASC
-   </select> 
-   
-   <select id="getUserByResultID" resultType="com.walab.oas.DTO.User">
-      select * from User where id = (SELECT user_id from Result where Result.id=#{id});
    </select> 
    
    <select id="getLink" resultType="String">
@@ -68,10 +59,7 @@
              select * from State where form_id = #{formID};
           ]]> 
    </select>
-   <delete id="deleteOState" parameterType="int">
-      DELETE from State WHERE form_id = #{formID};
-      
-   </delete>
+   
    <!-- userMyPage 게시글 -->
    <select id="userlist" resultType="com.walab.oas.DTO.Form">
     SELECT c.id,c.category_id,c.categoryName, c.formName,url, c.startDate as startDate,c.endDate as endDate,c.regDate,u.userName,stateName,ifnull(state_id,0)as state_id
@@ -228,7 +216,10 @@
    
    <!-- 해당 폼 상태 리스트 -->
    <select id="stateList" parameterType="int" resultType="com.walab.oas.DTO.State">
-         SELECT * FROM State WHERE form_id=#{form_id};
+         <![CDATA[
+         SELECT * FROM State WHERE form_id=1; 
+      ]]> 
+      <!-- SELECT * FROM State WHERE form_id=#{form_id}; -->
    </select>
    
    <!-- 해당 폼 상태 리스트 -->
@@ -567,8 +558,7 @@
    
     <!-- field 삭제하기 -->
    <delete id="deleteField" parameterType="int">
-  	   delete from Field where id=#{field_id};
-       <!--update Field SET isDelete=1 where id=#{field_id}; -->
+       update Field SET isDelete=1 where id=#{field_id};
    </delete>
    
     <!-- Item 삭제하기 -->

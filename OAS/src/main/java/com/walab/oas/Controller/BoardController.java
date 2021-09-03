@@ -78,18 +78,18 @@ public class BoardController {
     
     @RequestMapping(value = "/admin/board/addok", method = RequestMethod.POST)    
     public ModelAndView addPostOk(BoardVO vo, HttpSession session,HttpServletRequest request) throws Exception{     
-
+       
     	String storedCsrfToken = (String) session.getAttribute("CSRF_TOKEN");
     	String requestedCsrfToken = request.getParameter("csrfToken");
     	        
     	if( storedCsrfToken == null || !storedCsrfToken.equals(requestedCsrfToken)){
     	    return new ModelAndView("error/csrfMsg");
     	}
-
+    	
        ModelAndView mav=new ModelAndView("redirect:../../board/list");
-
-       boardService.insertBoard(vo);
-
+      
+       BoardVO board = new BoardVO();
+    	
 //    	if(files.isEmpty()){ //업로드할 파일이 없을 시
 //    		boardService.insertBoard(vo); //게시글 insert
 //        }
@@ -253,10 +253,8 @@ public class BoardController {
     }
     
     @RequestMapping(value = "/board/deleteok/{id}", method = RequestMethod.GET)    
-    public ModelAndView deletePostOk(@PathVariable("id") int id){ 
-    	System.out.println("삭제할 id는 "+id); 
-
-    	ModelAndView mav=new ModelAndView("redirect:../../board/list");
+    public ModelAndView deletePostOk(@PathVariable("id") int id){    
+    	ModelAndView mav=new ModelAndView("redirect:../list");
     	if(boardService.deleteBoard(id) == 0) {
         	System.out.println("데이터 삭제 실패 ");
         }

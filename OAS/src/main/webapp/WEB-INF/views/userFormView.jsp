@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>설문 확인 </title>
+<title>User View Form</title>
 
 <!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -101,6 +101,8 @@
 <script>
 	$(document).ready(function () {
 
+			
+		
 		var formInfo = ${form_info};
 		var fieldInfo = ${field_list};
 
@@ -110,12 +112,12 @@
 		
 		$('#form_title').text(formInfo[0].form_name);
 		
-		/*if(formInfo[0].form_fileid != null){
+		if(formInfo[0].form_fileid != null){
 			var fileBox = $('<div class="wrap-input100 bg0 text_center marginTop "><button onclick = fn_fileDown(' + formInfo[0].form_fileid + ')> '+첨부파일 다운로드+' 다운 <img src="resources/img/download.png" alt="" style="height: 12px; width: 12px;"></button></div>');
 			console.log("formInfo : " + formInfo[0].form_fileid);
 			$("#formInputs").append(fileBox);
-			// $("#formInputs").children("#result_"+i).append(fileBox); 
-		}*/
+			/* $("#formInputs").children("#result_"+i).append(fileBox); */	
+		}
 		
 		$('.form_explanation').html(formInfo[0].form_detail);
 		$('#startDate').text(moment(formInfo[0].form_startDate).format('YYYY.MM.DD HH:mm'));
@@ -128,8 +130,8 @@
 			$('#editDate').text(formInfo[0].form_submitDate);
 		}
 		
- 		//$('#editDate').text(formInfo[0].form_editDate);
- 		
+/* 		$('#editDate').text(formInfo[0].form_editDate);
+ */
 		console.log("step2");
 
 		for(var i = 0 ; i < fieldInfo.length; i++){
@@ -148,7 +150,7 @@
 			$("#fieldInputs").children("#result_"+i).append(questionBox);
 
 			if(fieldInfo[i].field_content == "")
-				var answerBox = $('<p class="label-input100 nameMargin answerP">응답 없음</p>');
+				var answerBox = $('<p class="label-input100 nameMargin answerP">응답 없음</p>')
 			else{
 				var result_content = fieldInfo[i].field_content;
 				console.log("field_content : " + result_content);
@@ -166,14 +168,13 @@
 				console.log("field_fileid : " + fieldInfo[i].field_fileid);
 			}
 			else{
-				var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>');
+				var answerBox = $('<p class="label-input100 nameMargin answerP">A. '+result_content+'</p>')
 			}
-		
-			$("#fieldInputs").children("#result_"+i).append(answerBox);
-
-		}
 			
 			
+			$("#fieldInputs").children("#result_"+i).append(answerBox);	
+			
+			}
 
 	}); //document ready
 	

@@ -86,13 +86,9 @@
 		var formInfo = ${form_info};
 		var fieldInfo = ${field_list};
 		var category = ${category_name};
-		var writter_info = ${writter_info};
-		//var writter_studentId = ${writter_studentId}; 
 		var date = ${date_list};
 		var resultContent = ${read_list};
 		var category_isDeleted = ${category_isDeleted};
-		
-		
 		
 		console.log("step1");
 		//form title & explation 만들기 
@@ -109,7 +105,6 @@
 		}else{
 			$('#editDate').text("마지막 수정 날짜: "+ date[0].regDate);
 		}
-		$('#writter_name').text(writter_info[0].writter_name+ " ("+ writter_info[0].writter_studentId+ ")");
 		console.log("step2");
 		//field 만들기 
 		for(var i = 0 ; i < fieldInfo.length; i++){
@@ -239,9 +234,7 @@ $(function() {
 					
 					<p class="label-input100 submit_dates"><span id="regDate"></span> / <span id="editDate"></span></p>
 				</div>
-				<div class="wrap-input100 bg0">
-					<p class="label-input100 submit_dates">신청자 : <span id="writter_name">"홍길동"</span></p>
-				</div>
+				
 				<input type="hidden" name="csrfToken" value="${sessionScope.CSRF_TOKEN}" />
 				<div id="fieldInputs"  class="contact100-form">
 						<!-- field insert 구역 -->

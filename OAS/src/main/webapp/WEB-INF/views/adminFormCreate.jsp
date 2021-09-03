@@ -26,7 +26,7 @@
 	</style> 
     
     
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=4"> 
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/form.css?ver=3"> 
 
 	<!--  Form CSS -->
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -100,8 +100,8 @@
 	<script src="<%=request.getContextPath()%>/resources/assets/vendor/noui/nouislider.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script> 
-<!-- todo -->
-	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=36"></script>
+
+	<script src="<%=request.getContextPath()%>/resources/assets/js/formCreate.js?ver=25"></script>
 	<script src="<%=request.getContextPath()%>/resources/assets/js/pageBackEvent.js?ver=2"></script>
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
@@ -187,7 +187,7 @@
   });</script> -->
   
   
-			<div class="wrap-input100  bg1" id="state_select" style="margin-bottom: 40px;">
+			<div class="wrap-input100  bg1" style="margin-bottom: 40px;">
 				<p class="label-input100" style="margin-bottom:10px; margin-top:5px;">상태 선택<span class="essential"> * </span></p>
 				<select style="width: 650px; border:none;" id="state" multiple="multiple" style="width: 450px;" class="form-state">
   
@@ -281,7 +281,7 @@
 						<button id='uploadBtn'>Upload</button> 
 					</div>  -->
 					
-						<select class="field_type" name="f_type3" style="clear:both"> <!-- TODO required -->
+						<select class="field_type  " name="f_type3" style="clear:both"> <!-- TODO required -->
 						  <option value="" selected="" disabled="">질문유형</option>
 						  <option value="text">단답형</option>
 						  <option value="textarea">장문형</option>
@@ -293,7 +293,7 @@
 						  <option value="time">시간</option>
 						  <!-- 직선단계, 객관식 그리드, 체크박스 그리드-->
 						</select>
-						<input class="selected_option" value="" type="hidden"/> <!--타입 변경 구분용 (질문유형 -> 변경)-->
+
 						<div style="float: right;">
 						<input type="checkbox" class="isEssential_fake" name="isEssential_fake">
 						<label for="필수질문">필수</label>
@@ -305,7 +305,7 @@
 
     <div class="add" id="radio_add">
       <div>
-        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" style="margin-top: 10px" class="remove_item remove_item_Create minusB">X</button>
+        <input class="radio_fake" type="radio" disabled><label class="item" for=""></label></input><button type="button" class="remove_item remove_item_Create minusB">X</button>
         <input class="real radio_real" type="hidden" name="?content?" value=""/>
       	<input class="isItemOri" type="hidden" name="?isItemOri?" value="0"/>
       </div>
@@ -427,7 +427,7 @@ $('#state').on('select2:unselect', function(e) {
     	$("#대기중").remove();
     	//$("#select2-state-result-h02g-대기중").remove();
     	//(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중" data-select2-id="select2-data-2-uqij"><button type="button" class="select2-selection__choice__remove" tabindex="-1" title="Remove item" aria-label="Remove item" aria-describedly="select2-state-container-choice-wzzt-대기중"><span aria-hidden="true">x</span></button><span class="select2-selection__choice__display" id="select2-state-container-choice-wzzt-대기중">대기중</span></li>');
-    	$("#state_select .select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>대기중</li>');
+    	$(".select2-selection__rendered").prepend('<li class="select2-selection__choice" title="대기중"><span class="select2-selection__choice__remove" role="presentation">x</span>"대기중"</li>');
     	$(".form-state").prepend("<option id='대기중' selected=\"selected\" value='대기중'>대기중</option>");
     }
     var value = $(this).val();

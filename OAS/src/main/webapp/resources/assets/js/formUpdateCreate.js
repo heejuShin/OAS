@@ -1,7 +1,5 @@
  
 var dup_check = false;
-var cnt_undefined = 0;
-
 function isValidForm(){
     if(!dup_check){
         alert("링크 중복 체크를 해주세요.");
@@ -127,36 +125,32 @@ $( document ).ready(function() {
 	$("#list").on('change', ".field_type", function(){
 		$(this).siblings(".content").empty();
 	    var content;
-	    if($(this).siblings(".selected_option").val()=="")
-	    	cnt_undefined--;
 	    if(this.value=="textarea"){
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
 	    else if(this.value=="select"){
-	      content = "<select id=\"\" style=\"display:inline-block; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"margin-top:2%;padding:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 항목></p></div><div class=\"list_select\"></div>";
+	      content = "<select id=\"\" style=\"display:inline-block; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"margin-top:2%;padding:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 항목></p></div><div class=\"list_select\"></div>";
 	    }
 	    else if(this.value=="radio"){
 	      content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
 	    }
 	    else if(this.value=="checkbox"){
-	      content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+	      content = "<input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 	    }
 	    else if(this.value=="file"){
           content = "<input type='file' class=\"inputs \" name=\"uploadFile\"/><br>";
           
         }
 	    else{
-	      content = "<input type='"+this.value+"' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
+	      content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    }
 	    $(this).siblings(".content").html(content);
-	    $(this).siblings(".selected_option").val(this.value);
 	});
 	
 	//field 추가
 	$("#menu-bar").click(function(){
 	  var count = $("div#list").children().length+1;
-	  cnt_undefined++;
-	 //console.log("count: "+count);
+	 console.log("count: "+count);
 	  if(count<0)
 		count=1;
 	  $("#field_add").find(".field").attr("id", "field"+count);

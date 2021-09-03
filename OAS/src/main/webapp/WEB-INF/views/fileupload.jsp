@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>파일 업로드 </title>
+<title>Insert title here</title>
 </head>
 <body>
 <% 

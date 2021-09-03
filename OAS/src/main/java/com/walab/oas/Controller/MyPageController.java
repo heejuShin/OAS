@@ -176,26 +176,17 @@ public class MyPageController {
 			//userTab1 신청폼 개수 가져오기 (TAB1)
 			cri.setUser_id(user_id);
 			List<Form> userList = mypageDao.userList(cri); //admin의 폼 데이터 리스트를 가져온다
-
-			//statelist default
-			List<State> stateList = mainDao.stateList(0);
-			int stateLentgh = stateList.size();
-			mav.addObject("stateLentgh", stateLentgh);
-			
-			//System.out.println(cri);
+			System.out.println(cri);
 			int count1 = mypageDao.countUserTab1(cri.getSearchType(), cri.getKeyword(), cri.getFilterType(),user_id);
 			
-			//System.out.println("userList"+count1);
+			System.out.println("userList"+count1);
 			PageMaker pageMaker = new PageMaker();
 			pageMaker.setCri(cri);
 			pageMaker.setTotalCount(count1);
 			
-			
 			ObjectMapper mapper=new ObjectMapper();
 			String jArray=mapper.writeValueAsString(userList);
-			String jArray1=mapper.writeValueAsString(stateList);
-			mav.addObject("stateList", jArray1);
-		
+
 			List<Department> department = mypageDao.departmentList();
 			List<Major> major = mypageDao.majorList();
 			
@@ -219,8 +210,8 @@ public class MyPageController {
 			        ob2.put("name", major.get(i).getName());
 			        ob2.put("department_id", major.get(i).getDepartment_id());
 			        ob2.put("department_name", major.get(i).getDepartment_name());
-			        //System.out.println("->"+major.get(i).getDepartment_name());
-			        //System.out.println(ob2);
+			        System.out.println("->"+major.get(i).getDepartment_name());
+			        System.out.println(ob2);
 		            major_list.put(ob2);
 				}
 			}catch(JSONException e){
@@ -233,12 +224,6 @@ public class MyPageController {
 			ObjectMapper cri_mapper=new ObjectMapper();
 			String cri_list=cri_mapper.writeValueAsString(cri);
 			mav.addObject("cri_list",cri_list);
-			
-//			System.out.println("department_list===>"+department_list);
-//			System.out.println("userList===>"+userList);
-//
-//			System.out.println("pageMaker===>"+pageMaker);
-			
 			mav.addObject("cri", cri);
 			mav.addObject("pageMaker", pageMaker);
 			mav.addObject("keyword", cri.getKeyword());

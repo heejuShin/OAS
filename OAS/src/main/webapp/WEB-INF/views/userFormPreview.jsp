@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-<title>설문 Preview</title>
+<title>Form Preview</title>
 	<!--  Form CSS -->
 
 	
