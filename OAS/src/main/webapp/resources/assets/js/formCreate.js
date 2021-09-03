@@ -1,5 +1,7 @@
 
 var dup_check = false;
+var cnt_undefined = 0;
+
 function isValidForm(){
     if(!dup_check){
         alert("링크 중복 체크를 해주세요.");
@@ -84,7 +86,6 @@ $( document ).ready(function() {
 	//모달창
 	
 	$('#confirm').on('click', function() {
-		alert("hello");
 		console.log("confirm click");
    		
 		var name = $("#formName").val();
@@ -109,6 +110,7 @@ $( document ).ready(function() {
 	
 	
 	$('#preview').on('click', function() {
+		//alert("->"+cnt_undefined);
 		var category_name=$("#category_select option:selected").val();
 		var form_name= $("#formName").val();
 		var startDate= $("#startDate").val();
@@ -116,7 +118,8 @@ $( document ).ready(function() {
 	    var endDate = $("#endDate").val();
 	    var endTime = $("#endTime").val();
 		console.log(endTime);
-		if(category_name == "")
+		if(cnt_undefined != 0) alert("질문 유형을 선택하지않은 질문이 있습니다.\n 질문 유형을 선택하거나, 해당 질문을 삭제해주세요.");
+		else if(category_name == "")
 			alert("카테고리를 선택해주세요 ");
 		else if(form_name == "")
 			alert("제목을 입력해주세요 ");
@@ -260,32 +263,48 @@ $( document ).ready(function() {
 	//질문 유형 선택
 	$("#list").on('change', ".field_type", function(){
 	    var content;
+	    //alert("->"+$(this).siblings(".selected_option").val()+"<-");
+	    if($(this).siblings(".selected_option").val()=="")
+	    	cnt_undefined--;
 	    $(this).siblings(".content").empty();
 	    $(this).siblings(".uploadDiv").empty();
 	    if(this.value=="textarea"){
 	      content = "<textarea class=\"textareaInput \" placeholder=\"장문형 작성칸\" disabled></textarea>";
 	    }
 	    else if(this.value=="select"){
-	      content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"margin-top:2%;padding:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
+	      content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"margin-top:2%;padding:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
 	    }
 	    else if(this.value=="radio"){
 	      content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_radio optionAddB\">옵션에 추가</button><div class=\"list_radio\"></div>";
 	    }
 	    else if(this.value=="checkbox"){
-	      content = "<input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+	      content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 	    }
 	    else if(this.value=="file"){
-          content = "<input type='file' class=\"inputs \" name=\"uploadFile\"/><br>";
+          content = "<input type='file' class=\"inputs \" name=\"uploadFile\" disabled/><br>";
           
         }
+        /*
+       	else if(this.value=="text"){
+			content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
+		}
+		else if(this.value=="date"){
+			content = "<input type='date' class=\"inputs \" name=\"uploadFile\"/><br>";
+		}
+		else if(this.value="time"){
+			content = "<input type='date' class=\"inputs \" name=\"uploadFile\"/><br>";
+		}*/
 	    else{
-	      content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
+	      content = "<input type='"+this.value+"' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    }
 	    $(this).siblings(".content").html(content);
+	    $(this).siblings(".selected_option").val(this.value);
 	});
 	
 	//field 추가
 	$("#menu-bar").click(function(){
+		
+	  cnt_undefined++;
 	  count++;
 	  
 	  $("#field_add").find(".field").attr("id", "field"+count);
@@ -306,12 +325,14 @@ $( document ).ready(function() {
 	
 	//field 삭제
 	$("#list").on('click', ".removeCreate", function(){
-	  $("#count").val($("#count").val()-1);
+	  //$("#count").val($("#count").val()-1);
+	  if($(this).siblings(".field_type").val()==null) cnt_undefined-- ;
 	  $(this).parent().remove();
 	})
 	
 	//객관식 아이템 추가-버튼 클릭시
 	$("#list").on('click', ".btn_add_radio", function(){
+	
 	
 	  //문자열 처리 (, 기준)
 		var inputs = $(this).siblings('input').val();

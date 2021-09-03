@@ -4,13 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물 작성  </title>
+<title>전산전자공학부 공지   </title>
 <link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=2">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<style>	
-  	@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
- 	* {font-family: 'NanumSquare', sans-serif !important;}   
-</style>
 </head>
 <body>
 
@@ -30,9 +26,9 @@
 <form action="addok" method="post"  enctype="multipart/form-data">
 	<div class="formField">
 		<table>
-			<tr><td>카테고리:</td><td><input type="text" name="category"/></td></tr>
-			<tr> <td>제목:</td> <td><input type="text" name="title"/></td></tr>
-			<tr><td>글쓴이:</td><td><input type="text" name="writer"/></td></tr>
+			<tr><td>Category:</td><td><input type="text" name="category"/></td></tr>
+			<tr> <td>Title:</td> <td><input type="text" name="title"/></td></tr>
+			<tr><td>Writer:</td><td>${name}<input type="hidden" name="writer" value="${name}"/></td></tr>
 		</table>
 		
 		<hr/>
@@ -62,8 +58,8 @@
 		</div>
 	</div>
 	<div class="buttonDiv">
-		<input id="but" class="button" type="submit" value="  등록  "/>
-		<button id="but" class="button" onclick="location.href='../../board/list'">목록보기 </button>
+		<button id="but" class="button" type="submit">Add Post</button>
+		<span id="but" class="button" onclick="location.href='<%=request.getContextPath()%>/board/list'">목록보기 </span>
 	</div>
 
 </form>

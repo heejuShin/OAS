@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 정보 </title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 	body{

@@ -118,6 +118,14 @@ $( document ).ready(function() {
 	  
 	  //field 유형 나타내기
 	  $("#field_add").find(".field_type").attr("name", "f_type"+count);
+	  
+	  $("#field_add").find(".field_type_real").attr("name", "f_type_real"+count);
+	  $("#field_add").find(".field_type_real").attr("value", formDetail[i].fieldType);
+	  //$("#field_add").find(".field_type_real").val("hey");
+	  //$("#field_add").find(".field_type_real").text("hey");
+	  //$("#field_add").find(".field_type_real").val(formDetail[i].fieldType);
+	  //$("#field_add").find(".field_type_real").html(formDetail[i].fieldType);
+	  
 	  $("#field_add").find('.field_type').attr('disabled', true);
 	  $("#field_add").find('.field_type option').attr('selected', false);
 	  $("#field_add").find('.field_type option[value='+formDetail[i].fieldType+']').attr('selected', true).change();
@@ -155,7 +163,7 @@ $( document ).ready(function() {
 	  	  $("#field_add").find(".itemCount").val(item_list.length);
 	  	  
 	  	  if(formDetail[i].fieldType=="select"){
-	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
+	    	content = "<select id=\"\" style=\"display:none; margin-bottom: 10px;\"><option disabled>추가된 옵션들</option></select><br><input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_select optionAddB\">옵션에 추가</button><div class=\"selectOption\" style=\"padding:2%;margin-top:2%;border:0.5px dashed black\"><p><드롭다운에 들어갈 옵션></p></div><div class=\"list_select\"></div>";
 	  	    $("#field_add").find(".content").html(content);
 	  	  	for(var j=0; j<item_list.length;j++){
 	  	  		var o_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -212,7 +220,7 @@ $( document ).ready(function() {
 		  }
 		  
 		  else if(formDetail[i].fieldType=="checkbox"){
-		    content = "<input type='text' class=\"inputs \" placeholder=\"보기(옵션)을 작성해주세요. \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
+		    content = "<input type='text' class=\"inputs \" placeholder=\"보기를 ,로 구별하여 작성해주세요. (예시 : 여자,남자) \" value=\"\"/><button type=\"button\" class=\"btn_add_chxbox optionAddB\">옵션에 추가</button><div class=\"list_chxbox\"></div>";
 		    $("#field_add").find(".content").html(content);
 		  	for(var j=0; j<item_list.length;j++){
 		    	var c_cnt = parseInt($("#field_add").find(".count").val())+1;
@@ -241,7 +249,8 @@ $( document ).ready(function() {
 	    $("#field_add").find(".content").html(content);
 	  }
 	  else{
-	    content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 
+	    //content = "<input type='text' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>"; 
+	    content = "<input type='"+this.value+"' class=\"inputs \" placeholder=\"단답형 작성칸\" type=\""+this.value+"\" disabled/>";
 	    $("#field_add").find(".content").html(content);
 	  }
 	  
@@ -288,6 +297,16 @@ $( document ).ready(function() {
 		}
 	});
 	
+	//item 추가되었을시 수정했다고 표시
+	$("#list").on('click', ".btn_add_radio", function(){
+		$(this).closest(".isModified").val("1");
+	});
+	
+	//item 삭제되었을시 수정했다고 표시
+	$("#list").on('click', ".remove_item", function(){
+		$(this).closest(".isModified").val("1");
+	});
+	
 	$("#list").on('change', ".isDefault_fake", function(){
 		$(this).siblings(".isModified").val("1");
 	});
@@ -317,7 +336,9 @@ $( document ).ready(function() {
 		}
 		//새로 추가했던 field면 그냥 삭제
 		else{
-			$("#count").val($("#count").val()-1);
+			if($(this).siblings(".field_type").val()==null) cnt_undefined-- ;
+			//console.log(cnt_undefined);
+			//$("#count").val($("#count").val()-1);
 			$(this).parent().remove();
 		}
 	});
@@ -436,7 +457,8 @@ $('#updatePreview').on('click', function() {
 	    var endDate = $("#endDate").val();
 	    var endTime = $("#endTime").val();
 		
-		if(category_name == "")
+		if(cnt_undefined != 0) alert("질문 유형을 선택하지않은 질문이 있습니다.\n질문 유형을 선택하거나, 해당 질문을 삭제해주세요.");
+		else if(category_name == "")
 			alert("카테고리를 선택해주세요 ");
 		else if(form_name == "")
 			alert("제목을 입력해주세요 ");

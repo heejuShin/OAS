@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>View Member</title>
+<title>회원 조회  </title>
 
 </head>
 <body>
@@ -23,7 +23,7 @@
 	       		<!-- Author-->
 	            <p class="lead">
 	            	by
-	                <a href="#!">${u.getWriter()}</a>
+	                <a>${u.getWriter()}</a>
 	            </p>
 	        </div>
             <hr />
@@ -44,6 +44,9 @@
 		</div>
 		<div class="buttonDiv">
 			<button class="btn btn-default pull-right" name='stateB' id="stateB" onclick="location.href='../list'">목록보기 </button>
+			<button  class="btn btn-default pull-right" onClick = "location.href='<%=request.getContextPath()%>/admin/board/editform/${u.seq}'">수정</button>
+			<button  class="btn btn-default pull-right" onClick = "javascript:delete_ok('${u.seq}')">삭제</button>
+ 		
 		</div>
 	</div>
 </div>

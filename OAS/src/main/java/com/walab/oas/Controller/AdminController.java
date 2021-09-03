@@ -146,6 +146,11 @@ public class AdminController {
 	    	int idx=0;
 	    	
 	    	for (int i = 1; i <= f_cnt ; i++) {   
+			
+			if(field_name[i] == "undefined" || field_name[i] == null || field_name[i] == "") {
+		    		continue;
+		    	}
+			
 		    	JSONObject ob =new JSONObject();
 		    	
 		        ob.put("field_id", field_id[i]);
@@ -223,6 +228,9 @@ public class AdminController {
 	    	
 	    	for (int i = 1; i <= f_cnt ; i++) {   
 		    	JSONObject ob =new JSONObject();
+			if(field_name[i] == "undefined" || field_name[i] == null || field_name[i] == "") {
+		    		continue;
+		    	}
 		    	if(Integer.parseInt(isFieldDel[i])==1)
 		    		continue;
 		        ob.put("field_id", field_id[i]);
@@ -282,20 +290,43 @@ public class AdminController {
 			Category cg = new Category();
 			int file_id=0;
 			Map<String, Object> map = new HashMap<String, Object>();
-			
-			if(adminUploadFile != null) {
+			if(adminUploadFile != null && !adminUploadFile.getOriginalFilename().equals("")) {
 				for(int i=0;i<1;i++) {
-					System.out.println(adminUploadFile);
-	            	String root_path = request.getSession().getServletContext().getRealPath("/");  
-	                String attach_path = "resources/upload/";
+					//System.out.println(adminUploadFile);
+					
+	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
+	                String attach_path = "resources/uploadFile/";
 	                String filename = adminUploadFile.getOriginalFilename();
+	                
+					File Folder = new File(root_path+attach_path);
+
+					if (!Folder.exists()) {
+						try{
+						    Folder.mkdir(); //폴더 생성합니다.
+						    //System.out.println("폴더가 생성되었습니다.");
+					        } 
+					        catch(Exception e){
+						    e.getStackTrace();
+						}        
+				         }else {
+						//System.out.println("이미 폴더가 생성되어 있습니다.");
+					}
+
+	                
+	                
 	                System.out.println("Filename is "+filename);
 	                if(filename == "") break;
-	                File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
-	                System.out.println("Path is "+root_path + attach_path + filename);
-	                adminUploadFile.transferTo(f);
+	                
 	                String originalFileExtension = filename.substring(filename.lastIndexOf("."));
 	                String storedFileName = UUID.randomUUID().toString()+originalFileExtension;
+	                //System.out.println("storedFileName is "+storedFileName);
+	                
+	                //File f = new File("//Users//sia//git//OAS//OAS//src//main//webapp//resources//img" + filename);
+	                File f = new File(root_path + attach_path + storedFileName);
+	                //System.out.println("Path is "+root_path + attach_path + storedFileName);
+	                
+	                adminUploadFile.transferTo(f);
+	                
 	                
 	                
 	                map.put("id", 0);
@@ -404,7 +435,19 @@ public class AdminController {
 						String key = Integer.toString(form_id) + "_" + Integer.toString(i);
 						field.setKey(key);
 						
+						adminDAO.createField(field);
+						
 						if("radio".equals(fieldType)||"checkbox".equals(fieldType)||"select".equals(fieldType)) {
+							if("select".equals(fieldType)) {
+								/*int field_id=adminDAO.getFieldId(key);
+								Item item = new Item();
+								item.setField_id(field_id);
+								item.setContent("내용을 선택해주세요");
+								int isDefault = 1;
+								//int isDefault = Integer.parseInt(request.getParameter(Integer.toString(i)+"isDefault"+Integer.toString(j))); 나중에 하자
+								item.setIsDefault(isDefault);
+								adminDAO.createItem(item);*/
+							}
 							int i_cnt = Integer.parseInt(request.getParameter("count"+Integer.toString(i)));
 							for(int j=1; j<=i_cnt; j++) {
 								Item item = new Item();
@@ -421,7 +464,6 @@ public class AdminController {
 								}
 							}//item 반복문
 						}
-						adminDAO.createField(field);
 					}
 				}	//field 반복문			
 				return mav;
@@ -553,22 +595,20 @@ public class AdminController {
 		int category_id = 0;
 		int form_id = Integer.parseInt(request.getParameter("formId"));
 		
-		//state 추가
-		List<State> state_list = mainDao.stateList(form_id);
-		JSONArray jArray2 = new JSONArray();
-		
-		try{
-			for (int i = 0; i < state_list.size() ; i++) {   
-	    		JSONObject ob2 =new JSONObject();
-	    		ob2.put("id", state_list.get(i).getId());
-		        ob2.put("stateName", state_list.get(i).getStateName());
-	            jArray2.put(ob2);
-			}
-		}catch(JSONException e){
-	    	e.printStackTrace();
-	    }
-		
-		mav.addObject("state_list",jArray2);
+		//state
+		State state= new State();
+		String statename = request.getParameter("state");
+		//System.out.println(statename);
+		String[] statenames = statename.split(",");
+		adminDAO.stateDel(form_id);
+		for (int i = 0; i < statenames.length; i++) {
+			state.setStateName(statenames[i]);
+			if(statenames[i].equals("대기중"))
+				state.setIsDefualt(1);
+			else state.setIsDefualt(0);
+			state.setForm_id(form_id);
+			adminDAO.createState(state);
+		}
 		
 		try {
 			Integer.parseInt(request.getParameter("category_id"));
@@ -632,7 +672,10 @@ public class AdminController {
 			System.out.println("fieldC:"+fieldC);
 			int fieldCount = Integer.parseInt(fieldC);
 			for(int i=1; i<=fieldCount; i++) {
+				System.out.println("~~~~~~~~~~~~~~~"+isModified[i-1]);
+				//todo
 				if(Integer.parseInt(isModified[i-1])==1) {
+					System.out.println("홍ㅁㅇ롬읾ㄴㅇ러ㅣㅁㄴㅇ");
 					Field field = new Field();
 					String title = request.getParameter("f_title"+Integer.toString(i));
 					int isFieldDel = Integer.parseInt(request.getParameter("isFieldDel"+Integer.toString(i)));
@@ -641,11 +684,13 @@ public class AdminController {
 						continue;
 					}
 					if(title != null) {
-						
 						field.setId(Integer.parseInt(field_id[i-1]));
 						field.setForm_id(form_id); 
 						field.setFieldName(title); 
-						String fieldType = request.getParameter("f_type"+Integer.toString(i));
+						String fieldType = request.getParameter("f_type_real"+Integer.toString(i));
+						//System.out.println("~!~!~!~!~!~!"+title);
+						//System.out.println("~!~!~!~!~!~!"+fieldType);
+						
 						field.setFieldType(fieldType);
 						String fileName; // 이거 어떻게 할지 고민
 						//field.setFileName(fileName);
@@ -794,6 +839,21 @@ public class AdminController {
 		List<Result> date_list = adminDAO.getDate(id);
 		
 		List<Form> form_info = mainDao.forminfo(form_ID);
+		
+		User writter = userDao.getUserByResultID(id);
+		
+		JSONArray writter_info = new JSONArray();
+		try {
+			JSONObject ob =new JSONObject();
+			ob.put("writter_name", writter.getUserName());
+			ob.put("writter_studentId", writter.getStudentId());
+			writter_info.put(ob); 
+		}catch(JSONException e){
+	        e.printStackTrace();
+	    }
+		
+		
+		
 	
 		
 		List<Field> field_list = mainDao.fieldList(form_ID);
@@ -911,6 +971,7 @@ public class AdminController {
 		 mav.addObject("field_list", jArray2);
 		 mav.addObject("read_list",readContent);
 		 mav.addObject("category_name",c_name);
+		 mav.addObject("writter_info",writter_info);
 		 mav.addObject("category_isDeleted",isDeleted);
 		 mav.addObject("date_list",reg_edit_date);
 		 

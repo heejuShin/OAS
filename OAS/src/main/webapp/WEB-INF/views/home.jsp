@@ -321,6 +321,7 @@ h4:hover span.formNameToolTip {
     </div>
 
    </main>
+	
    <footer>
       <jsp:include page="/WEB-INF/views/basic/footer.jsp" />
    </footer>

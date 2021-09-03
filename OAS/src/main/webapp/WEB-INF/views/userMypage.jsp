@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>User my page</title>
+    <title>마이페이지 </title>
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
       <!--  button css-->
@@ -42,6 +42,12 @@
      @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
 
  	 * {font-family: 'NanumSquare', sans-serif !important;}    
+     </style>
+	  
+     <style>
+      tr{
+     	top : 0px !important;
+      }
      </style>
   </head>
 
@@ -184,21 +190,24 @@
       }
 
       var criInfo=${cri_list};
-         $('.filterType option[value='+criInfo.filterType+']').prop('selected', 'selected').change();
-         
+               
       
       var userList=${userList};
-         for(var i=0; i < userList.length; i++){
-                                   
-            /*설문지 별 tr 만듦*/
-           var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"' ></tr>"); 
+	var stateLentgh = ${stateLentgh};
+   	  var stateList = ${stateList};
+   	  var colorList = ['#D6D208', '#538CF5', '#F5942B', '#48F0C4', '#A839A2', '#38D60F', '#400DF5', '#F5C701', '#14B1F0', '#A83937'];
+   	
+         for(var i=0; i < userList.length; i++){ //userList.length
+
+           //설문지 별 tr 만듦
+           var divOne = $("<tr class='form-item"+i+" item-row category"+userList[i].category_id+"' data-category='category"+userList[i].category_id+"'></tr>"); 
             $(".tbodies").append(divOne);
    
-         /* tr의 안에 들어갈 td */
+         //tr의 안에 들어갈 td//
           var td1 = $("<td>"+(i+1)+"</td>"); 
           $($(".tbodies").children()[i]).append(td1);
-      
-         var th1 = $("<th>"+userList[i].categoryName+"<span class='co-name'></span></th>"); 
+   
+         var th1 = $("<td>"+userList[i].categoryName+"<span class='co-name'></span></td>"); 
          $($(".tbodies").children()[i]).append(th1);
 
          if(userList[i].formName.length > 35){
@@ -208,7 +217,6 @@
 		    	var td2 = $("<td class='formName'>"+userList[i].formName+"</td>"); 
  		    }
    
-           //var td2 = $("<td>"+userList[i].formName+"</td>"); 
           $($(".tbodies").children()[i]).append(td2);
    
           var td3 = $("<td>"+moment(userList[i].startDate).format('YYYY.MM.DD HH:mm')+" ~ "+moment(userList[i].endDate).format('YYYY.MM.DD HH:mm')+"</td>"); 
@@ -235,11 +243,25 @@
    
          var td5 = $("<td>"+userList[i].userName+"</td>"); 
            $($(".tbodies").children()[i]).append(td5);
-         console.log("date:"+new Date());
+	var color = 0;
+       	var flag = 0;
+       	var k = 0;
+         //console.log("date:"+new Date());
            //신청했던 폼 : 신청마감 (자신이 신청했던거 볼 수 있게)
            if(new Date()>new Date(userList[i].endDate)){
-               var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
-            $($(".tbodies").children()[i]).append(a);
+               for(k=0;k<stateLentgh;k++){
+       		   if(stateList[k] == userList[i].stateName){
+       				color = k;   
+       				flag = 1;
+       				break;
+       		   }
+       	   }
+       	   if(flag == 1)
+            	var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid "+colorList[color]+";' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
+       	   else 
+             var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #1f0167;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button</td>");
+
+       	   $($(".tbodies").children()[i]).append(a);
            }   
            else{
               //신청하기 (그 폼 신청페이지로 넘어가게)
@@ -249,18 +271,30 @@
             }
              //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)
               else{
-                  var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
+                  for(k=0;k<stateLentgh;k++){
+              		   if(stateList[k].stateName == userList[i].stateName){
+              				color = k;   
+              				flag = 1;
+              				break;
+              		   }
+              	   }
+              	   if(flag == 1)
+                   	var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid "+colorList[color]+";' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button></td>");
+              	   else 
+                    var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button></td>");
+
+                  //var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #458641;' onClick = 'openForm(this);'>"+userList[i].stateName+"</button><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #3560b1;' onClick = 'delSubmitForm(this);'>"+"신청취소"+"</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
 
          }
-         var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/><input type='hidden' id='linkName' name='linkName' value='"+userList[i].url+"'/></form>");
+         //alert($(".tbodies").children()[i].children()[0] + " && " + $(".tbodies").children()[i].children()[1]);
+         /*var form=$("<form id='form' action='form/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/><input type='hidden' id='linkName' name='linkName' value='"+userList[i].url+"'/></form>");
          $($(".tbodies").children()[i]).append(form);
          var form2=$("<form id='viewForm' action='viewForm/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
           $($(".tbodies").children()[i]).append(form2);
           var form3=$("<form id='delForm' action='delMyFormU/"+userList[i].url+"' method='POST'><input type='hidden' id='select_formID' name='select_formID' value='"+userList[i].id+"'/><input type='hidden' id='stateID' name='stateID' value='"+userList[i].state_id+"'/></form>");
-          $($(".tbodies").children()[i]).append(form3);
-
+          $($(".tbodies").children()[i]).append(form3);*/
          
       }
 
