@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>User my page</title>
+    <title>마이페이지 </title>
     <!-- Responsive Tables -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/rwd-table.min.css?v=5.3.1">
       <!--  button css-->
@@ -64,7 +64,7 @@
     <main>
     
     <div id="headTitle">
-             <div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 <span><img id="settingsIcon" style="cursor:pointer;"
+             <div id="welcomeMsg"><h2 >안녕하세요 ${name} 님   <span><img id="settingsIcon" style="cursor:pointer;"
  alt="profileImg" onclick="userInfo()" src="<%=request.getContextPath()%>/resources/img/settings.png"></span></h2></div>
      </div>
 
@@ -244,7 +244,7 @@
            else{
               //신청하기 (그 폼 신청페이지로 넘어가게)
               if(userList[i].state_id==0){
-                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'openForm(this);'>신청하기</button</td>");
+                 var a=$("<td><button id='form_"+userList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #f33f3f;' onClick = 'openForm(this);'>신청하기</button</td>");
                $($(".tbodies").children()[i]).append(a);
             }
              //신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)

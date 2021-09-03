@@ -105,7 +105,7 @@
               
               
             </div>
-            <button id="infoeditB" class="w3-button w3-black" type="submit">수정</button>
+            <button id="infoeditB" class="w3-button w3-black" type="submit" style="background-color: #f33f3f;">수정</button>
           </form>
     
         </div>
