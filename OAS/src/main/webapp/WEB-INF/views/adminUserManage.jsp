@@ -9,8 +9,7 @@
 <title>회원 관리</title>
 
 	<link rel="stylesheet"  href="<%=request.getContextPath()%>/resources/assets/css/adminUserManage.css?ver=4">
-<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/home.css?ver=7">
- --%>	
+	
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -168,8 +167,7 @@
 		            <option value="1">선생님</option>
 		            <option value="0">관리자</option>
 		          </select>
-		          <button name='stateB' id="stateB" class="stateB" style="border: 1px solid #28a745; display: table-cell;float: left;margin-left: 10px;background: #fff;color:#28a745;
-		          ">적용</button>
+		          <button name='stateB' id="stateB">적용</button>
 		        </div>
 	        </div><!-- select controller end -->
       
