@@ -69,7 +69,7 @@
   <main>
 
   	<div id="headTitle">
-		<div id="welcomeMsg"><img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"><h2 >안녕하세요 ${name} 님 </h2></div>
+		<div id="welcomeMsg"><%-- <img id="profileImg" src="<%=request.getContextPath()%>/resources/img/smile.png"> --%><h2 >안녕하세요 ${name} 님 :)  </h2></div>
      </div>
 
     <section id="demo" class="adminMypage_main">
@@ -341,7 +341,7 @@
 	                    		    //$($(".tbodies").children()[i]).append(td7);
 									//todo
 	                    				//if(adminListWithState[i].state_id==0){
-	                                    	var td7=$("<td><button id='form_"+adminList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #ffd500;' onClick = 'writeForm(this);'>신청하기</button</td>");
+	                                    	var td7=$("<td><button id='form_"+adminList[i].id+"' type='button' class='btn mb-2 mb-md-0 btn-round filled-button' style='border: 3px solid #f33f3f;' onClick = 'writeForm(this);'>신청하기</button</td>");
 	                                  		$($(".tbodies").children()[i]).append(td7);
 	                               		//}
 	                                	//신청한 폼 : 상태 확인 (자신이 신청했던거 볼 수 있게)

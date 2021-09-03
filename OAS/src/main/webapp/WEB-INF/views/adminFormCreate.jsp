@@ -213,13 +213,13 @@
 			</div> 
 			
 			<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts">
-					<button class="contact100-form-btn" type="button" id="mypageB" onclick="location.href='<%=request.getContextPath()%>/admin/mypage'" >
+					<button class="contact100-form-btn" type="button" id="mypageB" style="color:#000;background:#fff;border:2px solid #000;" onclick="location.href='<%=request.getContextPath()%>/admin/mypage'" >
 						<span>설문 만들기 취소</span>
 					</button>
 				</div>
 			<!-- input type : submit -->
 				<div id="submitDiv" class="wrap-input100 button rs1-wrap-input100 formbts">
-					<button class="contact100-form-btn" type="button" id="preview">
+					<button class="contact100-form-btn" type="button" id="preview" style="color:#f33f3f;background:#fff;border:2px solid #f33f3f;">
 						<span>확인</span>
 					</button>
 				</div>

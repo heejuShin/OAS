@@ -386,8 +386,8 @@ button {
 	background-color: #7b7676;
 }
 
-#mypageB:hover, #cancle:hover {
-	filter: brightness(70%);
+#cancle:hover {
+	filter: brightness(80%);
 }
 
 .removeField {
