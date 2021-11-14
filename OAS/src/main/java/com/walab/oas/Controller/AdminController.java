@@ -295,7 +295,7 @@ public class AdminController {
 					//System.out.println(adminUploadFile);
 					
 	            	String root_path = request.getSession().getServletContext().getRealPath("/");  // MAC
-	                String attach_path = "resources/uploadFile/";
+	                String attach_path = "resources/img/";
 	                String filename = adminUploadFile.getOriginalFilename();
 	                
 					File Folder = new File(root_path+attach_path);

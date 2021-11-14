@@ -70,7 +70,7 @@ public class FileController {
 
 		String fileName = fileInfo.getFileName();
 		String realFileName = fileInfo.getFileRealName();
-		String saveFileName = request.getSession().getServletContext().getRealPath("/") + "resources/uploadFile/"+ fileName;
+		String saveFileName = request.getSession().getServletContext().getRealPath("/") + "resources/img/"+ fileName;
 		
 		System.out.println("Download file location: "+ saveFileName);
  
